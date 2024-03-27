@@ -1,0 +1,28 @@
+<label *ngIf="this.label">{{ this.label }}</label>
+<mat-form-field appearance="outline" class="chip-list">
+  <mat-chip-grid #chipList aria-label="this.label" [formControl]="this.getValue()" multiple>
+    <mat-chip-row
+      *ngFor="let chip of this.getValue()?.value"
+      [editable]="!removable"
+      [removable]="removable"
+      (removed)="remove(chip)"
+      color="primary">
+      {{ chip }}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip-row>
+    <input
+      #chipInput
+      placeholder="{{ this.placeholderadd }}"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)" />
+  </mat-chip-grid>
+  <mat-error
+    arq-form-control-error
+    [labelControl]="this.label"
+    [formControlSibling]="this.getValue()"
+  ></mat-error>
+</mat-form-field>

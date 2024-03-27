@@ -1,0 +1,107 @@
+<arq-toolbar [menuItems]="menuItemList" [languages]="languages" (idiomSelected)="selectIdiom($event)" [user]="user">
+</arq-toolbar>
+
+<section>
+  <div class="container">
+    <h3>{{ "title" | transloco }}</h3>
+    <arq-tab-group [selectedTabChange]="this.cambioTab">
+      <arq-tab-item>
+        <arq-tab-item-header title="{{ 'title_tab_1' | transloco }}"></arq-tab-item-header>
+        <arq-tab-item-content>
+          <form [formGroup]="this.formGroup" *ngIf="this.formGroup" (submit)="enviar()">
+            <div class="d-flex flex-wrap">
+              <div class="col-lg-4 col-12">
+                <arq-text-input [label]="'input_label_1' | transloco" [placeholder]="'input_placeholder_1' | transloco"
+                  [value]="'name'" [fGroup]="this.formGroup" [msgError]="'input_error_1' | transloco">
+                </arq-text-input>
+              </div>
+              <div class="col-lg-4 col-12">
+                <arq-autocomplete [label]="'input_label_2' | transloco"
+                  [placeholder]="'input_placeholder_2' | transloco" [options]=""
+                  [value]="'country'" [fGroup]="this.formGroup" [filterBack]="false"
+                  [msgError]="'input_error_2' | transloco" [lang]="lang">
+                </arq-autocomplete>
+              </div>
+
+              <!-- Inputs dependientes -->
+              <div class="col-12 px-0">
+                <arq-dependent-inputs [inputs]="inputs" [form]="this.fgDependedInputs"></arq-dependent-inputs>
+              </div>
+              <!--  -->
+              <ng-container formGroupName="country">
+                <div class="col-lg-4 col-12">
+                  <arq-text-input [label]="'Codigo Municipio'" [placeholder]="'Ingrese el código del Municipio'"
+                    [value]="'denominacion'" [fGroup]="$any(this.formGroup.controls['municipalities'])">
+                  </arq-text-input>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <arq-text-input [label]="'Nombre Municipio'" [placeholder]="'Ingrese el nombre del Municipio'"
+                    [value]="'codigoMunicipio'" [fGroup]="$any(this.formGroup.controls['municipalities'])">
+                  </arq-text-input>
+                </div>
+              </ng-container>
+              <div class="col-lg-4 col-12">
+                <arq-text-input [label]="'input_label_3' | transloco" [placeholder]="'input_placeholder_3' | transloco"
+                  [value]="'position'" [fGroup]="this.formGroup" [msgError]="'input_error_3' | transloco">
+                </arq-text-input>
+              </div>
+              <div class="col-lg-4 col-12">
+                <arq-input-number [label]="'input_label_4' | transloco"
+                  [placeholder]="'input_placeholder_4' | transloco" [fGroup]="this.formGroup" [value]="'age'"
+                  [msgError]="'input_error_4' | transloco">
+                </arq-input-number>
+              </div>
+              <div class="col-lg-4 col-12">
+                <arq-datetimepicker label="{{ 'input_label_5' | transloco }}"
+                  placeholder="{{ 'input_placeholder_5' | transloco }}" [value]="'birthday'"
+                  [fGroup]="this.formGroup"></arq-datetimepicker>
+              </div>
+
+              <div class="col-lg-4 col-12">
+                <arq-input-money [label]="'input_label_6' | transloco" [placeholder]="'input_placeholder_6' | transloco"
+                  [value]="'salary'" [fGroup]="this.formGroup">
+                </arq-input-money>
+              </div>
+              <div class="col-lg-4 col-12">
+                <arq-select label="{{ 'input_label_7' | transloco }}"
+                  placeholder="{{ 'input_placeholder_7' | transloco }}" [emptyOption]="true" [value]="'gender'"
+                  [fGroup]="this.formGroup" [selectOptionsList]="genders">
+                </arq-select>
+              </div>
+              <div class="col-12">
+                <arq-textarea [label]="'input_label_8' | transloco" [placeholder]="'input_placeholder_8' | transloco"
+                  [value]="'about'" [fGroup]="this.formGroup">
+                </arq-textarea>
+              </div>
+
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+              <button type="submit" mat-raised-button color="primary" class="btn-lg">
+                {{ "btn_txt" | transloco }}
+              </button>
+            </div>
+          </form>
+        </arq-tab-item-content>
+      </arq-tab-item>
+      <arq-tab-item>
+        <arq-tab-item-header title="{{ 'title_tab_2' | transloco }}"></arq-tab-item-header>
+        <arq-tab-item-content>
+          <!-- <arq-datatable [loadedData]="ejemploService.loadedData$" [columnsSchema]="columns" [tableConfig]="tableConfig"
+            (loadDataEvent)="requireData($event)"></arq-datatable> -->
+          <ng-container *ngIf="(columnsSchema$ | async) && (tableConfig$ | async)">
+            <arq-datatable [loadDataFn]="ejemploService.loadData" [columnsSchema]="setColumnsSchema()"
+              [tableConfig]="setTableConfig()" [form]="this.fgDatatable" [isEditing]="editing"
+              [itemsPerPageLabel]="'Ítems'" (selectEvent)="handleSelectEvent($event)">
+            </arq-datatable>
+          </ng-container>
+        </arq-tab-item-content>
+      </arq-tab-item>
+      <arq-tab-item>
+        <arq-tab-item-header title="{{ 'title_tab_3' | transloco }}"></arq-tab-item-header>
+        <arq-tab-item-content>
+          <pre>{{ pruebaBackResponse | json}}</pre>
+        </arq-tab-item-content>
+      </arq-tab-item>
+    </arq-tab-group>
+  </div>
+</section>

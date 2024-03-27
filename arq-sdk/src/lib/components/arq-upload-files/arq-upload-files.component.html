@@ -1,0 +1,37 @@
+<div class="row align-items-center">
+  <div class="col-8">
+    <input #file type="file" [multiple]="multiple" (change)="selectFiles($event)" class="file-input" />
+
+    <div class="file-upload">
+      <button mat-mini-fab color="primary" class="upload-btn" (click)="file.click()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <div *ngIf="selectedFiles?.length == 0; else elseBlock">
+        <span class="d-flex justify-content-center align-items-center name">{{ label }}</span>
+      </div>
+      <ng-template #elseBlock>
+        <span class="d-flex justify-content-center align-items-center">{{ txtLabel }}</span>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <button
+      mat-raised-button
+      class="btn btn-success btn-sm"
+      [disabled]="selectedFiles.length == 0"
+      (click)="uploadFiles()">
+      Subir archivos
+    </button>
+  </div>
+</div>
+
+<div *ngIf="showProgress" class="mt-4">
+  <div *ngFor="let item of selectedFiles" class="d-flex align-items-center my-2">
+    <span> {{ item.name }} </span>
+  </div>
+  <div class="progress">
+    <mat-progress-bar class="progress-bar" mode="indeterminate"></mat-progress-bar>
+    <mat-icon class="cancel-upload" (click)="cancelUpload()">delete_forever</mat-icon>
+  </div>
+</div>

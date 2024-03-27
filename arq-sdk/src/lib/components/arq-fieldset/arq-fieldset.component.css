@@ -1,0 +1,23 @@
+fieldset {
+  width: 100%;
+  display: inline-block;
+  padding: 20px;
+  box-sizing: border-box;
+  border: solid 1px darkgray;
+  border-radius: 8px;
+}
+
+legend {
+  width: auto;
+  max-width: 80%;
+}
+
+legend span {
+  display: inline-block;
+  width: calc(100%);
+  padding: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
+}

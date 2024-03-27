@@ -1,0 +1,192 @@
+<div *ngIf="columnsSchema && tableLoaded">
+  <ng-container *ngIf="componentConfig.headerToolbarsPos === 'normal'">
+    <ng-container *ngTemplateOutlet="tButtons"></ng-container>
+    <ng-container *ngTemplateOutlet="tFilters"></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="componentConfig.headerToolbarsPos === 'inverted'">
+    <ng-container *ngTemplateOutlet="tFilters"></ng-container>
+    <ng-container *ngTemplateOutlet="tButtons"></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="componentConfig.headerToolbarsPos === 'onlyButtons'">
+    <ng-container *ngTemplateOutlet="tButtons"></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="componentConfig.headerToolbarsPos === 'onlyFilters'">
+    <ng-container *ngTemplateOutlet="tFilters"></ng-container>
+  </ng-container>
+
+  <!-- DATATABLE -->
+  <arq-datatable
+    *ngIf="columnsSchema"
+    [loadedData]="loadedData$"
+    [refreshData]="refreshData$"
+    (loadDataEvent)="requireData($event)"
+    [columnsSchema]="columnsSchema"
+    [tableConfig]="componentConfig.datatable"
+    (selectEvent)="handleSelectEvent($event)"></arq-datatable>
+</div>
+
+<!-- BUTTON TOOLBAR -->
+<ng-template #tButtons>
+  <mat-toolbar>
+    <button mat-raised-button class="menuTrigger" [matMenuTriggerFor]="showHideSelect" color="primary">
+      Mostrar/ocultar columnas <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <button mat-raised-button class="menuTrigger" [matMenuTriggerFor]="savedFiltersM" color="primary">
+      Filtros guardados <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+
+    <mat-chip-listbox *ngIf="savedFiltersStatus === 'loaded'" style="margin-left: 0.5em; margin-right: 1em">
+      <mat-chip><b>Filtros:</b> {{ selectedSavedFilter?.nombre }}</mat-chip>
+    </mat-chip-listbox>
+
+    <button *ngIf="savedFiltersStatus === 'loaded'" mat-raised-button (click)="deleteSavedFilters()" color="primary">
+      {{ 'DT-BA.DELETE-FILTERS' | transloco }}
+    </button>
+    <button *ngIf="savedFiltersStatus === 'modified'" mat-raised-button (click)="saveSavedFilters()" color="primary">
+      {{ 'DT-BA.SAVE-FILTERS' | transloco }}
+    </button>
+
+    <span class="toolbar-spacer"></span>
+
+    <button
+      *ngIf="componentConfig.cleanFiltersButton && componentConfig.headerToolbarsPos !== 'onlyFilters'"
+      mat-raised-button
+      (click)="cleanFilters()"
+      color="primary">
+      {{ 'DT-BA.CLEAN-FILTERS' | transloco }}
+    </button>
+    <button
+      *ngFor="let btn of componentConfig.headerButtons"
+      mat-raised-button
+      (click)="emitActionEvent(btn.id, btn.value || null)"
+      [color]="btn.color ? btn.color : 'primary'"
+      [matTooltip]="btn.tooltip ? btn.tooltip : ''">
+      {{ btn.label }}
+    </button>
+  </mat-toolbar>
+
+  <br />
+
+  <mat-menu #showHideSelect="matMenu">
+    <button *ngFor="let col of savedColumnsSchema" mat-menu-item (click)="showHideCol(col)">
+      <mat-icon *ngIf="col.isHidden" class="empty">check_box_outline_blank</mat-icon>
+      <mat-icon *ngIf="!col.isHidden" class="checked">check_box</mat-icon>
+      {{ col.label }}
+    </button>
+  </mat-menu>
+
+  <mat-menu #savedFiltersM="matMenu">
+    <ng-container *ngIf="savedFilters.length">
+      <button *ngFor="let sf of savedFilters" mat-menu-item (click)="applySavedFilters(sf)">
+        <span>{{ sf.nombre }}</span>
+        <mat-icon [style.color]="sf.isPredeterminado ? 'gold' : 'grey'">{{
+          sf.isPublico ? 'public' : 'person'
+        }}</mat-icon>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!savedFilters.length">
+      <button mat-menu-item style="font-style: italic">No hay filtros guardados</button>
+    </ng-container>
+  </mat-menu>
+</ng-template>
+
+<!-- FILTERS TOOLBAR -->
+<ng-template #tFilters>
+  <mat-toolbar class="filter-toolbar">
+    <button mat-raised-button color="basic" (click)="openAdvFilters()"><mat-icon>tune</mat-icon> Avanzado</button>
+
+    <mat-form-field>
+      <mat-select placeholder="Columna" [(value)]="addFilterForm.column" (selectionChange)="selectionChange()">
+        <mat-option *ngFor="let col of filterCols(allColumnsSchema)" [value]="col">{{ col.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="addFilterForm.column" [ngSwitch]="addFilterForm.column.type">
+      <mat-form-field>
+        <input *ngSwitchDefault matInput type="text" placeholder="Filtro" [(ngModel)]="addFilterForm.data[0]" />
+        <input
+          *ngSwitchCase="'number'"
+          matInput
+          type="number"
+          placeholder="Filtro"
+          [(ngModel)]="addFilterForm.data[0]" />
+        <mat-select *ngSwitchCase="'boolean'" [(ngModel)]="addFilterForm.data[0]">
+          <mat-option [value]="null"></mat-option>
+          <mat-option [value]="true">&#10003;</mat-option>
+          <mat-option [value]="false">&#10005;</mat-option>
+        </mat-select>
+        <mat-select *ngSwitchCase="'select'" [(ngModel)]="addFilterForm.data[0]">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let col of addFilterForm.column.data" [value]="col.value">
+            {{ col.description }}
+          </mat-option>
+        </mat-select>
+        <ng-container *ngSwitchCase="'autocomplete'">
+          <input
+            matInput
+            [type]="'text'"
+            [matAutocomplete]="auto"
+            [(ngModel)]="addFilterForm.data[0]"
+            (ngModelChange)="doFilter(addFilterForm)" />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            class="arq-autocomplete"
+            [displayWith]="displayFn">
+            <mat-option *ngFor="let col of addFilterForm.column.dataFn | async" [value]="col">
+              {{ col.description }}
+            </mat-option>
+          </mat-autocomplete>
+        </ng-container>
+        <ng-container *ngSwitchCase="'date'">
+          <input
+            matInput
+            placeholder="DD/MM/AAAA"
+            [matDatepicker]="picker"
+            (dateChange)="addFilterForm.data[0] = $event.value"
+            (click)="picker.open()" />
+          <mat-datepicker #picker></mat-datepicker>
+        </ng-container>
+        <mat-select *ngSwitchCase="'image'" [(ngModel)]="addFilterForm.data[0]">
+          <mat-option [value]="null"></mat-option>
+          <mat-option *ngFor="let col of addFilterForm.column.data" [value]="col.value">
+            {{ col.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+    </ng-container>
+
+    <button mat-raised-button color="primary" (click)="addFilter()"><mat-icon>add</mat-icon> Filtrar</button>
+
+    <mat-chip-listbox>
+      <ng-container *ngFor="let filter of hiddenFilters(filters); let i = index">
+        <mat-chip *ngIf="i < 3">
+          <span [innerHTML]="getChipName(filter)"></span>
+          <span matChipRemove style="margin-left: 0em"><mat-icon (click)="removeFilter(filter)">cancel</mat-icon></span>
+        </mat-chip>
+        <mat-chip *ngIf="i === 3">
+          <b>+{{ hiddenFilters(filters).length - 3 }}</b>
+          <span matChipRemove style="margin-left: 0em">
+            <mat-icon [matMenuTriggerFor]="moreFilters">more_horiz</mat-icon>
+          </span>
+        </mat-chip>
+      </ng-container>
+    </mat-chip-listbox>
+
+    <mat-menu #moreFilters="matMenu">
+      <ng-container *ngFor="let filter of hiddenFilters(filters); let i = index">
+        <button mat-menu-item (click)="removeFilter(filter)" *ngIf="i > 2">
+          <mat-chip>
+            <span [innerHTML]="getChipName(filter)"></span>
+          </mat-chip>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </ng-container>
+    </mat-menu>
+  </mat-toolbar>
+  <br />
+</ng-template>

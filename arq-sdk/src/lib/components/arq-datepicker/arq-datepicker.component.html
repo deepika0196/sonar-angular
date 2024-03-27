@@ -1,0 +1,21 @@
+<label *ngIf="this.label"
+  >{{ this.label }}
+  <span *ngIf="this.getValidations()" class="text-danger"> * </span>
+</label>
+<mat-form-field appearance="outline" class="full-width type-date pb-0" [class]="sizeInput" *ngIf="this.getValue()">
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [formControl]="this.getValue()"
+    #tooltip="matTooltip"
+    [matTooltip]="this.message"
+    [matTooltipPosition]="this.positionTooltip"
+    [matTooltipHideDelay]="this.hideDelay"
+    [placeholder]="placeholder"
+    (dateChange)="ngChanges()"
+    (blur)="validateValue()" />
+  <mat-error arq-form-control-error [labelControl]="this.label" [formControlSibling]="this.getValue()"></mat-error>
+  <mat-hint *ngIf="hint">{{ this.hint }}</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker [disabled]="this.isDisabled()"></mat-datepicker>
+</mat-form-field>

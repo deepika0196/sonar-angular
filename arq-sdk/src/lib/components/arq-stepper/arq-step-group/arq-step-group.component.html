@@ -1,0 +1,21 @@
+<mat-stepper
+  #stepper
+  [linear]="linear"
+  [animationDuration]="duration"
+  [headerPosition]="position"
+  [labelPosition]="labelPosition"
+  [orientation]="orientation"
+  (selectionChange)="selectionChange($event)">
+  <ng-template ngFor let-item [ngForOf]="appItems" let-i="index">
+    <mat-step [stepControl]="item.control" [editable]="isEditable">
+      <ng-template matStepLabel>
+        <ng-container *ngTemplateOutlet="item.itemLabel.labelTemplate"></ng-container>
+      </ng-template>
+      <ng-template matStepContent>
+        <ng-container *ngTemplateOutlet="item.contentTemplate"></ng-container>
+        <button *ngIf="item.btnBack" mat-button matStepperPrevious>Back</button>
+        <button *ngIf="item.btnNext" mat-button matStepperNext (click)="next(item.control)">Next</button>
+      </ng-template>
+    </mat-step>
+  </ng-template>
+</mat-stepper>

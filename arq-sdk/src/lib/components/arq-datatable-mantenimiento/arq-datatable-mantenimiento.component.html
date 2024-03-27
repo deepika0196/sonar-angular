@@ -1,0 +1,19 @@
+<div *ngIf="tableList">
+  <mat-form-field appearance="fill">
+    <mat-label>Select table</mat-label>
+    <mat-select placeholder="Select table" (selectionChange)="changeTable($event.value)" [value]="selectedTable?.value">
+      <mat-option *ngFor="let table of tableList" [value]="table.value">
+        {{ table.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <arq-datatable
+    *ngIf="selectedTable && tableLoaded"
+    [loadDataMantFn]="loadDataMantFn()"
+    [columnsSchema]="selectedTable.columnsSchema"
+    [tableConfig]="tableConfig"
+    [isEditing]="editing"
+    [form]="fGroup">
+  </arq-datatable>
+</div>

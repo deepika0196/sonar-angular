@@ -1,0 +1,14 @@
+<div class="custom-class-dialog p-3">
+  <div class="my-4">
+    <arq-upload-files [config]="data.config" [label]="data.label"></arq-upload-files>
+  </div>
+
+  <div align="end">
+    <button mat-button *ngIf="data.cancelBtn" class="btn btn-cancel" style="margin-right: 10px" (click)="cancel()">
+      {{ data.textCancel }}
+    </button>
+    <button mat-raised-button *ngIf="data.confirmBtn" color="primary" class="btn" (click)="confirm()" cdkFocusInitial>
+      {{ data.textConfirm }}
+    </button>
+  </div>
+</div>

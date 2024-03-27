@@ -1,0 +1,4 @@
+<mat-slider *ngIf="this.getValue()" [max]="max" [min]="min" [step]="step" [discrete]="barraLabel">
+  <input matSliderStartThumb [formControl]="this.getValue()" (change)="this.cambioValorInicio($event)" />
+  <input matSliderEndThumb [formControl]="this.formControlFinal" (change)="this.cambioValorFin($event)" />
+</mat-slider>

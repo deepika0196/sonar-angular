@@ -1,0 +1,61 @@
+<mat-toolbar class="menu-bar mat-elevation-z1">
+  <ng-container *ngIf="titleAlign == 'left' && title">
+    <span>{{ title }}</span>
+    <span class="example-spacer"></span>
+  </ng-container>
+
+  <ng-container *ngIf="menuItems">
+    <ng-container *ngFor="let basemenu of menuItems">
+      <div *ngIf="basemenu.subItems && basemenu.subItems.length > 0; else elseMatMenu">
+        <button mat-button class="btn-marte-menu" [matMenuTriggerFor]="submenu.Submenuitem">
+          <mat-icon *ngIf="basemenu.icon" class="mr-1">{{ basemenu.icon }}</mat-icon>
+          <span>{{ basemenu.label }}</span>
+        </button>
+        <arq-submenu #submenu (SelectedMenu)="setSelectedItem($event)" [SubMenuItems]="basemenu.subItems"></arq-submenu>
+      </div>
+      <ng-template #elseMatMenu>
+        <button mat-button class="btn-marte-menu" (click)="setSelectedItem(basemenu)">
+          <mat-icon class="mr-1" *ngIf="basemenu.icon">{{ basemenu.icon }}</mat-icon>
+          <span>{{ basemenu.label }}</span>
+        </button>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="titleAlign == 'center' && title">
+    <span class="example-spacer"></span>
+
+    <span>{{ title }}</span>
+  </ng-container>
+
+  <span class="example-spacer"></span>
+
+  <ng-container *ngIf="languages">
+    <ng-container *ngFor="let language of languages">
+      <a
+        class="item-lang"
+        [ngClass]="{ 'border-lang': language.check, 'p-bottom': !language.check }"
+        (click)="changeLang(language)"
+        >{{ language.label }}
+      </a>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="titleAlign == 'right' && title">
+    <span class="example-spacer"></span>
+
+    <span>{{ title }}</span>
+  </ng-container>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="logout">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <ng-template ngFor let-item [ngForOf]="user" let-i="index">
+      <button mat-menu-item (click)="item.event()">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.text }}</span>
+      </button>
+    </ng-template>
+  </mat-menu>
+</mat-toolbar>

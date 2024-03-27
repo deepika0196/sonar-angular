@@ -1,0 +1,9 @@
+<mat-slider
+  *ngIf="this.getValue()"
+  [disabled]="this.disabled"
+  [max]="max"
+  [min]="min"
+  [step]="step"
+  [discrete]="barraLabel">
+  <input matSliderThumb [formControl]="this.getValue()" />
+</mat-slider>

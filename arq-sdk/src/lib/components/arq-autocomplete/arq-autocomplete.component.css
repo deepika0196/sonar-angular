@@ -1,0 +1,10 @@
+/* @import '../../../lib/styles/styles.css'; */
+
+.full-width {
+  width: 100%;
+}
+
+.mat-mdc-form-field-icon-prefix > .mat-icon,
+.mat-mdc-form-field-icon-suffix > .mat-icon {
+  background-color: lightgrey;
+}

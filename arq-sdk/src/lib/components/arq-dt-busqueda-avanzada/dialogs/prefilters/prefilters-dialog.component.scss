@@ -1,0 +1,47 @@
+.filter-toolbar {
+  background-color: white;
+}
+
+mat-toolbar button {
+  margin-right: 0.5em;
+}
+
+.filter-toolbar mat-form-field,
+.filter-toolbar button {
+  margin-right: 1em;
+}
+
+.filter-toolbar mat-form-field {
+  margin-top: 1.5em;
+}
+
+.filter-toolbar
+  mat-form-field
+  ::ng-deep
+  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea)
+  .mat-mdc-form-field-infix {
+  padding-top: 0.8em !important;
+  padding-bottom: 0.8em !important;
+}
+
+.filter-toolbar mat-form-field ::ng-deep .mat-mdc-form-field-infix {
+  min-height: 0 !important;
+}
+
+button {
+  border-radius: 0px !important;
+  height: 2.6em;
+  min-height: 2.6em;
+  font-size: 16px;
+}
+
+button:not([disabled]):hover {
+  background-color: #0c556d;
+  color: white;
+  border-radius: 0px;
+}
+
+button[disabled] {
+  color: rgb(30, 29, 29);
+  background-color: #acacac;
+}

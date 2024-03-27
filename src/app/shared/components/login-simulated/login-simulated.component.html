@@ -1,0 +1,17 @@
+<head>
+    <title>Login simulated</title>
+</head>
+<body class="container pt-4">
+<h1 class="row">Login simulated</h1>
+    <hr/>
+    <form class="row" (ngSubmit)="login()">
+        <input type="text" [(ngModel)]="tokenRequest.userInfo.nif" name="nif" class= "form-control mb-2" placeholder="Write nif">
+        <input type="text" [(ngModel)]="tokenRequest.userInfo.name" name="name" class= "form-control" placeholder="Write name">  
+        <input type="text" [(ngModel)]="tokenRequest.userInfo.email" name="email" class= "form-control" placeholder="Write email">  
+        <input type="text" [(ngModel)]="tokenRequest.userInfo.rol" name="role" class= "form-control mb-2" placeholder="Write role"> 
+        <button class ="btn btn-primary">
+            Login
+        </button>
+    </form>
+
+</body>

@@ -1,0 +1,10 @@
+/* @import '../../../lib/styles/styles.css'; */
+
+.mat-grid-tile-content > * {
+  width: 95%;
+}
+
+arq-datatable:last-child {
+  display: block;
+  margin-top: 20px;
+}

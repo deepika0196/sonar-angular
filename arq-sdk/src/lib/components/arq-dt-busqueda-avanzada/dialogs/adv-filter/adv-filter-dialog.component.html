@@ -1,0 +1,145 @@
+<h2 mat-dialog-title>{{ 'DT-BA.ADV-FILTER.TITLE' | transloco }}</h2>
+
+<mat-dialog-content>
+  <h4>{{ 'DT-BA.COLUMN' | transloco }}</h4>
+  <mat-form-field>
+    <mat-select
+      [placeholder]="'DT-BA.COLUMN' | transloco"
+      [(value)]="data.selectedCol"
+      (selectionChange)="colChanged($event.value)">
+      <mat-option *ngFor="let col of data.filterCols(data.allColumnsSchema)" [value]="col">{{ col.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <h4>{{ 'DT-BA.FILTERS' | transloco }}</h4>
+  <i *ngIf="!data.selectedCol">{{ 'DT-BA.ADV-FILTER.NO-COL-SEL' | transloco }}</i>
+  <ng-container *ngIf="data.selectedCol">
+    <mat-form-field>
+      <mat-select [placeholder]="'DT-BA.TYPE' | transloco" [(value)]="filter.type">
+        <mat-option *ngFor="let type of filterTypes" [value]="type[0]">{{ type[1] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="filter.type" [ngSwitch]="data.selectedCol.type">
+      <br />
+      <ng-container *ngSwitchCase="'date'">
+        <ng-container *ngTemplateOutlet="date"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'number'">
+        <ng-container *ngTemplateOutlet="number"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'select'">
+        <ng-container *ngTemplateOutlet="select"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'autocomplete'">
+        <ng-container *ngTemplateOutlet="autocomplete"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'text'">
+        <ng-container *ngTemplateOutlet="text"></ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" mat-dialog-close>{{ 'DT-BA.CANCEL' | transloco }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="generateFilter()" cdkFocusInitial>
+    {{ 'DT-BA.FILTERV' | transloco }}
+  </button>
+</mat-dialog-actions>
+
+<ng-template #date>
+  <ng-container [ngSwitch]="filter.type">
+    <ng-container *ngSwitchDefault></ng-container>
+    <ng-container *ngSwitchCase="'daterange'">
+      <mat-form-field>
+        <mat-date-range-input [rangePicker]="picker" (click)="picker.open()">
+          <input matStartDate placeholder="Desde" (dateChange)="filter.data[0] = $event.value.toDate()" />
+          <input matEndDate placeholder="Hasta" (dateChange)="filter.data[1] = $event.value.toDate()" />
+        </mat-date-range-input>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #number>
+  <ng-container [ngSwitch]="filter.type">
+    <ng-container *ngSwitchDefault></ng-container>
+    <ng-container *ngSwitchCase="'numberrange'">
+      <mat-form-field>
+        <mat-label>Desde</mat-label>
+        <input matInput type="number" [(ngModel)]="filter.data[0]" />
+      </mat-form-field>
+      <mat-form-field class="ml-1">
+        <mat-label>Hasta</mat-label>
+        <input matInput type="number" [(ngModel)]="filter.data[1]" />
+      </mat-form-field>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #select>
+  <ng-container [ngSwitch]="filter.type">
+    <ng-container *ngSwitchDefault></ng-container>
+    <ng-container *ngSwitchCase="'selectmultiple'">
+      <mat-form-field>
+        <mat-select [(ngModel)]="filter.data" multiple>
+          <mat-option *ngFor="let col of data.selectedCol.data" [value]="col.value">
+            {{ col.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #autocomplete>
+  <ng-container [ngSwitch]="filter.type">
+    <ng-container *ngSwitchDefault></ng-container>
+    <ng-container *ngSwitchCase="'autocompletemultiple'">
+      <mat-form-field>
+        <mat-chip-grid #chipGrid aria-label="selection">
+          <mat-chip-row *ngFor="let chip of filter.data" [value]="$any(chip).value" (removed)="removeTx(chip)">
+            {{ $any(chip).description }}
+            <button matChipRemove [attr.aria-label]="'remove ' + data">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        </mat-chip-grid>
+        <input
+          #chipInput
+          [type]="'text'"
+          [matChipInputFor]="chipGrid"
+          [matAutocomplete]="auto"
+          [(ngModel)]="filterData"
+          (ngModelChange)="doFilter()" />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" class="arq-autocomplete">
+          <mat-option *ngFor="let col of data.selectedCol.dataFn | async" [value]="col">
+            {{ col.description }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #text>
+  <ng-container [ngSwitch]="filter.type">
+    <ng-container *ngSwitchDefault></ng-container>
+    <ng-container *ngSwitchCase="'textmultiple'">
+      <mat-form-field>
+        <mat-chip-grid #chipGrid>
+          <mat-chip-row *ngFor="let tx of filter.data" (removed)="removeTx(tx)">
+            {{ tx }}
+            <button matChipRemove><mat-icon>cancel</mat-icon></button>
+          </mat-chip-row>
+          <input
+            [placeholder]="'DT-BA.ADV-FILTER.ADD-TEXTS' | transloco"
+            [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="true"
+            (matChipInputTokenEnd)="addTx($event)" />
+        </mat-chip-grid>
+      </mat-form-field>
+    </ng-container>
+  </ng-container>
+</ng-template>

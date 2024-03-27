@@ -1,0 +1,115 @@
+<label *ngIf="this.subLabel">{{ this.subLabel }}</label>
+<h2 *ngIf="this.datos">{{ this.datos.formulario.denominacion }}</h2>
+<div *ngFor="let grupo of this.grupos">
+  <arq-fieldset [legend]="grupo">
+    <mat-grid-list
+      *ngIf="this.datos"
+      [cols]="this.datos.formulario.numColumnas || this.numCols"
+      [rowHeight]="this.rowHeight">
+      <mat-grid-tile *ngFor="let campo of this.datos.campos | filterByGrupo : grupo" [colspan]="campo.anchoColumna">
+        <arq-text-input
+          *ngIf="campo.htmlTipo === 'input-text'"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [fGroup]="this.fGroup"
+          [value]="campo.idCampo"
+          [ngClass]="campo.cssClass !== null ? campo.cssClass : ''"
+          [maxLength]="campo.htmlTamanyoMax"></arq-text-input>
+
+        <arq-select
+          *ngIf="campo.htmlTipo === 'select'"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [emptyOption]="true"
+          [fGroup]="this.fGroup"
+          [value]="campo.idCampo"
+          [ngClass]="campo.cssClass !== null ? campo.cssClass : ''"
+          [fullObject]="false"
+          [selectOptionsList]="this.selectOptionsArray.get(campo.idCampo)">
+        </arq-select>
+
+        <arq-datepicker-range
+          *ngIf="campo.htmlTipo === 'datepicker-range'"
+          [fGroup]="this.fGroup"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [value]="campo.idCampo"
+          [fechaFin]="campo.idCampo + this.NAME_FC_DP_RANGE"
+          [visibleRange]="false"
+          [ngClass]="campo.cssClass !== null ? campo.cssClass : ''">
+        </arq-datepicker-range>
+
+        <arq-datepicker
+          *ngIf="campo.htmlTipo === 'datepicker'"
+          [fGroup]="this.fGroup"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [value]="campo.idCampo"
+          [placeholder]="'DD/MM/YYYY'"></arq-datepicker>
+
+        <arq-input-money
+          *ngIf="campo.htmlTipo === 'input-money'"
+          [fGroup]="this.fGroup"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [value]="campo.idCampo"
+          [ngClass]="campo.cssClass !== null ? campo.cssClass : ''"
+          [maxLength]="campo.htmlTamanyoMax"></arq-input-money>
+
+        <arq-input-number
+          *ngIf="campo.htmlTipo === 'input-number'"
+          [fGroup]="this.fGroup"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [value]="campo.idCampo"
+          [ngClass]="campo.cssClass !== null ? campo.cssClass : ''"
+          [maxLength]="campo.htmlTamanyoMax"></arq-input-number>
+
+        <arq-checkbox-basic
+          *ngIf="campo.htmlTipo === 'checkbox-basic'"
+          [fGroup]="this.fGroup"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [value]="campo.idCampo"
+          [color]="this.colorCheckboxBasic"
+          [checked]="this.checkedCheckboxBasic"
+          [ngClass]="campo.cssClass !== null ? campo.cssClass : ''">
+        </arq-checkbox-basic>
+
+        <arq-autocomplete
+          *ngIf="campo.htmlTipo === 'autocomplete'"
+          [fGroup]="this.fGroup"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [value]="campo.idCampo"
+          [options]="this.autocompletetOptionsArray.get(campo.idCampo)"
+          [ngClass]="campo.cssClass !== null ? campo.cssClass : ''">
+        </arq-autocomplete>
+
+        <arq-select
+          *ngIf="campo.htmlTipo === 'select-multiple'"
+          [label]="this.lang === this.LANG_ES ? campo.htmlLabel : campo.htmlLabelVal"
+          [emptyOption]="false"
+          [fGroup]="this.fGroup"
+          [value]="campo.idCampo"
+          [ngClass]="campo.cssClass !== null ? campo.cssClass : ''"
+          [fullObject]="false"
+          [multiple]="true"
+          [selectOptionsList]="this.selectOptionsArray.get(campo.idCampo)">
+        </arq-select>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </arq-fieldset>
+</div>
+
+<div style="padding-top: 20px">
+  <arq-button
+    *ngIf="this.showBtnSearch"
+    [label]="this.labelBtnSearch"
+    [color]="this.colorBtnSearch"
+    [type]="this.typeBtnSearch"
+    [icon]="this.iconBtnSearch"
+    (click)="this.search()">
+  </arq-button>
+
+  <arq-button
+    *ngIf="this.showBtnExport"
+    [label]="this.labelBtnExport"
+    [color]="this.colorBtnExport"
+    [type]="this.typeBtnExport"
+    [icon]="this.iconBtnExport"
+    (click)="this.export()">
+  </arq-button>
+</div>

@@ -1,0 +1,9 @@
+<fieldset>
+  <legend
+    *ngIf="legend">
+    <span
+      [matTooltip]="legend">
+      {{ legend }}</span>
+  </legend>
+  <ng-content></ng-content>
+</fieldset>

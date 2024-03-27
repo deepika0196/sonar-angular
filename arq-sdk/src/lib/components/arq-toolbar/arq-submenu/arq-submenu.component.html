@@ -1,0 +1,18 @@
+<mat-menu #Submenuitem="matMenu" [overlapTrigger]="false" class="customize-mat-menu">
+  <div *ngFor="let submenu of SubMenuItems">
+    <span *ngIf="submenu.subItems && submenu.subItems.length > 0">
+      <button class="btn-marte-menu" mat-menu-item [matMenuTriggerFor]="secondsubmenu.Submenuitem">
+        <mat-icon *ngIf="submenu.icon">{{ submenu.icon }}</mat-icon>
+        <span>{{ submenu.label }}</span>
+      </button>
+      <arq-submenu (SelectedMenu)="clickeventhandler($event)" #secondsubmenu [SubMenuItems]="submenu.subItems">
+      </arq-submenu>
+    </span>
+    <span *ngIf="!submenu.subItems || submenu.subItems.length === 0">
+      <button class="btn-marte-menu" mat-menu-item (click)="clickeventhandler(submenu)">
+        <mat-icon *ngIf="submenu.icon">{{ submenu.icon }}</mat-icon>
+        <span>{{ submenu.label }}</span>
+      </button>
+    </span>
+  </div>
+</mat-menu>

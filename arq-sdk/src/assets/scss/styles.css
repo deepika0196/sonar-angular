@@ -1,0 +1,212 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/dist/css/bootstrap-grid.min.css';
+
+/* @import './marte.scss'; */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+.container {
+  padding: 10px 20px;
+}
+arq-button {
+  margin: 2px;
+}
+.customize-mat-menu {
+  background-color: #19aee0;
+}
+
+.customize-mat-menu .mat-mdc-menu-content .mat-mdc-menu-item .mdc-list-item__primary-text {
+  color: white;
+  font-size: 12px;
+}
+.customize-mat-menu .mat-mdc-menu-item .mat-icon,
+.customize-mat-menu .mat-mdc-menu-submenu-icon {
+  color: white;
+}
+
+/* Inputs Small  */
+.small {
+  font-size: 14px !important;
+}
+
+.small
+  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea)
+  .mat-mdc-form-field-infix {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.small .mat-mdc-form-field-infix {
+  min-height: 38px !important;
+}
+
+.small .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.small .mat-icon,
+.small .mat-mdc-icon-button.mat-mdc-button-base {
+  font-size: 14px !important;
+  height: 9px !important;
+  width: 9px !important;
+}
+
+.small .mdc-icon-button svg,
+.small .mdc-icon-button img,
+.medium .mdc-icon-button svg,
+.medium .mdc-icon-button img,
+.large .mdc-icon-button svg,
+.large .mdc-icon-button img {
+  width: var(--mdc-icon-button-icon-size, 14px) !important;
+  height: var(--mdc-icon-button-icon-size, 14px) !important;
+}
+
+.small .mdc-text-field__input,
+.small .mat-mdc-select-trigger {
+  height: 38px !important;
+}
+
+.small .mat-mdc-select-value-text {
+  font-size: 14px !important;
+}
+
+.small .mat-date-range-input-container {
+  height: 38px !important;
+}
+
+/* Inputs Medium  */
+.medium {
+  font-size: 14px !important;
+}
+
+.medium .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.medium
+  .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea)
+  .mat-mdc-form-field-infix {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.medium .mat-mdc-form-field-infix {
+  min-height: 47px !important;
+}
+
+.medium .mat-icon {
+  font-size: 14px !important;
+  height: 17px !important;
+  width: 17px !important;
+}
+
+.medium .mdc-text-field__input {
+  min-height: 47px !important;
+}
+
+.medium .mat-mdc-select-trigger {
+  min-height: 47px !important;
+}
+
+.medium .mat-mdc-select-value-text {
+  font-size: 14px !important;
+}
+
+.mat-mdc-form-field-icon-prefix > .mat-icon,
+.mat-mdc-form-field-icon-suffix > .mat-icon {
+  background-color: lightgrey;
+  padding: 15px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mdc-text-field--disabled.mdc-text-field--filled {
+  background-color: #e9e9e9;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #f6f6f6;
+}
+
+input::placeholder {
+  font-style: italic;
+}
+
+.mat-mdc-form-field-icon-prefix,
+.mat-mdc-form-field-icon-suffix {
+  font-weight: 500;
+}
+
+.type-date.mat-mdc-form-field {
+  padding-bottom: 1rem;
+}
+
+.mdc-text-field {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+/* inputs date  */
+.small.type-date .mat-mdc-icon-button.mat-mdc-button-base {
+  font-size: 14px !important;
+  min-height: 38px !important;
+  width: 38px !important;
+}
+
+.type-date .mat-mdc-icon-button .mat-mdc-button-touch-target {
+  min-height: 38px !important;
+  width: 38px !important;
+}
+
+/* para quitar los border radius */
+.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading,
+.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing {
+  border-radius: 0 !important;
+}
+
+/*para que todos los inputs tengan el mismo tamanyo de texto */
+.mat-mdc-form-field-flex {
+  font-size: 14px !important;
+}
+
+.large .mat-icon {
+  font-size: 14px !important;
+}
+
+/* Estilos para los inputs readonly (sobrescritos) */
+.inputReadOnly input {
+  cursor: default;
+  opacity: 1;
+}
+.mdc-text-field--disabled,
+.inputReadOnly .mat-mdc-text-field-wrapper {
+  background-color: #f0f0f0;
+  height: inherit;
+  font-weight: 600 !important;
+}
+
+/* Alineación derecha de input numericos con margen 3px (no firefox)*/
+input[type='number'] {
+  text-align: right;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  margin-left: 3px;
+}
+
+label {
+  font-weight: bold;
+}

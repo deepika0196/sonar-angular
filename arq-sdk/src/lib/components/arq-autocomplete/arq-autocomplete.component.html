@@ -1,0 +1,44 @@
+<label *ngIf="this.label"
+  >{{ this.label }}
+  <span *ngIf="this.getValidations()" class="text-danger"> * </span>
+</label>
+<mat-form-field appearance="outline" class="full-width" [class]="sizeInput" *ngIf="this.getValue()">
+  <input
+    matInput
+    [formControl]="this.getValue()"
+    [type]="this.type"
+    [placeholder]="this.placeholder"
+    [matAutocomplete]="auto"
+    #tooltip="matTooltip"
+    [matTooltip]="this.message"
+    [matTooltipPosition]="this.positionTooltip"
+    [matTooltipHideDelay]="this.hideDelay"
+    (keyup)="ngGetValue($event)"
+    (focusOut)="this.onFocusOutEvent($event)" />
+  <mat-error arq-form-control-error [labelControl]="this.label" [formControlSibling]="this.getValue()"></mat-error>
+  <mat-autocomplete
+    class="arq-autocomplete"
+    autoActiveFirstOption
+    #auto="matAutocomplete"
+    [displayWith]="displayFn"
+    (optionSelected)="ngChanges($event)">
+    <mat-paginator
+      *ngIf="this.totalElements > this.request.size"
+      showFirstLastButtons
+      hidePageSize
+      [length]="this.totalElements"
+      [pageSize]="this.request.size"
+      (page)="onPageChange($event)"
+      (click)="clickEvent($event)">
+    </mat-paginator>
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      <ng-container *ngIf="lang === 'ca'; else elseTemplateDescription">
+        <span *ngIf="showValue">{{ option?.value }} - </span> {{ option?.descriptionV }}
+      </ng-container>
+      <ng-template #elseTemplateDescription>
+        <span *ngIf="showValue">{{ option?.value }} - </span> {{ option?.description }}
+      </ng-template>
+    </mat-option>
+  </mat-autocomplete>
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>

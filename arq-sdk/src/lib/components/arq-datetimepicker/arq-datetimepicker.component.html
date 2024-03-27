@@ -1,0 +1,24 @@
+<label *ngIf="this.label"
+  >{{ this.label }}
+  <span *ngIf="this.getValidations()" class="text-danger"> * </span>
+</label>
+<mat-form-field appearance="outline" *ngIf="this.getValue()" [class]="sizeInput" class="type-date pb-0">
+  <mtx-datetimepicker
+    #datetimePicker
+    [type]="type"
+    [mode]="mode"
+    [multiYearSelector]="multiYearSelector"
+    [startView]="startView"
+    [twelvehour]="twelvehour"
+    [timeInterval]="timeInterval"
+    [touchUi]="touchUi"
+    [timeInput]="timeInput"
+    [disabled]="this.isDisabled()"
+    (selectedChanged)="ngSetValue($event)"
+    (blur)="validateValue()">
+  </mtx-datetimepicker>
+  <mat-error arq-form-control-error [labelControl]="this.label" [formControlSibling]="this.getValue()"></mat-error>
+  <mat-hint *ngIf="hint">{{ this.hint }}</mat-hint>
+  <input [mtxDatetimepicker]="datetimePicker" matInput [formControl]="this.getValue()" />
+  <mtx-datetimepicker-toggle [for]="datetimePicker" matSuffix></mtx-datetimepicker-toggle>
+</mat-form-field>

@@ -1,0 +1,8 @@
+{
+  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../dist/arq-sdk",
+  "assets": ["./assets/styles/**/*.css", "./assets/styles/**/*.scss"],
+  "lib": {
+    "entryFile": "public-api.ts"
+  }
+}

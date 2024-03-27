@@ -1,0 +1,77 @@
+<h2 mat-dialog-title>{{ 'DT-BA.PREFILTERS.TITLE' | transloco }}</h2>
+
+<mat-dialog-content>
+  <ng-container *ngFor="let col of data.prefilters; let i = index">
+    <mat-toolbar class="filter-toolbar">
+      <mat-form-field>
+        <mat-select placeholder="Columna" [(value)]="addFilterForm[i].column">
+          <mat-option *ngFor="let col of fixedCol(col.key)" [value]="col">{{ col.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <ng-container *ngIf="addFilterForm[i].column" [ngSwitch]="addFilterForm[i].column?.type">
+        <mat-form-field>
+          <input *ngSwitchDefault matInput type="text" placeholder="Filtro" [(ngModel)]="addFilterForm[i].data[0]" />
+          <input
+            *ngSwitchCase="'number'"
+            matInput
+            type="number"
+            placeholder="Filtro"
+            [(ngModel)]="addFilterForm[i].data[0]" />
+          <mat-select *ngSwitchCase="'boolean'" [(ngModel)]="addFilterForm[i].data[0]">
+            <mat-option [value]="null"></mat-option>
+            <mat-option [value]="true">&#10003;</mat-option>
+            <mat-option [value]="false">&#10005;</mat-option>
+          </mat-select>
+          <mat-select
+            *ngSwitchCase="'select'"
+            [(ngModel)]="addFilterForm[i].data[0]"
+            (ngModelChange)="doFilter(addFilterForm[i])">
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let col of addFilterForm[i].column?.data" [value]="col.value">
+              {{ col.description }}
+            </mat-option>
+          </mat-select>
+          <ng-container *ngSwitchCase="'autocomplete'">
+            <input
+              matInput
+              [type]="'text'"
+              [matAutocomplete]="auto"
+              [(ngModel)]="addFilterForm[i].data[0]"
+              (ngModelChange)="doFilter(addFilterForm[i])" />
+            <mat-autocomplete
+              autoActiveFirstOption
+              #auto="matAutocomplete"
+              class="arq-autocomplete"
+              [displayWith]="displayFn">
+              <mat-option *ngFor="let col of addFilterForm[i].column!.dataFn | async" [value]="col">
+                {{ col.description }}
+              </mat-option>
+            </mat-autocomplete>
+          </ng-container>
+          <ng-container *ngSwitchCase="'date'">
+            <input
+              matInput
+              placeholder="DD/MM/AAAA"
+              [matDatepicker]="picker"
+              (dateChange)="addFilterForm[i].data[0] = $event.value"
+              (click)="picker.open()" />
+            <mat-datepicker #picker></mat-datepicker>
+          </ng-container>
+          <mat-select *ngSwitchCase="'image'" [(ngModel)]="addFilterForm[i].data[0]">
+            <mat-option [value]="null"></mat-option>
+            <mat-option *ngFor="let col of addFilterForm[i].column?.data" [value]="col.value">
+              {{ col.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+      </ng-container>
+    </mat-toolbar>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{ 'DT-BA.CANCEL' | transloco }}</button>
+  <button mat-button [mat-dialog-close]="addFilterForm" cdkFocusInitial>{{ 'DT-BA.FILTERV' | transloco }}</button>
+</mat-dialog-actions>

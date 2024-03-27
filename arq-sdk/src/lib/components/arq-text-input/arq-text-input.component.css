@@ -1,0 +1,7 @@
+/* @import "../../../lib/styles/styles.css"; */
+
+.input-text {
+  border-radius: 0%;
+  width: 100%;
+  border: 3px;
+}

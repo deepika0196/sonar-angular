@@ -1,0 +1,468 @@
+<div class="mat-elevation-z8">
+  <!-- TABLE HEADER  -->
+  <div
+    *ngIf="tableConfig.headerTable || tableConfig.headerTableString"
+    style="margin: 1em; display: flex; justify-content: flex-end">
+    <p *ngIf="tableConfig.headerTableString">{{ tableConfig.headerTableString }}</p>
+    <ng-container *ngIf="tableConfig.headerTable">
+      <button
+        style="margin-left: 1em; margin-top: 1em"
+        mat-raised-button
+        type="button"
+        *ngFor="let btn of tableConfig.headerTable"
+        [color]="btn.color ? btn.color : 'primary'"
+        [matTooltip]="btn.tooltip ? btn.tooltip : ''"
+        (click)="btn.action()">
+        <mat-icon *ngIf="btn.icon">{{ btn.icon }}</mat-icon>
+        {{ btn.label }}
+      </button>
+    </ng-container>
+  </div>
+
+  <!-- FILTER -->
+  <mat-form-field
+    appearance="outline"
+    class="table-filter"
+    *ngIf="tableConfig.filterType === 'global' || tableConfig.filterType === 'both'">
+    <mat-label>{{ tableConfig.filterLabel }}</mat-label>
+    <input
+      matInput
+      (keyup)="filterHandler($event, 'global')"
+      placeholder="{{ tableConfig.filterPlaceholder }}"
+      #input />
+  </mat-form-field>
+
+  <!-- TABLE -->
+  <table
+    #table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"
+    matSort
+    (matSortChange)="sortHandler($event)">
+    <!-- Select column -->
+    <ng-container matColumnDef="selectColumn" *ngIf="tableConfig.selectColumn">
+      <th
+        mat-header-cell
+        class="header-datatable"
+        *matHeaderCellDef
+        style="cursor: pointer !important"
+        (click)="cleanSelectionRows()">
+        <!-- <mat-checkbox [checked]="false" [disabled]="true"></mat-checkbox> -->
+        ({{ selectedRows.length }})
+      </th>
+      <td mat-cell *matCellDef="let element" (click)="toggleSelectRow(element)">
+        <mat-checkbox [checked]="checkSelectedRow(element)" [disabled]="true"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Dynamic Columns -->
+    <ng-container [matColumnDef]="col.key" *ngFor="let col of _columnsSchema">
+      <ng-container *ngIf="tableConfig.disableSorting || col.isSortable === false">
+        <th mat-header-cell class="header-datatable" *matHeaderCellDef>{{ col.label }}</th>
+      </ng-container>
+      <ng-container *ngIf="!tableConfig.disableSorting && col.isSortable !== false">
+        <th mat-header-cell class="header-datatable" *matHeaderCellDef mat-sort-header>
+          {{ col.label }}
+        </th>
+      </ng-container>
+      <!-- Data rows -->
+      <td mat-cell *matCellDef="let element" (click)="eventRow(element)">
+        <!-- Normal rows -->
+        <div
+          [ngSwitch]="col.type"
+          *ngIf="!element.isEdit && !element.isCreate"
+          (contextmenu)="displayContextMenu($event, element); (false)">
+          <span *ngSwitchCase="'date'">
+            {{ element[col.key] | date : 'dd/MM/yyyy' }}
+          </span>
+          <span *ngSwitchCase="'datetimepicker'">
+            {{ element[col.key] | date : 'dd/MM/yyyy HH:mm' }}
+          </span>
+          <span *ngSwitchCase="'boolean'">
+            {{ element[col.key] ? '&#10003;' : '&#10005;' }}
+          </span>
+          <span *ngSwitchCase="'select'">
+            {{ findValue(element[col.key], col.data, col.lang, col.type) }}
+          </span>
+          <span *ngSwitchCase="'autocomplete'">
+            {{ findValue(element[col.key], col.data, col.lang, col.type) }}
+          </span>
+          <span *ngSwitchCase="'image'">
+            <img [src]="findSrc(element[col.key], col.data)" />
+          </span>
+          <span *ngSwitchDefault>
+            {{ col.subkey ? this.obtenerElemento(element, col.key) : element[col.key] }}
+          </span>
+        </div>
+
+        <!-- Editing rows -->
+
+        <div [ngSwitch]="col.type" *ngIf="element.isEdit && _form" class="inputs-edit">
+          <div *ngSwitchCase="'date'" [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="editCol(col, element) && !col.subkey; else elseBlockNoEditable">
+              <arq-datepicker [fGroup]="_form" [value]="col.key" />
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'datetimepicker'"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="editCol(col, element) && !col.subkey; else elseBlockNoEditable">
+              <arq-datetimepicker [value]="col.key" [fGroup]="_form"></arq-datetimepicker>
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'boolean'"
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="editCol(col, element) && !col.subkey; else elseBlockNoEditable">
+              <arq-checkbox-basic [value]="col.key" [fGroup]="this._form"></arq-checkbox-basic>
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'select'"
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="editCol(col, element) && !col.subkey; else elseBlockNoEditable">
+              <arq-select
+                [emptyOption]="true"
+                [value]="col.key"
+                [fGroup]="this._form"
+                [selectOptionsList]="col.data || col.dataFn"
+                (change)="inputHandler($event, element.id, col.key)"
+                [fullObject]="col.fullObject"
+                [lang]="col.lang">
+              </arq-select>
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'autocomplete'"
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="editCol(col, element) && !col.subkey; else elseBlockNoEditable">
+              <arq-autocomplete
+                [options]="autocFilter(col.dataFnReq, element[col.key])"
+                [panelWidth]="col.panelWidth || 'auto'"
+                [dependsOn]="col.dependsOn"
+                [value]="col.key"
+                [fGroup]="this._form"
+                (change)="inputHandler($event, element.id, col.key)"
+                [lang]="col.lang"
+                [defaultSize]="col.defaultSize || 10">
+              </arq-autocomplete>
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'number'"
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="editCol(col, element) && !col.subkey; else elseBlockNoEditable">
+              <arq-input-number
+                [value]="col.key"
+                [fGroup]="this._form"
+                (change)="inputHandler($event, element.id, col.key)">
+              </arq-input-number>
+            </div>
+          </div>
+
+          <div *ngSwitchDefault [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="editCol(col, element) && !col.subkey; else elseBlockNoEditable">
+              <arq-text-input
+                [value]="col.key"
+                [fGroup]="this._form"
+                [maxLength]="col.maxLength ? col.maxLength : 100"
+                (change)="inputHandler($event, element.id, col.key)">
+              </arq-text-input>
+            </div>
+          </div>
+
+          <ng-template #elseBlockNoEditable>
+            <div [ngSwitch]="col.type">
+              <span *ngSwitchCase="'date'">
+                {{ element[col.key] | date : 'dd/MM/yyyy' }}
+              </span>
+              <span *ngSwitchCase="'datetimepicker'">
+                {{ element[col.key] | date : 'dd/MM/yyyy' }}
+              </span>
+              <span *ngSwitchCase="'boolean'">
+                {{ element[col.key] ? '&#10003;' : '&#10005;' }}
+              </span>
+              <span *ngSwitchCase="'select'">
+                {{ findValue(element[col.key], col.data || col.dataFn, col.lang, col.type) }}
+              </span>
+              <span *ngSwitchCase="'autocomplete'">
+                {{ findValue(element[col.key], col.data || col.dataFnReq, col.lang, col.type) }}
+              </span>
+              <span *ngSwitchCase="'image'">
+                <img [src]="findSrc(element[col.key], col.data)" />
+              </span>
+              <span *ngSwitchDefault>
+                {{ col.subkey ? this.obtenerElemento(element, col.key) : element[col.key] }}
+              </span>
+            </div>
+          </ng-template>
+        </div>
+
+        <div [ngSwitch]="col.type" *ngIf="element.isCreate && fg" class="inputs-edit">
+          <div *ngSwitchCase="'date'" [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="col.isCreable !== false && !col.subkey; else elseBlockShow">
+              <arq-datepicker [fGroup]="fg" [value]="col.key" />
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'datetimepicker'"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="col.isCreable !== false && !col.subkey; else elseBlockShow">
+              <arq-datetimepicker [value]="col.key" [fGroup]="fg"></arq-datetimepicker>
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'boolean'"
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="col.isCreable !== false && !col.subkey; else elseBlockShow">
+              <arq-checkbox-basic [value]="col.key" [fGroup]="fg"></arq-checkbox-basic>
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'select'"
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="col.isCreable !== false && !col.subkey; else elseBlockShow">
+              <arq-select
+                [fullObject]="col.fullObject"
+                [emptyOption]="true"
+                [value]="col.key"
+                [fGroup]="fg"
+                [selectOptionsList]="col.data || col.dataFn"
+                (change)="inputHandler($event, element.id, col.key)"
+                [lang]="col.lang">
+              </arq-select>
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'autocomplete'"
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="col.isCreable !== false && !col.subkey; else elseBlockShow">
+              <arq-autocomplete
+                [options]="autocFilter(col.dataFnReq, element[col.key])"
+                [panelWidth]="col.panelWidth || 'auto'"
+                [dependsOn]="col.dependsOn"
+                [value]="col.key"
+                [fGroup]="fg"
+                (change)="inputHandler($event, element.id, col.key)"
+                [lang]="col.lang"
+                [defaultSize]="col.defaultSize || 10">
+              </arq-autocomplete>
+            </div>
+          </div>
+
+          <div
+            *ngSwitchCase="'number'"
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="col.isCreable !== false && !col.subkey; else elseBlockShow">
+              <arq-input-number [value]="col.key" [fGroup]="fg" (change)="inputHandler($event, element.id, col.key)">
+              </arq-input-number>
+            </div>
+          </div>
+
+          <div *ngSwitchDefault [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <div *ngIf="col.isCreable !== false && !col.subkey; else elseBlockShow">
+              <arq-text-input
+                [value]="col.key"
+                [fGroup]="fg"
+                [maxLength]="col.maxLength ? col.maxLength : 100"
+                (change)="inputHandler($event, element.id, col.key)">
+              </arq-text-input>
+            </div>
+          </div>
+
+          <ng-template #elseBlockShow>
+            <div [ngSwitch]="col.type">
+              <span *ngSwitchCase="'date'">
+                {{ element[col.key] | date : 'dd/MM/yyyy' }}
+              </span>
+              <span *ngSwitchCase="'datetimepicker'">
+                {{ element[col.key] | date : 'dd/MM/yyyy' }}
+              </span>
+              <span *ngSwitchCase="'boolean'">
+                {{ element[col.key] ? '&#10003;' : '&#10005;' }}
+              </span>
+              <span *ngSwitchCase="'select'">
+                {{ findValue(element[col.key], col.data || col.dataFn, col.lang, col.type) }}
+              </span>
+              <span *ngSwitchCase="'autocomplete'">
+                {{ findValue(element[col.key], col.data || col.dataFnReq, col.lang, col.type) }}
+              </span>
+              <span *ngSwitchCase="'image'">
+                <img [src]="findSrc(element[col.key], col.data)" />
+              </span>
+              <span *ngSwitchDefault>
+                {{ col.subkey ? this.obtenerElemento(element, col.key) : element[col.key] }}
+              </span>
+            </div>
+          </ng-template>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Actions Columns -->
+    <ng-container matColumnDef="actions" *ngIf="tableConfig.actions?.length">
+      <th mat-header-cell class="header-datatable" *matHeaderCellDef>
+        {{ tableConfig.actionColLabel }}
+        <arq-button
+          *ngIf="tableConfig.newRowInActionsTH"
+          class="material-icons arq-toolbar-menu add-button"
+          [ngClass]="{ disabled: readonly || _isEditing }"
+          (click)="addNewRow()"
+          [matTooltip]="readonly ? '' : 'Crear'"
+          color="primary"
+          [icon]="'add_box'"
+          [tipoButton]="'icon'"
+          [readonly]="readonly || _isEditing">
+        </arq-button>
+
+        <ng-template [ngIf]="tableConfig.newRowInActionsTH && showFilters">
+          <arq-button
+            *ngIf="hideIcon"
+            class="material-icons arq-toolbar-menu add-button"
+            (click)="hideFilter(true)"
+            matTooltip="ocultar filtros"
+            color="primary"
+            [icon]="'visibility'"
+            [tipoButton]="'icon'">
+          </arq-button>
+          <arq-button
+            *ngIf="!hideIcon"
+            class="material-icons arq-toolbar-menu add-button"
+            (click)="hideFilter(false)"
+            matTooltip="ocultar filtros"
+            color="primary"
+            [icon]="'visibility_off'"
+            [tipoButton]="'icon'">
+          </arq-button>
+        </ng-template>
+      </th>
+      <td mat-cell *matCellDef="let element" class="noCursor">
+        <ng-container *ngIf="!element.isEdit && !element.isCreate">
+          <button
+            mat-icon-button
+            *ngFor="let action of tableConfig.actions"
+            class="material-icons arq-toolbar-menu add-button btn-strech"
+            type="button"
+            (click)="this.actionHandler(action, element)"
+            [matTooltip]="action.tooltip"
+            [color]="action.color || 'primary'"
+            [ngClass]="{ disabled: readonly || _isEditing }">
+            <mat-icon>{{ action.icon }}</mat-icon>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="element.isEdit || element.isCreate">
+          <div class="btn-edit">
+            <arq-button
+              class="material-icons arq-toolbar-menu save-button"
+              (click)="editRow(element); showActionsCol(false)"
+              matTooltip="Guardar Cambios"
+              color="primary"
+              [icon]="'check_circle'"
+              [tipoButton]="'icon'"></arq-button>
+            <arq-button
+              class="material-icons arq-toolbar-menu cancel-button"
+              (click)="showActionsCol(false); closeRowEdit(element)"
+              matTooltip="Cancelar"
+              color="warn"
+              [icon]="'cancel'"
+              [tipoButton]="'icon'"></arq-button>
+          </div>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- Filter Rows -->
+    <ng-container [matColumnDef]="'selectColumnf'">
+      <th mat-header-cell *matHeaderCellDef></th>
+    </ng-container>
+    <ng-container [matColumnDef]="col.key + 'f'" *ngFor="let col of _columnsSchema">
+      <th mat-header-cell *matHeaderCellDef>
+        <ng-container
+          *ngIf="
+            col.isFilterable !== false &&
+            (tableConfig.filterType === 'column' || tableConfig.filterType === 'both') &&
+            col.key !== 'selectColumn' &&
+            col.key !== 'actions'
+          ">
+          <mat-form-field
+            appearance="outline"
+            [style]="col.editInputSize ? 'width: ' + col.editInputSize + ' !important' : ''">
+            <input matInput (keyup)="filterHandler($event, col.key)" placeholder="{{ tableConfig.filterLabel }}" />
+          </mat-form-field>
+        </ng-container>
+      </th>
+    </ng-container>
+    <ng-container [matColumnDef]="'actionsf'">
+      <th mat-header-cell *matHeaderCellDef></th>
+    </ng-container>
+
+    <!-- HEADERS AND FILTERS -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="iterateAndF(displayedColumns)"
+      [ngClass]="{ hidden_row: tableConfig.filterType === 'hide' }"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [style.background-color]="rowClicked === row.id ? '#f2f2f2' : ''"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td *ngIf="!isLoading" class="mat-cell" colspan="4">{{ tableConfig.noDataString }}</td>
+    </tr>
+  </table>
+
+  <!-- PAGINATOR -->
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    showFirstLastButtons
+    [pageSize]="tableConfig.pageSize"
+    [length]="totalElements"
+    (page)="nextPage($event)">
+  </mat-paginator>
+
+  <!-- TABLE FOOTER  -->
+  <div
+    *ngIf="tableConfig.footerTable || tableConfig.footerTableString"
+    style="margin: 1em; display: flex; justify-content: flex-end">
+    <p *ngIf="tableConfig.footerTableString">{{ tableConfig.footerTableString }}</p>
+    <ng-container *ngIf="tableConfig.footerTable">
+      <button
+        mat-stroked-button
+        *ngFor="let btn of tableConfig.footerTable"
+        [color]="btn.color ? btn.color : 'primary'"
+        [matTooltip]="btn.tooltip ? btn.tooltip : ''"
+        (click)="btn.action()">
+        <mat-icon *ngIf="btn.icon">{{ btn.icon }}</mat-icon>
+        {{ btn.label }}
+      </button>
+    </ng-container>
+  </div>
+</div>
+
+<!-- CONTEXT-MENU -->
+<arq-context-menu
+  *ngIf="rightClickMenuItems.length > 0 && isDisplayContextMenu"
+  [contextMenuItems]="rightClickMenuItems"
+  (onContextMenuItemClick)="$event.data.action($event.data.row); showActionsCol()"
+  [menuPositions]="rightClickMenuPositions">
+</arq-context-menu>

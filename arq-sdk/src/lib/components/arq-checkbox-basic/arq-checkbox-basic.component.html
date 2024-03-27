@@ -1,0 +1,14 @@
+<section class="example-section" *ngIf="this.getValue()">
+  <mat-checkbox
+    [color]="color"
+    [formControl]="this.getValue()"
+    [ngClass]="{ checkbox_down: checkbox_down == true }"
+    (change)="checkbox_sn ? this.ngSetChanges() : this.ngChanges()">
+    {{ label }}
+  </mat-checkbox>
+  <mat-error
+    arq-form-control-error
+    [labelControl]="this.label"
+    [formControlSibling]="this.getValue()"
+  ></mat-error>
+</section>

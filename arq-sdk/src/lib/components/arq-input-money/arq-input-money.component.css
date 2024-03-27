@@ -1,0 +1,15 @@
+/* @import '../../../lib/styles/styles.css'; */
+
+.input-money {
+  border-radius: 0%;
+  width: 100%;
+  border: 3px;
+}
+
+.full-width {
+  width: 100%;
+}
+/* 
+.mat-mdc-form-field-icon-suffix {
+  padding-right: 10px !important;
+} */

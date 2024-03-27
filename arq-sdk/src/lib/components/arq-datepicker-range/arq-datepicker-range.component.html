@@ -1,0 +1,40 @@
+<label *ngIf="this.label"
+  >{{ this.label }}
+  <span *ngIf="this.getValidations()" class="text-danger"> * </span>
+</label>
+<mat-form-field appearance="outline" class="full-width type-date pb-0" [class]="sizeInput" *ngIf="this.getValue()">
+  <mat-date-range-input [rangePicker]="picker">
+    <input
+      matStartDate
+      [formControl]="this.getValue()"
+      [placeholder]="placeholderStart"
+      #dateRangeStart
+      #tooltip="matTooltip"
+      [matTooltip]="this.message"
+      [matTooltipPosition]="this.positionTooltip"
+      [matTooltipHideDelay]="this.hideDelay" />
+    <input
+      matEndDate
+      [formControl]="this.getFechaFinCntr()"
+      [placeholder]="placeholderEnd"
+      (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
+      (blur)="validateValue()"
+      #dateRangeEnd />
+  </mat-date-range-input>
+
+  <mat-hint *ngIf="hint">{{ this.hint }} – {{ this.hint }}</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker [disabled]="this.isDisabled()"></mat-date-range-picker>
+
+  <!-- TODO este componente esta todo comentado por lo que doy por echo que esta a medias,
+    dejo aqui la manera en la que se estaban controlando los errores hasta ahora por si se necesitase
+    probar
+  <mat-error *ngIf="this.getValue()?.hasError('matStartDateInvalid')">{{ this.labelErrorStart }}</mat-error>
+  <mat-error *ngIf="this.fechaFinCntr?.hasError('matEndDateInvalid')">{{ this.labelErrorEnd }}</mat-error>
+  -->
+  <mat-error arq-form-control-error [labelControl]="this.label" [formControlSibling]="this.getValue()"></mat-error>
+</mat-form-field>
+<p *ngIf="this.visibleRange && this.getValue()">
+  {{ this.rangeLabel }}: {{ this.getValue().value | date : 'dd/MM/yyyy' }} -
+  {{ this.fechaFinCntr.value | date : 'dd/MM/yyyy' }}
+</p>
