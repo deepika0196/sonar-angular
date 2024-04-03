@@ -1,0 +1,23 @@
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ArqTabGroupComponent } from './arq-tab-group/arq-tab-group.component';
+import { ArqTabItemContentComponent } from './arq-tab-item-content/arq-tab-item-content.component';
+import { ArqTabItemHeaderComponent } from './arq-tab-item-header/arq-tab-item-header.component';
+import { ArqTabItemComponent } from './arq-tab-item/arq-tab-item.component';
+import * as i0 from "@angular/core";
+export class ArqTabModule {
+}
+ArqTabModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqTabModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+ArqTabModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "15.2.9", ngImport: i0, type: ArqTabModule, declarations: [ArqTabItemComponent, ArqTabItemContentComponent, ArqTabItemHeaderComponent, ArqTabGroupComponent], imports: [ReactiveFormsModule, CommonModule, MatTabsModule], exports: [ArqTabItemComponent, ArqTabItemContentComponent, ArqTabItemHeaderComponent, ArqTabGroupComponent] });
+ArqTabModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqTabModule, imports: [ReactiveFormsModule, CommonModule, MatTabsModule] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqTabModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    declarations: [ArqTabItemComponent, ArqTabItemContentComponent, ArqTabItemHeaderComponent, ArqTabGroupComponent],
+                    exports: [ArqTabItemComponent, ArqTabItemContentComponent, ArqTabItemHeaderComponent, ArqTabGroupComponent],
+                    imports: [ReactiveFormsModule, CommonModule, MatTabsModule]
+                }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXJxLXRhYi5tb2R1bGUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9hcnEtc2RrL3NyYy9saWIvY29tcG9uZW50cy9hcnEtdGFiL2FycS10YWIubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUMvQyxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxtQkFBbUIsRUFBRSxNQUFNLGdCQUFnQixDQUFDO0FBQ3JELE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSx3QkFBd0IsQ0FBQztBQUN2RCxPQUFPLEVBQUUsb0JBQW9CLEVBQUUsTUFBTSx5Q0FBeUMsQ0FBQztBQUMvRSxPQUFPLEVBQUUsMEJBQTBCLEVBQUUsTUFBTSx1REFBdUQsQ0FBQztBQUNuRyxPQUFPLEVBQUUseUJBQXlCLEVBQUUsTUFBTSxxREFBcUQsQ0FBQztBQUNoRyxPQUFPLEVBQUUsbUJBQW1CLEVBQUUsTUFBTSx1Q0FBdUMsQ0FBQzs7QUFPNUUsTUFBTSxPQUFPLFlBQVk7O3lHQUFaLFlBQVk7MEdBQVosWUFBWSxpQkFKUixtQkFBbUIsRUFBRSwwQkFBMEIsRUFBRSx5QkFBeUIsRUFBRSxvQkFBb0IsYUFFckcsbUJBQW1CLEVBQUUsWUFBWSxFQUFFLGFBQWEsYUFEaEQsbUJBQW1CLEVBQUUsMEJBQTBCLEVBQUUseUJBQXlCLEVBQUUsb0JBQW9COzBHQUcvRixZQUFZLFlBRmIsbUJBQW1CLEVBQUUsWUFBWSxFQUFFLGFBQWE7MkZBRS9DLFlBQVk7a0JBTHhCLFFBQVE7bUJBQUM7b0JBQ1IsWUFBWSxFQUFFLENBQUMsbUJBQW1CLEVBQUUsMEJBQTBCLEVBQUUseUJBQXlCLEVBQUUsb0JBQW9CLENBQUM7b0JBQ2hILE9BQU8sRUFBRSxDQUFDLG1CQUFtQixFQUFFLDBCQUEwQixFQUFFLHlCQUF5QixFQUFFLG9CQUFvQixDQUFDO29CQUMzRyxPQUFPLEVBQUUsQ0FBQyxtQkFBbUIsRUFBRSxZQUFZLEVBQUUsYUFBYSxDQUFDO2lCQUM1RCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbW1vbk1vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvbW1vbic7XHJcbmltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XHJcbmltcG9ydCB7IFJlYWN0aXZlRm9ybXNNb2R1bGUgfSBmcm9tICdAYW5ndWxhci9mb3Jtcyc7XHJcbmltcG9ydCB7IE1hdFRhYnNNb2R1bGUgfSBmcm9tICdAYW5ndWxhci9tYXRlcmlhbC90YWJzJztcclxuaW1wb3J0IHsgQXJxVGFiR3JvdXBDb21wb25lbnQgfSBmcm9tICcuL2FycS10YWItZ3JvdXAvYXJxLXRhYi1ncm91cC5jb21wb25lbnQnO1xyXG5pbXBvcnQgeyBBcnFUYWJJdGVtQ29udGVudENvbXBvbmVudCB9IGZyb20gJy4vYXJxLXRhYi1pdGVtLWNvbnRlbnQvYXJxLXRhYi1pdGVtLWNvbnRlbnQuY29tcG9uZW50JztcclxuaW1wb3J0IHsgQXJxVGFiSXRlbUhlYWRlckNvbXBvbmVudCB9IGZyb20gJy4vYXJxLXRhYi1pdGVtLWhlYWRlci9hcnEtdGFiLWl0ZW0taGVhZGVyLmNvbXBvbmVudCc7XHJcbmltcG9ydCB7IEFycVRhYkl0ZW1Db21wb25lbnQgfSBmcm9tICcuL2FycS10YWItaXRlbS9hcnEtdGFiLWl0ZW0uY29tcG9uZW50JztcclxuXHJcbkBOZ01vZHVsZSh7XHJcbiAgZGVjbGFyYXRpb25zOiBbQXJxVGFiSXRlbUNvbXBvbmVudCwgQXJxVGFiSXRlbUNvbnRlbnRDb21wb25lbnQsIEFycVRhYkl0ZW1IZWFkZXJDb21wb25lbnQsIEFycVRhYkdyb3VwQ29tcG9uZW50XSxcclxuICBleHBvcnRzOiBbQXJxVGFiSXRlbUNvbXBvbmVudCwgQXJxVGFiSXRlbUNvbnRlbnRDb21wb25lbnQsIEFycVRhYkl0ZW1IZWFkZXJDb21wb25lbnQsIEFycVRhYkdyb3VwQ29tcG9uZW50XSxcclxuICBpbXBvcnRzOiBbUmVhY3RpdmVGb3Jtc01vZHVsZSwgQ29tbW9uTW9kdWxlLCBNYXRUYWJzTW9kdWxlXVxyXG59KVxyXG5leHBvcnQgY2xhc3MgQXJxVGFiTW9kdWxlIHt9XHJcbiJdfQ==

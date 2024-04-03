@@ -1,0 +1,11 @@
+import { Component, ViewEncapsulation } from '@angular/core';
+import * as i0 from "@angular/core";
+export class ArqStepItemContentComponent {
+}
+ArqStepItemContentComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqStepItemContentComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+ArqStepItemContentComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.2.9", type: ArqStepItemContentComponent, selector: "arq-step-item-content", ngImport: i0, template: "<div class=\"py-4\">\r\n  <ng-content></ng-content>\r\n</div>\r\n", encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqStepItemContentComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'arq-step-item-content', encapsulation: ViewEncapsulation.None, template: "<div class=\"py-4\">\r\n  <ng-content></ng-content>\r\n</div>\r\n" }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXJxLXN0ZXAtaXRlbS1jb250ZW50LmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uLy4uL2FycS1zZGsvc3JjL2xpYi9jb21wb25lbnRzL2FycS1zdGVwcGVyL2FycS1zdGVwLWl0ZW0tY29udGVudC9hcnEtc3RlcC1pdGVtLWNvbnRlbnQuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vYXJxLXNkay9zcmMvbGliL2NvbXBvbmVudHMvYXJxLXN0ZXBwZXIvYXJxLXN0ZXAtaXRlbS1jb250ZW50L2FycS1zdGVwLWl0ZW0tY29udGVudC5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLGlCQUFpQixFQUFFLE1BQU0sZUFBZSxDQUFDOztBQU83RCxNQUFNLE9BQU8sMkJBQTJCOzt3SEFBM0IsMkJBQTJCOzRHQUEzQiwyQkFBMkIsNkRDUHhDLG1FQUdBOzJGRElhLDJCQUEyQjtrQkFMdkMsU0FBUzsrQkFDRSx1QkFBdUIsaUJBRWxCLGlCQUFpQixDQUFDLElBQUkiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIFZpZXdFbmNhcHN1bGF0aW9uIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XHJcblxyXG5AQ29tcG9uZW50KHtcclxuICBzZWxlY3RvcjogJ2FycS1zdGVwLWl0ZW0tY29udGVudCcsXHJcbiAgdGVtcGxhdGVVcmw6ICcuL2FycS1zdGVwLWl0ZW0tY29udGVudC5jb21wb25lbnQuaHRtbCcsXHJcbiAgZW5jYXBzdWxhdGlvbjogVmlld0VuY2Fwc3VsYXRpb24uTm9uZVxyXG59KVxyXG5leHBvcnQgY2xhc3MgQXJxU3RlcEl0ZW1Db250ZW50Q29tcG9uZW50IHt9XHJcbiIsIjxkaXYgY2xhc3M9XCJweS00XCI+XHJcbiAgPG5nLWNvbnRlbnQ+PC9uZy1jb250ZW50PlxyXG48L2Rpdj5cclxuIl19

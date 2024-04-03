@@ -1,0 +1,33 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./arq-datatable.component";
+import * as i2 from "@angular/forms";
+import * as i3 from "@angular/common";
+import * as i4 from "../arq-button/arq-button.module";
+import * as i5 from "../arq-context-menu/arq-context-menu.module";
+import * as i6 from "../arq-datepicker/arq-datepicker.module";
+import * as i7 from "../arq-text-input/arq-text-input.module";
+import * as i8 from "../arq-checkbox-basic/arq-checkbox-basic.module";
+import * as i9 from "../arq-select/arq-select.module";
+import * as i10 from "../arq-autocomplete/arq-autocomplete.module";
+import * as i11 from "../arq-datetimepicker/arq-datetimepicker.module";
+import * as i12 from "../arq-input-number/arq-input-number.module";
+import * as i13 from "@angular/material/table";
+import * as i14 from "@angular/material/checkbox";
+import * as i15 from "@angular/material/icon";
+import * as i16 from "@angular/material/form-field";
+import * as i17 from "@angular/material/datepicker";
+import * as i18 from "@angular/material/card";
+import * as i19 from "@angular/material/select";
+import * as i20 from "@angular/material/progress-spinner";
+import * as i21 from "@angular/material/paginator";
+import * as i22 from "@angular/material/input";
+import * as i23 from "@angular/material/core";
+import * as i24 from "@angular/material/tooltip";
+import * as i25 from "@angular/material/autocomplete";
+import * as i26 from "@angular/material/sort";
+import * as i27 from "@angular/material/button";
+export declare class ArqDatatableModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<ArqDatatableModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ArqDatatableModule, [typeof i1.ArqDatatableComponent], [typeof i2.ReactiveFormsModule, typeof i3.CommonModule, typeof i2.FormsModule, typeof i4.ArqButtonModule, typeof i5.ArqContextMenuModule, typeof i6.ArqDatepickerModule, typeof i7.ArqTextInputModule, typeof i8.ArqCheckboxBasicModule, typeof i9.ArqSelectModule, typeof i10.ArqAutocompleteModule, typeof i11.ArqDateTimepickerModule, typeof i12.ArqInputNumberModule, typeof i13.MatTableModule, typeof i14.MatCheckboxModule, typeof i15.MatIconModule, typeof i16.MatFormFieldModule, typeof i17.MatDatepickerModule, typeof i18.MatCardModule, typeof i19.MatSelectModule, typeof i20.MatProgressSpinnerModule, typeof i21.MatPaginatorModule, typeof i22.MatInputModule, typeof i23.MatNativeDateModule, typeof i24.MatTooltipModule, typeof i25.MatAutocompleteModule, typeof i26.MatSortModule, typeof i27.MatButtonModule], [typeof i1.ArqDatatableComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ArqDatatableModule>;
+}

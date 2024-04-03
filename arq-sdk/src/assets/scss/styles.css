@@ -197,6 +197,21 @@ input::placeholder {
   font-weight: 600 !important;
 }
 
+.mat-mdc-icon-button.mat-mdc-button-base {
+  width: 30px !important;
+  height: 30px !important;
+  padding: 2px !important;
+}
+
+.mat-mdc-paginator-range-label {
+  margin: 0 12px 0 8px !important;
+}
+
+.mat-mdc-option.mdc-list-item {
+  min-height: 42px;
+  font-size: 14px;
+}
+
 /* Alineación derecha de input numericos con margen 3px (no firefox)*/
 input[type='number'] {
   text-align: right;
