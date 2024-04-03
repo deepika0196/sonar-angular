@@ -1,6 +1,6 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 @use '@ng-matero/extensions' as mtx;
-@import "./styles.css";
+@import './styles.css';
 
 /*
   TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
@@ -38,43 +38,68 @@ $marte-palette: (
     800: #fbfbfb,
     900: #fbfbfb
   ),
-  A100:#c97b84,
-  A200:#fba900,
-  A400:#c97b84,
-  A700:#fba900,
+  A100: #c97b84,
+  A200: #fba900,
+  A400: #c97b84,
+  A700: #fba900
 );
 $my-primary: mat.define-palette($marte-palette, 400);
 $my-accent: mat.define-palette($marte-palette, A100, A200, A400, A700);
 $my-warn: mat.define-palette(mat.$red-palette);
 
-
 @font-face {
-  font-family: "Open Sans Condensed";
-  src: url("../../assets/fonts/open-sans-condensed-v12-latin-300.eot");
-  src: url("../../assets/fonts/OpenSans-CondLight.ttf") format("truetype"), url("../../assets/fonts/open-sans-condensed-v12-latin-300.eot?#iefix") format("embedded-opentype"), url("../../assets/fonts/open-sans-condensed-v12-latin-300.woff") format("woff"), url("../../assets/fonts/open-sans-condensed-v12-latin-300.woff2") format("woff2");
+  font-family: 'Open Sans Condensed';
+  src: url('../../assets/fonts/open-sans-condensed-v12-latin-300.eot');
+  src: url('../../assets/fonts/OpenSans-CondLight.ttf') format('truetype'),
+    url('../../assets/fonts/open-sans-condensed-v12-latin-300.eot?#iefix') format('embedded-opentype'),
+    url('../../assets/fonts/open-sans-condensed-v12-latin-300.woff') format('woff'),
+    url('../../assets/fonts/open-sans-condensed-v12-latin-300.woff2') format('woff2');
 }
 
 /* Comprobar el funcionamiento de la letra en bold en internet Explorer */
 @font-face {
-  font-family: "Open Sans Bold";
-  src: url("../../assets/fonts/open-sans-condensed-v12-latin-300.eot");
-  src: local("Open Sans Bold"), local("Open Sans Bold"), url("../../assets/fonts/OpenSans-CondBold.ttf") format("truetype"), url("../../assets/fonts/open-sans-condensed-v12-latin-300.eot?#iefix") format("embedded-opentype");
+  font-family: 'Open Sans Bold';
+  src: url('../../assets/fonts/open-sans-condensed-v12-latin-300.eot');
+  src: local('Open Sans Bold'), local('Open Sans Bold'),
+    url('../../assets/fonts/OpenSans-CondBold.ttf') format('truetype'),
+    url('../../assets/fonts/open-sans-condensed-v12-latin-300.eot?#iefix') format('embedded-opentype');
 }
 
+// $custom-typography: mat.define-legacy-typography-config(
+//   $font-family: "Open Sans Condensed"
+// );
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../../assets/fonts/inter/Inter.eot');
+  src: url('../../assets/fonts/inter/Inter-Regular.ttf') format('truetype'),
+    url('../../assets/fonts/inter/Inter.eot?#iefix') format('embedded-opentype'),
+    url('../../assets/fonts/inter/Inter.woff') format('woff'),
+    url('../../assets/fonts/inter/Inter.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter Bold';
+  src: url('../../assets/fonts/inter/Inter.eot');
+  src: local('Inter Bold'), local('Open Sans Bold'), url('../../assets/fonts/inter/Inter-Bold.ttf') format('truetype'),
+    url('../../assets/fonts/inter/Inter.eot?#iefix') format('embedded-opentype');
+}
 
 $custom-typography: mat.define-legacy-typography-config(
-  $font-family: "Open Sans Condensed"
+  $font-family: 'Inter'
 );
 
-$my-theme: mat.define-light-theme((
-  color: (
-    primary: $my-primary,
-    accent: $my-accent,
-    error: $my-warn,
-    warn: $my-warn,
-  ),
-  typography: $custom-typography,
-));
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      error: $my-warn,
+      warn: $my-warn
+    ),
+    typography: $custom-typography
+  )
+);
 
 @include mat.legacy-core();
 
@@ -83,6 +108,10 @@ $my-theme: mat.define-light-theme((
 
 @include mtx.all-component-themes($my-theme);
 
-label{
-   font-family: "Open Sans Condensed"
+// label{
+//    font-family: "Open Sans Condensed"
+// }
+
+label {
+  font-family: 'Inter';
 }

@@ -1,5 +1,0 @@
-<mat-button-toggle-group multiple [formControl]="this.getValue()" (change)="onValChange($event.value)">
-  <mat-button-toggle *ngFor="let op of toggleOptions | async" [value]="op.value">
-    {{ op.description }}
-  </mat-button-toggle>
-</mat-button-toggle-group>

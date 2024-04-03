@@ -1,0 +1,29 @@
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { ArqGenericInputComponent } from '../../../core/arq-generic-input/arq-generic-input.component';
+import * as i0 from "@angular/core";
+import * as i1 from "@angular/forms";
+import * as i2 from "@angular/common";
+import * as i3 from "@angular/material/slider";
+export class ArqSliderComponent extends ArqGenericInputComponent {
+    constructor() {
+        super();
+    }
+    comprobarEntradas() { }
+}
+ArqSliderComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqSliderComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+ArqSliderComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.2.9", type: ArqSliderComponent, selector: "arq-slider", inputs: { disabled: "disabled", max: "max", min: "min", step: "step", barraLabel: "barraLabel" }, usesInheritance: true, ngImport: i0, template: "<mat-slider\r\n  *ngIf=\"this.getValue()\"\r\n  [disabled]=\"this.disabled\"\r\n  [max]=\"max\"\r\n  [min]=\"min\"\r\n  [step]=\"step\"\r\n  [discrete]=\"barraLabel\">\r\n  <input matSliderThumb [formControl]=\"this.getValue()\" />\r\n</mat-slider>\r\n", styles: ["mat-slider{width:100%}\n"], dependencies: [{ kind: "directive", type: i1.DefaultValueAccessor, selector: "input:not([type=checkbox])[formControlName],textarea[formControlName],input:not([type=checkbox])[formControl],textarea[formControl],input:not([type=checkbox])[ngModel],textarea[ngModel],[ngDefaultControl]" }, { kind: "directive", type: i1.NgControlStatus, selector: "[formControlName],[ngModel],[formControl]" }, { kind: "directive", type: i1.FormControlDirective, selector: "[formControl]", inputs: ["formControl", "disabled", "ngModel"], outputs: ["ngModelChange"], exportAs: ["ngForm"] }, { kind: "directive", type: i2.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "component", type: i3.MatSlider, selector: "mat-slider", inputs: ["color", "disableRipple", "disabled", "discrete", "showTickMarks", "min", "max", "step", "displayWith"], exportAs: ["matSlider"] }, { kind: "directive", type: i3.MatSliderThumb, selector: "input[matSliderThumb]", inputs: ["value"], outputs: ["valueChange", "dragStart", "dragEnd"], exportAs: ["matSliderThumb"] }], encapsulation: i0.ViewEncapsulation.None });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqSliderComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'arq-slider', encapsulation: ViewEncapsulation.None, template: "<mat-slider\r\n  *ngIf=\"this.getValue()\"\r\n  [disabled]=\"this.disabled\"\r\n  [max]=\"max\"\r\n  [min]=\"min\"\r\n  [step]=\"step\"\r\n  [discrete]=\"barraLabel\">\r\n  <input matSliderThumb [formControl]=\"this.getValue()\" />\r\n</mat-slider>\r\n", styles: ["mat-slider{width:100%}\n"] }]
+        }], ctorParameters: function () { return []; }, propDecorators: { disabled: [{
+                type: Input
+            }], max: [{
+                type: Input
+            }], min: [{
+                type: Input
+            }], step: [{
+                type: Input
+            }], barraLabel: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXJxLXNsaWRlci5jb21wb25lbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9hcnEtc2RrL3NyYy9saWIvY29tcG9uZW50cy9hcnEtc2xpZGVyL2FycS1zbGlkZXIuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vYXJxLXNkay9zcmMvbGliL2NvbXBvbmVudHMvYXJxLXNsaWRlci9hcnEtc2xpZGVyLmNvbXBvbmVudC5odG1sIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBLE9BQU8sRUFBRSxTQUFTLEVBQUUsS0FBSyxFQUFVLGlCQUFpQixFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQzVFLE9BQU8sRUFBRSx3QkFBd0IsRUFBRSxNQUFNLDZEQUE2RCxDQUFDOzs7OztBQVF2RyxNQUFNLE9BQU8sa0JBQW1CLFNBQVEsd0JBQXdCO0lBZ0I5RDtRQUNFLEtBQUssRUFBRSxDQUFDO0lBQ1YsQ0FBQztJQUVELGlCQUFpQixLQUFVLENBQUM7OytHQXBCakIsa0JBQWtCO21HQUFsQixrQkFBa0IsMktDVi9CLDhQQVNBOzJGRENhLGtCQUFrQjtrQkFOOUIsU0FBUzsrQkFDRSxZQUFZLGlCQUdQLGlCQUFpQixDQUFDLElBQUk7MEVBSXJDLFFBQVE7c0JBRFAsS0FBSztnQkFJTixHQUFHO3NCQURGLEtBQUs7Z0JBSU4sR0FBRztzQkFERixLQUFLO2dCQUlOLElBQUk7c0JBREgsS0FBSztnQkFJTixVQUFVO3NCQURULEtBQUsiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBCb29sZWFuSW5wdXQsIE51bWJlcklucHV0IH0gZnJvbSAnQGFuZ3VsYXIvY2RrL2NvZXJjaW9uJztcclxuaW1wb3J0IHsgQ29tcG9uZW50LCBJbnB1dCwgT25Jbml0LCBWaWV3RW5jYXBzdWxhdGlvbiB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5pbXBvcnQgeyBBcnFHZW5lcmljSW5wdXRDb21wb25lbnQgfSBmcm9tICcuLi8uLi8uLi9jb3JlL2FycS1nZW5lcmljLWlucHV0L2FycS1nZW5lcmljLWlucHV0LmNvbXBvbmVudCc7XHJcblxyXG5AQ29tcG9uZW50KHtcclxuICBzZWxlY3RvcjogJ2FycS1zbGlkZXInLFxyXG4gIHRlbXBsYXRlVXJsOiAnLi9hcnEtc2xpZGVyLmNvbXBvbmVudC5odG1sJyxcclxuICBzdHlsZVVybHM6IFsnLi9hcnEtc2xpZGVyLmNvbXBvbmVudC5jc3MnXSxcclxuICBlbmNhcHN1bGF0aW9uOiBWaWV3RW5jYXBzdWxhdGlvbi5Ob25lXHJcbn0pXHJcbmV4cG9ydCBjbGFzcyBBcnFTbGlkZXJDb21wb25lbnQgZXh0ZW5kcyBBcnFHZW5lcmljSW5wdXRDb21wb25lbnQgaW1wbGVtZW50cyBPbkluaXQge1xyXG4gIEBJbnB1dCgpXHJcbiAgZGlzYWJsZWQ6IEJvb2xlYW5JbnB1dDtcclxuXHJcbiAgQElucHV0KClcclxuICBtYXg6IE51bWJlcklucHV0O1xyXG5cclxuICBASW5wdXQoKVxyXG4gIG1pbjogTnVtYmVySW5wdXQ7XHJcblxyXG4gIEBJbnB1dCgpXHJcbiAgc3RlcDogTnVtYmVySW5wdXQ7XHJcblxyXG4gIEBJbnB1dCgpXHJcbiAgYmFycmFMYWJlbDogQm9vbGVhbklucHV0O1xyXG5cclxuICBjb25zdHJ1Y3RvcigpIHtcclxuICAgIHN1cGVyKCk7XHJcbiAgfVxyXG5cclxuICBjb21wcm9iYXJFbnRyYWRhcygpOiB2b2lkIHt9XHJcbn1cclxuIiwiPG1hdC1zbGlkZXJcclxuICAqbmdJZj1cInRoaXMuZ2V0VmFsdWUoKVwiXHJcbiAgW2Rpc2FibGVkXT1cInRoaXMuZGlzYWJsZWRcIlxyXG4gIFttYXhdPVwibWF4XCJcclxuICBbbWluXT1cIm1pblwiXHJcbiAgW3N0ZXBdPVwic3RlcFwiXHJcbiAgW2Rpc2NyZXRlXT1cImJhcnJhTGFiZWxcIj5cclxuICA8aW5wdXQgbWF0U2xpZGVyVGh1bWIgW2Zvcm1Db250cm9sXT1cInRoaXMuZ2V0VmFsdWUoKVwiIC8+XHJcbjwvbWF0LXNsaWRlcj5cclxuIl19

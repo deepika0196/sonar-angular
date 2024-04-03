@@ -1,0 +1,18 @@
+import { Component, Input } from '@angular/core';
+import * as i0 from "@angular/core";
+import * as i1 from "@angular/common";
+import * as i2 from "@angular/material/tooltip";
+export class ArqFieldsetComponent {
+    constructor() {
+        this.legend = undefined;
+    }
+}
+ArqFieldsetComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqFieldsetComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+ArqFieldsetComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "15.2.9", type: ArqFieldsetComponent, selector: "arq-fieldset", inputs: { legend: "legend" }, ngImport: i0, template: "<fieldset>\r\n  <legend\r\n    *ngIf=\"legend\">\r\n    <span\r\n      [matTooltip]=\"legend\">\r\n      {{ legend }}</span>\r\n  </legend>\r\n  <ng-content></ng-content>\r\n</fieldset>\r\n", styles: ["fieldset{width:100%;display:inline-block;padding:20px;box-sizing:border-box;border:solid 1px darkgray;border-radius:8px}legend{width:auto;max-width:80%}legend span{display:inline-block;width:100%;padding:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}\n"], dependencies: [{ kind: "directive", type: i1.NgIf, selector: "[ngIf]", inputs: ["ngIf", "ngIfThen", "ngIfElse"] }, { kind: "directive", type: i2.MatTooltip, selector: "[matTooltip]", exportAs: ["matTooltip"] }] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "15.2.9", ngImport: i0, type: ArqFieldsetComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'arq-fieldset', template: "<fieldset>\r\n  <legend\r\n    *ngIf=\"legend\">\r\n    <span\r\n      [matTooltip]=\"legend\">\r\n      {{ legend }}</span>\r\n  </legend>\r\n  <ng-content></ng-content>\r\n</fieldset>\r\n", styles: ["fieldset{width:100%;display:inline-block;padding:20px;box-sizing:border-box;border:solid 1px darkgray;border-radius:8px}legend{width:auto;max-width:80%}legend span{display:inline-block;width:100%;padding:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}\n"] }]
+        }], propDecorators: { legend: [{
+                type: Input
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXJxLWZpZWxkc2V0LmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uL2FycS1zZGsvc3JjL2xpYi9jb21wb25lbnRzL2FycS1maWVsZHNldC9hcnEtZmllbGRzZXQuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vYXJxLXNkay9zcmMvbGliL2NvbXBvbmVudHMvYXJxLWZpZWxkc2V0L2FycS1maWVsZHNldC5jb21wb25lbnQuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLEtBQUssRUFBRSxNQUFNLGVBQWUsQ0FBQzs7OztBQU9qRCxNQUFNLE9BQU8sb0JBQW9CO0lBTGpDO1FBUVMsV0FBTSxHQUF1QixTQUFTLENBQUE7S0FFOUM7O2lIQUxZLG9CQUFvQjtxR0FBcEIsb0JBQW9CLGtGQ1BqQywrTEFTQTsyRkRGYSxvQkFBb0I7a0JBTGhDLFNBQVM7K0JBQ0UsY0FBYzs4QkFPakIsTUFBTTtzQkFEWixLQUFLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBJbnB1dCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5cclxuQENvbXBvbmVudCh7XHJcbiAgc2VsZWN0b3I6ICdhcnEtZmllbGRzZXQnLFxyXG4gIHRlbXBsYXRlVXJsOiAnLi9hcnEtZmllbGRzZXQuY29tcG9uZW50Lmh0bWwnLFxyXG4gIHN0eWxlVXJsczogWycuL2FycS1maWVsZHNldC5jb21wb25lbnQuY3NzJ11cclxufSlcclxuZXhwb3J0IGNsYXNzIEFycUZpZWxkc2V0Q29tcG9uZW50IHtcclxuXHJcbiAgQElucHV0KClcclxuICBwdWJsaWMgbGVnZW5kOiBzdHJpbmcgfCB1bmRlZmluZWQgPSB1bmRlZmluZWRcclxuXHJcbn1cclxuIiwiPGZpZWxkc2V0PlxyXG4gIDxsZWdlbmRcclxuICAgICpuZ0lmPVwibGVnZW5kXCI+XHJcbiAgICA8c3BhblxyXG4gICAgICBbbWF0VG9vbHRpcF09XCJsZWdlbmRcIj5cclxuICAgICAge3sgbGVnZW5kIH19PC9zcGFuPlxyXG4gIDwvbGVnZW5kPlxyXG4gIDxuZy1jb250ZW50PjwvbmctY29udGVudD5cclxuPC9maWVsZHNldD5cclxuIl19

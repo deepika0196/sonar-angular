@@ -1,8 +1,0 @@
-<mat-tab-group (selectedTabChange)="this.changeTab($event)">
-  <mat-tab *ngFor="let item of appItems">
-    <ng-template mat-tab-label>
-      <ng-container *ngTemplateOutlet="item.itemHeader.headerTemplate"></ng-container>
-    </ng-template>
-    <ng-container *ngTemplateOutlet="item.contentTemplate"></ng-container>
-  </mat-tab>
-</mat-tab-group>
