@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { ArqRoleGuard } from 'arq-sdk';
 import { environment } from 'src/environments/environment';
 import { EjemploUsoComponent } from './components/ejemplo-uso/ejemplo-uso.component';
 
 import { environmentLoader } from 'src/environments/environmentLoader';
-import { LoginSimulatedComponent } from './shared/components/login-simulated/login-simulated.component';
-import { ItemExampleComponent as ItemExample } from './components/item-example/item-example.component';
 import { ItemExampleEditComponent as ItemExampleEdit } from './components/item-example-edit/item-example-edit.component';
+import { ItemExampleComponent as ItemExample } from './components/item-example/item-example.component';
+import { LoginSimulatedComponent } from './shared/components/login-simulated/login-simulated.component';
 
 export let routes: Routes = [];
 
