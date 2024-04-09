@@ -1,7 +1,29 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
-import { ArqBasicComponent, ArqDatatableColumnsSchema, ArqDatatableConfig, ArqDatatableSelectEvent, ArqDialogService, ArqPageableRequest, ArqSchemaService, ArqSnackBarService, ArqSnackBoxOptions, MenuItem } from 'arq-sdk';
+import {
+  ArqBasicComponent,
+  ArqDatatableColumnsSchema,
+  ArqDatatableConfig,
+  ArqDatatableSelectEvent,
+  ArqDialogService,
+  ArqPageableRequest,
+  ArqSchemaService,
+  ArqSnackBarService,
+  ArqSnackBoxOptions,
+  MenuItem,
+} from 'arq-sdk';
 import { forkJoin, map, Observable, of, Subject, takeUntil } from 'rxjs';
 import { EjemploService } from 'src/app/services/ejemplo.service';
 
@@ -10,7 +32,10 @@ import { EjemploService } from 'src/app/services/ejemplo.service';
   templateUrl: './ejemplo-uso.component.html',
   styleUrls: ['./ejemplo-uso.component.css'],
 })
-export class EjemploUsoComponent extends ArqBasicComponent implements OnInit {
+export class EjemploUsoComponent
+  extends ArqBasicComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   public destroy$: Subject<boolean> = new Subject<boolean>();
   public genders: any;
   public tableConfig!: ArqDatatableConfig;
@@ -38,12 +63,12 @@ export class EjemploUsoComponent extends ArqBasicComponent implements OnInit {
 
   constructor(
     public ejemploService: EjemploService,
-    private dialogService: ArqDialogService,
-    private transloco: TranslocoService,
-    private cd: ChangeDetectorRef,
+    private readonly dialogService: ArqDialogService,
+    private readonly transloco: TranslocoService,
+    private readonly cd: ChangeDetectorRef,
     public override _schemaService: ArqSchemaService,
-    private service: ArqSnackBarService,
-    private fb: FormBuilder
+    private readonly service: ArqSnackBarService,
+    private readonly fb: FormBuilder
   ) {
     super(_schemaService, ejemploService);
 
@@ -65,7 +90,7 @@ export class EjemploUsoComponent extends ArqBasicComponent implements OnInit {
     });
   }
 
-  override ngOnInit(): void {
+  public override ngOnInit(): void {
     this.lang = this.transloco.getActiveLang();
     this.getTableConfig(this.lang);
     this.getMenu(this.lang);
@@ -206,23 +231,24 @@ export class EjemploUsoComponent extends ArqBasicComponent implements OnInit {
   // }
 
   public handleSelectEvent(ev: ArqDatatableSelectEvent): void {
+    // eslint-disable-next-line no-console
     console.log(ev);
   }
   public requireData(request: ArqPageableRequest): void {
     this.ejemploService.loadData(request);
   }
 
-  obtenerNomMuni(): FormControl<any> {
-    let country = this.formGroup.controls['country'] as FormGroup;
+  protected obtenerNomMuni(): FormControl<any> {
+    const country = this.formGroup.controls['country'] as FormGroup;
     return country.controls['denominacion'] as FormControl;
   }
 
-  obtenerCodMun(): FormControl<any> {
-    let country = this.formGroup.controls['country'] as FormGroup;
+  protected obtenerCodMun(): FormControl<any> {
+    const country = this.formGroup.controls['country'] as FormGroup;
     return country.controls['codigoMunicipio'] as FormControl;
   }
 
-  enviar() {
+  protected enviar(): void {
     if (this.formGroup.valid) {
       this.entidad = this.fillEntity(this.formGroup);
       this.ejemploService.sendData(this.entidad);
@@ -246,22 +272,28 @@ export class EjemploUsoComponent extends ArqBasicComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }
 
-  obtenerRespuestaBack(): void{
+  obtenerRespuestaBack(): void {
     this.ejemploService.pruebaPeticionBack().subscribe({
-      next: (v) => {this.pruebaBackResponse = v;},
-      error: (e) => {this.pruebaBackResponse = e;},
-      complete: () => {console.log("COMPLETED")}
+      next: (v) => {
+        this.pruebaBackResponse = v;
+      },
+      error: (e) => {
+        this.pruebaBackResponse = e;
+      },
+      complete: () => {
+        console.log('COMPLETED');
+      },
     });
   }
 
   cambioTab = (tab: number): any => {
-    if(tab == 2){
+    if (tab == 2) {
       this.obtenerRespuestaBack();
     }
-  }
+  };
 }

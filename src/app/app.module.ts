@@ -15,9 +15,9 @@ import { GvLoginModule } from './core/gvlogin/gvlogin.module';
 import { TranslocoRootModule } from './transloco-root.module';
 import { ToastrModule } from 'ngx-toastr';
 import { preLoad } from './transloco-preload';
-import { MenubarModule } from 'primeng/menubar';
-import { MenuExample } from './shared/components/menu/menu.component';
+import { MenuExampleComponent } from './shared/components/menu/menu.component';
 import { LoginSimulatedComponent } from './shared/components/login-simulated/login-simulated.component';
+import { PrimeNgModule } from 'src/app/prime-ng.module';
 // import { MenuItem } from 'primeng/api';
 
 registerLocaleData(localeEs);
@@ -29,11 +29,12 @@ export function getToken(): string {
 export let AppInjector: Injector;
 
 @NgModule({
-  declarations: [AppComponent,LoginSimulatedComponent,MenuExample],
+  declarations: [AppComponent, LoginSimulatedComponent, MenuExampleComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
+    PrimeNgModule,
     HttpClientModule,
     AppRoutingModule,
     AppComponentsModule,
@@ -43,8 +44,6 @@ export let AppInjector: Injector;
     ArqSpinnerModule,
     GvLoginModule.forRoot(),
     ToastrModule.forRoot(),
-    MenubarModule,
-    
   ],
   providers: [
     ArqGvloginService,
@@ -57,7 +56,7 @@ export let AppInjector: Injector;
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(private injector: Injector) {
+  constructor(private readonly injector: Injector) {
     AppInjector = this.injector;
   }
 }
