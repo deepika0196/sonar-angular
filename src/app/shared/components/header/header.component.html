@@ -1,0 +1,18 @@
+<div class="header">
+  <p-menubar [model]="items">
+    <ng-template pTemplate="start"> </ng-template>
+
+    <ng-template pTemplate="start">
+      Maninder
+      <img
+        src="../../../../assets/images/logo.svg"
+        height="40"
+        class="mr-2"
+      />
+      <b class="mb-3">ECMCA</b>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <p-menubar [model]="menuIcons"></p-menubar>
+    </ng-template>
+  </p-menubar>
+</div>

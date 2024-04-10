@@ -18,6 +18,8 @@ import { preLoad } from './transloco-preload';
 import { MenuExampleComponent } from './shared/components/menu/menu.component';
 import { LoginSimulatedComponent } from './shared/components/login-simulated/login-simulated.component';
 import { PrimeNgModule } from 'src/app/prime-ng.module';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { LogoGVAComponent } from 'src/app/shared/components/header/logo.component';
 // import { MenuItem } from 'primeng/api';
 
 registerLocaleData(localeEs);
@@ -29,7 +31,13 @@ export function getToken(): string {
 export let AppInjector: Injector;
 
 @NgModule({
-  declarations: [AppComponent, LoginSimulatedComponent, MenuExampleComponent],
+  declarations: [
+    AppComponent,
+    LoginSimulatedComponent,
+    MenuExampleComponent,
+    HeaderComponent,
+    LogoGVAComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
