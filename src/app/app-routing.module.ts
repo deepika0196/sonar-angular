@@ -8,7 +8,25 @@ import { ItemExampleEditComponent as ItemExampleEdit } from './components/item-e
 import { ItemExampleComponent as ItemExample } from './components/item-example/item-example.component';
 import { LoginSimulatedComponent } from './shared/components/login-simulated/login-simulated.component';
 
-export let routes: Routes = [];
+export let routes: Routes = [
+  {
+    path: 'basic-maintenance',
+    loadChildren: () =>
+      import('./basic-maintenance/basic-maintenance.module').then(
+        (m) => m.BasicMaintenanceModule
+      ),
+  },
+  {
+    path: 'files',
+    loadChildren: () =>
+      import('./files/files.module').then((m) => m.FilesModule),
+  },
+  {
+    path: 'reports',
+    loadChildren: () =>
+      import('./reports/reports.module').then((m) => m.ReportsModule),
+  },
+];
 
 interface Environment {
   [key: string]: any;
@@ -36,7 +54,7 @@ export class AppRoutingModule {
             nombreApp: environment.gvlogin.aplicacion,
             gvloginUrl: environment.gvlogin.url,
             enable: environment.gvlogin.enable,
-          }
+          },
         },
         {
           path: 'itemExampleEdit',
@@ -48,7 +66,7 @@ export class AppRoutingModule {
             nombreApp: environment.gvlogin.aplicacion,
             gvloginUrl: environment.gvlogin.url,
             enable: environment.gvlogin.enable,
-          }
+          },
         },
         {
           path: 'ejemplo-uso',
@@ -66,33 +84,33 @@ export class AppRoutingModule {
               component: EjemploUsoComponent,
             },
           ],
-        }
-        
+        },
       ];
 
       if (!environment.gvlogin.enableLoginSimulated) {
         routes.push({
           path: '**',
-          component: ItemExample,//Set main page on your application
-        })
+          component: ItemExample, //Set main page on your application
+        });
       } else {
-        routes.push({
-          path: 'loginSimulated',
-          component: LoginSimulatedComponent,
-          // canActivate: [ArqRoleGuard],
-          // canActivateChild: [ArqRoleGuard],
-          data: {
-            host: environment.settings.host,
-            nombreApp: environment.gvlogin.aplicacion,
-            gvloginUrl: environment.gvlogin.url,
-            enable: false,
-          }
-        },
+        routes.push(
+          {
+            path: 'loginSimulated',
+            component: LoginSimulatedComponent,
+            // canActivate: [ArqRoleGuard],
+            // canActivateChild: [ArqRoleGuard],
+            data: {
+              host: environment.settings.host,
+              nombreApp: environment.gvlogin.aplicacion,
+              gvloginUrl: environment.gvlogin.url,
+              enable: false,
+            },
+          },
           {
             path: '**',
-            redirectTo: 'loginSimulated',//This is for login local
-
-          })
+            redirectTo: 'loginSimulated', //This is for login local
+          }
+        );
       }
 
       this.router.resetConfig(routes);
