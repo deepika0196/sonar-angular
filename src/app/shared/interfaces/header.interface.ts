@@ -6,12 +6,5 @@ export interface MenuItem {
 
 export interface Language {
   label: string;
-  icon?: string;
-  code?: string;
-}
-export interface MenuIcon {
-  label?: string;
-  icon?: string;
-  url?: string;
-  items?: Language[];
+  code: string;
 }

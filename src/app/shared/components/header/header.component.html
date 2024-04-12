@@ -1,7 +1,8 @@
-<div class="header">
+<div
+  class="header"
+  *transloco="let t"
+>
   <p-menubar [model]="items">
-    <ng-template pTemplate="start"> </ng-template>
-
     <ng-template pTemplate="start">
       <img
         src="assets/images/logo.svg"
@@ -11,7 +12,76 @@
       <b class="mb-3">ECMCA</b>
     </ng-template>
     <ng-template pTemplate="end">
-      <p-menubar [model]="menuIcons"></p-menubar>
+      <p-button
+        icon="pi pi-home"
+        [pTooltip]="t('header.home')"
+        tooltipPosition="bottom"
+        styleClass="p-button-text "
+        class="mr-2"
+      ></p-button>
+      <p-button
+        icon="pi pi-bell"
+        [pTooltip]="t('header.bell')"
+        pTooltip="bell"
+        tooltipPosition="bottom"
+        class="mr-2"
+        styleClass="p-button-text "
+      ></p-button>
+
+      <p-dropdown
+        [options]="languages"
+        [(ngModel)]="selectedLanguage"
+        (onChange)="changeLanguage()"
+      >
+        <ng-template
+          let-item
+          pTemplate="selectedItem"
+        >
+          <i
+            [pTooltip]="t('header.Cambiar_Idioma')"
+            class="pi pi-language"
+            aria-hidden="true"
+          ></i>
+          <span class="dropdown-label">{{ item.label }}</span>
+        </ng-template>
+        <ng-template
+          let-item
+          pTemplate="item"
+        >
+          <i aria-hidden="true"></i>
+          <span>{{ item.label }}</span>
+        </ng-template>
+      </p-dropdown>
+
+      <!-- <p-dropdown
+        [options]="languages"
+        [(ngModel)]="selectedLanguage"
+        (onChange)="changeLanguage()"
+      >
+        <ng-template pTemplate="selectedItem">
+          <i
+            [pTooltip]="t('header.Cambiar_Idioma')"
+            tooltipPosition="bottom"
+            class="pi pi-language"
+            aria-hidden="true"
+          ></i>
+          <span class="dropdown-label"></span>
+        </ng-template>
+      </p-dropdown> -->
+
+      <p-button
+        pTooltip="Sun"
+        [pTooltip]="t('header.sun')"
+        tooltipPosition="bottom"
+        icon="pi pi-sun"
+        styleClass="p-button-text "
+      ></p-button>
+      <p-button
+        [pTooltip]="t('header.sign-out')"
+        tooltipPosition="bottom"
+        icon="pi pi-sign-out"
+        styleClass="p-button-text "
+      ></p-button>
     </ng-template>
   </p-menubar>
 </div>

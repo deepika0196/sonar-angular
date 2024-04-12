@@ -1,4 +1,26 @@
 {
+  "header": {
+    "sign-out": "Cerrar sesión",
+    "sun": "Sol",
+    "bell": "Campana",
+    "home": "Hogar",
+    "Cambiar_Idioma": "Cambiar Idioma"
+  },
+
+  "menu_items": {
+    "Mantenimientos básicos": "Mantenimientos básicos",
+    "Expedientes": "Expedientes",
+    "Informes": "Informes",
+    "sub_menu": {
+      "Entidades Solicitantes": "Entidades Solicitantes",
+      "Campos de Actuación": "Campos de Actuación",
+      "Requerimientos Subsanación": "Requerimientos Subsanación",
+      "Representantes de Entidad": "Representantes de Entidad",
+      "Solicitud de Inscripción": "Solicitud de Inscripción",
+      "Generación de Informes": "Generación de Informes"
+    }
+  },
+
   "title": "Ejemplo de uso",
   "title_tab_1": "Agregar datos:",
   "title_tab_2": "Colaboradores:",

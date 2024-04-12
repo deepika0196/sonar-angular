@@ -1,5 +1,25 @@
 {
-  "Cambiar_idioma": "Change language",
+  "header": {
+    "sign-out": "Log out",
+    "sun": "Sun",
+    "bell": "Bell",
+    "home": "Home",
+    "Cambiar_Idioma": "Change language"
+  },
+
+  "menu_items": {
+    "Mantenimientos básicos": "Basic maintenance",
+    "Expedientes": "Files",
+    "Informes": "Reports",
+    "sub_menu": {
+      "Entidades Solicitantes": "Requesting Entities",
+      "Campos de Actuación": "Fields of Action",
+      "Requerimientos Subsanación (OBSOLETO)": "Correction Requirements (OBSOLETE)",
+      "Representantes de Entidad": "Entity Representatives",
+      "Solicitud de Inscripción": "Registration Request",
+      "generación de Informes": "Report Generation"
+    }
+  },
   "title": "Example of use",
   "title_tab_1": "Add data:",
   "title_tab_2": "Collaborators:",

@@ -1,71 +1,65 @@
 import { Injectable } from '@angular/core';
-import { MenuIcon, MenuItem } from '../interfaces/header.interface';
+import { Language, MenuItem } from '../interfaces/header.interface';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({ providedIn: 'root' })
 export class HeaderService {
   items: MenuItem[] = [
     {
-      label: 'Mantenimientos básicos',
+      label: this.translocoService.translate(
+        'menu_items.Mantenimientos básicos'
+      ),
       items: [
         {
-          label: 'Entidades Solicitantes',
+          label: this.translocoService.translate(
+            'menu_items.sub_menu.Entidades Solicitantes'
+          ),
         },
         {
-          label: 'Campos de Actuación',
+          label: this.translocoService.translate(
+            'menu_items.sub_menu.Campos de Actuación'
+          ),
         },
 
         {
-          label: 'Requerimientos Subsanación (OBSOLETO)',
+          label: this.translocoService.translate(
+            'menu_items.sub_menu.Requerimientos Subsanación'
+          ),
         },
         {
-          label: 'Representantes de Entidad',
+          label: this.translocoService.translate(
+            'menu_items.sub_menu.Representantes de Entidad'
+          ),
         },
       ],
     },
 
     {
-      label: 'Expedientes',
+      label: this.translocoService.translate('menu_items.Expedientes'),
       items: [
         {
-          label: 'Solicitud de Inscripción',
+          label: this.translocoService.translate(
+            'menu_items.sub_menu.Solicitud de Inscripción'
+          ),
         },
       ],
     },
     {
-      label: 'Informes',
+      label: this.translocoService.translate('menu_items.Informes'),
       items: [
         {
-          label: 'Requerimientos Subsanación (OBSOLETO)',
+          label: this.translocoService.translate(
+            'menu_items.sub_menu.Generación de Informes'
+          ),
         },
       ],
     },
   ];
 
-  menuIcons: MenuIcon[] = [
-    {
-      icon: 'pi pi-fw pi-home',
-      url: '#',
-    },
-    {
-      icon: 'pi pi-bell',
-      url: '#',
-    },
-    {
-      icon: 'pi pi-language',
-      url: '#',
-      items: [
-        { icon: 'pi pi-language', label: ' Spanish', code: 'es' },
-        { icon: 'pi pi-language', label: ' English', code: 'en' },
-        { icon: 'pi pi-language', label: ' Valencian', code: 'ca' },
-      ],
-    },
-    {
-      icon: 'pi pi-sun',
-      url: '#',
-    },
-    {
-      icon: 'pi pi-sign-out',
-      url: '#',
-    },
+  language: Language[] = [
+    { label: ' Spanish', code: 'es' },
+    { label: ' English', code: 'en' },
+    { label: ' Valencian', code: 'ca' },
   ];
+  constructor(private translocoService: TranslocoService) {}
 }
