@@ -7,49 +7,49 @@ export class HeaderService {
   items: MenuItem[] = [
     {
       label: this.translocoService.translate(
-        'menu_items.Mantenimientos básicos'
+        'menu_items.mantenimientos_basicos'
       ),
       items: [
         {
           label: this.translocoService.translate(
-            'menu_items.sub_menu.Entidades Solicitantes'
+            'menu_items.sub_menu.entidades_solicitantes'
           ),
         },
         {
           label: this.translocoService.translate(
-            'menu_items.sub_menu.Campos de Actuación'
+            'menu_items.sub_menu.campos_de_actuacion'
           ),
         },
 
         {
           label: this.translocoService.translate(
-            'menu_items.sub_menu.Requerimientos Subsanación'
+            'menu_items.sub_menu.requerimientos_subsanacion'
           ),
         },
         {
           label: this.translocoService.translate(
-            'menu_items.sub_menu.Representantes de Entidad'
+            'menu_items.sub_menu.representantes_de_entidad'
           ),
         },
       ],
     },
 
     {
-      label: this.translocoService.translate('menu_items.Expedientes'),
+      label: this.translocoService.translate('menu_items.expedientes'),
       items: [
         {
           label: this.translocoService.translate(
-            'menu_items.sub_menu.Solicitud de Inscripción'
+            'menu_items.sub_menu.solicitud_de_inscripcion'
           ),
         },
       ],
     },
     {
-      label: this.translocoService.translate('menu_items.Informes'),
+      label: this.translocoService.translate('menu_items.informes'),
       items: [
         {
           label: this.translocoService.translate(
-            'menu_items.sub_menu.Generación de Informes'
+            'menu_items.sub_menu.generacion_de_informes'
           ),
         },
       ],

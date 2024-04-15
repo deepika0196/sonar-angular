@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
   selectedLanguage: Language;
 
   ngOnInit() {
+    this.selectedLanguage = this.headerService.language[1];
     this.items = this.headerService.items || [];
     this.languages = this.headerService.language;
   }

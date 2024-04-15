@@ -8,18 +8,19 @@
   },
 
   "menu_items": {
-    "Mantenimientos básicos": "Basic maintenance",
-    "Expedientes": "Files",
-    "Informes": "Reports",
+    "mantenimientos_basicos": "Basic maintenance",
+    "expedientes": "Files",
+    "informes": "Reports",
     "sub_menu": {
-      "Entidades Solicitantes": "Requesting Entities",
-      "Campos de Actuación": "Fields of Action",
-      "Requerimientos Subsanación (OBSOLETO)": "Correction Requirements (OBSOLETE)",
-      "Representantes de Entidad": "Entity Representatives",
-      "Solicitud de Inscripción": "Registration Request",
-      "generación de Informes": "Report Generation"
+      "entidades_solicitantes": "Requesting Entities",
+      "campos_de_actuacion": "Fields of Action",
+      "requerimientos_subsanacion": "Correction Requirements (OBSOLETE)",
+      "representantes_de_entidad": "Entity Representatives",
+      "solicitud_de_inscripcion": "Registration Request",
+      "generacion_de_informes": "Report Generation"
     }
   },
+
   "title": "Example of use",
   "title_tab_1": "Add data:",
   "title_tab_2": "Collaborators:",

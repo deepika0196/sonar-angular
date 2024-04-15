@@ -14,16 +14,11 @@
     <ng-template pTemplate="end">
       <p-button
         icon="pi pi-home"
-        [pTooltip]="t('header.home')"
-        tooltipPosition="bottom"
         styleClass="p-button-text "
         class="mr-2"
       ></p-button>
       <p-button
         icon="pi pi-bell"
-        [pTooltip]="t('header.bell')"
-        pTooltip="bell"
-        tooltipPosition="bottom"
         class="mr-2"
         styleClass="p-button-text "
       ></p-button>
@@ -39,10 +34,16 @@
         >
           <i
             [pTooltip]="t('header.Cambiar_Idioma')"
+            tooltipPosition="bottom"
             class="pi pi-language"
             aria-hidden="true"
           ></i>
-          <span class="dropdown-label">{{ item.label }}</span>
+          <span
+            [pTooltip]="t('header.Cambiar_Idioma')"
+            tooltipPosition="bottom"
+            class="dropdown-label"
+            >{{ item.label }}</span
+          >
         </ng-template>
         <ng-template
           let-item
@@ -53,7 +54,8 @@
         </ng-template>
       </p-dropdown>
 
-      <!-- <p-dropdown
+      <!-- 
+      <p-dropdown
         [options]="languages"
         [(ngModel)]="selectedLanguage"
         (onChange)="changeLanguage()"
@@ -70,15 +72,10 @@
       </p-dropdown> -->
 
       <p-button
-        pTooltip="Sun"
-        [pTooltip]="t('header.sun')"
-        tooltipPosition="bottom"
         icon="pi pi-sun"
         styleClass="p-button-text "
       ></p-button>
       <p-button
-        [pTooltip]="t('header.sign-out')"
-        tooltipPosition="bottom"
         icon="pi pi-sign-out"
         styleClass="p-button-text "
       ></p-button>
