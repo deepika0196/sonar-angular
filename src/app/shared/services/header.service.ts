@@ -57,9 +57,9 @@ export class HeaderService {
   ];
 
   language: Language[] = [
-    { label: ' Spanish', code: 'es' },
-    { label: ' English', code: 'en' },
-    { label: ' Valencian', code: 'ca' },
+    { label: 'Valenciano', code: 'es' },
+    { label: 'English', code: 'en' },
+    { label: 'Castellano', code: 'ca' },
   ];
   constructor(private translocoService: TranslocoService) {}
 }

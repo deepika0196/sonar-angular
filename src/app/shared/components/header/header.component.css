@@ -62,5 +62,5 @@ ng-deep .p-menubar .p-submenu-list {
   color: black;
 }
 ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  padding: 0.25rem 0.8rem !important;
+  padding: 0.25rem 0.7rem !important;
 }
