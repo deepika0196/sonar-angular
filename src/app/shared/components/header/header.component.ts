@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private subscription = new Subject<void>();
 
   ngOnInit() {
-    this.selectedLanguage = this.headerService.language[1];
     this.items = this.headerService.getHeaderMenu() || [];
     this.languages = this.headerService.language;
   }
