@@ -6,8 +6,8 @@ import { TranslocoService } from '@ngneat/transloco';
 export class HeaderService {
   language: Language[] = [
     { label: 'Valenciano', code: 'es' },
-    { label: 'English', code: 'en' },
     { label: 'Castellano', code: 'ca' },
+    { label: 'English', code: 'en' },
   ];
   constructor(private translocoService: TranslocoService) {}
 
