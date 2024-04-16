@@ -11,10 +11,10 @@ export const environment = {
 
   gvlogin: {
     enable: true,
-    enableLoginSimulated:true, //Only active on local environment, change this on DES, PRE and PRO enviroments, on back this won't be avaliable. If you have access to gvLogin service, you can use gvlogin-dsa
+    enableLoginSimulated: true, //Only active on local environment, change this on DES, PRE and PRO enviroments, on back this won't be avaliable. If you have access to gvLogin service, you can use gvlogin-dsa
     aplicacion: 'PROTOTIPO',
     // url: 'https://gvlogin-dsa.gva.es/gvlogin',
-    url: 'http://localhost:8080/prototipo-frontend/loginSimulated', // url to gvLoginLoginSimulated, you can 
+    url: 'http://localhost:8080/prototipo-frontend/loginSimulated', // url to gvLoginLoginSimulated, you can
     tokenKey: 'gvlogin-token',
     tokenPeticionMarte: 'peticion-marte',
     whitelistedDomains: [
@@ -22,7 +22,7 @@ export const environment = {
       'expropia-dsa.gva.es',
       'localhost.gva.es',
       'localhost.gva.es:8081',
-      'http://localhost:8080'
+      'http://localhost:8080',
     ],
   },
   settings: {
@@ -35,7 +35,7 @@ export const environment = {
     hostDynamic: 'http://localhost:8081/prototipo-backend',
   },
   locale: {
-    default: 'es',
-    cultures: ['ca', 'es'],
+    default: 'en',
+    cultures: ['ca', 'es', 'en'],
   },
 };

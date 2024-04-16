@@ -1,37 +1,48 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
 import { TranslocoService } from '@ngneat/transloco';
-
 import { Language, MenuItem } from 'src/app/shared/interfaces/header.interface';
 import { TranslocoHttpLoader } from 'src/app/transloco-root.module';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private headerService: HeaderService,
-    private transloco: TranslocoService,
+    private translateService: TranslocoService,
     private cdr: ChangeDetectorRef,
-    private translocoHttpLoader: TranslocoHttpLoader
+    private translateHttpLoader: TranslocoHttpLoader
   ) {}
 
   items: MenuItem[] = [];
   languages: Language[] = [];
   selectedLanguage: Language;
+  private subscription = new Subject<void>();
 
   ngOnInit() {
     this.selectedLanguage = this.headerService.language[1];
-    this.items = this.headerService.items || [];
+    this.items = this.headerService.getHeaderMenu() || [];
     this.languages = this.headerService.language;
   }
 
   changeLanguage() {
-    console.log(this.selectedLanguage);
-    this.transloco.setActiveLang(this.selectedLanguage.code);
+    this.translateService.setActiveLang(this.selectedLanguage.code);
+    this.translateHttpLoader
+      .getTranslation(this.selectedLanguage.code)
+      .pipe(takeUntil(this.subscription))
+      .subscribe(() => {
+        this.items = [...this.headerService.getHeaderMenu()];
+      });
+
     this.cdr.detectChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.next();
+    this.subscription.complete();
   }
 }
