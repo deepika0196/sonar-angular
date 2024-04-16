@@ -6,8 +6,11 @@
     <ng-template pTemplate="start">
       <img
         src="assets/images/logo.svg"
-        height="40"
-        class="mr-2"
+        class="logo mr-2"
+      />
+      <img
+        src="assets/images/logo_ecmca.png"
+        class="logo mr-5 ml-2"
       />
       <b class="mb-3">ECMCA</b>
     </ng-template>
@@ -28,38 +31,6 @@
         [(ngModel)]="selectedLanguage"
         (onChange)="changeLanguage()"
       >
-        <ng-template
-          let-item
-          pTemplate="selectedItem"
-        >
-          <i
-            [pTooltip]="t('header.Cambiar_Idioma')"
-            tooltipPosition="bottom"
-            class="pi pi-language"
-            aria-hidden="true"
-          ></i>
-          <span
-            [pTooltip]="t('header.Cambiar_Idioma')"
-            tooltipPosition="bottom"
-            class="dropdown-label"
-            >{{ item.label }}</span
-          >
-        </ng-template>
-        <ng-template
-          let-item
-          pTemplate="item"
-        >
-          <i aria-hidden="true"></i>
-          <span>{{ item.label }}</span>
-        </ng-template>
-      </p-dropdown>
-
-      <!-- 
-      <p-dropdown
-        [options]="languages"
-        [(ngModel)]="selectedLanguage"
-        (onChange)="changeLanguage()"
-      >
         <ng-template pTemplate="selectedItem">
           <i
             [pTooltip]="t('header.Cambiar_Idioma')"
@@ -69,7 +40,7 @@
           ></i>
           <span class="dropdown-label"></span>
         </ng-template>
-      </p-dropdown> -->
+      </p-dropdown>
 
       <p-button
         icon="pi pi-sun"
