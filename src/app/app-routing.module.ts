@@ -44,6 +44,7 @@ export class AppRoutingModule {
         (environment as Environment)[key] = env[key];
       });
       routes = [
+        ...routes,
         {
           path: 'itemExample',
           component: ItemExample,

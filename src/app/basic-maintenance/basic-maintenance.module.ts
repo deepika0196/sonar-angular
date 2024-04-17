@@ -7,6 +7,8 @@ import { RepresentantesDeEntidadComponent } from './components/representantes-de
 import { RequerimientosSubsanacionComponent } from './components/requerimientos-subsanacion/requerimientos-subsanacion.component';
 import { CampoDeActuacionComponent } from './components/campo-de-actuacion/campo-de-actuacion.component';
 import { EntidadesSolicitantesComponent } from './components/entidades-solicitantes/entidades-solicitantes.component';
+import { PrimeNgModule } from '../prime-ng.module';
+import { AlertDialogComponent } from './components/campo-de-actuacion/alert-dialog/alert-dialog.component';
 
 
 @NgModule({
@@ -15,11 +17,13 @@ import { EntidadesSolicitantesComponent } from './components/entidades-solicitan
     RepresentantesDeEntidadComponent,
     RequerimientosSubsanacionComponent,
     CampoDeActuacionComponent,
-    EntidadesSolicitantesComponent
+    EntidadesSolicitantesComponent,
+    AlertDialogComponent
   ],
   imports: [
     CommonModule,
-    BasicMaintenanceRoutingModule
+    BasicMaintenanceRoutingModule,
+    PrimeNgModule
   ]
 })
 export class BasicMaintenanceModule { }
