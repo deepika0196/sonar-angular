@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { Language, MenuItem } from 'src/app/shared/interfaces/header.interface';
