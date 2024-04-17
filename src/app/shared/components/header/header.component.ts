@@ -4,7 +4,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Language, MenuItem } from 'src/app/shared/interfaces/header.interface';
 import { TranslocoHttpLoader } from 'src/app/transloco-root.module';
 import { Subject, takeUntil } from 'rxjs';
-
+import { GlobalConstant } from 'src/app/core/constants/globalConstants';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,13 +14,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private headerService: HeaderService,
     private translateService: TranslocoService,
-    private cdr: ChangeDetectorRef,
     private translateHttpLoader: TranslocoHttpLoader
   ) {}
 
   items: MenuItem[] = [];
   languages: Language[] = [];
   selectedLanguage: Language;
+  ecmca = GlobalConstant.ecmca;
   private subscription = new Subject<void>();
 
   ngOnInit() {
@@ -36,8 +36,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.items = [...this.headerService.getHeaderMenu()];
       });
-
-    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {
