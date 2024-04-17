@@ -1,5 +1,10 @@
 .logo {
-  height: 2.6rem;
+  height: 2.8rem;
+}
+.logo2 {
+  height: 2.8rem;
+  width: 4.5rem;
+  margin-bottom: 0.9rem;
 }
 .header {
   border-bottom: 0.32rem solid #e5e7eb !important;
@@ -62,5 +67,5 @@ ng-deep .p-menubar .p-submenu-list {
   color: black;
 }
 ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  padding: 0.25rem 0.7rem !important;
+  padding: 0.25rem 0.7rem;
 }
