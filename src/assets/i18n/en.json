@@ -4,6 +4,25 @@
     "cambiar_idioma": "Change language"
   },
 
+  "campoDeActuacion": {
+    "title": "Fields of action",
+    "field_id": "Code",
+    "field_description": "Spanish description",
+    "field_descriptionVal": "Valencian description",
+    "search_button": "Look for",
+    "clear_button": "Clean",
+    "add_button": "Add",
+    "previous": "Former",
+    "next": "Following",
+    "pagination_text": "Records from {{first}} to {{last}} (Total {{totalRecords}})",
+    "delete_alert": "The record could not be deleted because there is associated information.",
+    "insert_alert": "The record has already been inserted or is duplicated. Review it.",
+    "descriptionval_required": "You must add a description in Valencian.",
+    "description_required": "You must add a description in Spanish.",
+    "delete_existing_alert": "01015 : Do you want to permanently delete this record?",
+    "modify_alert": "Do you want to save the changes you made?"
+  },
+
   "menu_items": {
     "mantenimientos_basicos": "Basic maintenance",
     "expedientes": "Files",

@@ -18,6 +18,25 @@
     }
   },
 
+  "campoDeActuacion": {
+    "title": "Campos d'actuació",
+    "field_id": "Codi",
+    "field_description": "Descripció castellà",
+    "field_descriptionVal": "Descripció valencià",
+    "search_button": "Cercar",
+    "clear_button": "Netejar",
+    "add_button": "Alta",
+    "previous": "Anterior",
+    "next": "Següent",
+    "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})",
+    "delete_alert": "No s'ha pogut esborrar el registre perquè existix informació associada.",
+    "insert_alert": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
+    "descriptionval_required": "Ha d'afegir una descripció en valencià.",
+    "description_required": "Ha d'afegir una descripció en castellà.",
+    "delete_existing_alert": "01015: Desitja esborrar definitivament este registre?",
+    "modify_alert": "Desitja guardar els canvis realitzats ?"
+  },
+
   "title": "ca_Exemple dús",
   "title_tab_1": "ca_Afegeix dades:",
   "title_tab_2": "ca_Col·laboradors:",

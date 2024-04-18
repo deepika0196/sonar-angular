@@ -1,107 +1,131 @@
-import { Component, OnInit } from '@angular/core';
-import { FilterService, MessageService, SelectItem } from 'primeng/api';
-import { CampoDeActuacion } from '../../interfaces/campoDeActuacion';
-import { CampoDeActuacionService } from '../../services/campo-de-actuacion.service';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
-
+import { Component, OnInit } from "@angular/core";
+import { MessageService, SelectItem } from "primeng/api";
+import { CampoDeActuacion } from "../../interfaces/campoDeActuacion";
+import { CampoDeActuacionService } from "../../services/campo-de-actuacion.service";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { AlertDialogComponent } from "./alert-dialog/alert-dialog.component";
 
 @Component({
-  selector: 'app-campo-de-actuacion',
-  templateUrl: './campo-de-actuacion.component.html',
-  styleUrls: ['./campo-de-actuacion.component.css'],
-  providers: [MessageService, DialogService]
+  selector: "app-campo-de-actuacion",
+  templateUrl: "./campo-de-actuacion.component.html",
+  styleUrls: ["./campo-de-actuacion.component.css"],
+  providers: [MessageService, DialogService],
 })
-export class CampoDeActuacionComponent implements OnInit{
-  products: CampoDeActuacion[];
+export class CampoDeActuacionComponent implements OnInit {
+  campoDeActuacions: CampoDeActuacion[];
 
   statuses: SelectItem[];
 
-  clonedProducts: { [s: string]: CampoDeActuacion } = {};
-  
-  ref: DynamicDialogRef  | undefined;
+  clonedcampoDeActuacions: { [s: string]: CampoDeActuacion } = {};
 
-  constructor(private campoDeActuacionService: CampoDeActuacionService, private messageService: MessageService, private filterService: FilterService, private dialogService: DialogService) {}
+  ref: DynamicDialogRef | undefined;
 
-  id: any
-  
-  description: string
+  first = 0;
 
-  descriptionVal: string
+  rows = 10;
+
+  constructor(
+    private campoDeActuacionService: CampoDeActuacionService,
+    private messageService: MessageService,
+    private dialogService: DialogService
+  ) {}
+
+  id: any;
+
+  description: string;
+
+  descriptionVal: string;
 
   ngOnInit() {
-      this.campoDeActuacionService.getProductsMini().then((data) => {
-          this.products = data;
-      });
-
-      this.statuses = [
-          { label: 'In Stock', value: 'INSTOCK' },
-          { label: 'Low Stock', value: 'LOWSTOCK' },
-          { label: 'Out of Stock', value: 'OUTOFSTOCK' }
-      ];
-
-      this.filterService.register('isPrimeNumber', (value: any, filter: any): boolean => {
-        if (filter === undefined || filter === null || filter.trim() === '') {
-            return true;
-        }
-    
-        if (value === undefined || value === null) {
-            return false;
-        }
-    
-        return value.toString() === filter.toString();
+    this.campoDeActuacionService.getCampoDeActuacionsMini().then((data) => {
+      this.campoDeActuacions = data;
     });
   }
 
   onRowEditInit(product: CampoDeActuacion) {
-      this.clonedProducts[product.id] = { ...product };
+    this.clonedcampoDeActuacions[product.id] = { ...product };
   }
 
   onRowEditSave(product: CampoDeActuacion) {
-      if (product.id) {
-          delete this.clonedProducts[product.id];
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product is updated' });
-      } else {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid Price' });
-      }
+    if (product.id) {
+      delete this.clonedcampoDeActuacions[product.id];
+      this.messageService.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Product is updated",
+      });
+    } else {
+      this.messageService.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Invalid Price",
+      });
+    }
   }
 
   onRowEditCancel(product: CampoDeActuacion, index: number) {
-      this.products[index] = this.clonedProducts[product.id];
-      delete this.clonedProducts[product.id];
+    this.campoDeActuacions[index] = this.clonedcampoDeActuacions[product.id];
+    delete this.clonedcampoDeActuacions[product.id];
   }
 
   clearAll() {
-    this.id = null
-    this.description = ''
-    this.descriptionVal = ''
+    this.id = null;
+    this.description = "";
+    this.descriptionVal = "";
   }
 
   filterHandler() {
-    this.products.filter(() => {
-
-    }) 
-    const values = this.products.filter(obj => obj.id?.toString().includes(this.id) || obj.description?.includes(this.description) || obj.descriptionVal?.includes(this.descriptionVal))
-    console.log(values, "values")
+    const values = this.campoDeActuacions.filter(
+      (obj: CampoDeActuacion) =>
+        obj.id?.toString().includes(this.id) ||
+        obj.description?.includes(this.description) ||
+        obj.descriptionVal?.includes(this.descriptionVal)
+    );
   }
 
   onDeleteHandler(product: any) {
     this.ref = this.dialogService.open(AlertDialogComponent, {
-      header: 'Informe de actualizaciones',
-      width: '50%',
-      contentStyle: { overflow: 'none', padding: '4px' },
+      header: "Informe de actualizaciones",
+      width: "50%",
+      contentStyle: { overflow: "none" },
       baseZIndex: 10000,
-      // style: {'padding': '2px'},
-      // styleClass: 'dialogStyle',
-      height: '50%',
-      data: {}
-      // maximizable: true
+      height: "50%",
+      data: {},
     });
 
     this.ref.onClose.subscribe((product: any) => {
       if (product) {
-        this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: product.name });
+        this.messageService.add({
+          severity: "info",
+          summary: "Product Selected",
+          detail: product.name,
+        });
       }
     });
+  }
+
+  next() {
+    if (this.first + this.rows > this.campoDeActuacions.length) return;
+    this.first = this.first + this.rows;
+  }
+
+  prev() {
+    if (this.first - this.rows < 0) return;
+    this.first = this.first - this.rows;
+  }
+
+  isLastPage(): boolean {
+    return this.campoDeActuacions
+      ? this.first + this.rows > this.campoDeActuacions.length
+      : true;
+  }
+
+  isFirstPage(): boolean {
+    return this.campoDeActuacions ? this.first === 0 : true;
+  }
+
+  pageChange(event: any) {
+    this.first = event.first;
+    this.rows = event.rows;
   }
 }

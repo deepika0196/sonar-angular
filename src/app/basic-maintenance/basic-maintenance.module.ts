@@ -9,7 +9,7 @@ import { CampoDeActuacionComponent } from './components/campo-de-actuacion/campo
 import { EntidadesSolicitantesComponent } from './components/entidades-solicitantes/entidades-solicitantes.component';
 import { PrimeNgModule } from '../prime-ng.module';
 import { AlertDialogComponent } from './components/campo-de-actuacion/alert-dialog/alert-dialog.component';
-
+import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { AlertDialogComponent } from './components/campo-de-actuacion/alert-dial
   imports: [
     CommonModule,
     BasicMaintenanceRoutingModule,
-    PrimeNgModule
+    PrimeNgModule,
+    TranslocoRootModule
   ]
 })
 export class BasicMaintenanceModule { }
