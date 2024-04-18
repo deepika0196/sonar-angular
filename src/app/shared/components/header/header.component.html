@@ -1,0 +1,40 @@
+<div
+  class="header"
+  *transloco="let t"
+>
+  <p-menubar [model]="items">
+    <ng-template pTemplate="start">
+      <img
+        src="assets/images/logo.svg"
+        class="logo"
+      />
+      <img
+        src="assets/images/logo_ecmca.png"
+        class="logo2 mr-5"
+      />
+      <b class="mb-3">{{ ecmca }}</b>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <p-dropdown
+        [options]="languages"
+        [(ngModel)]="selectedLanguage"
+        (onChange)="changeLanguage()"
+      >
+        <ng-template pTemplate="selectedItem">
+          <i
+            [pTooltip]="t('header.cambiar_idioma')"
+            tooltipPosition="bottom"
+            class="pi pi-language"
+            aria-hidden="true"
+          ></i>
+          <span class="dropdown-label"></span>
+        </ng-template>
+      </p-dropdown>
+
+      <p-button
+        icon="pi pi-sign-out"
+        styleClass="p-button-text "
+      ></p-button>
+    </ng-template>
+  </p-menubar>
+</div>
