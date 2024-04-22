@@ -11,3 +11,7 @@
     justify-content: right;
   }
 }
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 0rem !important;
+}
