@@ -20,7 +20,18 @@
     "descriptionval_required": "You must add a description in Valencian.",
     "description_required": "You must add a description in Spanish.",
     "delete_existing_alert": "01015 : Do you want to permanently delete this record?",
-    "modify_alert": "Do you want to save the changes you made?"
+    "modify_alert": "Do you want to save the changes you made?",
+    "add_dialog_header": "Add fields of action",
+    "delete_dialog_header": "Consultation",
+    "update_dialog_header": "Modify Field of Action",
+    "alert_dialog_header": "Attention",
+    "save_button": "Save",
+    "cancel_button": "Cancel",
+    "modify_button": "Modify",
+    "update_button": "Update",
+    "yes_button": "Yes",
+    "no_button": "No",
+    "required_text": "You must fill out the field."
   },
 
   "menu_items": {

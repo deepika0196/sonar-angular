@@ -34,7 +34,18 @@
     "descriptionval_required": "Ha d'afegir una descripció en valencià.",
     "description_required": "Ha d'afegir una descripció en castellà.",
     "delete_existing_alert": "01015: Desitja esborrar definitivament este registre?",
-    "modify_alert": "Desitja guardar els canvis realitzats ?"
+    "modify_alert": "Desitja guardar els canvis realitzats ?",
+    "add_dialog_header": "Afegir Camp d'actuació",
+    "delete_dialog_header": "Consulta",
+    "update_dialog_header": "Moficiar Camp d'actuació",
+    "alert_dialog_header": "Atención",
+    "save_button": "Guardar",
+    "cancel_button": "Cancel·lar",
+    "modify_button": "Moficiar",
+    "update_button": "Actualitzar",
+    "yes_button": "Si",
+    "no_button": "No",
+    "required_text": "Cal emplenar el camp."
   },
 
   "title": "ca_Exemple dús",

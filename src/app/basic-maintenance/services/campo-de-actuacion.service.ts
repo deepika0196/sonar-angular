@@ -1,509 +1,120 @@
 import { Injectable } from "@angular/core";
 import { CampoDeActuacion } from "../interfaces/campoDeActuacion";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { ArqHttpClient } from "arq-sdk";
 
 @Injectable({
   providedIn: "root",
 })
 export class CampoDeActuacionService {
-  constructor() {}
+  public urlApi: string =
+    environment.settings.hostDynamic + "/api/v1/reccaSecciones";
+
+  constructor(private _http: HttpClient) {}
+
+  _arqHttpClient: ArqHttpClient = new ArqHttpClient(this._http, environment);
   getProductsData() {
     const data: CampoDeActuacion[] = [
       {
-        id: 1000,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
+        codigo: 1000,
+        deseccion: "Product Description 1",
+        deseccionVal: "Product Description Val 1",
       },
       {
-        id: 1001,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
+        codigo: 1001,
+        deseccion: "Product Description 2",
+        deseccionVal: "Product Description Val 2",
       },
       {
-        id: 1002,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
+        codigo: 1002,
+        deseccion: "Product Description 3",
+        deseccionVal: "Product Description Val 3",
       },
       {
-        id: 1003,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
+        codigo: 1003,
+        deseccion: "Product Description 4",
+        deseccionVal: "Product Description Val 4",
       },
       {
-        id: 1004,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
+        codigo: 1004,
+        deseccion: "Product Description 5",
+        deseccionVal: "Product Description Val 5",
       },
       {
-        id: 1005,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
+        codigo: 1005,
+        deseccion: "Product Description 6",
+        deseccionVal: "Product Description Val 6",
       },
       {
-        id: 1006,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
+        codigo: 1006,
+        deseccion: "Product Description 7",
+        deseccionVal: "Product Description Val 7",
       },
       {
-        id: 1007,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
+        codigo: 1007,
+        deseccion: "Product Description 1",
+        deseccionVal: "Descripció valencià",
       },
       {
-        id: 1008,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
+        codigo: 1008,
+        deseccion: "Descripció castellà",
+        deseccionVal: "Product Description Val 2",
       },
       {
-        id: 1009,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
+        codigo: 1009,
+        deseccion: "Product Description 3",
+        deseccionVal: "Product Description Val 3",
       },
       {
-        id: 1010,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
+        codigo: 1010,
+        deseccion: "Product Description 4",
+        deseccionVal: "Product Description Val 4",
       },
       {
-        id: 1011,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
+        codigo: 1011,
+        deseccion: "Product Description 5",
+        deseccionVal: "Product Description Val 5",
       },
       {
-        id: 1012,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
+        codigo: 1012,
+        deseccion: "Product Description 6",
+        deseccionVal: "Product Description Val 6",
       },
       {
-        id: 1013,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-
-      {
-        id: 1000,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1001,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1002,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1003,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1004,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1005,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1006,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1007,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1008,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1009,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1010,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1011,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1012,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1013,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1000,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1001,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1002,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1003,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1004,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1005,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1006,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1007,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1008,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1009,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1010,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1011,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1012,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1013,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1000,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1001,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1002,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1003,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1004,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1005,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1006,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1007,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1008,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1009,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1010,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1011,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1012,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1013,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1000,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1001,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1002,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1003,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1004,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1005,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1006,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1007,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1008,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1009,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1010,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1011,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1012,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1013,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1000,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1001,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1002,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1003,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1004,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1005,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1006,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1007,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1008,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1009,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1010,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1011,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1012,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1013,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1000,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1001,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1002,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1003,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1004,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1005,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1006,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
-      },
-      {
-        id: 1007,
-        description: "Product Description 1",
-        descriptionVal: "Product Description Val 1",
-      },
-      {
-        id: 1008,
-        description: "Product Description 2",
-        descriptionVal: "Product Description Val 2",
-      },
-      {
-        id: 1009,
-        description: "Product Description 3",
-        descriptionVal: "Product Description Val 3",
-      },
-      {
-        id: 1010,
-        description: "Product Description 4",
-        descriptionVal: "Product Description Val 4",
-      },
-      {
-        id: 1011,
-        description: "Product Description 5",
-        descriptionVal: "Product Description Val 5",
-      },
-      {
-        id: 1012,
-        description: "Product Description 6",
-        descriptionVal: "Product Description Val 6",
-      },
-      {
-        id: 1013,
-        description: "Product Description 7",
-        descriptionVal: "Product Description Val 7",
+        codigo: 1013,
+        deseccion: "Product Description 7",
+        deseccionVal: "Product Description Val 7",
       },
     ];
     return data;
   }
 
-  getCampoDeActuacionsMini() {
-    return Promise.resolve(this.getProductsData());
+  getCampoDeActuacions() {
+    return this._arqHttpClient.get<CampoDeActuacion[]>(
+      environment.settings.hostDynamic + "/api/v1/reccaSecciones"
+    );
+    // return Promise.resolve(this.getProductsData());
+  }
+  postCampoDeActuacions(campDetails: CampoDeActuacion) {
+    return this._arqHttpClient.post(
+      environment.settings.hostDynamic + "/api/v1/reccaSecciones",
+      campDetails
+    );
+  }
+  updateCampoDeActuacions(campDetails: CampoDeActuacion) {
+    return this._arqHttpClient.put(
+      environment.settings.hostDynamic +
+        "/api/v1/reccaSecciones/" +
+        campDetails.codigo.toString(),
+      campDetails
+    );
+  }
+  deleteCampoDeActuacions(campDetails: CampoDeActuacion) {
+    return this._arqHttpClient.delete(
+      environment.settings.hostDynamic +
+        "/api/v1/reccaSecciones/" +
+        campDetails.codigo.toString()
+    );
   }
 }

@@ -34,7 +34,18 @@
     "descriptionval_required": "Debe añadir una descripción en valenciano.",
     "description_required": "Debe añadir una descripción en castellano.",
     "delete_existing_alert": "01015 : ¿Desea borrar definitivamente este registro?",
-    "modify_alert": "¿Desea guardar los cambios realizados ?"
+    "modify_alert": "¿Desea guardar los cambios realizados ?",
+    "add_dialog_header": "Añadir Campo de actuación",
+    "delete_dialog_header": "Consulta",
+    "update_dialog_header": "Modificar Campo de actuación",
+    "alert_dialog_header": "Atención",
+    "save_button": "Guardar",
+    "cancel_button": "Cancelar",
+    "modify_button": "Modificar",
+    "update_button": "Actualizar",
+    "yes_button": "Si",
+    "no_button": "No",
+    "required_text": "Debe rellenar el campo."
   },
 
   "title": "es_Exemple dús",

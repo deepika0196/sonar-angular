@@ -1,58 +1,84 @@
 import { Component, OnInit } from "@angular/core";
+
 import { MessageService, SelectItem } from "primeng/api";
+
 import { CampoDeActuacion } from "../../interfaces/campoDeActuacion";
+
 import { CampoDeActuacionService } from "../../services/campo-de-actuacion.service";
+
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+
 import { AlertDialogComponent } from "./alert-dialog/alert-dialog.component";
+import { TranslocoService } from "@ngneat/transloco";
 
 @Component({
   selector: "app-campo-de-actuacion",
   templateUrl: "./campo-de-actuacion.component.html",
   styleUrls: ["./campo-de-actuacion.component.css"],
-  providers: [MessageService, DialogService],
+  providers: [MessageService, DialogService, DynamicDialogRef],
 })
 export class CampoDeActuacionComponent implements OnInit {
   campoDeActuacions: CampoDeActuacion[];
+  cloneCampoDeActuacionRecords: CampoDeActuacion[];
 
   statuses: SelectItem[];
 
-  clonedcampoDeActuacions: { [s: string]: CampoDeActuacion } = {};
+  clonedCampoDeActuacion: {
+    [s: string]: CampoDeActuacion;
+  } = {};
 
-  ref: DynamicDialogRef | undefined;
+  addDialogRef: DynamicDialogRef | undefined;
+  updateDialogRef: DynamicDialogRef | undefined;
+  deleteDialogRef: DynamicDialogRef | undefined;
+  alertDialogRef: DynamicDialogRef | undefined;
 
   first = 0;
 
   rows = 10;
+  visible = false;
 
   constructor(
     private campoDeActuacionService: CampoDeActuacionService,
     private messageService: MessageService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private translocoService: TranslocoService // private ref: DynamicDialogRef
   ) {}
 
-  id: any;
+  id = "";
 
-  description: string;
+  description = "";
 
-  descriptionVal: string;
+  descriptionVal = "";
 
   ngOnInit() {
-    this.campoDeActuacionService.getCampoDeActuacionsMini().then((data) => {
-      this.campoDeActuacions = data;
-    });
+    this.campoDeActuacionService
+      .getCampoDeActuacions()
+      .subscribe((data: any) => {
+        const { response: res } = data;
+        console.log(res, data, "data");
+        this.campoDeActuacions = res;
+        this.cloneCampoDeActuacionRecords = res;
+      });
+    // .then((res) => {
+    //   this.campoDeActuacions = res;
+    //   this.cloneCampoDeActuacionRecords = res;
+    // });
   }
 
-  onRowEditInit(product: CampoDeActuacion) {
-    this.clonedcampoDeActuacions[product.id] = { ...product };
+  onRowEditInit(campoDetails: CampoDeActuacion) {
+    this.clonedCampoDeActuacion[campoDetails.codigo] = {
+      ...campoDetails,
+    };
   }
 
-  onRowEditSave(product: CampoDeActuacion) {
-    if (product.id) {
-      delete this.clonedcampoDeActuacions[product.id];
+  onRowEditSave(campoDetails: CampoDeActuacion) {
+    if (campoDetails.codigo) {
+      delete this.clonedCampoDeActuacion[campoDetails.codigo];
+
       this.messageService.add({
         severity: "success",
         summary: "Success",
-        detail: "Product is updated",
+        detail: "campoDetails is updated",
       });
     } else {
       this.messageService.add({
@@ -63,44 +89,312 @@ export class CampoDeActuacionComponent implements OnInit {
     }
   }
 
-  onRowEditCancel(product: CampoDeActuacion, index: number) {
-    this.campoDeActuacions[index] = this.clonedcampoDeActuacions[product.id];
-    delete this.clonedcampoDeActuacions[product.id];
+  onRowEditCancel(campoDetails: CampoDeActuacion, index: number) {
+    this.campoDeActuacions[index] =
+      this.clonedCampoDeActuacion[campoDetails.codigo];
+    delete this.clonedCampoDeActuacion[campoDetails.codigo];
   }
 
   clearAll() {
-    this.id = null;
+    this.id = "";
     this.description = "";
     this.descriptionVal = "";
+    this.campoDeActuacions = [...this.cloneCampoDeActuacionRecords];
   }
 
   filterHandler() {
-    const values = this.campoDeActuacions.filter(
+    const values = this.cloneCampoDeActuacionRecords.filter(
       (obj: CampoDeActuacion) =>
-        obj.id?.toString().includes(this.id) ||
-        obj.description?.includes(this.description) ||
-        obj.descriptionVal?.includes(this.descriptionVal)
+        obj.codigo
+          ?.toString()
+          .toLowerCase()
+          .includes(this.id.trim().toLowerCase()) &&
+        obj.deseccion
+          ?.toLowerCase()
+          .includes(this.description.trim().toLowerCase()) &&
+        obj.deseccionVal
+          ?.toLowerCase()
+          .includes(this.descriptionVal.trim().toLowerCase())
     );
+    this.campoDeActuacions = [...values];
   }
 
-  onDeleteHandler(product: any) {
-    this.ref = this.dialogService.open(AlertDialogComponent, {
-      header: "Informe de actualizaciones",
-      width: "50%",
-      contentStyle: { overflow: "none" },
+  openAddDialog() {
+    this.addDialogRef = this.dialogService.open(AlertDialogComponent, {
+      header: this.translocoService.translate(
+        "campoDeActuacion.add_dialog_header"
+      ),
+      width: "70%",
+      contentStyle: {
+        overflow: "none",
+      },
+
       baseZIndex: 10000,
       height: "50%",
-      data: {},
+      data: {
+        inputValues: {
+          codigo: 0,
+          deseccion: "",
+          deseccionVal: "",
+        },
+        actionButtons: [
+          {
+            label: this.translocoService.translate(
+              "campoDeActuacion.save_button"
+            ),
+            action: (input: any) => {
+              console.log("add", input);
+              // this.campoDeActuacionService
+              //   .postCampoDeActuacions(input)
+              //   .subscribe((data) => {
+              //     console.log(data);
+              //   });
+              this.addDialogRef?.close();
+            },
+            validate: (input: any) => {
+              return Object.values(input).some((x) => x === null || x === "");
+            },
+            disabled: true,
+          },
+          {
+            label: this.translocoService.translate(
+              "campoDeActuacion.cancel_button"
+            ),
+            action: (input: any) => {
+              console.log("cancel", input);
+              // this.ref.close();
+              this.openAlertDialog();
+            },
+            disabled: false,
+          },
+        ],
+        inputFields: [
+          {
+            label: `${this.translocoService.translate(
+              "campoDeActuacion.field_description"
+            )}*`,
+            required_msg: this.translocoService.translate(
+              "campoDeActuacion.required_text"
+            ),
+            name: "deseccion",
+          },
+          {
+            label: `${this.translocoService.translate(
+              "campoDeActuacion.field_descriptionVal"
+            )}*`,
+            required_msg: this.translocoService.translate(
+              "campoDeActuacion.required_text"
+            ),
+            name: "deseccionVal",
+          },
+        ],
+      },
+      styleClass: "dialogStyle",
+      // footer: "hell0",
     });
 
-    this.ref.onClose.subscribe((product: any) => {
-      if (product) {
+    this.addDialogRef.onClose.subscribe((campoDetails: any) => {
+      if (campoDetails) {
         this.messageService.add({
           severity: "info",
-          summary: "Product Selected",
-          detail: product.name,
+          summary: "campoDetails Selected",
+          detail: campoDetails.name,
         });
       }
+    });
+  }
+
+  openUpdateDialog(campoDetails: any) {
+    this.updateDialogRef = this.dialogService.open(AlertDialogComponent, {
+      header: this.translocoService.translate(
+        "campoDeActuacion.update_dialog_header"
+      ),
+      width: "70%",
+      contentStyle: {
+        overflow: "none",
+      },
+
+      baseZIndex: 10000,
+      height: "50%",
+      data: {
+        inputValues: campoDetails,
+        actionButtons: [
+          {
+            label: this.translocoService.translate(
+              "campoDeActuacion.update_button"
+            ),
+            action: (input: any) => {
+              console.log("add", input);
+              // this.campoDeActuacionService
+              //   .updateCampoDeActuacions(input)
+              //   .subscribe((data) => {
+              //     console.log(data);
+              //   });
+              this.updateDialogRef?.close();
+            },
+            disabled: false,
+          },
+          {
+            label: this.translocoService.translate(
+              "campoDeActuacion.cancel_button"
+            ),
+            action: (input: any) => {
+              console.log("cancel", input);
+              this.updateDialogRef?.close();
+            },
+            disabled: false,
+          },
+        ],
+        inputFields: [
+          {
+            label: `${this.translocoService.translate(
+              "campoDeActuacion.field_description"
+            )}*`,
+            required_msg: this.translocoService.translate(
+              "campoDeActuacion.required_text"
+            ),
+            name: "deseccion",
+          },
+          {
+            label: `${this.translocoService.translate(
+              "campoDeActuacion.field_descriptionVal"
+            )}*`,
+            required_msg: this.translocoService.translate(
+              "campoDeActuacion.required_text"
+            ),
+            name: "deseccionVal",
+          },
+        ],
+      },
+      styleClass: "dialogStyle",
+      // footer: "hell0",
+    });
+
+    this.updateDialogRef.onClose.subscribe((campoDetails: any) => {
+      if (campoDetails) {
+        this.messageService.add({
+          severity: "info",
+          summary: "campoDetails Selected",
+          detail: campoDetails.name,
+        });
+      }
+    });
+  }
+
+  onDeleteHandler(campoDetails: any) {
+    this.deleteDialogRef = this.dialogService.open(AlertDialogComponent, {
+      width: "50%",
+      contentStyle: {
+        overflow: "none",
+      },
+      showHeader: false,
+
+      baseZIndex: 10000,
+      height: "40%",
+      styleClass: "dialogStyle",
+      data: {
+        actionButtons: [
+          {
+            label: this.translocoService.translate(
+              "campoDeActuacion.yes_button"
+            ),
+            icon: "pi pi-check",
+            action: (input: any) => {
+              console.log("delete");
+              // this.campoDeActuacionService
+              //   .deleteCampoDeActuacions(campoDetails)
+              //   .subscribe((data) => {
+              //     console.log(data);
+              //   });
+              this.deleteDialogRef?.close();
+            },
+            disabled: false,
+          },
+          {
+            label: this.translocoService.translate(
+              "campoDeActuacion.no_button"
+            ),
+            action: (input: any) => {
+              console.log("cancel");
+              this.deleteDialogRef?.close();
+            },
+            disabled: false,
+          },
+        ],
+        alertMessage: this.translocoService.translate(
+          "campoDeActuacion.delete_existing_alert"
+        ),
+        headerStyle: {
+          icon: "pi pi-info-circle",
+          type: "info",
+          text: this.translocoService.translate(
+            "campoDeActuacion.delete_dialog_header"
+          ),
+        },
+      },
+    });
+
+    this.deleteDialogRef.onClose.subscribe((campoDetails: any) => {
+      if (campoDetails) {
+        this.messageService.add({
+          severity: "info",
+          summary: "campoDetails Selected",
+          detail: campoDetails.name,
+        });
+      }
+    });
+  }
+
+  openAlertDialog() {
+    this.alertDialogRef = this.dialogService.open(AlertDialogComponent, {
+      width: "50%",
+      contentStyle: {
+        overflow: "none",
+      },
+      showHeader: false,
+      // position: "left",
+      baseZIndex: 20000,
+      height: "40%",
+      styleClass: "dialogStyle",
+      data: {
+        actionButtons: [
+          {
+            label: this.translocoService.translate(
+              "campoDeActuacion.yes_button"
+            ),
+            action: (input: any) => {
+              console.log("delete");
+              // this.campoDeActuacionService
+              //   .deleteCampoDeActuacions(input)
+              //   .subscribe((data) => {
+              //     console.log(data);
+              //   });
+              this.alertDialogRef?.close();
+            },
+            disabled: false,
+          },
+          {
+            label: this.translocoService.translate(
+              "campoDeActuacion.no_button"
+            ),
+            action: (input: any) => {
+              console.log("cancel");
+              this.alertDialogRef?.close();
+            },
+            disabled: false,
+          },
+        ],
+        alertMessage: this.translocoService.translate(
+          "campoDeActuacion.delete_existing_alert"
+        ),
+        headerStyle: {
+          icon: "pi pi-exclamation-triangle",
+          type: "warn",
+          text: this.translocoService.translate(
+            "campoDeActuacion.alert_dialog_header"
+          ),
+        },
+      },
     });
   }
 
