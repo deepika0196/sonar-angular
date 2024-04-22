@@ -1,1 +1,44 @@
-<p>alert-dialog works!</p>
+<div class="contentStyle">
+  <div class="">
+    <div
+      *ngIf="headerExist"
+      class="{{ 'headerStyle-' + headerStyle.type }} d-flex align-items-center"
+    >
+      <span [className]="headerStyle?.icon + ' iconStyle'"></span
+      ><span>{{ headerStyle?.text }}</span>
+    </div>
+    <div *ngIf="headerExist" class="messageStyle">{{ alertMessage }}</div>
+    <div
+      *ngFor="let field of inputFields; let i = index"
+      class="row align-items-center m-2"
+    >
+      <label htmlFor="username" class="col-5">{{ field.label }}</label>
+      <div class="d-flex flex-column gap-2 col-7">
+        <input
+          pInputText
+          id="username"
+          aria-describedby="username-help"
+          class="inputStyle"
+          [(ngModel)]="inputValues[field.name]"
+        />
+        <!--onfocus="checkValidation($event)" <small id="username-help" class="helperStyle"
+          ><i class="pi pi-exclamation-triangle pr-1"></i
+          >{{ field.required_msg }}</small
+        > -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="app-dialog-footer">
+  <button
+    *ngFor="let button of actionButtons; let i = index"
+    pButton
+    (click)="button.action(inputValues)"
+    class="buttonStyle"
+    [disabled]="button.validate && button.validate(inputValues)"
+  >
+    <!-- [disabled]="button.disabled ? checkValidation() : false" -->
+    <i *ngIf="button.icon" class="{{ button.icon }} p-1"></i>
+    {{ button.label }}
+  </button>
+</div>

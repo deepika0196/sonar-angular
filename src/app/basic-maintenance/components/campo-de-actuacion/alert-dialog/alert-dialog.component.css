@@ -1,0 +1,97 @@
+/* :host ::ng-deep .p-dialog.p-dynamicdialog.dialogStyle {
+    border: 2px dashed red !important;
+    padding: 2px;
+} */
+::ng-deep label,
+.p-button {
+    font-family: 'Open Sans Condensed';
+    font-size: 1rem;
+}
+
+.inputStyle {
+    border: 2px solid rgb(221, 221, 221);
+    height: 2.125rem;
+    font-size: 1rem;
+    font-family: 'Open Sans Condensed';
+    margin-bottom: 0.2rem;
+}
+
+::ng-deep .dialogStyle {
+    border: 0.5rem solid #2394B9;
+    border-radius: 0%;
+    font-family: 'Open Sans Condensed';
+
+    .p-dialog-header,
+    .p-dialog-content {
+        border-radius: 0% !important;
+
+    }
+
+    .p-dialog-content {
+        margin-bottom: 3.2rem;
+        padding: 0rem 0rem 1.5rem;
+    }
+
+    .p-dialog-header {
+        background-color: #2394B9;
+        font-size: 1.125rem;
+    }
+}
+
+
+.app-dialog-footer {
+    padding: 4px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: flex-end;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+}
+
+.buttonStyle {
+    background-color: rgb(17, 121, 155);
+    border-radius: 0rem;
+    border: none;
+    font-size: 1rem;
+    color: rgb(255, 255, 255);
+}
+
+.buttonStyle:not([disabled]):hover {
+    background-color: rgb(17, 121, 155);
+}
+
+.buttonStyle:disabled {
+    background-color: rgb(186, 186, 186);
+    /* background-color: rgb(242, 242, 242); */
+}
+
+.helperStyle {
+    color: white;
+    background-color: red;
+    width: max-content;
+}
+
+.headerStyle-info {
+    border-top: 0.6rem solid #2394B9;
+    padding: 2rem 2rem 0rem;
+    font-size: 1.125rem;
+}
+
+.headerStyle-warn {
+    border-top: 0.6rem solid rgb(251, 169, 0);
+}
+
+::ng-deep .pi.iconStyle {
+    border-radius: 50%;
+    color: white;
+    background-color: #2394B9;
+    font-size: 2rem;
+}
+
+.messageStyle {
+    padding: 2rem;
+}
