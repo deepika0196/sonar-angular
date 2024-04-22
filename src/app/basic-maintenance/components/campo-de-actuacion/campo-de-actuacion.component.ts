@@ -124,13 +124,13 @@ export class CampoDeActuacionComponent implements OnInit {
       header: this.translocoService.translate(
         "campoDeActuacion.add_dialog_header"
       ),
-      width: "70%",
+      width: "50%",
       contentStyle: {
         overflow: "none",
       },
 
       baseZIndex: 10000,
-      height: "50%",
+      // height: "50%",
       data: {
         inputValues: {
           codigo: 0,
@@ -163,7 +163,9 @@ export class CampoDeActuacionComponent implements OnInit {
             action: (input: any) => {
               console.log("cancel", input);
               // this.ref.close();
-              this.openAlertDialog();
+              this.openAlertDialog(
+                this.translocoService.translate("campoDeActuacion.insert_alert")
+              );
             },
             disabled: false,
           },
@@ -209,13 +211,13 @@ export class CampoDeActuacionComponent implements OnInit {
       header: this.translocoService.translate(
         "campoDeActuacion.update_dialog_header"
       ),
-      width: "70%",
+      width: "50%",
       contentStyle: {
         overflow: "none",
       },
 
       baseZIndex: 10000,
-      height: "50%",
+      // height: "50%",
       data: {
         inputValues: campoDetails,
         actionButtons: [
@@ -230,6 +232,9 @@ export class CampoDeActuacionComponent implements OnInit {
               //   .subscribe((data) => {
               //     console.log(data);
               //   });
+              // this.openAlertDialog(
+              //   this.translocoService.translate("campoDeActuacion.insert_alert")
+              // );
               this.updateDialogRef?.close();
             },
             disabled: false,
@@ -283,14 +288,14 @@ export class CampoDeActuacionComponent implements OnInit {
 
   onDeleteHandler(campoDetails: any) {
     this.deleteDialogRef = this.dialogService.open(AlertDialogComponent, {
-      width: "50%",
+      width: "40%",
       contentStyle: {
         overflow: "none",
       },
       showHeader: false,
 
       baseZIndex: 10000,
-      height: "40%",
+      // height: "40%",
       styleClass: "dialogStyle",
       data: {
         actionButtons: [
@@ -306,6 +311,9 @@ export class CampoDeActuacionComponent implements OnInit {
               //   .subscribe((data) => {
               //     console.log(data);
               //   });
+              // this.openAlertDialog(
+              //   this.translocoService.translate("campoDeActuacion.delete_alert")
+              // );
               this.deleteDialogRef?.close();
             },
             disabled: false,
@@ -345,16 +353,16 @@ export class CampoDeActuacionComponent implements OnInit {
     });
   }
 
-  openAlertDialog() {
+  openAlertDialog(alertMessage: string) {
     this.alertDialogRef = this.dialogService.open(AlertDialogComponent, {
-      width: "50%",
+      width: "40%",
       contentStyle: {
         overflow: "none",
       },
       showHeader: false,
       // position: "left",
       baseZIndex: 20000,
-      height: "40%",
+      // height: "40%",
       styleClass: "dialogStyle",
       data: {
         actionButtons: [
@@ -384,9 +392,7 @@ export class CampoDeActuacionComponent implements OnInit {
             disabled: false,
           },
         ],
-        alertMessage: this.translocoService.translate(
-          "campoDeActuacion.delete_existing_alert"
-        ),
+        alertMessage: alertMessage,
         headerStyle: {
           icon: "pi pi-exclamation-triangle",
           type: "warn",

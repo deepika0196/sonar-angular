@@ -2,18 +2,37 @@
   <div class="">
     <div
       *ngIf="headerExist"
+      class="{{
+        'headerStyle-' + headerStyle.type
+      }} d-flex flex-row justify-content-between"
+    >
+      <div class="d-flex flex-column gap-2 col-1"></div>
+      <div class="d-flex flex-column gap-2 col-2">
+        <span
+          [className]="headerStyle?.icon + ' iconStyle-' + headerStyle.type"
+        ></span>
+      </div>
+      <div class="d-flex flex-column gap-2 col-9">
+        <span>{{ headerStyle?.text }}</span>
+        <span class="messageStyle mt-3">{{ alertMessage }}</span>
+      </div>
+    </div>
+    <!-- <div
+      *ngIf="headerExist"
       class="{{ 'headerStyle-' + headerStyle.type }} d-flex align-items-center"
     >
-      <span [className]="headerStyle?.icon + ' iconStyle'"></span
+      <span
+        [className]="headerStyle?.icon + ' iconStyle-' + headerStyle.type"
+      ></span
       ><span>{{ headerStyle?.text }}</span>
     </div>
-    <div *ngIf="headerExist" class="messageStyle">{{ alertMessage }}</div>
+    <div *ngIf="headerExist" class="messageStyle">{{ alertMessage }}</div> -->
     <div
       *ngFor="let field of inputFields; let i = index"
       class="row align-items-center m-2"
     >
-      <label htmlFor="username" class="col-5">{{ field.label }}</label>
-      <div class="d-flex flex-column gap-2 col-7">
+      <label htmlFor="username" class="col-3">{{ field.label }}</label>
+      <div class="d-flex flex-column gap-2 col-9">
         <input
           pInputText
           id="username"

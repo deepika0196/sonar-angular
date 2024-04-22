@@ -77,21 +77,30 @@
 
 .headerStyle-info {
     border-top: 0.6rem solid #2394B9;
-    padding: 2rem 2rem 0rem;
+    padding: 2rem 0rem 0rem;
     font-size: 1.125rem;
 }
 
 .headerStyle-warn {
     border-top: 0.6rem solid rgb(251, 169, 0);
+    padding: 2rem 0rem 0rem;
+    font-size: 1.125rem;
 }
 
-::ng-deep .pi.iconStyle {
-    border-radius: 50%;
-    color: white;
-    background-color: #2394B9;
+::ng-deep .pi.iconStyle-info {
+    /* border-radius: 50%; */
+    color: #2394B9;
+    /* background-color: #2394B9; */
+    font-size: 2rem;
+}
+
+::ng-deep .pi.iconStyle-warn {
+    /* border-radius: 50%; */
+    color: rgb(251, 169, 0);
+    /* background-color: rgb(251, 169, 0); */
     font-size: 2rem;
 }
 
 .messageStyle {
-    padding: 2rem;
+    /* padding: 2rem; */
 }
