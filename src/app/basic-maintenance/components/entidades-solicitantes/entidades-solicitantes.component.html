@@ -1,5 +1,12 @@
 <div class="card">
-  <p-table
+  <generic-table
+    [data]="products"
+    [columns]="columns"
+    [paginatorConfig]="paginatorConfig"
+    [tableConfig]="tableConfig"
+  ></generic-table>
+
+  <!-- <p-table
     [value]="products"
     [paginator]="true"
     [rows]="10"
@@ -70,7 +77,7 @@
         styleClass="p-button-text"
       ></p-button>
     </ng-template>
-  </p-table>
+  </p-table> -->
 </div>
 
 <!-- <p-table

@@ -12,3 +12,7 @@ body {
 app-button {
   margin: 2px;
 }
+
+.table-col-width {
+  width: '20%';
+}

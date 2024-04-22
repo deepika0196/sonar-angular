@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import {
+  PaginatorConfig,
+  TableConfig,
+} from 'src/app/shared/components/generic-table/generic-table.config';
 
 @Component({
   selector: 'app-entidades-solicitantes',
@@ -9368,6 +9372,44 @@ export class EntidadesSolicitantesComponent {
       quantity: 25,
       inventoryStatus: 'INSTOCK',
       rating: 8,
+    },
+  ];
+  tableConfig: TableConfig = {
+    rows: 10,
+    styleClass: 'paginator-override',
+    paginator: true,
+    sortable: true,
+    tableStyle: { 'min-width': '60rem' },
+  };
+
+  paginatorConfig: PaginatorConfig = {
+    showCurrentPageReport: true,
+    currentPageReportTemplate:
+      'Showing {first} to {last} of {totalRecords} entries',
+    class: 'paginator-override',
+    rowsPerPageOptions: [10, 25, 50],
+  };
+
+  columns = [
+    { field: 'code', header: 'Code', sortable: true, class: 'table-col-width' },
+    { field: 'name', header: 'Name', sortable: true, class: 'table-col-width' },
+    {
+      field: 'category',
+      header: 'Category',
+      sortable: true,
+      class: 'table-col-width',
+    },
+    {
+      field: 'quantity',
+      header: 'Quantity',
+      sortable: true,
+      class: 'table-col-width',
+    },
+    {
+      field: 'price',
+      header: 'Price',
+      sortable: true,
+      class: 'table-col-width',
     },
   ];
 }

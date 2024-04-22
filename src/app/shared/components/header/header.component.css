@@ -1,3 +1,8 @@
+.logo2 {
+  height: 2.8rem;
+  width: 4.5rem;
+  margin-bottom: 0.9rem;
+}
 .logo {
   height: 2.6rem;
 }
@@ -39,28 +44,27 @@ ng-deep .p-menubar .p-submenu-list {
   font-size: 1rem;
 }
 
-/* ::ng-deep .p-dropdown .p-dropdown-trigger-icon {
+::ng-deep.dropdown-css-override {
   display: none;
   padding: 0%;
   border: none;
+  .p-dropdown-items-wrapper {
+    margin-top: 0.5rem;
+  }
+  .p-icon {
+    width: 0rem;
+    height: 0rem;
+  }
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    padding: 0.45rem 0.7rem !important;
+  }
+  .p-dropdown-trigger {
+    width: 1rem !important;
+  }
 }
-::ng-deep .p-dropdown .p-dropdown-trigger {
-  width: 0.2rem;
-  border: 0 none !important;
-} */
 
-/* ::ng-deep .p-component {
-  border: none;
-} */
-/* ::ng-deep .p-dropdown-items-wrapper {
-  margin-top: 6px;
-} */
-
-::ng-deep .p-button.p-button-icon-only {
+::ng-deep .nav-button {
   width: 3rem;
   padding: 0.75rem 0;
-  color: black;
+  color: black !important;
 }
-/* ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  padding: 0.25rem 0.7rem !important;
-} */

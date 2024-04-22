@@ -16,6 +16,7 @@
     </ng-template>
     <ng-template pTemplate="end">
       <p-dropdown
+        styleClass="header-dropdown-override"
         [options]="languages"
         [(ngModel)]="selectedLanguage"
         (onChange)="changeLanguage()"
