@@ -4,7 +4,8 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Language, MenuItem } from 'src/app/shared/interfaces/header.interface';
 import { TranslocoHttpLoader } from 'src/app/transloco-root.module';
 import { Subject, takeUntil } from 'rxjs';
-import { GlobalConstant } from 'src/app/core/consts/globalConstants';
+import { GlobalConstant } from 'src/app/core/constants/globalConstants';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
