@@ -2,34 +2,34 @@
   <span class="headerStyle">{{ t("campoDeActuacion.title") }}</span>
   <div class="d-flex flex-row justify-content-between mt-2">
     <div class="d-flex flex-column gap-2 col-2">
-      <label htmlFor="username">{{ t("campoDeActuacion.field_id") }}</label>
+      <label htmlFor="codigo">{{ t("campoDeActuacion.field_id") }}</label>
       <input
         pInputText
-        id="username"
-        aria-describedby="username-help"
-        [(ngModel)]="id"
+        id="codigo"
+        aria-describedby="codigo-help"
+        [(ngModel)]="codigo"
       />
     </div>
     <div class="d-flex flex-column gap-2 col-5">
-      <label htmlFor="username">{{
+      <label htmlFor="deseccion">{{
         t("campoDeActuacion.field_description")
       }}</label>
       <input
         pInputText
-        id="username"
-        aria-describedby="username-help"
-        [(ngModel)]="description"
+        id="deseccion"
+        aria-describedby="deseccion-help"
+        [(ngModel)]="deseccion"
       />
     </div>
     <div class="d-flex flex-column gap-2 col-5">
-      <label htmlFor="username">{{
+      <label htmlFor="deseccionVal">{{
         t("campoDeActuacion.field_descriptionVal")
       }}</label>
       <input
         pInputText
-        id="username"
-        aria-describedby="username-help"
-        [(ngModel)]="descriptionVal"
+        id="deseccionVal"
+        aria-describedby="deseccionVal-help"
+        [(ngModel)]="deseccionVal"
       />
     </div>
   </div>
@@ -62,19 +62,19 @@
   <div class="card">
     <p-toast></p-toast>
     <p-table
+      #dt
       [value]="campoDeActuacions"
       editMode="row"
-      #dt
       [rows]="10"
       [paginator]="true"
       [first]="first"
-      [globalFilterFields]="['id', 'description', 'descriptionVal']"
       [tableStyle]="{ 'min-width': '50rem' }"
       [rowHover]="true"
       dataKey="id"
       [totalRecords]="98"
       [rowsPerPageOptions]="[10, 25, 50]"
       [showCurrentPageReport]="true"
+      paginatorLocale="fa-IR"
       [currentPageReportTemplate]="
         t('campoDeActuacion.pagination_text', {
           first: '{first}',

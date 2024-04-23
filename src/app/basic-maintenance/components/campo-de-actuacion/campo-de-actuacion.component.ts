@@ -8,7 +8,7 @@ import { CampoDeActuacionService } from "../../services/campo-de-actuacion.servi
 
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 
-import { AlertDialogComponent } from "./alert-dialog/alert-dialog.component";
+import { AlertDialogComponent } from "../../../shared/components/alert-dialog/alert-dialog.component";
 import { TranslocoService } from "@ngneat/transloco";
 
 @Component({
@@ -44,11 +44,11 @@ export class CampoDeActuacionComponent implements OnInit {
     private translocoService: TranslocoService // private ref: DynamicDialogRef
   ) {}
 
-  id = "";
+  codigo = "";
 
-  description = "";
+  deseccion = "";
 
-  descriptionVal = "";
+  deseccionVal = "";
 
   ngOnInit() {
     this.campoDeActuacionService
@@ -96,9 +96,9 @@ export class CampoDeActuacionComponent implements OnInit {
   }
 
   clearAll() {
-    this.id = "";
-    this.description = "";
-    this.descriptionVal = "";
+    this.codigo = "";
+    this.deseccion = "";
+    this.deseccionVal = "";
     this.campoDeActuacions = [...this.cloneCampoDeActuacionRecords];
   }
 
@@ -108,13 +108,13 @@ export class CampoDeActuacionComponent implements OnInit {
         obj.codigo
           ?.toString()
           .toLowerCase()
-          .includes(this.id.trim().toLowerCase()) &&
+          .includes(this.codigo.trim().toLowerCase()) &&
         obj.deseccion
           ?.toLowerCase()
-          .includes(this.description.trim().toLowerCase()) &&
+          .includes(this.deseccion.trim().toLowerCase()) &&
         obj.deseccionVal
           ?.toLowerCase()
-          .includes(this.descriptionVal.trim().toLowerCase())
+          .includes(this.deseccionVal.trim().toLowerCase())
     );
     this.campoDeActuacions = [...values];
   }
@@ -196,13 +196,14 @@ export class CampoDeActuacionComponent implements OnInit {
     });
 
     this.addDialogRef.onClose.subscribe((campoDetails: any) => {
-      if (campoDetails) {
-        this.messageService.add({
-          severity: "info",
-          summary: "campoDetails Selected",
-          detail: campoDetails.name,
-        });
-      }
+      console.log("Shs");
+      this.messageService.add({
+        severity: "info",
+        summary: "campoDetails Selected",
+        detail: "Sh",
+      });
+      // if (campoDetails) {
+      // }
     });
   }
 
@@ -227,11 +228,11 @@ export class CampoDeActuacionComponent implements OnInit {
             ),
             action: (input: any) => {
               console.log("add", input);
-              // this.campoDeActuacionService
-              //   .updateCampoDeActuacions(input)
-              //   .subscribe((data) => {
-              //     console.log(data);
-              //   });
+              this.campoDeActuacionService
+                .updateCampoDeActuacions(input)
+                .subscribe((data) => {
+                  console.log(data);
+                });
               // this.openAlertDialog(
               //   this.translocoService.translate("campoDeActuacion.insert_alert")
               // );
