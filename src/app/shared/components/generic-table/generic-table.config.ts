@@ -10,5 +10,5 @@ export interface TableConfig {
   sortable: boolean;
   paginator: boolean;
   styleClass?: string;
-  tableStyle?: { 'min-width': string };
+  tableStyle?: { 'min-width': string; 'max-height'?: string };
 }
