@@ -28,7 +28,6 @@
     "add_button": "Alta",
     "previous": "Anterior",
     "next": "Següent",
-    "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})",
     "delete_alert": "No s'ha pogut esborrar el registre perquè existix informació associada.",
     "insert_alert": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
     "descriptionval_required": "Ha d'afegir una descripció en valencià.",
@@ -75,5 +74,6 @@
   "btn_txt": "ca_Afegir",
   "snackbar_txt_success": "ca_Dades mostrades correctament",
   "snackbar_txt_error": "ca_No s'han pogut obtenir les dades",
-  "snackbar_txt_validate": "ca_Completeu les dades obligatòries"
+  "snackbar_txt_validate": "ca_Completeu les dades obligatòries",
+  "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})"
 }

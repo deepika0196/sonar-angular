@@ -1,8 +1,12 @@
-<div class="mainStyle" style="flex: 0 0 100%" *transloco="let t">
-  <span class="headerStyle">{{ t("campoDeActuacion.title") }}</span>
+<div
+  class="mainStyle"
+  style="flex: 0 0 100%"
+  *transloco="let t"
+>
+  <span class="headerStyle">{{ t('campoDeActuacion.title') }}</span>
   <div class="d-flex flex-row justify-content-between mt-2">
     <div class="d-flex flex-column gap-2 col-2">
-      <label htmlFor="username">{{ t("campoDeActuacion.field_id") }}</label>
+      <label htmlFor="username">{{ t('campoDeActuacion.field_id') }}</label>
       <input
         pInputText
         id="username"
@@ -12,7 +16,7 @@
     </div>
     <div class="d-flex flex-column gap-2 col-5">
       <label htmlFor="username">{{
-        t("campoDeActuacion.field_description")
+        t('campoDeActuacion.field_description')
       }}</label>
       <input
         pInputText
@@ -23,7 +27,7 @@
     </div>
     <div class="d-flex flex-column gap-2 col-5">
       <label htmlFor="username">{{
-        t("campoDeActuacion.field_descriptionVal")
+        t('campoDeActuacion.field_descriptionVal')
       }}</label>
       <input
         pInputText
@@ -61,7 +65,15 @@
   </div>
   <div class="card">
     <p-toast></p-toast>
-    <p-table
+    <generic-table
+      [data]="campoDeActuacions"
+      [columns]="columns"
+      [paginatorConfig]="paginatorConfig"
+      [tableConfig]="tableConfig"
+      (openEdit)="openUpdateDialog($event)"
+      (openDelete)="onDeleteHandler($event)"
+    ></generic-table>
+    <!-- <p-table
       [value]="campoDeActuacions"
       editMode="row"
       #dt
@@ -76,7 +88,7 @@
       [rowsPerPageOptions]="[10, 25, 50]"
       [showCurrentPageReport]="true"
       [currentPageReportTemplate]="
-        t('campoDeActuacion.pagination_text', {
+        t('pagination_text', {
           first: '{first}',
           last: '{last}',
           totalRecords: '{totalRecords}'
@@ -86,17 +98,20 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="codigo" style="width: 10%">
-            {{ t("campoDeActuacion.field_id") }}
+          <th
+            pSortableColumn="codigo"
+            style="width: 10%"
+          >
+            {{ t('campoDeActuacion.field_id') }}
             <p-sortIcon field="codigo">
               <img src="assets/images/sort_both.png"
             /></p-sortIcon>
           </th>
           <th style="width: 40%">
-            {{ t("campoDeActuacion.field_description") }}
+            {{ t('campoDeActuacion.field_description') }}
           </th>
           <th style="width: 40%">
-            {{ t("campoDeActuacion.field_descriptionVal") }}
+            {{ t('campoDeActuacion.field_descriptionVal') }}
           </th>
           <th style="width: 10%"></th>
         </tr>
@@ -184,37 +199,6 @@
           </td>
         </tr>
       </ng-template>
-      <!-- <ng-template pTemplate="paginatorleft" let-state>
-        <div class="d-flex flex-row justify-content-between">
-          <span class="d-flex flex-column justify-content-center gap-2 col-8">{{
-            t('campoDeActuacion.pagination_text', {
-              first: state.first,
-              last:
-                state.first + state.rows > state.totalRecords
-                  ? state.totalRecords
-                  : state.first + state.rows,
-              totalRecords: state.totalRecords
-            })
-          }}</span>
-          <p-button
-            class="d-flex flex-column gap-2 col-4"
-            type="button"
-            [label]="t('campoDeActuacion.previous')"
-            styleClass="p-button-text paginator-button"
-            (click)="prev()"
-            [disabled]="isFirstPage()"
-          ></p-button>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="paginatorright">
-        <p-button
-          type="button"
-          [label]="t('campoDeActuacion.next')"
-          styleClass="p-button-text paginator-button"
-          (click)="next()"
-          [disabled]="isLastPage()"
-        ></p-button>
-      </ng-template> -->
-    </p-table>
+    </p-table> -->
   </div>
 </div>

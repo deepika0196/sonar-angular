@@ -36,8 +36,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.items = [...this.headerService.getHeaderMenu()];
       });
-
-    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {

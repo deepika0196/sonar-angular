@@ -14,7 +14,6 @@
     "add_button": "Add",
     "previous": "Former",
     "next": "Following",
-    "pagination_text": "Records from {{first}} to {{last}} (Total {{totalRecords}})",
     "delete_alert": "The record could not be deleted because there is associated information.",
     "insert_alert": "The record has already been inserted or is duplicated. Review it.",
     "descriptionval_required": "You must add a description in Valencian.",
@@ -75,5 +74,6 @@
   "btn_txt": "Add",
   "snackbar_txt_success": "Data displayed correctly",
   "snackbar_txt_error": "Could not get data",
-  "snackbar_txt_validate": "Fill in the required information"
+  "snackbar_txt_validate": "Fill in the required information",
+  "pagination_text": "Records from {{first}} to {{last}} (Total {{totalRecords}})"
 }

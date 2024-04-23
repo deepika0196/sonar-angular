@@ -19,6 +19,7 @@ import { MenuExampleComponent } from './shared/components/menu/menu.component';
 import { LoginSimulatedComponent } from './shared/components/login-simulated/login-simulated.component';
 import { PrimeNgModule } from 'src/app/prime-ng.module';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { SharedModule } from 'primeng/api';
 
 // import { MenuItem } from 'primeng/api';
 

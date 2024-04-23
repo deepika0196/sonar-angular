@@ -1,4 +1,4 @@
-<div class="card">
+<div *transloco="let t">
   <p-table
     [value]="data"
     [paginator]="tableConfig.paginator"
@@ -8,17 +8,24 @@
     [showCurrentPageReport]="paginatorConfig.showCurrentPageReport"
     [rowsPerPageOptions]="paginatorConfig.rowsPerPageOptions"
     styleClass="{{ tableConfig.styleClass }}"
-    currentPageReportTemplate="{{ paginatorConfig.currentPageReportTemplate }}"
+    [currentPageReportTemplate]="
+      t('pagination_text', {
+        first: '{first}',
+        last: '{last}',
+        totalRecords: '{totalRecords}'
+      })
+    "
   >
     <ng-template pTemplate="header">
       <tr>
         <th
           *ngFor="let column of columns; let ind = index"
           pSortableColumn="{{ column.field }}"
+          [pSortableColumnDisabled]="!column.sortable"
         >
-          {{ column.header }}
+          {{ column.header | transloco }}
           <p-sortIcon
-            *ngIf="tableConfig.sortable"
+            *ngIf="column.sortable"
             field="{{ column.field }}"
           ></p-sortIcon>
         </th>
@@ -36,12 +43,14 @@
         >
           {{ item[column.field] }}
         </td>
-        <td>
+        <td *ngIf="tableConfig.showDelete || tableConfig.showEdit">
           <div>
             <button
+              *ngIf="tableConfig.showEdit"
               pButton
               pRipple
               type="button"
+              (click)="onEdit(item)"
               class="p-button-rounded p-button-text p-0 mr-2"
             >
               <img
@@ -50,10 +59,12 @@
               />
             </button>
             <button
+              *ngIf="tableConfig.showDelete"
               pButton
               pRipple
               type="button"
               class="p-button-rounded p-button-text p-0 ml-2"
+              (click)="onDelete(item)"
             >
               <img
                 src="assets/images/glyphicons-halflings-7-bin@2x.png"
