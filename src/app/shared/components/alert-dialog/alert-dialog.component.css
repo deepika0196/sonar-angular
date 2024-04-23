@@ -4,7 +4,7 @@
 } */
 ::ng-deep label,
 .p-button {
-    font-family: 'Open Sans Condensed';
+    /* font-family: 'Open Sans Condensed'; */
     font-size: 1rem;
 }
 
@@ -12,14 +12,14 @@
     border: 2px solid rgb(221, 221, 221);
     height: 2.125rem;
     font-size: 1rem;
-    font-family: 'Open Sans Condensed';
+    /* font-family: 'Open Sans Condensed'; */
     margin-bottom: 0.2rem;
 }
 
 ::ng-deep .dialogStyle {
     border: 0.5rem solid #2394B9;
     border-radius: 0%;
-    font-family: 'Open Sans Condensed';
+    /* font-family: 'Open Sans Condensed'; */
 
     .p-dialog-header,
     .p-dialog-content {
