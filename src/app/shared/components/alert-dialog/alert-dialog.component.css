@@ -1,10 +1,5 @@
-/* :host ::ng-deep .p-dialog.p-dynamicdialog.dialogStyle {
-    border: 2px dashed red !important;
-    padding: 2px;
-} */
 ::ng-deep label,
 .p-button {
-    /* font-family: 'Open Sans Condensed'; */
     font-size: 1rem;
 }
 
@@ -12,14 +7,25 @@
     border: 2px solid rgb(221, 221, 221);
     height: 2.125rem;
     font-size: 1rem;
-    /* font-family: 'Open Sans Condensed'; */
     margin-bottom: 0.2rem;
 }
 
+.labelStyle {
+    font-weight: normal;
+}
+
+.inputStyle:hover,
+.inputStyle:focus {
+    border: 2px solid rgb(12, 85, 109);
+}
+
+.inputStyle.p-inputtext {
+    color: rgb(85, 85, 85);
+}
+
 ::ng-deep .dialogStyle {
-    border: 0.5rem solid #2394B9;
+    border: 0.5rem solid #19afe0;
     border-radius: 0%;
-    /* font-family: 'Open Sans Condensed'; */
 
     .p-dialog-header,
     .p-dialog-content {
@@ -28,19 +34,25 @@
     }
 
     .p-dialog-content {
-        margin-bottom: 3.2rem;
-        padding: 0rem 0rem 1.5rem;
+        margin-bottom: 2.7rem;
+        padding: 0rem 0rem 0rem;
     }
 
     .p-dialog-header {
-        background-color: #2394B9;
-        font-size: 1.125rem;
+        background-color: #19afe0;
+        padding: 1.2rem 1.2rem 1.5rem;
+
+        .p-dialog-title {
+            font-weight: normal;
+            font-size: 2.813rem;
+            color: rgb(255, 255, 255);
+        }
     }
+
 }
 
 
 .app-dialog-footer {
-    padding: 4px;
     display: flex;
     flex-direction: row;
     gap: 8px;
@@ -60,8 +72,12 @@
     color: rgb(255, 255, 255);
 }
 
+.alertStyle {
+    padding: 1.2rem 1.2rem 1.2rem 0rem;
+}
+
 .buttonStyle:not([disabled]):hover {
-    background-color: rgb(17, 121, 155);
+    background-color: rgb(12, 85, 109);
 }
 
 .buttonStyle:disabled {
@@ -76,31 +92,28 @@
 }
 
 .headerStyle-info {
-    border-top: 0.6rem solid #2394B9;
+    border-top: 0.7rem solid #19afe0;
     padding: 2rem 0rem 0rem;
     font-size: 1.125rem;
 }
 
 .headerStyle-warn {
-    border-top: 0.6rem solid rgb(251, 169, 0);
+    border-top: 0.7rem solid rgb(251, 169, 0);
     padding: 2rem 0rem 0rem;
     font-size: 1.125rem;
 }
 
 ::ng-deep .pi.iconStyle-info {
-    /* border-radius: 50%; */
     color: #2394B9;
-    /* background-color: #2394B9; */
     font-size: 2rem;
 }
 
 ::ng-deep .pi.iconStyle-warn {
-    /* border-radius: 50%; */
     color: rgb(251, 169, 0);
-    /* background-color: rgb(251, 169, 0); */
     font-size: 2rem;
 }
 
 .messageStyle {
-    /* padding: 2rem; */
+    padding: 0rem 0rem 2.8rem;
+    word-wrap: break-word;
 }

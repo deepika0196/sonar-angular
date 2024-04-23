@@ -6,32 +6,43 @@
   <span class="headerStyle">{{ t('campoDeActuacion.title') }}</span>
   <div class="d-flex flex-row justify-content-between mt-2">
     <div class="d-flex flex-column gap-2 col-2">
-      <label htmlFor="codigo">{{ t('campoDeActuacion.field_id') }}</label>
+      <label
+        htmlFor="codigo"
+        class="labelStyle"
+        >{{ t('campoDeActuacion.field_id') }}</label
+      >
       <input
         pInputText
         id="codigo"
+        class="inputStyle"
         aria-describedby="codigo-help"
         [(ngModel)]="codigo"
       />
     </div>
     <div class="d-flex flex-column gap-2 col-5">
-      <label htmlFor="deseccion">{{
-        t('campoDeActuacion.field_description')
-      }}</label>
+      <label
+        htmlFor="deseccion"
+        class="labelStyle"
+        >{{ t('campoDeActuacion.field_description') }}</label
+      >
       <input
         pInputText
         id="deseccion"
+        class="inputStyle"
         aria-describedby="deseccion-help"
         [(ngModel)]="deseccion"
       />
     </div>
     <div class="d-flex flex-column gap-2 col-5">
-      <label htmlFor="deseccionVal">{{
-        t('campoDeActuacion.field_descriptionVal')
-      }}</label>
+      <label
+        htmlFor="deseccionVal"
+        class="labelStyle"
+        >{{ t('campoDeActuacion.field_descriptionVal') }}</label
+      >
       <input
         pInputText
         id="deseccionVal"
+        class="inputStyle"
         aria-describedby="deseccionVal-help"
         [(ngModel)]="deseccionVal"
       />
@@ -73,131 +84,5 @@
       (openEdit)="openUpdateDialog($event)"
       (openDelete)="onDeleteHandler($event)"
     ></generic-table>
-    <!-- <p-table
-      [value]="campoDeActuacions"
-      editMode="row"
-      [rows]="10"
-      [paginator]="true"
-      [first]="first"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      [rowHover]="true"
-      dataKey="id"
-      [totalRecords]="98"
-      [rowsPerPageOptions]="[10, 25, 50]"
-      [showCurrentPageReport]="true"
-      paginatorLocale="fa-IR"
-      [currentPageReportTemplate]="
-        t('pagination_text', {
-          first: '{first}',
-          last: '{last}',
-          totalRecords: '{totalRecords}'
-        })
-      "
-      (onPage)="pageChange($event)"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th
-            pSortableColumn="codigo"
-            style="width: 10%"
-          >
-            {{ t('campoDeActuacion.field_id') }}
-            <p-sortIcon field="codigo">
-              <img src="assets/images/sort_both.png"
-            /></p-sortIcon>
-          </th>
-          <th style="width: 40%">
-            {{ t('campoDeActuacion.field_description') }}
-          </th>
-          <th style="width: 40%">
-            {{ t('campoDeActuacion.field_descriptionVal') }}
-          </th>
-          <th style="width: 10%"></th>
-        </tr>
-      </ng-template>
-      <ng-template
-        pTemplate="body"
-        let-campoDetails
-        let-editing="editing"
-        let-ri="rowIndex"
-      >
-        <tr [pEditableRow]="campoDetails">
-          <td>
-            <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input
-                  pInputText
-                  type="text"
-                  [(ngModel)]="campoDetails.codigo"
-                />
-              </ng-template>
-              <ng-template pTemplate="output">
-                {{ campoDetails.codigo }}
-              </ng-template>
-            </p-cellEditor>
-          </td>
-          <td>
-            <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input
-                  pInputText
-                  type="text"
-                  [(ngModel)]="campoDetails.deseccion"
-                  required
-                />
-              </ng-template>
-              <ng-template pTemplate="output">
-                {{ campoDetails.deseccion }}
-              </ng-template>
-            </p-cellEditor>
-          </td>
-          <td>
-            <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input
-                  pInputText
-                  type="text"
-                  [(ngModel)]="campoDetails.deseccionVal"
-                  required
-                />
-              </ng-template>
-              <ng-template pTemplate="output">
-                {{ campoDetails.deseccionVal }}
-              </ng-template>
-            </p-cellEditor>
-          </td>
-          <td>
-            <div class="flex align-items-center justify-content-center gap-2">
-              <button
-                *ngIf="!editing"
-                pButton
-                pRipple
-                type="button"
-                (click)="openUpdateDialog(campoDetails)"
-                class="p-button-rounded p-button-text p-0 mr-2"
-              >
-                <img
-                  src="assets/images/glyphicons-halflings-13-pencil@2x.png"
-                  height="20"
-                />
-              </button>
-              <button
-                *ngIf="!editing"
-                pButton
-                pRipple
-                type="button"
-                (click)="onDeleteHandler(campoDetails)"
-                class="p-button-rounded p-button-text p-0 ml-2"
-              >
-                <img
-                  src="assets/images/glyphicons-halflings-7-bin@2x.png"
-                  height="20"
-                />
-              </button>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table> -->
   </div>
 </div>

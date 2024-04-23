@@ -19,7 +19,7 @@
   },
 
   "campoDeActuacion": {
-    "title": "Campos d'actuació",
+    "title": "Camps d'actuació",
     "field_id": "Codi",
     "field_description": "Descripció castellà",
     "field_descriptionVal": "Descripció valencià",
@@ -32,12 +32,12 @@
     "insert_alert": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
     "descriptionval_required": "Ha d'afegir una descripció en valencià.",
     "description_required": "Ha d'afegir una descripció en castellà.",
-    "delete_existing_alert": "01015: Desitja esborrar definitivament este registre?",
+    "delete_existing_alert": "Desitja esborrar definitivament este registre?",
     "modify_alert": "Desitja guardar els canvis realitzats ?",
     "add_dialog_header": "Afegir Camp d'actuació",
     "delete_dialog_header": "Consulta",
     "update_dialog_header": "Moficiar Camp d'actuació",
-    "alert_dialog_header": "Atención",
+    "alert_dialog_header": "Atenció",
     "save_button": "Guardar",
     "cancel_button": "Cancel·lar",
     "modify_button": "Moficiar",
