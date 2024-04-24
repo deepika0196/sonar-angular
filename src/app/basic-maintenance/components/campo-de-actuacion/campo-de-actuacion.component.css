@@ -1,104 +1,45 @@
-.mainStyle,
-label,
-:host ::ng-deep .p-button .p-button-label,
-th,
-td {
-  /* font-family: 'Open Sans Condensed'; */
+.labelStyle {
+    font-size: 1rem;
+    color: rgb(51, 51, 51);
 }
 
-label {
-  font-size: 1rem;
-  color: rgb(51, 51, 51);
+.inputStyle {
+    border: 2px solid rgb(221, 221, 221);
+    height: 2.125rem;
+    font-size: 1rem;
 }
 
-input {
-  border: 2px solid rgb(221, 221, 221);
-  height: 2.125rem;
-  font-size: 1rem;
-}
-
-:host ::ng-deep .p-inputtext {
-  color: rgb(85, 85, 85);
+.inputStyle.p-inputtext {
+    color: rgb(85, 85, 85);
 }
 
 :host ::ng-deep .p-button.actionStyle {
-  background-color: rgb(17, 121, 155);
-  border-radius: 0rem;
+    background-color: rgb(17, 121, 155);
+    border-radius: 0rem;
 
-  .pi {
-    color: rgb(25, 175, 224);
-  }
+    .pi {
+        color: #19afe0;
+    }
 }
 
 .headerStyle {
-  color: #2394b9;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-:host ::ng-deep .p-datatable .p-sortable-column .p-sortable-column-icon:before {
-  /* content: "";
-    background-image: url("../../../../assets/images/sort_both.png"); */
-  content: '\e903';
-}
-
-.paginator-button {
-  /* font-family: 'Open Sans Condensed'; */
-  /* background: none; */
-}
-
-:host ::ng-deep .p-paginator .p-paginator-prev {
-  /* display: none; */
-}
-
-:host ::ng-deep .p-paginator .p-paginator-next {
-  /* display: none; */
-}
-
-:host ::ng-deep .p-paginator {
-  /* display: flex;
-    justify-content: space-between; */
-  padding: 0.5rem 0.5rem;
-  /* font-family: 'Open Sans Condensed'; */
-  font-size: 1rem;
-  float: right;
-}
-
-:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
-  border-radius: 0%;
-  color: rgb(102, 102, 102);
-}
-
-:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background-color: rgb(25, 175, 224);
-  color: rgb(255, 255, 255);
-  border-radius: 0.2rem;
-}
-
-::ng-deep .p-paginator-right-content {
-  /* margin-left: 0 !important; */
-}
-
-::ng-deep .p-paginator-left-content {
-  /* margin-right: 0 !important; */
-}
-
-::ng-deep .p-dropdown .p-dropdown-label {
-  /* background: transparent;
-    border: 1px solid grey;
-    padding: 0.75rem 0.75rem !important; */
+    color: #19afe0;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 ::ng-deep .paginator-override {
-  .p-paginator .p-paginator-pages .p-paginator-page {
-    border-radius: 10% !important;
-  }
-  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-    background: #14b6eb;
-    border-color: #14b6eb;
-    color: white;
-  }
-  .p-paginator {
-    justify-content: right;
-  }
+    .p-paginator .p-paginator-pages .p-paginator-page {
+        border-radius: 10% !important;
+    }
+
+    .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+        background: #19afe0;
+        border-color: #19afe0;
+        color: white;
+    }
+
+    .p-paginator {
+        justify-content: right;
+    }
 }

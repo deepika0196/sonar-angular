@@ -100,36 +100,6 @@ export class CampoDeActuacionComponent implements OnInit {
     // });
   }
 
-  onRowEditInit(campoDetails: CampoDeActuacion) {
-    this.clonedCampoDeActuacion[campoDetails.codigo] = {
-      ...campoDetails,
-    };
-  }
-
-  onRowEditSave(campoDetails: CampoDeActuacion) {
-    if (campoDetails.codigo) {
-      delete this.clonedCampoDeActuacion[campoDetails.codigo];
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'campoDetails is updated',
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Invalid Price',
-      });
-    }
-  }
-
-  onRowEditCancel(campoDetails: CampoDeActuacion, index: number) {
-    this.campoDeActuacions[index] =
-      this.clonedCampoDeActuacion[campoDetails.codigo];
-    delete this.clonedCampoDeActuacion[campoDetails.codigo];
-  }
-
   clearAll() {
     this.codigo = '';
     this.deseccion = '';
@@ -163,7 +133,7 @@ export class CampoDeActuacionComponent implements OnInit {
       contentStyle: {
         overflow: 'none',
       },
-
+      closable: false,
       baseZIndex: 10000,
       // height: "50%",
       data: {
@@ -185,6 +155,11 @@ export class CampoDeActuacionComponent implements OnInit {
               //     console.log(data);
               //   });
               this.addDialogRef?.close();
+              this.messageService.add({
+                severity: 'info',
+                summary: 'Campos De Actuacion',
+                detail: 'New Record Saved',
+              });
             },
             validate: (input: any) => {
               return Object.values(input).some((x) => x === null || x === '');
@@ -228,14 +203,6 @@ export class CampoDeActuacionComponent implements OnInit {
       },
       styleClass: 'dialogStyle',
     });
-
-    this.addDialogRef.onClose.subscribe((campoDetails: any) => {
-      this.messageService.add({
-        severity: 'info',
-        summary: 'campoDetails Selected',
-        detail: 'Sh',
-      });
-    });
   }
 
   openUpdateDialog(campoDetails: any) {
@@ -247,7 +214,7 @@ export class CampoDeActuacionComponent implements OnInit {
       contentStyle: {
         overflow: 'none',
       },
-
+      closable: false,
       baseZIndex: 10000,
       // height: "50%",
       data: {
@@ -351,7 +318,7 @@ export class CampoDeActuacionComponent implements OnInit {
             label: this.translocoService.translate(
               'campoDeActuacion.no_button'
             ),
-            action: (input: any) => {
+            action: () => {
               console.log('cancel');
               this.deleteDialogRef?.close();
             },
@@ -414,7 +381,7 @@ export class CampoDeActuacionComponent implements OnInit {
             label: this.translocoService.translate(
               'campoDeActuacion.no_button'
             ),
-            action: (input: any) => {
+            action: () => {
               console.log('cancel');
               this.alertDialogRef?.close();
             },
@@ -431,30 +398,5 @@ export class CampoDeActuacionComponent implements OnInit {
         },
       },
     });
-  }
-
-  next() {
-    if (this.first + this.rows > this.campoDeActuacions.length) return;
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    if (this.first - this.rows < 0) return;
-    this.first = this.first - this.rows;
-  }
-
-  isLastPage(): boolean {
-    return this.campoDeActuacions
-      ? this.first + this.rows > this.campoDeActuacions.length
-      : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.campoDeActuacions ? this.first === 0 : true;
-  }
-
-  pageChange(event: any) {
-    this.first = event.first;
-    this.rows = event.rows;
   }
 }

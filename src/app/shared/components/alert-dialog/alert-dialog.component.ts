@@ -30,8 +30,4 @@ export class AlertDialogComponent implements OnInit {
         : false;
     this.inputValues = this.dialogConfig.data.inputValues;
   }
-
-  checkValidation() {
-    return Object.values(this.inputValues).some((x) => x === null || x === '');
-  }
 }

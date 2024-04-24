@@ -32,7 +32,7 @@
     "insert_alert": "El registro ya ha sido insertado o está duplicado. Revíselo.",
     "descriptionval_required": "Debe añadir una descripción en valenciano.",
     "description_required": "Debe añadir una descripción en castellano.",
-    "delete_existing_alert": "01015 : ¿Desea borrar definitivamente este registro?",
+    "delete_existing_alert": "¿Desea borrar definitivamente este registro?",
     "modify_alert": "¿Desea guardar los cambios realizados ?",
     "add_dialog_header": "Añadir Campo de actuación",
     "delete_dialog_header": "Consulta",
