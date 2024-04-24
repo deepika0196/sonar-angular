@@ -1,29 +1,29 @@
 .labelStyle {
     font-size: 1rem;
-    color: rgb(51, 51, 51);
+    color: var(--grey-black);
 }
 
 .inputStyle {
-    border: 2px solid rgb(221, 221, 221);
+    border: 2px solid var(--light-grey);
     height: 2.125rem;
     font-size: 1rem;
 }
 
 .inputStyle.p-inputtext {
-    color: rgb(85, 85, 85);
+    color: var(--dark-grey);
 }
 
 :host ::ng-deep .p-button.actionStyle {
-    background-color: rgb(17, 121, 155);
+    background-color: var(--blue);
     border-radius: 0rem;
 
     .pi {
-        color: #19afe0;
+        color: var(--light-blue);
     }
 }
 
 .headerStyle {
-    color: #19afe0;
+    color: var(--light-blue);
     font-size: 20px;
     font-weight: bold;
 }
@@ -34,8 +34,8 @@
     }
 
     .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-        background: #19afe0;
-        border-color: #19afe0;
+        background: var(--light-blue);
+        border-color: var(--light-blue);
         color: white;
     }
 

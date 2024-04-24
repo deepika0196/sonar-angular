@@ -31,6 +31,7 @@
           id="{{ field.name }}"
           class="inputStyle"
           [(ngModel)]="inputValues[field.name]"
+          [disabled]="field.disabled ? field.disabled : 'false'"
         />
         <!--onfocus="checkValidation($event)" <small id="username-help" class="helperStyle"
           ><i class="pi pi-exclamation-triangle pr-1"></i

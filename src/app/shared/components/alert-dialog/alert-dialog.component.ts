@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { ActionButtons } from '@app/basic-maintenance/interfaces/action-buttons';
+import {
+  ActionButtons,
+  InputField,
+} from '@app/basic-maintenance/interfaces/action-buttons';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -9,7 +12,7 @@ import { ActionButtons } from '@app/basic-maintenance/interfaces/action-buttons'
 })
 export class AlertDialogComponent implements OnInit {
   actionButtons: ActionButtons[] = [];
-  inputFields: { label: string; required_msg: string; name: string }[] = [];
+  inputFields: InputField[] = [];
   alertMessage = '';
   headerStyle: any;
   headerExist = false;

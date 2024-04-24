@@ -1,5 +1,5 @@
 export interface CampoDeActuacion {
-  codigo: number;
+  codigo: string;
   deseccion?: string;
   deseccionVal?: string;
 }

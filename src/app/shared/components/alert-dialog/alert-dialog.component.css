@@ -4,7 +4,7 @@
 }
 
 .inputStyle {
-    border: 2px solid rgb(221, 221, 221);
+    border: 2px solid var(--light-grey);
     height: 2.125rem;
     font-size: 1rem;
     margin-bottom: 0.2rem;
@@ -16,15 +16,15 @@
 
 .inputStyle:hover,
 .inputStyle:focus {
-    border: 2px solid rgb(12, 85, 109);
+    border: 2px solid var(--dark-blue);
 }
 
 .inputStyle.p-inputtext {
-    color: rgb(85, 85, 85);
+    color: var(--dark-grey);
 }
 
 ::ng-deep .dialogStyle {
-    border: 0.5rem solid #19afe0;
+    border: 0.5rem solid var(--light-blue);
     border-radius: 0%;
 
     .p-dialog-header,
@@ -39,13 +39,14 @@
     }
 
     .p-dialog-header {
-        background-color: #19afe0;
+        background-color: var(--light-blue);
         padding: 1.2rem 1.2rem 1.5rem;
+        display: inline-block;
 
         .p-dialog-title {
             font-weight: normal;
             font-size: 2.813rem;
-            color: rgb(255, 255, 255);
+            color: var(--white);
         }
     }
 
@@ -61,15 +62,15 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: white;
+    background-color: var(--white);
 }
 
 .buttonStyle {
-    background-color: rgb(17, 121, 155);
+    background-color: var(--blue);
     border-radius: 0rem;
     border: none;
     font-size: 1rem;
-    color: rgb(255, 255, 255);
+    color: var(--white);
 }
 
 .alertStyle {
@@ -77,39 +78,32 @@
 }
 
 .buttonStyle:not([disabled]):hover {
-    background-color: rgb(12, 85, 109);
+    background-color: var(--dark-blue);
 }
 
 .buttonStyle:disabled {
-    background-color: rgb(186, 186, 186);
-    /* background-color: rgb(242, 242, 242); */
+    background-color: var(--disable-items);
 }
 
-.helperStyle {
-    color: white;
-    background-color: red;
-    width: max-content;
-}
-
-.headerStyle-info {
-    border-top: 0.7rem solid #19afe0;
+.headerStyle-confirm {
+    border-top: 0.7rem solid var(--light-blue);
     padding: 2rem 0rem 0rem;
     font-size: 1.125rem;
 }
 
 .headerStyle-warn {
-    border-top: 0.7rem solid rgb(251, 169, 0);
+    border-top: 0.7rem solid var(--orange);
     padding: 2rem 0rem 0rem;
     font-size: 1.125rem;
 }
 
-::ng-deep .pi.iconStyle-info {
-    color: #2394B9;
+::ng-deep .pi.iconStyle-confirm {
+    color: var(--blue);
     font-size: 2rem;
 }
 
 ::ng-deep .pi.iconStyle-warn {
-    color: rgb(251, 169, 0);
+    color: var(--orange);
     font-size: 2rem;
 }
 
