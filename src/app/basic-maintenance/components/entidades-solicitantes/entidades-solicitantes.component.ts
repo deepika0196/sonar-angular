@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {
   PaginatorConfig,
   TableConfig,
-} from 'src/app/shared/components/generic-table/generic-table.config';
+} from '@shared/components/generic-table/generic-table.config';
 
 @Component({
   selector: 'app-entidades-solicitantes',

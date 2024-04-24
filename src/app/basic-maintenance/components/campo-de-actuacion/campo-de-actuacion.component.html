@@ -41,11 +41,16 @@
     <button
       pButton
       [label]="t('campoDeActuacion.search_button')"
-      icon="pi pi-search"
-      iconPos="right"
+      iconPos="left"
       class="actionStyle mr-2"
       (click)="filterHandler()"
-    ></button>
+    >
+      <span
+        class="material-icons"
+        style="color: #2394b9"
+        >search</span
+      >
+    </button>
     <button
       pButton
       [label]="t('campoDeActuacion.clear_button')"

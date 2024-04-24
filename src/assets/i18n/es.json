@@ -47,6 +47,8 @@
     "required_text": "Debe rellenar el campo."
   },
 
+  "errors": {},
+
   "title": "es_Exemple dús",
   "title_tab_1": "es_Afegeix dades:",
   "title_tab_2": "es_Col·laboradors:",

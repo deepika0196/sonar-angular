@@ -1,6 +1,6 @@
 import { APP_INITIALIZER } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 
 const lang = environment.locale.default;
 

@@ -1,16 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { DynamicDialogConfig } from "primeng/dynamicdialog";
-import { ActionButtons } from "src/app/basic-maintenance/interfaces/action-buttons";
+import { Component, OnInit } from '@angular/core';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { ActionButtons } from '@app/basic-maintenance/interfaces/action-buttons';
 
 @Component({
-  selector: "app-alert-dialog",
-  templateUrl: "./alert-dialog.component.html",
-  styleUrls: ["./alert-dialog.component.css"],
+  selector: 'app-alert-dialog',
+  templateUrl: './alert-dialog.component.html',
+  styleUrls: ['./alert-dialog.component.css'],
 })
 export class AlertDialogComponent implements OnInit {
   actionButtons: ActionButtons[] = [];
   inputFields: { label: string; required_msg: string; name: string }[] = [];
-  alertMessage = "";
+  alertMessage = '';
   headerStyle: any;
   headerExist = false;
   inputValues: any;
@@ -19,7 +19,7 @@ export class AlertDialogComponent implements OnInit {
 
   ngOnInit() {
     // Access data as follow
-    console.log("~ this.dialogConfig.data:", this.dialogConfig.data);
+    console.log('~ this.dialogConfig.data:', this.dialogConfig.data);
     this.actionButtons = this.dialogConfig.data?.actionButtons;
     this.inputFields = this.dialogConfig.data.inputFields;
     this.alertMessage = this.dialogConfig.data.alertMessage;
@@ -32,6 +32,6 @@ export class AlertDialogComponent implements OnInit {
   }
 
   checkValidation() {
-    return Object.values(this.inputValues).some((x) => x === null || x === "");
+    return Object.values(this.inputValues).some((x) => x === null || x === '');
   }
 }

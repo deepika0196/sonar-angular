@@ -9,14 +9,14 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { TranslocoHttpLoader } from '@app/transloco-root.module';
 import { TranslocoDirective, TranslocoService } from '@ngneat/transloco';
-import { Subject, takeUntil } from 'rxjs';
 import {
   PaginatorConfig,
   TableConfig,
-} from 'src/app/shared/components/generic-table/generic-table.config';
-import { TranslocoHttpLoader } from 'src/app/transloco-root.module';
-import { HeaderService } from '../../services/header.service';
+} from '@shared/components/generic-table/generic-table.config';
+import { HeaderService } from '@shared/services/header.service';
+import { Subject } from 'rxjs';
 
 interface TableColumns {
   field: string;

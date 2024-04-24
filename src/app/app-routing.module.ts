@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { EjemploUsoComponent } from './components/ejemplo-uso/ejemplo-uso.component';
+import { environment } from '@env/environment';
+import { EjemploUsoComponent } from '@app/components/ejemplo-uso/ejemplo-uso.component';
 
-import { environmentLoader } from 'src/environments/environmentLoader';
-import { ItemExampleEditComponent as ItemExampleEdit } from './components/item-example-edit/item-example-edit.component';
-import { ItemExampleComponent as ItemExample } from './components/item-example/item-example.component';
-import { LoginSimulatedComponent } from './shared/components/login-simulated/login-simulated.component';
+import { environmentLoader } from '@env/environmentLoader';
+import { ItemExampleEditComponent as ItemExampleEdit } from '@app/components/item-example-edit/item-example-edit.component';
+import { ItemExampleComponent as ItemExample } from '@app/components/item-example/item-example.component';
+import { LoginSimulatedComponent } from '@shared/components/login-simulated/login-simulated.component';
 
 export let routes: Routes = [
   {

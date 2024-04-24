@@ -5,10 +5,10 @@ import { TranslocoService } from '@ngneat/transloco';
 import {
   PaginatorConfig,
   TableConfig,
-} from 'src/app/shared/components/generic-table/generic-table.config';
-import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
-import { CampoDeActuacionService } from 'src/app/basic-maintenance/services/campo-de-actuacion.service';
-import { CampoDeActuacion } from 'src/app/basic-maintenance/interfaces/campoDeActuacion';
+} from '@shared/components/generic-table/generic-table.config';
+import { AlertDialogComponent } from '@shared/components/alert-dialog/alert-dialog.component';
+import { CampoDeActuacionService } from '@app/basic-maintenance/services/campo-de-actuacion.service';
+import { CampoDeActuacion } from '@app/basic-maintenance/interfaces/campoDeActuacion';
 @Component({
   selector: 'app-campo-de-actuacion',
   templateUrl: './campo-de-actuacion.component.html',
