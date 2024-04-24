@@ -5,6 +5,7 @@ import { Language, MenuItem } from 'src/app/shared/interfaces/header.interface';
 import { TranslocoHttpLoader } from 'src/app/transloco-root.module';
 import { Subject, takeUntil } from 'rxjs';
 import { GlobalConstant } from 'src/app/core/constants/globalConstants';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -26,6 +27,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.items = this.headerService.getHeaderMenu() || [];
     this.languages = this.headerService.language;
+    for (const item of this.languages) {
+      if (item.code === this.translateService.getDefaultLang()) {
+        this.selectedLanguage = item;
+      }
+    }
   }
 
   changeLanguage() {

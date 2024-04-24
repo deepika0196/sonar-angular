@@ -16,6 +16,7 @@
     </ng-template>
     <ng-template pTemplate="end">
       <p-dropdown
+        styleClass="dropdown-css-override"
         [options]="languages"
         [(ngModel)]="selectedLanguage"
         (onChange)="changeLanguage()"
@@ -33,7 +34,7 @@
 
       <p-button
         icon="pi pi-sign-out"
-        styleClass="p-button-text "
+        styleClass="p-button-text nav-button"
       ></p-button>
     </ng-template>
   </p-menubar>
