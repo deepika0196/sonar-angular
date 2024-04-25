@@ -10,8 +10,8 @@ export const environment = {
   pai: { aplicacion: '', apiKey: '' },
 
   gvlogin: {
-    enable: true,
-    enableLoginSimulated: true, //Only active on local environment, change this on DES, PRE and PRO enviroments, on back this won't be avaliable. If you have access to gvLogin service, you can use gvlogin-dsa
+    enable: false,
+    enableLoginSimulated: false, //Only active on local environment, change this on DES, PRE and PRO enviroments, on back this won't be avaliable. If you have access to gvLogin service, you can use gvlogin-dsa
     aplicacion: 'PROTOTIPO',
     // url: 'https://gvlogin-dsa.gva.es/gvlogin',
     url: 'http://localhost:8080/prototipo-frontend/loginSimulated', // url to gvLoginLoginSimulated, you can

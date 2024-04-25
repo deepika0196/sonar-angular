@@ -1,0 +1,30 @@
+@import 'bootstrap/dist/css/bootstrap-grid.min.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import 'colors.scss';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+.container {
+  padding: 10px 20px;
+}
+app-button {
+  margin: 2px;
+}
+
+.table-col-width {
+  width: '20%';
+}

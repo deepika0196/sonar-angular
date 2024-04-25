@@ -31,6 +31,7 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [],
@@ -69,6 +70,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     InputTextareaModule,
     TooltipModule,
     RadioButtonModule,
+    DynamicDialogModule
   ],
 })
 export class PrimeNgModule {}

@@ -1,6 +1,7 @@
 <!-- Change this menu if you want another-->
 <app-header></app-header>
-<menu-example *ngIf="!router.url.includes('loginSimulated')"></menu-example>
-<div class="d-flex p-1 justify-content-center bd-highlight">
+<!-- <menu-example *ngIf="!router.url.includes('loginSimulated')"></menu-example>-->
+<div class="p-2 m-2 bd-highlight">
   <router-outlet></router-outlet>
+  <app-loader></app-loader>
 </div>

@@ -25,7 +25,7 @@ import {
   MenuItem,
 } from 'arq-sdk';
 import { forkJoin, map, Observable, of, Subject, takeUntil } from 'rxjs';
-import { EjemploService } from 'src/app/services/ejemplo.service';
+import { EjemploService } from '@services/ejemplo.service';
 
 @Component({
   selector: 'app-ejemplo-uso',

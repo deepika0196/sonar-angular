@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ArqGvloginInterceptorService, ArqGvloginService } from 'arq-sdk';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '@env/environment';
 
 const securityProviders = [
   // Servicios de gvLogin

@@ -1,0 +1,80 @@
+<div *transloco="let t">
+  <p-table
+    [value]="data"
+    [paginator]="tableConfig.paginator"
+    [rows]="tableConfig.rows"
+    [scrollable]="true"
+    [rowHover]="true"
+    [tableStyle]="tableConfig.tableStyle"
+    [showCurrentPageReport]="paginatorConfig.showCurrentPageReport"
+    [rowsPerPageOptions]="paginatorConfig.rowsPerPageOptions"
+    styleClass="{{ tableConfig.styleClass }}"
+    [currentPageReportTemplate]="
+      t('pagination_text', {
+        first: '{first}',
+        last: '{last}',
+        totalRecords: '{totalRecords}'
+      })
+    "
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th
+          *ngFor="let column of columns; let ind = index"
+          pSortableColumn="{{ column.field }}"
+          [pSortableColumnDisabled]="!column.sortable"
+        >
+          {{ column.header | transloco }}
+          <p-sortIcon
+            *ngIf="column.sortable"
+            field="{{ column.field }}"
+          ></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template
+      pTemplate="body"
+      let-item
+    >
+      <tr>
+        <td
+          *ngFor="let column of columns; let ind = index"
+          class="column.class"
+        >
+          {{ item[column.field] }}
+        </td>
+        <td *ngIf="tableConfig.showDelete || tableConfig.showEdit">
+          <div>
+            <button
+              *ngIf="tableConfig.showEdit"
+              pButton
+              pRipple
+              type="button"
+              (click)="onEdit(item)"
+              class="p-button-rounded p-button-text p-0 mr-2"
+            >
+              <img
+                src="assets/images/glyphicons-halflings-13-pencil@2x.png"
+                height="20"
+              />
+            </button>
+            <button
+              *ngIf="tableConfig.showDelete"
+              pButton
+              pRipple
+              type="button"
+              class="p-button-rounded p-button-text p-0 ml-2"
+              (click)="onDelete(item)"
+            >
+              <img
+                src="assets/images/glyphicons-halflings-7-bin@2x.png"
+                height="20"
+              />
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

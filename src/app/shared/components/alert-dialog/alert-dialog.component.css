@@ -1,0 +1,113 @@
+::ng-deep label,
+.p-button {
+    font-size: 1rem;
+}
+
+.inputStyle {
+    border: 2px solid var(--light-grey);
+    height: 2.125rem;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.labelStyle {
+    font-weight: normal;
+}
+
+.inputStyle:hover,
+.inputStyle:focus {
+    border: 2px solid var(--dark-blue);
+}
+
+.inputStyle.p-inputtext {
+    color: var(--dark-grey);
+}
+
+::ng-deep .dialogStyle {
+    border: 0.5rem solid var(--light-blue);
+    border-radius: 0%;
+
+    .p-dialog-header,
+    .p-dialog-content {
+        border-radius: 0% !important;
+
+    }
+
+    .p-dialog-content {
+        margin-bottom: 2.7rem;
+        padding: 0rem 0rem 0rem;
+    }
+
+    .p-dialog-header {
+        background-color: var(--light-blue);
+        padding: 1.2rem 1.2rem 1.5rem;
+        display: inline-block;
+
+        .p-dialog-title {
+            font-weight: normal;
+            font-size: 2.813rem;
+            color: var(--white);
+        }
+    }
+
+}
+
+
+.app-dialog-footer {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: flex-end;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--white);
+}
+
+.buttonStyle {
+    background-color: var(--blue);
+    border-radius: 0rem;
+    border: none;
+    font-size: 1rem;
+    color: var(--white);
+}
+
+.alertStyle {
+    padding: 1.2rem 1.2rem 1.2rem 0rem;
+}
+
+.buttonStyle:not([disabled]):hover {
+    background-color: var(--dark-blue);
+}
+
+.buttonStyle:disabled {
+    background-color: var(--disable-items);
+}
+
+.headerStyle-confirm {
+    border-top: 0.7rem solid var(--light-blue);
+    padding: 2rem 0rem 0rem;
+    font-size: 1.125rem;
+}
+
+.headerStyle-warn {
+    border-top: 0.7rem solid var(--orange);
+    padding: 2rem 0rem 0rem;
+    font-size: 1.125rem;
+}
+
+::ng-deep .pi.iconStyle-confirm {
+    color: var(--blue);
+    font-size: 2rem;
+}
+
+::ng-deep .pi.iconStyle-warn {
+    color: var(--orange);
+    font-size: 2rem;
+}
+
+.messageStyle {
+    padding: 0rem 0rem 2.8rem;
+    word-wrap: break-word;
+}

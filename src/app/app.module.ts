@@ -1,5 +1,5 @@
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import localeEs from '@angular/common/locales/es';
 import { Injector, LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,8 +17,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { preLoad } from './transloco-preload';
 import { MenuExampleComponent } from './shared/components/menu/menu.component';
 import { LoginSimulatedComponent } from './shared/components/login-simulated/login-simulated.component';
-import { PrimeNgModule } from 'src/app/prime-ng.module';
-import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { PrimeNgModule } from '@app/prime-ng.module';
+import { HeaderComponent } from '@shared/components/header/header.component';
+import { HttpRequestInterceptor } from '@app/interceptors/http-request.interceptor';
+import { LoaderComponent } from '@app/shared/loader/loader.component';
 
 // import { MenuItem } from 'primeng/api';
 
@@ -35,6 +37,7 @@ export let AppInjector: Injector;
     AppComponent,
     LoginSimulatedComponent,
     MenuExampleComponent,
+    LoaderComponent,
     HeaderComponent,
   ],
   imports: [
@@ -59,6 +62,12 @@ export let AppInjector: Injector;
     MomentDateAdapter,
     preLoad,
     { provide: LOCALE_ID, useValue: 'es-ES' },
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpRequestInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
