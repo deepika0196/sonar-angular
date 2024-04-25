@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CampoDeActuacion } from '../interfaces/campoDeActuacion';
-import { environment } from '@env/environment';
 import { CommonService } from '@app/shared/services/common.service';
 import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 
@@ -8,8 +7,6 @@ import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
   providedIn: 'root',
 })
 export class CampoDeActuacionService extends CommonService {
-  public urlApi = `${environment.settings.hostDynamic}/api/v1/reccaSecciones`;
-
   getCampoDeActuacions() {
     return this._arqHttpClient.get<Array<CampoDeActuacion>>(
       this.urlBuilder(UrlEndpoints.reccaSecciones)
