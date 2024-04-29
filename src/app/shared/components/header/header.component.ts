@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { HeaderService } from '@shared/services/header.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { GlobalConstant } from '@app/core/constants/globalConstants';
+import { TranslocoHttpLoader } from '@app/transloco-root.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { Language, MenuItem } from '@shared/interfaces/header.interface';
-import { TranslocoHttpLoader } from '@app/transloco-root.module';
+import { HeaderService } from '@shared/services/header.service';
 import { Subject, takeUntil } from 'rxjs';
-import { GlobalConstant } from 'src/app/core/constants/globalConstants';
 
 @Component({
   selector: 'app-header',
