@@ -20,7 +20,9 @@
     "build:tar_desa": "npm install && ng build --base-href /expropia-frontend/ --configuration=desa",
     "build:tar_pre": "npm install && ng build --base-href /expropia-frontend/ --configuration=pre",
     "build:tar_prod": "npm install && ng build --base-href /expropia-frontend/ --configuration=prod ",
-    "build:tar": "npm install && ng build --base-href /expropia-frontend/ --configuration=prod "
+    "build:tar": "npm install && ng build --base-href /expropia-frontend/ --configuration=prod ",
+    "sonar": "node sonar-project.js",
+    "coverage": "ng test --codeCoverage=true --browsers=Chrome --watch=false && node sonar-project.js"
   },
   "private": true,
   "dependencies": {
@@ -45,7 +47,7 @@
     "core-js": "3.26.1",
     "date-fns": "^2.29.3",
     "hammerjs": "2.0.8",
-    "material-design-icons": "^3.0.1",
+    "material-icons": "^1.13.12",
     "moment": "^2.29.4",
     "ngx-cookie-service": "^15.0.0",
     "ngx-toastr": "^16.2.0",
@@ -84,6 +86,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "ngx-build-plus": "^15.0.0",
+    "sonarqube-scanner": "^3.4.0",
     "ts-node": "10.9.1",
     "typescript": "~4.9.5"
   }
