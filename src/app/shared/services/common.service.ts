@@ -4,9 +4,9 @@ import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 import { environment } from '@env/environment';
 import { ArqHttpClient } from 'arq-sdk';
 
-export interface CustomResponse {
+export interface CustomResponse<T> {
   success: boolean;
-  response: [] | any;
+  response: T[];
   errorCode?: string;
 }
 

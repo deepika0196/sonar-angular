@@ -11,27 +11,27 @@ import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 })
 export class CampoDeActuacionService extends CommonService {
   getCampoDeActuacions() {
-    return this._arqHttpClient.get<CustomResponse>(
+    return this._arqHttpClient.get<CustomResponse<CampoDeActuacion>>(
       this.urlBuilder(UrlEndpoints.reccaSecciones)
     );
   }
 
   postCampoDeActuacions(campDetails: CampoDeActuacion) {
-    return this._arqHttpClient.post<CustomResponse>(
+    return this._arqHttpClient.post<CustomResponse<CampoDeActuacion>>(
       this.urlBuilder(UrlEndpoints.reccaSecciones),
       campDetails
     );
   }
 
   updateCampoDeActuacions(campDetails: CampoDeActuacion) {
-    return this._arqHttpClient.put<CustomResponse>(
+    return this._arqHttpClient.put<CustomResponse<CampoDeActuacion>>(
       this.urlBuilder(UrlEndpoints.reccaSecciones),
       campDetails
     );
   }
 
   deleteCampoDeActuacions(codigo: string) {
-    return this._arqHttpClient.delete<CustomResponse>(
+    return this._arqHttpClient.delete<CustomResponse<CampoDeActuacion>>(
       this.urlBuilder(UrlEndpoints.reccaSecciones) + `/${codigo}`
     );
   }

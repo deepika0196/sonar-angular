@@ -17,7 +17,7 @@
     background-color: var(--blue);
     border-radius: 0rem;
 
-    .pi {
+    .iconStyle {
         color: var(--light-blue);
     }
 }

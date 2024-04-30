@@ -22,6 +22,8 @@ export class HeaderService {
             label: this.translocoService.translate(
               'menu_items.sub_menu.entidades_solicitantes'
             ),
+            routerLink: ['/basic-maintenance/entidadesSolicitantes'],
+            routerLinkActiveOptions: { exact: true },
           },
           {
             label: this.translocoService.translate(

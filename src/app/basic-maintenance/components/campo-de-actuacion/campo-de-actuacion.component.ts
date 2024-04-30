@@ -98,7 +98,7 @@ export class CampoDeActuacionComponent implements OnInit {
   fetchAllCamposDeActuacion() {
     this.campoDeActuacionService
       .getCampoDeActuacions()
-      .subscribe((data: CustomResponse) => {
+      .subscribe((data: CustomResponse<CampoDeActuacion>) => {
         this.campoDeActuacions = data.response;
         this.cloneCampoDeActuacionRecords = data.response;
       });
@@ -132,22 +132,12 @@ export class CampoDeActuacionComponent implements OnInit {
         action: (input: CampoDeActuacion) => {
           this.campoDeActuacionService
             .postCampoDeActuacions(input)
-            .subscribe((data: CustomResponse) => {
-              if (
-                data.success === false &&
-                data.errorCode &&
-                data.errorCode === 'DataIntegrityViolationException'
-              ) {
+            .subscribe((data: CustomResponse<CampoDeActuacion>) => {
+              if (data.success === false && data.errorCode) {
                 this.openAlertDialog(
-                  this.translocoService.translate(
-                    'errors.REGISTRATION_DUPLICATE_ERROR'
-                  ),
+                  this.translocoService.translate('errors.' + data.errorCode),
                   'warn'
                 );
-                // this.openAlertDialog(
-                //   this.translocoService.translate('error.' + data.errorCode),
-                //   'warn'
-                // );
               } else {
                 this.fetchAllCamposDeActuacion();
                 this.addDialogRef?.close();
@@ -240,20 +230,12 @@ export class CampoDeActuacionComponent implements OnInit {
     const updateHandler = (input: CampoDeActuacion) => {
       this.campoDeActuacionService
         .updateCampoDeActuacions(input)
-        .subscribe((data: CustomResponse) => {
-          if (
-            data.success === false &&
-            data.errorCode &&
-            data.errorCode === 'DataIntegrityViolationException'
-          ) {
+        .subscribe((data: CustomResponse<CampoDeActuacion>) => {
+          if (data.success === false && data.errorCode) {
             this.openAlertDialog(
-              this.translocoService.translate('errors.UPDATE_REFERENCE_ERROR'),
+              this.translocoService.translate('errors.' + data.errorCode),
               'warn'
             );
-            // this.openAlertDialog(
-            //   this.translocoService.translate('error.' + data.errorCode),
-            //   'warn'
-            // );
           } else {
             this.fetchAllCamposDeActuacion();
             this.updateDialogRef?.close();
@@ -356,22 +338,12 @@ export class CampoDeActuacionComponent implements OnInit {
         action: () => {
           this.campoDeActuacionService
             .deleteCampoDeActuacions(campoDetails.codigo)
-            .subscribe((data) => {
-              if (
-                data.success === false &&
-                data.errorCode &&
-                data.errorCode === 'DataIntegrityViolationException'
-              ) {
+            .subscribe((data: CustomResponse<CampoDeActuacion>) => {
+              if (data.success === false && data.errorCode) {
                 this.openAlertDialog(
-                  this.translocoService.translate(
-                    'errors.DELETE_REFERENCE_ERROR'
-                  ),
+                  this.translocoService.translate('errors.' + data.errorCode),
                   'warn'
                 );
-                // this.openAlertDialog(
-                //   this.translocoService.translate('error.' + data.errorCode),
-                //   'warn'
-                // );
               } else {
                 this.fetchAllCamposDeActuacion();
                 this.deleteDialogRef?.close();
