@@ -1,149 +1,268 @@
-<div class="card">
-  <generic-table
-    [data]="products"
-    [columns]="columns"
-    [paginatorConfig]="paginatorConfig"
-    [tableConfig]="tableConfig"
-  ></generic-table>
+<div class="w-100">
+  <div class="row w-100 h-25">
+    <div class="col-md-6 mt-3">
+      <p class="text-size color-1">{{ RegistroDeEntidades }}</p>
+    </div>
+    <div class="col-md-6 justify-content-end d-flex">
+      <button
+        pButton
+        type="button"
+        class="custom-button"
+      >
+        Volver
+        <span class="icon-only">
+          <i
+            iconPos="right"
+            class="pi pi-arrow-left"
+          ></i>
+        </span>
+      </button>
 
-  <!-- <p-table
-    [value]="products"
-    [paginator]="true"
-    [rows]="10"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    styleClass="paginator-override"
-    [tableStyle]="{ 'min-width': '60rem' }"
+      <button
+        pButton
+        type="button"
+        class="custom-button mr-2"
+        [disabled]="
+          !(
+            DatosPrincipalesForm.get('cif')?.valid &&
+            DatosPrincipalesForm.get('razonSocial')?.valid &&
+            DatosPrincipalesForm.get('domicilioSocia')?.valid
+          )
+        "
+        (click)="onSubmit()"
+      >
+        Guardar
+        <span class="icon-only ml-1">
+          <i
+            iconPos="right"
+            class="pi pi-save"
+          ></i>
+        </span>
+      </button>
+      <button
+        pButton
+        type="button"
+        class="custom-button mr-2"
+      >
+        Archive
+        <span class="icon-only ml-1">
+          <i
+            iconPos="right"
+            class="pi pi-save"
+          ></i>
+        </span>
+      </button>
+    </div>
+  </div>
+  <hr />
+  <p-accordion
+    class="accordion"
+    [activeIndex]="0"
   >
-    <ng-template pTemplate="header">
-      <tr>
-        <th
-          pSortableColumn="code"
-          style="width: 20%"
-        >
-          Code <p-sortIcon field="code"></p-sortIcon>
-        </th>
-        <th
-          pSortableColumn="name"
-          style="width: 20%"
-        >
-          Name <p-sortIcon field="name"></p-sortIcon>
-        </th>
-        <th
-          pSortableColumn="category"
-          style="width: 20%"
-        >
-          Category <p-sortIcon field="category"></p-sortIcon>
-        </th>
-        <th
-          pSortableColumn="quantity"
-          style="width: 20%"
-        >
-          Quantity <p-sortIcon field="quantity"></p-sortIcon>
-        </th>
-        <th
-          pSortableColumn="price"
-          style="width: 20%"
-        >
-          Price <p-sortIcon field="price"></p-sortIcon>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template
-      pTemplate="body"
-      let-product
-    >
-      <tr>
-        <td>{{ product.code }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.category }}</td>
-        <td>{{ product.quantity }}</td>
-        <td>{{ product.price | currency : 'USD' }}</td>
-      </tr>
-    </ng-template>
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center">
+          <p class="color-1">Datos Principales de la empresa</p>
+        </div>
+      </ng-template>
+      <ng-template
+        pTemplate="content"
+        contentStyle="accordion-content"
+      >
+        <form [formGroup]="DatosPrincipalesForm">
+          <div class="row text">
+            <div class="col-2">
+              <label for="lastname2">CIF*</label>
+              <div class="w-100">
+                <input
+                  id="cif"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="cif"
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <label for="lastname2">Razón Social*</label>
+              <div class="w-100">
+                <input
+                  id="razonSocial"
+                  type="text"
+                  [maxLength]="250"
+                  class="p-inputtext"
+                  formControlName="razonSocial"
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <label for="lastname2">Domicilio Social*</label>
+              <div class="w-100">
+                <input
+                  id="domicilioSocia"
+                  type="text"
+                  [maxLength]="250"
+                  class="p-inputtext"
+                  formControlName="domicilioSocia"
+                />
+              </div>
+            </div>
+          </div>
 
-    <ng-template pTemplate="paginatorleft">
-      <p-button
-        type="button"
-        icon="pi pi-plus"
-        styleClass="p-button-text"
-      ></p-button>
-    </ng-template>
-    <ng-template pTemplate="paginatorright">
-      <p-button
-        type="button"
-        icon="pi pi-cloud"
-        styleClass="p-button-text"
-      ></p-button>
-    </ng-template>
-  </p-table> -->
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-4">
+                  <label for="provincia">Provincia</label>
+                  <div class="w-100">
+                    <p-dropdown
+                      id="provincia"
+                      styleClass="dropdown"
+                      [editable]="true"
+                      optionLabel="name"
+                      placeholder=" "
+                      formControlName="provincia"
+                    ></p-dropdown>
+                  </div>
+                </div>
+                <div class="col-5">
+                  <label for="lastname2">Municipio </label>
+                  <div class="w-100">
+                    <p-dropdown
+                      styleClass="dropdown"
+                      [editable]="true"
+                      optionLabel="name"
+                      placeholder=" "
+                      formControlName="municipio"
+                    ></p-dropdown>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <label for="cPostal">C. Postal</label>
+                  <div class="w-100">
+                    <p-dropdown
+                      id="cPostal"
+                      styleClass="dropdown"
+                      [editable]="true"
+                      optionLabel="name"
+                      placeholder=" "
+                      formControlName="cPostal"
+                    ></p-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="row">
+                <div class="col-2">
+                  <label for="nRegistro">Nº Registro</label>
+                  <div class="w-100">
+                    <input
+                      id="nRegistro"
+                      type="text"
+                      [maxLength]="9"
+                      class="p-inputtext"
+                      formControlName="nRegistro"
+                    />
+                  </div>
+                </div>
+                <div class="col-5">
+                  <label for="fechaSolicitudDeInscripción"
+                    >Fecha Solicitud de Inscripción
+                  </label>
+                  <div class="w-100">
+                    <p-calendar
+                      id="fechaSolicitudDeInscripción"
+                      styleClass="calender"
+                      dateFormat="dd/mm/yy"
+                      [showIcon]="true"
+                      placeholder="dd.mm.yyyy"
+                      formControlName="fechaSolicitudDeInscripción"
+                    ></p-calendar>
+                  </div>
+                </div>
+                <div class="col-5">
+                  <label for="fechaBaja">Fecha Baja</label>
+                  <div class="w-100 calender-container">
+                    <p-calendar
+                      id="fechaBaja"
+                      styleClass="calender"
+                      [showIcon]="true"
+                      placeholder="dd.mm.yyyy"
+                      formControlName="fechaBaja"
+                    ></p-calendar>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-3">
+              <label for="email">E-mail</label>
+              <div class="w-100">
+                <input
+                  id="email"
+                  type="text"
+                  [maxLength]="50"
+                  class="p-inputtext border-1"
+                  formControlName="email"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <label for="telefono">Teléfono</label>
+              <div class="w-100">
+                <input
+                  id="telefono"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext border-1"
+                  formControlName="telefono"
+                />
+              </div>
+            </div>
+            <div class="col-3">
+              <label for="fax">Fax</label>
+              <div class="w-100">
+                <input
+                  id="fax"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext border-1"
+                  formControlName="fax"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <label for="lastname2">Publicar en web</label>
+              <div class="w-100">
+                <p-checkbox
+                  [binary]="true"
+                  inputId="publicEnWeb"
+                  formControlName="publicarEnWeb"
+                ></p-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="observaciones">Observaciones</label>
+              <div class="w-100">
+                <input
+                  id="observaciones"
+                  type="text"
+                  [maxLength]="80"
+                  class="p-inputtext"
+                  formControlName="observaciones"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
 </div>
-
-<!-- <p-table
-  [value]="customers"
-  [paginator]="true"
-  [rows]="5"
-  [showCurrentPageReport]="true"
-  [tableStyle]="{ 'min-width': '50rem' }"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-  [rowsPerPageOptions]="[10, 25, 50]"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th
-        pSortableColumn="customer.name"
-        style="width: 25%"
-      >
-        Name
-        <p-sortIcon field="customer.name"></p-sortIcon>
-      </th>
-      <th
-        pSortableColumn="customer.country.name"
-        style="width: 25%"
-      >
-        Country
-        <p-sortIcon field="customer.country.name"></p-sortIcon>
-      </th>
-      <th
-        pSortableColumn="customer.company"
-        style="width: 25%"
-      >
-        Company
-        <p-sortIcon field="customer.company"></p-sortIcon>
-      </th>
-      <th
-        pSortableColumn="customer.representative.name"
-        style="width: 25%"
-      >
-        Representative
-        <p-sortIcon field="customer.representative.name"></p-sortIcon>
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template
-    pTemplate="body"
-    let-customer
-  >
-    <tr>
-      <td>{{ customer.name }}</td>
-      <td>{{ customer.country.name }}</td>
-      <td>{{ customer.company }}</td>
-      <td>{{ customer.representative.name }}</td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="paginatorleft">
-    <p-button
-      type="button"
-      icon="pi pi-plus"
-      styleClass="p-button-text"
-    ></p-button>
-  </ng-template>
-  <ng-template pTemplate="paginatorright">
-    <p-button
-      type="button"
-      icon="pi pi-cloud"
-      styleClass="p-button-text"
-    ></p-button>
-  </ng-template>
-</p-table> -->
