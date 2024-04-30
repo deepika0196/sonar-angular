@@ -25,7 +25,7 @@ test:
   script:
     - export CHROME_BIN=/usr/bin/chromium-browser
     - npm install -g @angular/cli
-    - npm install
+    - npm install --legacy-peer-deps 
     - npm run test
 
 
