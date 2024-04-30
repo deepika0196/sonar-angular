@@ -10,4 +10,4 @@ install:
   script:
     - npm cache clear -f
     - npm cache verify
-    - npm install
+    - npm install --legacy-peer-deps 
