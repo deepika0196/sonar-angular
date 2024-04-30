@@ -25,7 +25,6 @@ test:
   script:
     - export CHROME_BIN=/usr/bin/chromium-browser
     - npm install -g @angular/cli
-    - npm install
     - npm run test
 
 
