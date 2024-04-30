@@ -49,7 +49,19 @@
     </div>
   </div>
   <div class="d-flex justify-content-end my-4 mr-2">
-    <button
+    <gva-button
+      [btnLabel]="'campoDeActuacion.search_button'"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="filterHandler()"
+    >
+      <span
+        class="material-icons"
+        style="color: #2394b9"
+        >search</span
+      >
+    </gva-button>
+    <!-- <button
       pButton
       [label]="t('campoDeActuacion.search_button')"
       iconPos="left"
@@ -61,7 +73,7 @@
         style="color: #2394b9"
         >search</span
       >
-    </button>
+    </button> -->
     <button
       pButton
       [label]="t('campoDeActuacion.clear_button')"

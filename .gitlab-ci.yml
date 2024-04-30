@@ -1,4 +1,4 @@
-image: node:16.14.2-alpine
+image: node:18-alpine
 
 stages:
   - install
@@ -25,6 +25,7 @@ test:
   script:
     - export CHROME_BIN=/usr/bin/chromium-browser
     - npm install -g @angular/cli
+    - npm install --legacy-peer-deps 
     - npm run test
 
 
