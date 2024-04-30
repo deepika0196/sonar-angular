@@ -15,5 +15,6 @@ install:
 lint:
   stage: lint
   script:
+    - npm install --legacy-peer-deps 
     - npm run lint
   needs: ["install"]
