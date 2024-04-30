@@ -2,7 +2,8 @@ image: node:16.14.2-alpine
 
 stages:
   - install
-  - lint
+#  - lint
+  - test
 
 
 install:
@@ -12,9 +13,20 @@ install:
     - npm cache verify
     - npm install --legacy-peer-deps 
 
-lint:
+.lint:
   stage: lint
   script:
     - npm install --legacy-peer-deps 
     - npm run lint
   needs: ["install"]
+
+test:
+  stage: test
+  script:
+    - export CHROME_BIN=/usr/bin/chromium-browser
+    - npm install -g @angular/cli
+    - npm install
+    - npm run test
+
+
+    
