@@ -3,16 +3,18 @@
     <div
       *ngIf="headerExist"
       class="{{
-        'headerStyle-' + headerStyle.type
+        'headerStyle-' + headerStyle.dialogType
       }} d-flex flex-row justify-content-between"
     >
       <div class="d-flex flex-column gap-2 col-2 align-items-center">
         <span
-          [className]="headerStyle?.icon + ' iconStyle-' + headerStyle.type"
+          [className]="
+            headerStyle?.icon + ' iconStyle-' + headerStyle.dialogType
+          "
         ></span>
       </div>
       <div class="d-flex flex-column gap-2 col-10">
-        <span>{{ headerStyle?.text }}</span>
+        <span>{{ headerStyle?.title }}</span>
         <span class="messageStyle mt-3">{{ alertMessage }}</span>
       </div>
     </div>
@@ -33,10 +35,6 @@
           [(ngModel)]="inputValues[field.name]"
           [disabled]="field.disabled ? field.disabled : 'false'"
         />
-        <!--onfocus="checkValidation($event)" <small id="username-help" class="helperStyle"
-          ><i class="pi pi-exclamation-triangle pr-1"></i
-          >{{ field.required_msg }}</small
-        > -->
       </div>
     </div>
   </div>

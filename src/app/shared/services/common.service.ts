@@ -4,6 +4,12 @@ import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 import { environment } from '@env/environment';
 import { ArqHttpClient } from 'arq-sdk';
 
+export interface CustomResponse {
+  success: boolean;
+  response: [] | any;
+  errorCode?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })

@@ -3,7 +3,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import {
   ActionButtons,
   InputField,
-} from '@app/basic-maintenance/interfaces/action-buttons';
+} from '@app/shared/components/alert-dialog/alert-dialog.config';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -21,8 +21,6 @@ export class AlertDialogComponent implements OnInit {
   constructor(private dialogConfig: DynamicDialogConfig) {}
 
   ngOnInit() {
-    // Access data as follow
-    console.log('~ this.dialogConfig.data:', this.dialogConfig.data);
     this.actionButtons = this.dialogConfig.data?.actionButtons;
     this.inputFields = this.dialogConfig.data.inputFields;
     this.alertMessage = this.dialogConfig.data.alertMessage;

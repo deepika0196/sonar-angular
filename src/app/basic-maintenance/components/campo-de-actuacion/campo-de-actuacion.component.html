@@ -51,33 +51,48 @@
   <div class="d-flex justify-content-end my-4 mr-2">
     <button
       pButton
-      [label]="t('campoDeActuacion.search_button')"
-      iconPos="left"
       class="actionStyle mr-2"
       (click)="filterHandler()"
     >
-      <span
+      <span>
+        {{ t('campoDeActuacion.search_button') }}
+      </span>
+      <i
         class="material-icons"
         style="color: #2394b9"
-        >search</span
+        >search</i
       >
     </button>
     <button
       pButton
-      [label]="t('campoDeActuacion.clear_button')"
-      icon="pi pi-eraser"
-      iconPos="right"
       class="actionStyle mr-2"
       (click)="clearAll()"
-    ></button>
+    >
+      <span>
+        {{ t('campoDeActuacion.clear_button') }}
+      </span>
+      <i
+        class="material-icons"
+        style="color: #2394b9"
+        >fsearch</i
+      >
+      <span class="material-icons material-symbols-outlined"> ink_eraser </span>
+      <span class="material-icons"> delete_forever </span>
+    </button>
     <button
       pButton
-      [label]="t('campoDeActuacion.add_button')"
-      icon="pi pi-plus"
-      iconPos="right"
       class="actionStyle"
       (click)="openAddDialog()"
-    ></button>
+    >
+      <span>
+        {{ t('campoDeActuacion.add_button') }}
+      </span>
+      <i
+        class="material-icons"
+        style="color: #2394b9"
+        >add</i
+      >
+    </button>
   </div>
   <div class="card">
     <p-toast></p-toast>

@@ -44,9 +44,17 @@
     "update_button": "Actualitzar",
     "yes_button": "Si",
     "no_button": "No",
-    "required_text": "Cal emplenar el camp."
+    "accept_button": "Acceptar",
+    "required_text": "Cal emplenar el camp.",
+    "add_success": "Registre afegit",
+    "update_success": "Registre editat",
+    "delete_success": "Registre esborrat"
   },
-  "errors": {},
+  "errors": {
+    "REGISTRATION_DUPLICATE_ERROR": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
+    "UPDATE_REFERENCE_ERROR": "No s'ha pogut editar el registre perquè existix informació associada.",
+    "DELETE_REFERENCE_ERROR": "No s'ha pogut esborrar el registre perquè existix informació associada."
+  },
   "title": "ca_Exemple dús",
   "title_tab_1": "ca_Afegeix dades:",
   "title_tab_2": "ca_Col·laboradors:",
@@ -75,5 +83,6 @@
   "snackbar_txt_success": "ca_Dades mostrades correctament",
   "snackbar_txt_error": "ca_No s'han pogut obtenir les dades",
   "snackbar_txt_validate": "ca_Completeu les dades obligatòries",
-  "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})"
+  "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})",
+  "empty_message": "No es va trobar cap coincidència"
 }

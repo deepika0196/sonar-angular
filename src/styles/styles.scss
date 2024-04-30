@@ -28,3 +28,18 @@ app-button {
 .table-col-width {
   width: '20%';
 }
+.p-toast,
+.p-toast-message,
+.p-toast.p-toast-icon,
+.p-toast-message-content,
+.p-toast-summary,
+.p-toast-detail {
+  color: black;
+}
+
+.p-toast-message-custom {
+  background-color: #e1cfe7;
+  border: solid #8a427a;
+  border-width: 0 0 0 6px;
+  color: #2c1e30;
+}

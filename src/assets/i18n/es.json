@@ -44,10 +44,18 @@
     "update_button": "Actualizar",
     "yes_button": "Si",
     "no_button": "No",
-    "required_text": "Debe rellenar el campo."
+    "accept_button": "Aceptar",
+    "required_text": "Debe rellenar el campo.",
+    "add_success": "Registro añadido",
+    "update_success": "Registro editado",
+    "delete_success": "Registro borrado"
   },
 
-  "errors": {},
+  "errors": {
+    "REGISTRATION_DUPLICATE_ERROR": "El registro ya ha sido insertado o está duplicado. Revíselo.",
+    "UPDATE_REFERENCE_ERROR": "No se ha podido editar el registro porque existe información asociada.",
+    "DELETE_REFERENCE_ERROR": "No se ha podido borrar el registro porque existe información asociada."
+  },
 
   "title": "es_Exemple dús",
   "title_tab_1": "es_Afegeix dades:",
@@ -77,5 +85,6 @@
   "snackbar_txt_success": "es_Dades mostrades correctament",
   "snackbar_txt_error": "es_No s'han pogut obtenir les dades",
   "snackbar_txt_validate": "es_Completeu les dades obligatòries",
-  "pagination_text": "Registros del {{first}} al {{last}} (Total {{totalRecords}})"
+  "pagination_text": "Registros del {{first}} al {{last}} (Total {{totalRecords}})",
+  "empty_message": "No se encontró ninguna coincidencia"
 }

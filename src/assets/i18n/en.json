@@ -30,7 +30,11 @@
     "update_button": "Update",
     "yes_button": "Yes",
     "no_button": "No",
-    "required_text": "You must fill out the field."
+    "accept_button": "Accept",
+    "required_text": "You must fill out the field.",
+    "add_success": "Record added",
+    "update_success": "Record edited",
+    "delete_success": "Record deleted"
   },
 
   "menu_items": {
@@ -47,7 +51,11 @@
     }
   },
 
-  "errors": {},
+  "errors": {
+    "REGISTRATION_DUPLICATE_ERROR": "The record has already been inserted or is duplicated. Review it.",
+    "UPDATE_REFERENCE_ERROR": "The record could not be updated because there is associated information.",
+    "DELETE_REFERENCE_ERROR": "The record could not be deleted because there is associated information."
+  },
   "title": "Example of use",
   "title_tab_1": "Add data:",
   "title_tab_2": "Collaborators:",
@@ -76,5 +84,6 @@
   "snackbar_txt_success": "Data displayed correctly",
   "snackbar_txt_error": "Could not get data",
   "snackbar_txt_validate": "Fill in the required information",
-  "pagination_text": "Records from {{first}} to {{last}} (Total {{totalRecords}})"
+  "pagination_text": "Records from {{first}} to {{last}} (Total {{totalRecords}})",
+  "empty_message": "No Record found"
 }
