@@ -4,9 +4,10 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgModule } from '@app/prime-ng.module';
 import { GenericTableComponent } from '@app/shared/components/generic-table/generic-table.component';
+import { GvaButtonComponent } from '@app/shared/components/gva-button/gva-button.component';
 import { TranslocoRootModule } from '@app/transloco-root.module';
 
-const commonDeclarations = [GenericTableComponent];
+const commonDeclarations = [GenericTableComponent, GvaButtonComponent];
 
 @NgModule({
   imports: [
