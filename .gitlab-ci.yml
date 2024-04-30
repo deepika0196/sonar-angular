@@ -1,0 +1,13 @@
+image: node:16.14.2-alpine
+
+stages:
+  - install
+  - lint
+
+
+install:
+  stage: install
+  script:
+    - npm cache clear -f
+    - npm cache verify
+    - npm install
