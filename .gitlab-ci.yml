@@ -11,3 +11,9 @@ install:
     - npm cache clear -f
     - npm cache verify
     - npm install --legacy-peer-deps 
+
+lint:
+  stage: lint
+  script:
+    - npm run lint
+  needs: ["install"]
