@@ -5,8 +5,8 @@ import { TranslocoService } from '@ngneat/transloco';
 @Injectable({ providedIn: 'root' })
 export class HeaderService {
   language: Language[] = [
-    { label: 'Valenciano', code: 'ca' },
-    { label: 'Castellano', code: 'es' },
+    { label: 'Valenciano', code: 'es' },
+    { label: 'Castellano', code: 'ca' },
     { label: 'English', code: 'en' },
   ];
   constructor(private translocoService: TranslocoService) {}
@@ -53,6 +53,8 @@ export class HeaderService {
             label: this.translocoService.translate(
               'menu_items.sub_menu.solicitud_de_inscripcion'
             ),
+            routerLink: ['/files/solicitudDeInscripcion'],
+            routerLinkActiveOptions: { exact: true },
           },
         ],
       },

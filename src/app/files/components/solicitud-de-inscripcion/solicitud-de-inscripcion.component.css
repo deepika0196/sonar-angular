@@ -1,0 +1,109 @@
+.headerStyle {
+  color: var(--light-blue);
+  font-size: 1.4rem;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0;
+  margin: 0%;
+}
+
+.disabled {
+  background-color: var(--grey);
+}
+
+::ng-deep .accordion {
+  height: auto;
+  .p-accordion-toggle-icon {
+    width: 0;
+  }
+
+  .p-accordion-content {
+    padding: 0.3rem;
+  }
+  .p-accordion .p-accordion-header .p-accordion-header-link {
+    padding: 0;
+    background-color: var(-- --accordion);
+    text-decoration: none;
+    width: 100%;
+  }
+}
+
+::ng-deep .custom-button {
+  padding: 0.4rem;
+  margin: 0.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: var(--blue);
+  .icon-only {
+    color: var(--dark-blue);
+  }
+}
+
+::ng-deep .custom-button:hover:not(:disabled) {
+  background-color: var(--blue) !important;
+}
+
+input {
+  height: 0.8rem;
+  width: 100%;
+  border-radius: 0.2rem;
+  border-color: var(--black);
+}
+
+.labelStyle {
+  font-size: 12px;
+}
+::ng-deep .dropdown {
+  height: 1.6rem;
+  border-radius: 0.2rem;
+  border-color: var(--black);
+  .p-icon {
+    color: var(--light-blue);
+  }
+}
+
+::ng-deep .calender {
+  height: 1.4rem;
+  .p-button-icon-only {
+    width: 3.5rem;
+    padding: 0.75rem 0;
+    border-left: none;
+    border-color: var(--black);
+  }
+
+  .p-button:hover:not(:disabled) {
+    background-color: white !important;
+    color: var(--black);
+    border-left: none;
+    border-color: var(--black);
+  }
+
+  .p-button {
+    background-color: white !important;
+    color: var(--black);
+    border-left: none;
+    border-radius: 0.2rem;
+    border-color: var(--black);
+  }
+
+  .p-inputtext {
+    border-right: none;
+    border-radius: 0.2rem;
+    border-color: var(--black);
+  }
+
+  .p-inputtext:hover:not(:disabled) {
+    border-right: none;
+    border-radius: 0.2rem;
+    border-color: var(--black);
+  }
+  .p-datepicker .p-datepicker-header {
+    padding: 0rem;
+    height: 1.8rem;
+  }
+  .p-datepicker table th,
+  .p-datepicker table td {
+    padding: 0px;
+    max-width: 0px;
+  }
+}
