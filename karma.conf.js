@@ -9,14 +9,14 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
+      require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma'),
-      // ! start sonar reports configuration
-      require('karma-phantomjs-launcher'),
-      require('karma-sonarqube-unit-reporter'),
     ],
     client: {
       jasmine: {
+        failSpecWithNoExpectations: true,
+        stopOnSpecFailure: true,
+        stopSpecOnExpectationFailure: true,
         // you can add configuration options for Jasmine here
         // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
         // for example, you can disable the random execution with `random: false`
@@ -27,28 +27,37 @@ module.exports = function (config) {
     jasmineHtmlReporter: {
       suppressAll: true, // removes the duplicated traces
     },
-    // ! start sonar reports configuration
-    sonarQubeUnitReporter: {
-      sonarQubeVersion: 'LATEST',
-      outputFile: 'reports/ut_report.xml',
-      useBrowserName: false,
+    coverageReporter: {
+      dir: require('path').join(__dirname, './coverage/ecmca-frontend'),
+      subdir: '.',
+      reporters: [
+        {
+          type: 'html',
+        },
+        {
+          type: 'lcov',
+        },
+        {
+          type: 'text-summary',
+        },
+      ],
+      check: {
+        emitWarning: true,
+      },
     },
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, './coverage/arquetipo-angular'),
-      reports: ['html', 'lcovonly', 'text-summary'], // ! sonarqube can only read lcov files.
-      fixWebpackSourcePaths: true,
-    },
-
-    reporters: ['progress', 'kjhtml', 'sonarqubeUnit'],
+    reporters: ['progress', 'kjhtml', 'coverage'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
-    singleRun: false,
-    restartOnFileChange: true,
-    browsers: ['PhantomJS', 'ChromeHeadless', 'Chrome'],
     customLaunchers: {
-      ChromeHeadlessCI: { base: 'ChromeHeadless', flags: ['--no-sandbox'] },
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox'],
+      },
     },
+    browsers: ['ChromeHeadlessNoSandbox'],
+    autoWatch: false,
+    singleRun: true,
+    restartOnFileChange: true,
   });
 };
