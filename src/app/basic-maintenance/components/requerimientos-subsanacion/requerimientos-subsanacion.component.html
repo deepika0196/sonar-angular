@@ -71,20 +71,16 @@
       [iconPosition]="'left'"
       [btnClass]="'actionStyle mr-2'"
       [btnDisabled]="true"
-      (btnClick)="openAddDialog()"
     >
       <i class="material-icons iconStyle">add</i>
     </gva-button>
   </div>
   <div class="card">
-    <p-toast></p-toast>
     <generic-table
       [data]="requerimientosSubsanacions"
       [columns]="columns"
       [paginatorConfig]="paginatorConfig"
       [tableConfig]="tableConfig"
-      (openEdit)="openUpdateDialog($event)"
-      (openDelete)="onDeleteHandler($event)"
     ></generic-table>
   </div>
 </div>

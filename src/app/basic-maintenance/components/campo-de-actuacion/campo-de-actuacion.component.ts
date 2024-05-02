@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService, SelectItem } from 'primeng/api';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TranslocoService } from '@ngneat/transloco';
 import {
@@ -14,14 +14,14 @@ import {
   GenericDialog,
   InputField,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
-import { CustomResponse } from '@app/shared/services/common.service';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-campo-de-actuacion',
   templateUrl: './campo-de-actuacion.component.html',
   styleUrls: ['./campo-de-actuacion.component.css'],
   providers: [MessageService, DialogService, DynamicDialogRef],
 })
-export class CampoDeActuacionComponent implements OnInit {
+export class CampoDeActuacionComponent implements OnInit, OnDestroy {
   campoDeActuacions: CampoDeActuacion[];
   cloneCampoDeActuacionRecords: CampoDeActuacion[];
 
@@ -67,6 +67,7 @@ export class CampoDeActuacionComponent implements OnInit {
       class: 'table-col-width',
     },
   ];
+  private subscription = new Subject<void>();
 
   constructor(
     private campoDeActuacionService: CampoDeActuacionService,
@@ -88,9 +89,14 @@ export class CampoDeActuacionComponent implements OnInit {
   fetchAllCamposDeActuacion() {
     this.campoDeActuacionService
       .getCampoDeActuacions()
-      .subscribe((data: CustomResponse<CampoDeActuacion>) => {
-        this.campoDeActuacions = data.response;
-        this.cloneCampoDeActuacionRecords = data.response;
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {
+          this.campoDeActuacions = data.response;
+          this.cloneCampoDeActuacionRecords = data.response;
+        },
+        error: (err: Error) => console.error(err),
+        complete: () => {},
       });
   }
 
@@ -103,14 +109,29 @@ export class CampoDeActuacionComponent implements OnInit {
 
   filterHandler() {
     const values = this.cloneCampoDeActuacionRecords.filter(
-      (obj: CampoDeActuacion) =>
-        obj.codigo?.toLowerCase().includes(this.codigo.trim().toLowerCase()) &&
-        obj.deseccion
-          ?.toLowerCase()
-          .includes(this.deseccion.trim().toLowerCase()) &&
-        obj.deseccionVal
-          ?.toLowerCase()
-          .includes(this.deseccionVal.trim().toLowerCase())
+      (obj: CampoDeActuacion) => {
+        let result = false;
+        if (obj.codigo) {
+          result = obj.codigo
+            .toLowerCase()
+            .includes(this.codigo.trim().toLowerCase());
+        }
+        if (obj.deseccion) {
+          result =
+            result &&
+            obj.deseccion
+              .toLowerCase()
+              .includes(this.deseccion.trim().toLowerCase());
+        }
+        if (obj.deseccionVal) {
+          result =
+            result &&
+            obj.deseccionVal
+              ?.toLowerCase()
+              .includes(this.deseccionVal.trim().toLowerCase());
+        }
+        return result;
+      }
     );
     this.campoDeActuacions = [...values];
   }
@@ -122,25 +143,30 @@ export class CampoDeActuacionComponent implements OnInit {
         action: (input: CampoDeActuacion) => {
           this.campoDeActuacionService
             .postCampoDeActuacions(input)
-            .subscribe((data: CustomResponse<CampoDeActuacion>) => {
-              if (data.success === false && data.errorCode) {
-                this.openAlertDialog(
-                  this.translocoService.translate('errors.' + data.errorCode),
-                  'warn'
-                );
-              } else {
-                this.fetchAllCamposDeActuacion();
-                this.addDialogRef?.close();
-                this.messageService.add({
-                  severity: 'success',
-                  summary: this.translocoService.translate(
-                    'campoDeActuacion.title'
-                  ),
-                  detail: this.translocoService.translate(
-                    'toast_messages.add_success'
-                  ),
-                });
-              }
+            .pipe(takeUntil(this.subscription))
+            .subscribe({
+              next: (data) => {
+                if (data.success === false && data.errorCode) {
+                  this.openAlertDialog(
+                    this.translocoService.translate('errors.' + data.errorCode),
+                    'warn'
+                  );
+                } else {
+                  this.fetchAllCamposDeActuacion();
+                  this.addDialogRef?.close();
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: this.translocoService.translate(
+                      'campoDeActuacion.title'
+                    ),
+                    detail: this.translocoService.translate(
+                      'toast_messages.add_success'
+                    ),
+                  });
+                }
+              },
+              error: (err: Error) => console.error(err),
+              complete: () => {},
             });
         },
         validate: (input: CampoDeActuacion) => {
@@ -213,25 +239,30 @@ export class CampoDeActuacionComponent implements OnInit {
     const updateHandler = (input: CampoDeActuacion) => {
       this.campoDeActuacionService
         .updateCampoDeActuacions(input)
-        .subscribe((data: CustomResponse<CampoDeActuacion>) => {
-          if (data.success === false && data.errorCode) {
-            this.openAlertDialog(
-              this.translocoService.translate('errors.' + data.errorCode),
-              'warn'
-            );
-          } else {
-            this.fetchAllCamposDeActuacion();
-            this.updateDialogRef?.close();
-            this.messageService.add({
-              severity: 'success',
-              summary: this.translocoService.translate(
-                'campoDeActuacion.title'
-              ),
-              detail: this.translocoService.translate(
-                'toast_messages.update_success'
-              ),
-            });
-          }
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: (data) => {
+            if (data.success === false && data.errorCode) {
+              this.openAlertDialog(
+                this.translocoService.translate('errors.' + data.errorCode),
+                'warn'
+              );
+            } else {
+              this.fetchAllCamposDeActuacion();
+              this.updateDialogRef?.close();
+              this.messageService.add({
+                severity: 'success',
+                summary: this.translocoService.translate(
+                  'campoDeActuacion.title'
+                ),
+                detail: this.translocoService.translate(
+                  'toast_messages.update_success'
+                ),
+              });
+            }
+          },
+          error: (err: Error) => console.error(err),
+          complete: () => {},
         });
     };
     const actionButtons: ActionButtons[] = [
@@ -312,25 +343,30 @@ export class CampoDeActuacionComponent implements OnInit {
         action: () => {
           this.campoDeActuacionService
             .deleteCampoDeActuacions(campoDetails.codigo)
-            .subscribe((data: CustomResponse<CampoDeActuacion>) => {
-              if (data.success === false && data.errorCode) {
-                this.openAlertDialog(
-                  this.translocoService.translate('errors.' + data.errorCode),
-                  'warn'
-                );
-              } else {
-                this.fetchAllCamposDeActuacion();
-                this.deleteDialogRef?.close();
-                this.messageService.add({
-                  severity: 'success',
-                  summary: this.translocoService.translate(
-                    'campoDeActuacion.title'
-                  ),
-                  detail: this.translocoService.translate(
-                    'toast_messages.delete_success'
-                  ),
-                });
-              }
+            .pipe(takeUntil(this.subscription))
+            .subscribe({
+              next: (data) => {
+                if (data.success === false && data.errorCode) {
+                  this.openAlertDialog(
+                    this.translocoService.translate('errors.' + data.errorCode),
+                    'warn'
+                  );
+                } else {
+                  this.fetchAllCamposDeActuacion();
+                  this.deleteDialogRef?.close();
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: this.translocoService.translate(
+                      'campoDeActuacion.title'
+                    ),
+                    detail: this.translocoService.translate(
+                      'toast_messages.delete_success'
+                    ),
+                  });
+                }
+              },
+              error: (err: Error) => console.error(err),
+              complete: () => {},
             });
         },
         disabled: false,
@@ -433,5 +469,12 @@ export class CampoDeActuacionComponent implements OnInit {
       AlertDialogComponent,
       alertDialogConfig
     );
+  }
+
+  ngOnDestroy(): void {
+    this.campoDeActuacions = [];
+    this.cloneCampoDeActuacionRecords = [];
+    this.subscription.next();
+    this.subscription.complete();
   }
 }
