@@ -22,6 +22,9 @@ install:
     - npm cache clear -f
     - npm cache verify
     - npm install --legacy-peer-deps 
+  artifacts:
+    paths:
+      - /builds/dgtic-offshore/ecmca/ecmca-frontend/node_modules/
   rules:
     - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging")
 
