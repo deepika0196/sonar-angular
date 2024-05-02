@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CampoDeActuacionComponent } from './campo-de-actuacion.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslocoRootModule } from '@app/transloco-root.module';
 
 describe('CampoDeActuacionComponent', () => {
   let component: CampoDeActuacionComponent;
@@ -8,9 +10,9 @@ describe('CampoDeActuacionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CampoDeActuacionComponent ]
-    })
-    .compileComponents();
+      imports: [TranslocoRootModule, HttpClientModule],
+      declarations: [CampoDeActuacionComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CampoDeActuacionComponent);
     component = fixture.componentInstance;

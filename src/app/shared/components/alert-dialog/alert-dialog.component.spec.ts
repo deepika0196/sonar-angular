@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { AlertDialogComponent } from './alert-dialog.component';
 
 describe('AlertDialogComponent', () => {
@@ -8,10 +8,12 @@ describe('AlertDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AlertDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [AlertDialogComponent],
+      providers: [{ provide: DynamicDialogConfig, useValue: { data: {} } }],
+    }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(AlertDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

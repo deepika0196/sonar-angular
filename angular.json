@@ -157,8 +157,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/arq-sdk/src/assets/scss/marte.scss",
-              "node_modules/material-icons/iconfont/material-icons.css",
-              "src/styles.css"
+              "node_modules/material-icons/iconfont/material-icons.css"
             ],
             "scripts": []
           }
