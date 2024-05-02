@@ -12,6 +12,8 @@ install:
     - npm cache clear -f
     - npm cache verify
     - npm install --legacy-peer-deps 
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging")
 
 .lint:
   stage: lint
@@ -19,6 +21,8 @@ install:
     - npm install --legacy-peer-deps 
     - npm run lint
   needs: ["install"]
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging")
 
 test:
   stage: test
@@ -27,6 +31,8 @@ test:
     - npm install -g @angular/cli
     - npm install --legacy-peer-deps 
     - npm run test
+  rules:
+    - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging")
 
 
     
