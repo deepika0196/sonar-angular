@@ -57,6 +57,8 @@ test:
 sonar:
   stage: sonar
   script:
+    - npm install -D karma-sonarqube-reporter --legacy-peer-deps
+    - npm install -D sonarqube-scanner --legacy-peer-deps
     - npm run sonar-scanner
   needs: ["test"]
 
