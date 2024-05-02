@@ -4,6 +4,7 @@ stages:
   - install
 #  - lint
   - test
+  - sonar
 
 cache:
   key:
@@ -44,8 +45,20 @@ test:
     - npm install -g @angular/cli
     - npm install --legacy-peer-deps 
     - npm run test
+  artifacts:
+    paths:
+      - /builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/
+  reports:
+      junit:
+        - /builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/ecmca-frontend/junit.xml
   rules:
     - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging")
+
+sonar:
+  stage: sonar
+  script:
+    - npm run sonar-scanner
+  needs: ["test"]
 
 
     
