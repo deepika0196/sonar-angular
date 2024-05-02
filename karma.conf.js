@@ -32,12 +32,17 @@ module.exports = function (config) {
         { type: 'text-summary' }
       ]
     },
+
+    browsers: ['PhantomJS', 'ChromeHeadless', 'Chrome'],
+    customLaunchers: {
+      ChromeHeadlessCI: { base: 'ChromeHeadless', flags: ['--no-sandbox'] },
+    },
+    
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
     singleRun: false,
     restartOnFileChange: true
   });
