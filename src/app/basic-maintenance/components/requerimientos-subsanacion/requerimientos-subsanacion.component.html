@@ -1,1 +1,90 @@
-<p>requerimientos-subsanacion works!</p>
+<div
+  class="mainStyle"
+  style="flex: 0 0 100%"
+  *transloco="let t"
+>
+  <span class="headerStyle">{{ t('requerimientosSubsanacion.title') }}</span>
+  <div class="d-flex flex-row justify-content-between mt-2">
+    <div class="d-flex flex-column gap-2 col-2">
+      <label
+        htmlFor="codigo"
+        class="labelStyle"
+        >{{ t('requerimientosSubsanacion.field_id') }}</label
+      >
+      <input
+        pInputText
+        id="codigo"
+        class="inputStyle"
+        aria-describedby="codigo-help"
+        [(ngModel)]="codigo"
+      />
+    </div>
+    <div class="d-flex flex-column gap-2 col-5">
+      <label
+        htmlFor="derequerimiento"
+        class="labelStyle"
+        >{{ t('requerimientosSubsanacion.field_description') }}</label
+      >
+      <input
+        pInputText
+        id="derequerimiento"
+        class="inputStyle"
+        aria-describedby="derequerimiento-help"
+        [(ngModel)]="derequerimiento"
+      />
+    </div>
+    <div class="d-flex flex-column gap-2 col-5">
+      <label
+        htmlFor="derequerimientoVal"
+        class="labelStyle"
+        >{{ t('requerimientosSubsanacion.field_descriptionVal') }}</label
+      >
+      <input
+        pInputText
+        id="derequerimientoVal"
+        class="inputStyle"
+        aria-describedby="derequerimientoVal-help"
+        [(ngModel)]="derequerimientoVal"
+        disabled="true"
+      />
+    </div>
+  </div>
+  <div class="d-flex justify-content-end my-4 mr-2">
+    <gva-button
+      [btnLabel]="'buttons.search'"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="filterHandler()"
+    >
+      <i class="material-icons iconStyle">search</i>
+    </gva-button>
+    <gva-button
+      [btnLabel]="'buttons.clear'"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="clearAll()"
+    >
+      <img src="assets/images/ink_eraser.svg" />
+    </gva-button>
+    <gva-button
+      [btnLabel]="'buttons.add'"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      [btnDisabled]="true"
+      (btnClick)="openAddDialog()"
+    >
+      <i class="material-icons iconStyle">add</i>
+    </gva-button>
+  </div>
+  <div class="card">
+    <p-toast></p-toast>
+    <generic-table
+      [data]="requerimientosSubsanacions"
+      [columns]="columns"
+      [paginatorConfig]="paginatorConfig"
+      [tableConfig]="tableConfig"
+      (openEdit)="openUpdateDialog($event)"
+      (openDelete)="onDeleteHandler($event)"
+    ></generic-table>
+  </div>
+</div>

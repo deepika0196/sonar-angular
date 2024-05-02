@@ -25,20 +25,10 @@ export class CampoDeActuacionComponent implements OnInit {
   campoDeActuacions: CampoDeActuacion[];
   cloneCampoDeActuacionRecords: CampoDeActuacion[];
 
-  statuses: SelectItem[];
-
-  clonedCampoDeActuacion: {
-    [s: string]: CampoDeActuacion;
-  } = {};
-
   addDialogRef: DynamicDialogRef | undefined;
   updateDialogRef: DynamicDialogRef | undefined;
   deleteDialogRef: DynamicDialogRef | undefined;
   alertDialogRef: DynamicDialogRef | undefined;
-
-  first = 0;
-  rows = 10;
-  visible = false;
 
   tableConfig: TableConfig = {
     rows: 10,
@@ -62,7 +52,7 @@ export class CampoDeActuacionComponent implements OnInit {
       field: 'codigo',
       header: 'campoDeActuacion.field_id',
       sortable: true,
-      class: 'table-col-width',
+      class: 'table-col-width-fix',
     },
     {
       field: 'deseccion',
@@ -128,7 +118,7 @@ export class CampoDeActuacionComponent implements OnInit {
   openAddDialog() {
     const actionButtons: ActionButtons[] = [
       {
-        label: this.translocoService.translate('campoDeActuacion.save_button'),
+        label: this.translocoService.translate('buttons.save'),
         action: (input: CampoDeActuacion) => {
           this.campoDeActuacionService
             .postCampoDeActuacions(input)
@@ -147,7 +137,7 @@ export class CampoDeActuacionComponent implements OnInit {
                     'campoDeActuacion.title'
                   ),
                   detail: this.translocoService.translate(
-                    'campoDeActuacion.add_success'
+                    'toast_messages.add_success'
                   ),
                 });
               }
@@ -159,9 +149,7 @@ export class CampoDeActuacionComponent implements OnInit {
         disabled: true,
       },
       {
-        label: this.translocoService.translate(
-          'campoDeActuacion.cancel_button'
-        ),
+        label: this.translocoService.translate('buttons.cancel'),
         action: () => {
           this.addDialogRef?.close();
         },
@@ -174,27 +162,21 @@ export class CampoDeActuacionComponent implements OnInit {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_id'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'codigo',
       },
       {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_description'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'deseccion',
       },
       {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_descriptionVal'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'deseccionVal',
       },
     ];
@@ -204,9 +186,9 @@ export class CampoDeActuacionComponent implements OnInit {
       deseccionVal: '',
     };
     const addDialogConfig: GenericDialog = {
-      header: this.translocoService.translate(
-        'campoDeActuacion.add_dialog_header'
-      ),
+      header: this.translocoService.translate('dialog_header.add', {
+        title: this.translocoService.translate('campoDeActuacion.title'),
+      }),
       width: '50%',
       contentStyle: {
         overflow: 'none',
@@ -219,6 +201,7 @@ export class CampoDeActuacionComponent implements OnInit {
         inputFields: inputFields,
       },
       styleClass: 'dialogStyle',
+      showHeader: true,
     };
     this.addDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -245,7 +228,7 @@ export class CampoDeActuacionComponent implements OnInit {
                 'campoDeActuacion.title'
               ),
               detail: this.translocoService.translate(
-                'campoDeActuacion.update_success'
+                'toast_messages.update_success'
               ),
             });
           }
@@ -253,12 +236,10 @@ export class CampoDeActuacionComponent implements OnInit {
     };
     const actionButtons: ActionButtons[] = [
       {
-        label: this.translocoService.translate(
-          'campoDeActuacion.update_button'
-        ),
+        label: this.translocoService.translate('buttons.update'),
         action: (input: CampoDeActuacion) => {
           this.openAlertDialog(
-            this.translocoService.translate('campoDeActuacion.modify_alert'),
+            this.translocoService.translate('dialog_content.modify_alert'),
             'confirm',
             updateHandler,
             input
@@ -267,9 +248,7 @@ export class CampoDeActuacionComponent implements OnInit {
         disabled: false,
       },
       {
-        label: this.translocoService.translate(
-          'campoDeActuacion.cancel_button'
-        ),
+        label: this.translocoService.translate('buttons.cancel'),
         action: () => {
           this.updateDialogRef?.close();
         },
@@ -282,9 +261,7 @@ export class CampoDeActuacionComponent implements OnInit {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_id'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'codigo',
         disabled: true,
       },
@@ -292,25 +269,21 @@ export class CampoDeActuacionComponent implements OnInit {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_description'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'deseccion',
       },
       {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_descriptionVal'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'deseccionVal',
       },
     ];
     const updateDialogConfig: GenericDialog = {
-      header: this.translocoService.translate(
-        'campoDeActuacion.update_dialog_header'
-      ),
+      header: this.translocoService.translate('dialog_header.update', {
+        title: this.translocoService.translate('campoDeActuacion.title'),
+      }),
       width: '50%',
       contentStyle: {
         overflow: 'none',
@@ -323,6 +296,7 @@ export class CampoDeActuacionComponent implements OnInit {
         inputFields: inputFields,
       },
       styleClass: 'dialogStyle',
+      showHeader: true,
     };
     this.updateDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -333,8 +307,8 @@ export class CampoDeActuacionComponent implements OnInit {
   onDeleteHandler(campoDetails: CampoDeActuacion) {
     const actionButtons: ActionButtons[] = [
       {
-        label: this.translocoService.translate('campoDeActuacion.yes_button'),
-        icon: 'pi pi-check',
+        label: this.translocoService.translate('buttons.yes'),
+        icon: 'check',
         action: () => {
           this.campoDeActuacionService
             .deleteCampoDeActuacions(campoDetails.codigo)
@@ -353,7 +327,7 @@ export class CampoDeActuacionComponent implements OnInit {
                     'campoDeActuacion.title'
                   ),
                   detail: this.translocoService.translate(
-                    'campoDeActuacion.delete_success'
+                    'toast_messages.delete_success'
                   ),
                 });
               }
@@ -362,7 +336,7 @@ export class CampoDeActuacionComponent implements OnInit {
         disabled: false,
       },
       {
-        label: this.translocoService.translate('campoDeActuacion.no_button'),
+        label: this.translocoService.translate('buttons.no'),
         action: () => {
           this.deleteDialogRef?.close();
         },
@@ -382,14 +356,12 @@ export class CampoDeActuacionComponent implements OnInit {
       data: {
         actionButtons: actionButtons,
         alertMessage: this.translocoService.translate(
-          'campoDeActuacion.delete_existing_alert'
+          'dialog_content.delete_alert'
         ),
         headerStyle: {
-          icon: 'pi pi-info-circle',
+          icon: 'info',
           dialogType: 'confirm',
-          title: this.translocoService.translate(
-            'campoDeActuacion.delete_dialog_header'
-          ),
+          title: this.translocoService.translate('dialog_header.delete'),
         },
       },
     };
@@ -409,9 +381,8 @@ export class CampoDeActuacionComponent implements OnInit {
       dialogType === 'confirm'
         ? [
             {
-              label: this.translocoService.translate(
-                'campoDeActuacion.yes_button'
-              ),
+              label: this.translocoService.translate('buttons.yes'),
+              icon: 'check',
               action: () => {
                 if (callback && campoDetails) callback(campoDetails);
                 this.alertDialogRef?.close();
@@ -419,9 +390,7 @@ export class CampoDeActuacionComponent implements OnInit {
               disabled: false,
             },
             {
-              label: this.translocoService.translate(
-                'campoDeActuacion.no_button'
-              ),
+              label: this.translocoService.translate('buttons.no'),
               action: () => {
                 this.alertDialogRef?.close();
               },
@@ -430,9 +399,7 @@ export class CampoDeActuacionComponent implements OnInit {
           ]
         : [
             {
-              label: this.translocoService.translate(
-                'campoDeActuacion.accept_button'
-              ),
+              label: this.translocoService.translate('buttons.accept'),
               action: () => {
                 this.alertDialogRef?.close();
               },
@@ -453,11 +420,12 @@ export class CampoDeActuacionComponent implements OnInit {
         actionButtons: actionButtons,
         alertMessage: alertMessage,
         headerStyle: {
-          icon: 'pi pi-exclamation-triangle',
+          icon: dialogType === 'confirm' ? 'info' : 'report_problem',
           dialogType: dialogType,
-          title: this.translocoService.translate(
-            'campoDeActuacion.alert_dialog_header'
-          ),
+          title:
+            dialogType === 'confirm'
+              ? this.translocoService.translate('dialog_header.delete')
+              : this.translocoService.translate('dialog_header.alert'),
         },
       },
     };

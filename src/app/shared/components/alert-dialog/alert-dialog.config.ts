@@ -35,5 +35,5 @@ export interface GenericDialog {
     };
   };
   styleClass: string;
-  showHeader?: boolean;
+  showHeader: boolean;
 }

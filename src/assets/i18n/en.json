@@ -3,40 +3,6 @@
     "sign-out": "Log out",
     "cambiar_idioma": "Change language"
   },
-
-  "campoDeActuacion": {
-    "title": "Fields of action",
-    "field_id": "Code",
-    "field_description": "Spanish description",
-    "field_descriptionVal": "Valencian description",
-    "search_button": "Look for",
-    "clear_button": "Clean",
-    "add_button": "Add",
-    "previous": "Former",
-    "next": "Following",
-    "delete_alert": "The record could not be deleted because there is associated information.",
-    "insert_alert": "The record has already been inserted or is duplicated. Review it.",
-    "descriptionval_required": "You must add a description in Valencian.",
-    "description_required": "You must add a description in Spanish.",
-    "delete_existing_alert": "Do you want to permanently delete this record?",
-    "modify_alert": "Do you want to save the changes you made?",
-    "add_dialog_header": "Add fields of action",
-    "delete_dialog_header": "Consultation",
-    "update_dialog_header": "Modify Field of Action",
-    "alert_dialog_header": "Attention",
-    "save_button": "Save",
-    "cancel_button": "Cancel",
-    "modify_button": "Modify",
-    "update_button": "Update",
-    "yes_button": "Yes",
-    "no_button": "No",
-    "accept_button": "Accept",
-    "required_text": "You must fill out the field.",
-    "add_success": "Record added",
-    "update_success": "Record edited",
-    "delete_success": "Record deleted"
-  },
-
   "menu_items": {
     "mantenimientos_basicos": "Basic maintenance",
     "expedientes": "Files",
@@ -51,10 +17,53 @@
     }
   },
 
+  "campoDeActuacion": {
+    "title": "Fields of action",
+    "field_id": "Code",
+    "field_description": "Spanish description",
+    "field_descriptionVal": "Valencian description"
+  },
+  "requerimientosSubsanacion": {
+    "title": "Requirements Correction",
+    "field_id": "Code",
+    "field_description": "Spanish description",
+    "field_descriptionVal": "Valencian description"
+  },
+
   "errors": {
     "REGISTRATION_DUPLICATE_ERROR": "The record has already been inserted or is duplicated. Review it.",
     "UPDATE_REFERENCE_ERROR": "The record could not be updated because there is associated information.",
     "DELETE_REFERENCE_ERROR": "The record could not be deleted because there is associated information."
+  },
+  "buttons": {
+    "previous": "Former",
+    "next": "Following",
+    "search": "Look for",
+    "clear": "Clean",
+    "add": "Add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "modify": "Modify",
+    "update": "Update",
+    "yes": "Yes",
+    "no": "No",
+    "accept": "Accept"
+  },
+  "toast_messages": {
+    "add_success": "Record added",
+    "update_success": "Record edited",
+    "delete_success": "Record deleted"
+  },
+  "dialog_header": {
+    "add": "Add {{title}}",
+    "delete": "Consultation",
+    "update": "Modify {{title}}",
+    "alert": "Attention"
+  },
+
+  "dialog_content": {
+    "delete_alert": "Do you want to permanently delete this record?",
+    "modify_alert": "Do you want to save the changes you made?"
   },
   "title": "Example of use",
   "title_tab_1": "Add data:",
@@ -85,5 +94,6 @@
   "snackbar_txt_error": "Could not get data",
   "snackbar_txt_validate": "Fill in the required information",
   "pagination_text": "Records from {{first}} to {{last}} (Total {{totalRecords}})",
-  "empty_message": "No Record found"
+  "empty_message": "No Record found",
+  "required_text": "You must fill out the field."
 }
