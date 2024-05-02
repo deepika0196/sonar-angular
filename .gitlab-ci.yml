@@ -48,7 +48,7 @@ test:
   artifacts:
     paths:
       - /builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/
-  reports:
+    reports:
       junit:
         - /builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/ecmca-frontend/junit.xml
   rules:
