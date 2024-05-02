@@ -5,6 +5,16 @@ stages:
 #  - lint
   - test
 
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - node_modules/
+
+before_script:
+  - apk update && apk upgrade && apk add --no-cache chromium
+
 
 install:
   stage: install
