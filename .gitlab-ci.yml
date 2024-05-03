@@ -91,6 +91,6 @@ sonar-frontend:
       -Dsonar.exclusions=node_modules/**,**/*.spec.ts,**/*.model.ts,**/*.directive.ts,**/*.interceptors.ts,**/*.const.ts,**/runtime/**/*.ts,**/spy/*.ts,**/*.module.ts,**/test-utils.ts
       -Dsonar.tests=/builds/dgtic-offshore/ecmca/ecmca-frontend -Dsonar.test.inclusions=**/*.spec.ts
   only:
-    - development
+    - develop
     - master
     - staging
