@@ -6,7 +6,8 @@
       "@app/*": ["./app/*"],
       "@env/*": ["./environments/*"],
       "@shared/*": ["./app/shared/*"],
-      "@services/*": ["./app/services/*"]
+      "@services/*": ["./app/services/*"],
+      "@styles/*": ["./styles/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
