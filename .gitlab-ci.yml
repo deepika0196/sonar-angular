@@ -4,6 +4,7 @@ stages:
   - install
   - lint
   - test
+  - build
   - sonar
 
 cache:
