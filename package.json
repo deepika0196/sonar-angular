@@ -11,7 +11,7 @@
     "prod": "ng serve --serve-path /expropia-frontend/ --prod",
     "pre": "ng serve --serve-path /expropia-frontend/ --pre",
     "desa": "ng serve --serve-path /expropia-frontend/ --desa",
-    "test": "ng test",
+    "test": "ng test --code-coverage",
     "lint": "ng lint",
     "lint:fix": "eslint . --fix",
     "e2e": "ng e2e",
