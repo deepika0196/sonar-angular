@@ -2,8 +2,9 @@ image: node:18-alpine
 
 stages:
   - install
-#  - lint
+  - lint
   - test
+  - sonar
 
 cache:
   key:
@@ -28,7 +29,7 @@ install:
   rules:
     - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging")
 
-.lint:
+lint:
   stage: lint
   script:
     - npm install --legacy-peer-deps 
@@ -43,9 +44,27 @@ test:
     - export CHROME_BIN=/usr/bin/chromium-browser
     - npm install -g @angular/cli
     - npm install --legacy-peer-deps 
+    - npm install -D karma-sonarqube-reporter --legacy-peer-deps
+    - npm install -D sonarqube-scanner --legacy-peer-deps
     - npm run test
+  artifacts:
+    paths:
+      - /builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/
+    reports:
+      junit:
+        - /builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/ecmca-frontend/junit.xml
   rules:
     - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "test" || $CI_COMMIT_BRANCH == "staging")
+
+sonar:
+  stage: sonar
+  image: ${CI_REGISTRY}/dep/library/ci-library/sonarsource/sonar-scanner-cli:4.6
+  variables:
+    GIT_STRATEGY: clone
+    GIT_DEPTH: 0
+  script:
+    - npm run sonar-scanner
+  needs: ["test"]
 
 
     
