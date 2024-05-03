@@ -12,6 +12,7 @@ export interface InputField {
   label: string;
   required_msg: string;
   name: string;
+  maxLength?: number;
   disabled?: boolean;
 }
 

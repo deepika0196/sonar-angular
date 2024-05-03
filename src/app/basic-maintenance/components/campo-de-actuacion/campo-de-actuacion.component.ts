@@ -190,6 +190,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
         )}*`,
         required_msg: this.translocoService.translate('required_text'),
         name: 'codigo',
+        maxLength: 10,
       },
       {
         label: `${this.translocoService.translate(

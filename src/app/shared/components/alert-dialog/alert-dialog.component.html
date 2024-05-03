@@ -33,6 +33,7 @@
           pInputText
           id="{{ field.name }}"
           class="inputStyle"
+          [maxlength]="field.maxLength ? field.maxLength : null"
           [(ngModel)]="inputValues[field.name]"
           [disabled]="field.disabled ? field.disabled : 'false'"
         />
