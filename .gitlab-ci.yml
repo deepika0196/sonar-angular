@@ -58,6 +58,10 @@ test:
 
 sonar:
   stage: sonar
+  image: ${CI_REGISTRY}/dep/library/ci-library/sonarsource/sonar-scanner-cli:4.6
+  variables:
+    GIT_STRATEGY: clone
+    GIT_DEPTH: 0
   script:
     - npm run sonar-scanner
   needs: ["test"]
