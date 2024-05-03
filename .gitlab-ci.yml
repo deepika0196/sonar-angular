@@ -6,7 +6,6 @@ stages:
   - test
   - build
   - sonar
-  - build-image
 
 cache:
   key:
