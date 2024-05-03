@@ -6,6 +6,7 @@ stages:
   - test
   - build
   - sonar
+  - build-image
 
 cache:
   key:
@@ -69,7 +70,7 @@ frontend-build:
 
   
 sonar-frontend:
-  stage: build-image
+  stage: sonar
   image: ${CI_REGISTRY}/dep/library/ci-library/sonarsource/sonar-scanner-cli:4.6
   variables:
     GIT_STRATEGY: clone
@@ -96,4 +97,15 @@ sonar-frontend:
     - staging
 
 
-    
+  build-image:
+  stage: build-image
+  needs: ["frontend-build"]
+  script:
+    - echo "Building the Docker image here"
+  only:
+    - development
+    - master
+    - sonar
+    - staging
+    - release
+    - main
