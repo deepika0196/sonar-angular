@@ -276,7 +276,10 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
             input
           );
         },
-        disabled: false,
+        validate: (input: CampoDeActuacion) => {
+          return Object.values(input).some((x) => x === null || x === '');
+        },
+        disabled: true,
       },
       {
         label: this.translocoService.translate('buttons.cancel'),
