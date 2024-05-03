@@ -1,50 +1,58 @@
-import { Injectable } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { TranslocoService } from "@ngneat/transloco";
-import { ArqDialogService } from "arq-sdk";
+import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { TranslocoService } from '@ngneat/transloco';
+import { ArqDialogService } from 'arq-sdk';
 
 @Injectable({
-    providedIn: 'root',
-  })
-
+  providedIn: 'root',
+})
 export class UtilsComponent {
+  static eventReadRow(row: any, dialog: any, serviceArq: any): any {
+    const data = {
+      row,
+      readOnly: true,
+    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    serviceArq.open(data, dialog).subscribe((res: any) => {});
+  }
 
-  static eventReadRow(row: any, dialog: any, serviceArq: any) : any {
-      const data = {    
-          row,
-          readOnly: true   
-      };
-      serviceArq.open(data, dialog).subscribe((res:any) => {
-      });
-    }
-  
   static eventNewRow(row: any, dialog: any): any {
     const dataModal = {
       data: {
-        readOnly: false
+        readOnly: false,
       },
-      component: dialog
+      component: dialog,
     };
 
     return dataModal;
   }
 
-  static eventEditRow(row: any, dialog: any, service: any, serviceArq: any): any {
-    const data = {    
+  static eventEditRow(
+    row: any,
+    dialog: any,
+    service: any,
+    serviceArq: any
+  ): any {
+    const data = {
       row,
-      readOnly: false   
+      readOnly: false,
     };
-    serviceArq.open(data, dialog).subscribe((res: any) => { 
+    serviceArq.open(data, dialog).subscribe((res: any) => {
       if (res != undefined && res != null) {
         service.sendData(res);
       }
     });
   }
 
-  static closeDialog(data:any, formGroup: FormGroup, serviceArq: ArqDialogService, transloco: TranslocoService):void{
-    if ( data.readOnly || formGroup.pristine ){
+  static closeDialog(
+    data: any,
+    formGroup: FormGroup,
+    serviceArq: ArqDialogService,
+    transloco: TranslocoService
+  ): void {
+    if (data.readOnly || formGroup.pristine) {
       serviceArq.close();
-    }else{
+    } else {
       serviceArq
         .open(
           {
@@ -56,7 +64,7 @@ export class UtilsComponent {
             icon: 'close',
             color: 'text-danger',
             textConfirm: transloco.translate('dialog_accept'),
-            textCancel: transloco.translate('dialog_cancel')
+            textCancel: transloco.translate('dialog_cancel'),
           },
           null
         )
@@ -67,5 +75,4 @@ export class UtilsComponent {
         });
     }
   }
-
 }

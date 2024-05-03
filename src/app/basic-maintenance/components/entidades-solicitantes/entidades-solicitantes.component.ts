@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { GlobalConstant } from '@app/core/constants/globalConstants';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface DatosPrincipales {
   cif: string;
   razonSocial: string;
