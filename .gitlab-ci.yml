@@ -44,6 +44,8 @@ test:
     - export CHROME_BIN=/usr/bin/chromium-browser
     - npm install -g @angular/cli
     - npm install --legacy-peer-deps 
+        - npm install -D karma-sonarqube-reporter --legacy-peer-deps
+    - npm install -D sonarqube-scanner --legacy-peer-deps
     - npm run test
   artifacts:
     paths:
@@ -57,8 +59,6 @@ test:
 sonar:
   stage: sonar
   script:
-    - npm install -D karma-sonarqube-reporter --legacy-peer-deps
-    - npm install -D sonarqube-scanner --legacy-peer-deps
     - npm run sonar-scanner
   needs: ["test"]
 
