@@ -84,7 +84,6 @@ sonar-frontend:
       -Dsonar.host.url=$SONAR_URL
       -Dsonar.login=$SONAR_LOGIN
       -Dsonar.TOKEN=$SONAR_TOKEN
-      -Dsonar.password=$SONAR_PASSWORD
       -Dsonar.branch.name=$CI_COMMIT_REF_NAME 
       -Dsonar.sourceEncoding=UTF-8 
       -Dsonar.sources=/builds/dgtic-offshore/ecmca/ecmca-frontend
