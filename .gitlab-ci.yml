@@ -82,8 +82,7 @@ sonar-frontend:
       -Dsonar.projectName="ECMCA FRONTEND"
       -Dsonar.javascript.lcov.reportPaths=/builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/ecmca-frontend/lcov.info 
       -Dsonar.host.url=$SONAR_URL
-      -Dsonar.login=$SONAR_LOGIN
-      -Dsonar.TOKEN=$SONAR_TOKEN
+      -Dsonar.login=$SONAR_TOKEN
       -Dsonar.branch.name=$CI_COMMIT_REF_NAME 
       -Dsonar.sourceEncoding=UTF-8 
       -Dsonar.sources=/builds/dgtic-offshore/ecmca/ecmca-frontend
