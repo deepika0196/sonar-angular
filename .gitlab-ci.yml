@@ -1,8 +1,8 @@
 image: node:18-alpine
 
 stages:
- # - install
- # - lint
+  - install
+  - lint
   - test
   # - build
   - sonar
@@ -14,11 +14,11 @@ cache:
   paths:
     - node_modules/
 
-.before_script:
+before_script:
   - apk update && apk upgrade && apk add --no-cache chromium
 
 
-.install:
+install:
   stage: install
   script:
     - npm cache clear -f
@@ -28,7 +28,7 @@ cache:
     paths:
       - /builds/dgtic-offshore/ecmca/ecmca-frontend/node_modules/
 
-.lint:
+lint:
   stage: lint
   script:
     - npm install --legacy-peer-deps 
