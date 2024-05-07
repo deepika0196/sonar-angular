@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService, SelectItem } from 'primeng/api';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TranslocoService } from '@ngneat/transloco';
 import {
@@ -13,31 +13,22 @@ import {
   ActionButtons,
   GenericDialog,
   InputField,
-} from '@app/basic-maintenance/interfaces/action-buttons';
+} from '@app/shared/components/alert-dialog/alert-dialog.config';
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-campo-de-actuacion',
   templateUrl: './campo-de-actuacion.component.html',
   styleUrls: ['./campo-de-actuacion.component.css'],
   providers: [MessageService, DialogService, DynamicDialogRef],
 })
-export class CampoDeActuacionComponent implements OnInit {
+export class CampoDeActuacionComponent implements OnInit, OnDestroy {
   campoDeActuacions: CampoDeActuacion[];
   cloneCampoDeActuacionRecords: CampoDeActuacion[];
-
-  statuses: SelectItem[];
-
-  clonedCampoDeActuacion: {
-    [s: string]: CampoDeActuacion;
-  } = {};
 
   addDialogRef: DynamicDialogRef | undefined;
   updateDialogRef: DynamicDialogRef | undefined;
   deleteDialogRef: DynamicDialogRef | undefined;
   alertDialogRef: DynamicDialogRef | undefined;
-
-  first = 0;
-  rows = 10;
-  visible = false;
 
   tableConfig: TableConfig = {
     rows: 10,
@@ -61,7 +52,7 @@ export class CampoDeActuacionComponent implements OnInit {
       field: 'codigo',
       header: 'campoDeActuacion.field_id',
       sortable: true,
-      class: 'table-col-width',
+      class: 'table-col-width-fix',
     },
     {
       field: 'deseccion',
@@ -76,12 +67,13 @@ export class CampoDeActuacionComponent implements OnInit {
       class: 'table-col-width',
     },
   ];
+  private subscription = new Subject<void>();
 
   constructor(
     private campoDeActuacionService: CampoDeActuacionService,
     private messageService: MessageService,
     private dialogService: DialogService,
-    private translocoService: TranslocoService // private ref: DynamicDialogRef
+    private translocoService: TranslocoService
   ) {}
 
   codigo = '';
@@ -97,10 +89,14 @@ export class CampoDeActuacionComponent implements OnInit {
   fetchAllCamposDeActuacion() {
     this.campoDeActuacionService
       .getCampoDeActuacions()
-      .subscribe((data: any) => {
-        const { response: res } = data;
-        this.campoDeActuacions = res;
-        this.cloneCampoDeActuacionRecords = res;
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {
+          this.campoDeActuacions = data.response;
+          this.cloneCampoDeActuacionRecords = data.response;
+        },
+        error: (err: Error) => console.error(err),
+        complete: () => {},
       });
   }
 
@@ -113,14 +109,29 @@ export class CampoDeActuacionComponent implements OnInit {
 
   filterHandler() {
     const values = this.cloneCampoDeActuacionRecords.filter(
-      (obj: CampoDeActuacion) =>
-        obj.codigo?.toLowerCase().includes(this.codigo.trim().toLowerCase()) &&
-        obj.deseccion
-          ?.toLowerCase()
-          .includes(this.deseccion.trim().toLowerCase()) &&
-        obj.deseccionVal
-          ?.toLowerCase()
-          .includes(this.deseccionVal.trim().toLowerCase())
+      (obj: CampoDeActuacion) => {
+        let result = false;
+        if (obj.codigo) {
+          result = obj.codigo
+            .toLowerCase()
+            .includes(this.codigo.trim().toLowerCase());
+        }
+        if (obj.deseccion) {
+          result =
+            result &&
+            obj.deseccion
+              .toLowerCase()
+              .includes(this.deseccion.trim().toLowerCase());
+        }
+        if (obj.deseccionVal) {
+          result =
+            result &&
+            obj.deseccionVal
+              ?.toLowerCase()
+              .includes(this.deseccionVal.trim().toLowerCase());
+        }
+        return result;
+      }
     );
     this.campoDeActuacions = [...values];
   }
@@ -128,37 +139,45 @@ export class CampoDeActuacionComponent implements OnInit {
   openAddDialog() {
     const actionButtons: ActionButtons[] = [
       {
-        label: this.translocoService.translate('campoDeActuacion.save_button'),
-        action: (input: any) => {
-          console.log('add', input);
-          // this.campoDeActuacionService
-          //   .postCampoDeActuacions(input)
-          //   .subscribe((data) => {
-          //     console.log(data);
-          //   });
-          this.addDialogRef?.close();
-          this.messageService.add({
-            severity: 'info',
-            summary: 'Campos De Actuacion',
-            detail: 'New Record Saved',
-          });
+        label: this.translocoService.translate('buttons.save'),
+        action: (input: CampoDeActuacion) => {
+          this.campoDeActuacionService
+            .postCampoDeActuacions(input)
+            .pipe(takeUntil(this.subscription))
+            .subscribe({
+              next: (data) => {
+                if (data.success === false && data.errorCode) {
+                  this.openAlertDialog(
+                    this.translocoService.translate('errors.' + data.errorCode),
+                    'warn'
+                  );
+                } else {
+                  this.fetchAllCamposDeActuacion();
+                  this.addDialogRef?.close();
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: this.translocoService.translate(
+                      'campoDeActuacion.title'
+                    ),
+                    detail: this.translocoService.translate(
+                      'toast_messages.add_success'
+                    ),
+                  });
+                }
+              },
+              error: (err: Error) => console.error(err),
+              complete: () => {},
+            });
         },
-        validate: (input: any) => {
+        validate: (input: CampoDeActuacion) => {
           return Object.values(input).some((x) => x === null || x === '');
         },
         disabled: true,
       },
       {
-        label: this.translocoService.translate(
-          'campoDeActuacion.cancel_button'
-        ),
-        action: (input: any) => {
-          console.log('cancel', input);
+        label: this.translocoService.translate('buttons.cancel'),
+        action: () => {
           this.addDialogRef?.close();
-          // this.ref.close();
-          // this.openAlertDialog(
-          //   this.translocoService.translate('campoDeActuacion.insert_alert')
-          // );
         },
         disabled: false,
       },
@@ -169,27 +188,22 @@ export class CampoDeActuacionComponent implements OnInit {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_id'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'codigo',
+        maxLength: 10,
       },
       {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_description'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'deseccion',
       },
       {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_descriptionVal'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'deseccionVal',
       },
     ];
@@ -199,9 +213,9 @@ export class CampoDeActuacionComponent implements OnInit {
       deseccionVal: '',
     };
     const addDialogConfig: GenericDialog = {
-      header: this.translocoService.translate(
-        'campoDeActuacion.add_dialog_header'
-      ),
+      header: this.translocoService.translate('dialog_header.add', {
+        title: this.translocoService.translate('campoDeActuacion.title'),
+      }),
       width: '50%',
       contentStyle: {
         overflow: 'none',
@@ -214,6 +228,7 @@ export class CampoDeActuacionComponent implements OnInit {
         inputFields: inputFields,
       },
       styleClass: 'dialogStyle',
+      showHeader: true,
     };
     this.addDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -222,34 +237,54 @@ export class CampoDeActuacionComponent implements OnInit {
   }
 
   openUpdateDialog(campoDetails: any) {
+    const updateHandler = (input: CampoDeActuacion) => {
+      this.campoDeActuacionService
+        .updateCampoDeActuacions(input)
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: (data) => {
+            if (data.success === false && data.errorCode) {
+              this.openAlertDialog(
+                this.translocoService.translate('errors.' + data.errorCode),
+                'warn'
+              );
+            } else {
+              this.fetchAllCamposDeActuacion();
+              this.updateDialogRef?.close();
+              this.messageService.add({
+                severity: 'success',
+                summary: this.translocoService.translate(
+                  'campoDeActuacion.title'
+                ),
+                detail: this.translocoService.translate(
+                  'toast_messages.update_success'
+                ),
+              });
+            }
+          },
+          error: (err: Error) => console.error(err),
+          complete: () => {},
+        });
+    };
     const actionButtons: ActionButtons[] = [
       {
-        label: this.translocoService.translate(
-          'campoDeActuacion.update_button'
-        ),
-        action: (input: any) => {
-          const updateService =
-            this.campoDeActuacionService.postCampoDeActuacions(input);
-          // .subscribe((data) => {
-          //   console.log(data, 'rrss');
-          //   this.fetchAllCamposDeActuacion();
-          // });
+        label: this.translocoService.translate('buttons.update'),
+        action: (input: CampoDeActuacion) => {
           this.openAlertDialog(
-            this.translocoService.translate('campoDeActuacion.modify_alert'),
+            this.translocoService.translate('dialog_content.modify_alert'),
             'confirm',
-            'update',
+            updateHandler,
             input
           );
-          // this.updateDialogRef?.close();
         },
-        disabled: false,
+        validate: (input: CampoDeActuacion) => {
+          return Object.values(input).some((x) => x === null || x === '');
+        },
+        disabled: true,
       },
       {
-        label: this.translocoService.translate(
-          'campoDeActuacion.cancel_button'
-        ),
-        action: (input: any) => {
-          console.log('cancel', input);
+        label: this.translocoService.translate('buttons.cancel'),
+        action: () => {
           this.updateDialogRef?.close();
         },
         disabled: false,
@@ -261,9 +296,7 @@ export class CampoDeActuacionComponent implements OnInit {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_id'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'codigo',
         disabled: true,
       },
@@ -271,38 +304,34 @@ export class CampoDeActuacionComponent implements OnInit {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_description'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'deseccion',
       },
       {
         label: `${this.translocoService.translate(
           'campoDeActuacion.field_descriptionVal'
         )}*`,
-        required_msg: this.translocoService.translate(
-          'campoDeActuacion.required_text'
-        ),
+        required_msg: this.translocoService.translate('required_text'),
         name: 'deseccionVal',
       },
     ];
     const updateDialogConfig: GenericDialog = {
-      header: this.translocoService.translate(
-        'campoDeActuacion.update_dialog_header'
-      ),
+      header: this.translocoService.translate('dialog_header.update', {
+        title: this.translocoService.translate('campoDeActuacion.title'),
+      }),
       width: '50%',
       contentStyle: {
         overflow: 'none',
       },
       closable: false,
       baseZIndex: 10000,
-      // height: "50%",
       data: {
-        inputValues: campoDetails,
+        inputValues: { ...campoDetails },
         actionButtons: actionButtons,
         inputFields: inputFields,
       },
       styleClass: 'dialogStyle',
+      showHeader: true,
     };
     this.updateDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -310,36 +339,45 @@ export class CampoDeActuacionComponent implements OnInit {
     );
   }
 
-  onDeleteHandler(campoDetails: any) {
+  onDeleteHandler(campoDetails: CampoDeActuacion) {
     const actionButtons: ActionButtons[] = [
       {
-        label: this.translocoService.translate('campoDeActuacion.yes_button'),
-        icon: 'pi pi-check',
-        action: (input: any) => {
-          console.log('delete');
+        label: this.translocoService.translate('buttons.yes'),
+        icon: 'check',
+        action: () => {
           this.campoDeActuacionService
-            .deleteCampoDeActuacions(campoDetails)
-            .subscribe((data) => {
-              console.log(data);
-              // if (error) {
-              // this.openAlertDialog(
-              //   this.translocoService.translate("campoDeActuacion.delete_alert"),
-              // 'warn',
-              //   ""
-              // );
-              // } else {
-              // this.fetchAllCamposDeActuacion()
-              // }
+            .deleteCampoDeActuacions(campoDetails.codigo)
+            .pipe(takeUntil(this.subscription))
+            .subscribe({
+              next: (data) => {
+                if (data.success === false && data.errorCode) {
+                  this.openAlertDialog(
+                    this.translocoService.translate('errors.' + data.errorCode),
+                    'warn'
+                  );
+                } else {
+                  this.fetchAllCamposDeActuacion();
+                  this.deleteDialogRef?.close();
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: this.translocoService.translate(
+                      'campoDeActuacion.title'
+                    ),
+                    detail: this.translocoService.translate(
+                      'toast_messages.delete_success'
+                    ),
+                  });
+                }
+              },
+              error: (err: Error) => console.error(err),
+              complete: () => {},
             });
-
-          this.deleteDialogRef?.close();
         },
         disabled: false,
       },
       {
-        label: this.translocoService.translate('campoDeActuacion.no_button'),
+        label: this.translocoService.translate('buttons.no'),
         action: () => {
-          console.log('cancel');
           this.deleteDialogRef?.close();
         },
         disabled: false,
@@ -354,19 +392,16 @@ export class CampoDeActuacionComponent implements OnInit {
       showHeader: false,
       closable: false,
       baseZIndex: 10000,
-      // height: "40%",
       styleClass: 'dialogStyle',
       data: {
         actionButtons: actionButtons,
         alertMessage: this.translocoService.translate(
-          'campoDeActuacion.delete_existing_alert'
+          'dialog_content.delete_alert'
         ),
         headerStyle: {
-          icon: 'pi pi-info-circle',
+          icon: 'info',
           dialogType: 'confirm',
-          title: this.translocoService.translate(
-            'campoDeActuacion.delete_dialog_header'
-          ),
+          title: this.translocoService.translate('dialog_header.delete'),
         },
       },
     };
@@ -379,39 +414,24 @@ export class CampoDeActuacionComponent implements OnInit {
   openAlertDialog(
     alertMessage: string,
     dialogType: string,
-    serviceType: string,
-    serviceInput: CampoDeActuacion
+    callback?: (input?: any) => void,
+    campoDetails?: CampoDeActuacion
   ) {
-    const actionButtons =
+    const actionButtons: ActionButtons[] =
       dialogType === 'confirm'
         ? [
             {
-              label: this.translocoService.translate(
-                'campoDeActuacion.yes_button'
-              ),
-              action: (input: any) => {
-                console.log('delesste');
-                this.runServiceByType(serviceType, serviceInput);
-                // if (service)
-                //   service.subscribe((data) => {
-                //     console.log(data, 'rrss');
-                //     this.fetchAllCamposDeActuacion();
-                //   });
-                // this.campoDeActuacionService
-                //   .deleteCampoDeActuacions(input)
-                //   .subscribe((data) => {
-                //     console.log(data);
-                //   });
+              label: this.translocoService.translate('buttons.yes'),
+              icon: 'check',
+              action: () => {
+                if (callback && campoDetails) callback(campoDetails);
                 this.alertDialogRef?.close();
               },
               disabled: false,
             },
             {
-              label: this.translocoService.translate(
-                'campoDeActuacion.no_button'
-              ),
+              label: this.translocoService.translate('buttons.no'),
               action: () => {
-                console.log('cancel');
                 this.alertDialogRef?.close();
               },
               disabled: false,
@@ -419,17 +439,8 @@ export class CampoDeActuacionComponent implements OnInit {
           ]
         : [
             {
-              label: this.translocoService.translate(
-                'campoDeActuacion.yes_button'
-              ),
-              action: (input: any) => {
-                console.log('delete');
-
-                // this.campoDeActuacionService
-                //   .deleteCampoDeActuacions(input)
-                //   .subscribe((data) => {
-                //     console.log(data);
-                //   });
+              label: this.translocoService.translate('buttons.accept'),
+              action: () => {
                 this.alertDialogRef?.close();
               },
               disabled: false,
@@ -442,20 +453,19 @@ export class CampoDeActuacionComponent implements OnInit {
         overflow: 'none',
       },
       showHeader: false,
-      // position: "left",
       baseZIndex: 20000,
-      // height: "40%",
       closable: false,
       styleClass: 'dialogStyle',
       data: {
         actionButtons: actionButtons,
         alertMessage: alertMessage,
         headerStyle: {
-          icon: 'pi pi-exclamation-triangle',
+          icon: dialogType === 'confirm' ? 'info' : 'report_problem',
           dialogType: dialogType,
-          title: this.translocoService.translate(
-            'campoDeActuacion.alert_dialog_header'
-          ),
+          title:
+            dialogType === 'confirm'
+              ? this.translocoService.translate('dialog_header.delete')
+              : this.translocoService.translate('dialog_header.alert'),
         },
       },
     };
@@ -465,20 +475,10 @@ export class CampoDeActuacionComponent implements OnInit {
     );
   }
 
-  runServiceByType(serviceType: string, serviceInput: CampoDeActuacion) {
-    switch (serviceType) {
-      case 'update':
-        this.campoDeActuacionService
-          .postCampoDeActuacions(serviceInput)
-          .subscribe((data) => {
-            console.log(data, 'rrss');
-            this.fetchAllCamposDeActuacion();
-            this.updateDialogRef?.close();
-          });
-        break;
-
-      default:
-        break;
-    }
+  ngOnDestroy(): void {
+    this.campoDeActuacions = [];
+    this.cloneCampoDeActuacionRecords = [];
+    this.subscription.next();
+    this.subscription.complete();
   }
 }

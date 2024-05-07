@@ -23,6 +23,7 @@
           *ngFor="let column of columns; let ind = index"
           pSortableColumn="{{ column.field }}"
           [pSortableColumnDisabled]="!column.sortable"
+          class="{{ column.class }}"
         >
           {{ column.header | transloco }}
           <p-sortIcon
@@ -30,7 +31,7 @@
             field="{{ column.field }}"
           ></p-sortIcon>
         </th>
-        <th></th>
+        <th class="table-col-width-fix"></th>
       </tr>
     </ng-template>
     <ng-template
@@ -38,10 +39,7 @@
       let-item
     >
       <tr>
-        <td
-          *ngFor="let column of columns; let ind = index"
-          class="column.class"
-        >
+        <td *ngFor="let column of columns; let ind = index">
           {{ item[column.field] }}
         </td>
         <td *ngIf="tableConfig.showDelete || tableConfig.showEdit">
@@ -52,6 +50,7 @@
               pRipple
               type="button"
               (click)="onEdit(item)"
+              [disabled]="tableConfig.disableEdit"
               class="p-button-rounded p-button-text p-0 mr-2"
             >
               <img
@@ -65,6 +64,7 @@
               pRipple
               type="button"
               class="p-button-rounded p-button-text p-0 ml-2"
+              [disabled]="tableConfig.disableDelete"
               (click)="onDelete(item)"
             >
               <img
@@ -76,5 +76,8 @@
         </td>
       </tr>
     </ng-template>
+    <ng-template pTemplate="emptymessage"
+      ><div class="p-2">{{ t('empty_message') }}</div></ng-template
+    >
   </p-table>
 </div>

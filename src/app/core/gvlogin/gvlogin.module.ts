@@ -27,7 +27,8 @@ export function jwtOptionsFactory() {
 }
 
 export function tokenGetter(): string {
-  return localStorage.getItem(environment.gvlogin.tokenKey)!;
+  const item = localStorage.getItem(environment.gvlogin.tokenKey);
+  return item ? item : '';
 }
 
 @NgModule({

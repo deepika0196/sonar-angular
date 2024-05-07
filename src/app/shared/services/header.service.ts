@@ -37,6 +37,8 @@ export class HeaderService {
             label: this.translocoService.translate(
               'menu_items.sub_menu.requerimientos_subsanacion'
             ),
+            routerLink: ['/basic-maintenance/requerimientosSubsanacion'],
+            routerLinkActiveOptions: { exact: true },
           },
           {
             label: this.translocoService.translate(

@@ -17,6 +17,9 @@ export const environmentLoader = new Promise<any>((resolve, reject) => {
       resolve(defaultEnvironment);
     }
   };
+  xmlhttp.onerror = function () {
+    reject();
+  };
 
   xmlhttp.send();
 });

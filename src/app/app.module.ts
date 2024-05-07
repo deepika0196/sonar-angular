@@ -27,7 +27,9 @@ import { LoaderComponent } from '@app/shared/loader/loader.component';
 registerLocaleData(localeEs);
 
 export function getToken(): string {
-  return localStorage.getItem('token')!;
+  // return localStorage.getItem('token')!;
+  const token = localStorage.getItem('token');
+  return token ? token : '';
 }
 
 export let AppInjector: Injector;

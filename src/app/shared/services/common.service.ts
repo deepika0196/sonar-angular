@@ -1,8 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 import { environment } from '@env/environment';
 import { ArqHttpClient } from 'arq-sdk';
+
+export interface CustomResponse<T> {
+  success: boolean;
+  response: T[];
+  errorCode?: string;
+}
 
 @Injectable({
   providedIn: 'root',

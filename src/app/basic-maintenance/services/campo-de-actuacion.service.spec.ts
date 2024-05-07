@@ -4,8 +4,6 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { CampoDeActuacionService } from './campo-de-actuacion.service';
-import { CampoDeActuacion } from '../interfaces/campoDeActuacion';
-import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 
 describe('CampoDeActuacionService', () => {
   let service: CampoDeActuacionService;

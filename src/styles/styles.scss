@@ -28,5 +28,8 @@ app-button {
 }
 
 .table-col-width {
-  width: '20%';
+  min-width: 20%;
+}
+.table-col-width-fix {
+  min-width: 7rem;
 }

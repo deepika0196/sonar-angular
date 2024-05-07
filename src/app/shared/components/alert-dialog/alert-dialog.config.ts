@@ -12,6 +12,7 @@ export interface InputField {
   label: string;
   required_msg: string;
   name: string;
+  maxLength?: number;
   disabled?: boolean;
 }
 
@@ -35,5 +36,5 @@ export interface GenericDialog {
     };
   };
   styleClass: string;
-  showHeader?: boolean;
+  showHeader: boolean;
 }
