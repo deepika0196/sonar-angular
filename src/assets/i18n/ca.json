@@ -65,6 +65,30 @@
     "delete_alert": "Desitja esborrar definitivament este registre?",
     "modify_alert": "Desitja guardar els canvis realitzats ?"
   },
+
+  "solicitud_de_inscripcion": {
+    "title": "ca_Registro de entidades",
+    "volver_button": "Volver",
+    "guardar_button": "Guardar",
+    "archivar_button": "Archivar ",
+    "restaurar_button": "Restaurar",
+    "title_tab_1": "ca_Datos principales de la empresa",
+    "cif": "CIF",
+    "razon_social": "Razón Social",
+    "domicilio_social": "Domicilio Social",
+    "provincia": "Provincia ",
+    "municipio": "Municipio",
+    "c_postal": "C. Postal",
+    "n_registro": "Nº Registro",
+    "fecha_solicitud_de_inscripcion": "Fecha Solicitud de Inscripción ",
+    "fecha_baja": "Fecha Baja",
+    "e-mail": "E-mail",
+    "telefono": "Teléfono ",
+    "fax": "Fax",
+    "publicar_en_web": "Publicar en web",
+    "observaciones": "Observaciones"
+  },
+
   "title": "ca_Exemple dús",
   "title_tab_1": "ca_Afegeix dades:",
   "title_tab_2": "ca_Col·laboradors:",

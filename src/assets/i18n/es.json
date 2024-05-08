@@ -31,6 +31,29 @@
     "field_descriptionVal": "Descripción valenciano"
   },
 
+  "solicitud_de_inscripcion": {
+    "title": "Registre d'entitats",
+    "volver_button": "Tornar",
+    "guardar_button": "Guardar",
+    "archivar_button": "Arxivar",
+    "restaurar_button": "Restaurar",
+    "title_tab_1": "es_Dades principals de l'empresa",
+    "cif": "CIF",
+    "razon_social": "Raó Social",
+    "domicilio_social": "Domicilio Social",
+    "provincia": "Provincia ",
+    "municipio": "Municipio",
+    "c_postal": "C. Postal",
+    "n_registro": "Núm. Registre",
+    "fecha_solicitud_de_inscripcion": "Data Sol·licitud d'Inscripció",
+    "fecha_baja": "Data Baixa",
+    "e-mail": "E-mail",
+    "telefono": "Teléfono ",
+    "fax": "Fax",
+    "publicar_en_web": "Publicar en web",
+    "observaciones": "Observaciones"
+  },
+
   "errors": {
     "REGISTRATION_DUPLICATE_ERROR": "El registro ya ha sido insertado o está duplicado. Revíselo.",
     "UPDATE_REFERENCE_ERROR": "No se ha podido editar el registro porque existe información asociada.",

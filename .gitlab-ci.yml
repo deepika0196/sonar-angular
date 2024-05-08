@@ -1,10 +1,10 @@
 image: node:18-alpine
 
 stages:
-  - install
-  - lint
+ # - install
+ # - lint
   - test
-  - build
+  # - build
   - sonar
 
 cache:
@@ -14,11 +14,11 @@ cache:
   paths:
     - node_modules/
 
-before_script:
+.before_script:
   - apk update && apk upgrade && apk add --no-cache chromium
 
 
-install:
+.install:
   stage: install
   script:
     - npm cache clear -f
@@ -28,7 +28,7 @@ install:
     paths:
       - /builds/dgtic-offshore/ecmca/ecmca-frontend/node_modules/
 
-lint:
+.lint:
   stage: lint
   script:
     - npm install --legacy-peer-deps 
@@ -52,20 +52,20 @@ test:
       junit:
         - /builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/ecmca-frontend/junit.xml
 
-frontend-build:
-  stage: build
-  script:
-    - cd /builds/dgtic-offshore/ecmca/ecmca-frontend
-    - npm install -g @angular/cli
-    - npm ci --unsafe-perm
-    - node --max-old-space-size=2048 ./node_modules/@angular/cli/bin/ng build --aot --configuration=production --source-map=false
-    - sed -i "s/TAG/$CI_COMMIT_TAG/g" dist/index.html
-    - cat dist/index.html
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - /builds/dgtic-offshore/ecmca/ecmca-frontend/dist/
-  needs: ["test"]
+# frontend-build:
+#   stage: build
+#   script:
+#     - cd /builds/dgtic-offshore/ecmca/ecmca-frontend
+#     - npm install -g @angular/cli
+#     - npm ci --unsafe-perm
+#     - node --max-old-space-size=2048 ./node_modules/@angular/cli/bin/ng build --aot --configuration=production --source-map=false
+#     - sed -i "s/TAG/$CI_COMMIT_TAG/g" dist/index.html
+#     - cat dist/index.html
+#   artifacts:
+#     expire_in: 1 day
+#     paths:
+#       - /builds/dgtic-offshore/ecmca/ecmca-frontend/dist/
+#   needs: ["test"]
 
   
 sonar-frontend:
@@ -81,16 +81,14 @@ sonar-frontend:
       -Dsonar.projectKey=es.gva.ecmca:ecmca-frontend  
       -Dsonar.projectName="ECMCA FRONTEND"
       -Dsonar.javascript.lcov.reportPaths=/builds/dgtic-offshore/ecmca/ecmca-frontend/coverage/ecmca-frontend/lcov.info 
-      -Dsonar.host.url=$SONAR_URL 
-      -Dsonar.login=$SONAR_LOGIN
-      -Dsonar.TOKEN=$SONAR_TOKEN
-      -Dsonar.password=$SONAR_PASSWORD
+      -Dsonar.host.url=$SONAR_URL
+      -Dsonar.login=$SONAR_TOKEN
       -Dsonar.branch.name=$CI_COMMIT_REF_NAME 
       -Dsonar.sourceEncoding=UTF-8 
       -Dsonar.sources=/builds/dgtic-offshore/ecmca/ecmca-frontend
       -Dsonar.exclusions=node_modules/**,**/*.spec.ts,**/*.model.ts,**/*.directive.ts,**/*.interceptors.ts,**/*.const.ts,**/runtime/**/*.ts,**/spy/*.ts,**/*.module.ts,**/test-utils.ts
       -Dsonar.tests=/builds/dgtic-offshore/ecmca/ecmca-frontend -Dsonar.test.inclusions=**/*.spec.ts
   only:
-    - development
+    - develop
     - master
     - staging

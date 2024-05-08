@@ -17,6 +17,29 @@
     }
   },
 
+  "solicitud_de_inscripcion": {
+    "title": "Entity registrations",
+    "volver_button": "Pervious screen",
+    "guardar_button": "Save",
+    "archivar_button": "File",
+    "restaurar_button": "Restore",
+    "title_tab_1": "Main company data",
+    "cif": "CIF",
+    "razon_social": "Razón Social",
+    "domicilio_social": "Domicilio Social",
+    "provincia": "Provincia ",
+    "municipio": "Municipio",
+    "c_postal": "C. Postal",
+    "n_registro": "Nº Registro",
+    "fecha_solicitud_de_inscripcion": "Fecha Solicitud de Inscripción ",
+    "fecha_baja": "Fecha Baja",
+    "e-mail": "E-mail",
+    "telefono": "Teléfono ",
+    "fax": "Fax",
+    "publicar_en_web": "Publicar en web",
+    "observaciones": "Observaciones"
+  },
+
   "campoDeActuacion": {
     "title": "Fields of action",
     "field_id": "Code",

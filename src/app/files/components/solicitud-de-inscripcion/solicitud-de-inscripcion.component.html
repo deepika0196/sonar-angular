@@ -1,1 +1,329 @@
-<p>solicitud-de-inscripcion works!</p>
+<div *transloco="let t">
+  <div class="grid">
+    <div class="col-6">
+      <p class="headerStyle">
+        {{ t('solicitud_de_inscripcion.title') }}
+      </p>
+    </div>
+    <div class="col-6 justify-content-end d-flex">
+      <button
+        pButton
+        type="button"
+        class="custom-button ml-1"
+      >
+        {{ t('solicitud_de_inscripcion.volver_button') }}
+        <span class="material-icons icon-only"> arrow_back </span>
+      </button>
+
+      <button
+        pButton
+        type="submit"
+        class="custom-button"
+        [ngClass]="{ disabled: !isValidForm }"
+        [disabled]="!isValidForm"
+        (click)="onSubmit()"
+      >
+        {{ t('solicitud_de_inscripcion.guardar_button') }}
+
+        <span class="material-icons icon-only"> save </span>
+      </button>
+      <button
+        pButton
+        type="button"
+        class="custom-button"
+        (click)="updateFechaBaja()"
+      >
+        <span *ngIf="!isFechaBajaNull">
+          {{ t('solicitud_de_inscripcion.restaurar_button') }}
+        </span>
+        <span *ngIf="isFechaBajaNull">
+          {{ t('solicitud_de_inscripcion.archivar_button') }}</span
+        >
+        <span class="material-icons icon-only"> save </span>
+      </button>
+    </div>
+  </div>
+  <hr />
+  <p-accordion
+    class="accordion"
+    [activeIndex]="0"
+  >
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center">
+          <p>{{ t('solicitud_de_inscripcion.title_tab_1') }}</p>
+        </div>
+      </ng-template>
+      <ng-template
+        pTemplate="content"
+        contentStyle="accordion-content"
+      >
+        <form [formGroup]="datosPrincipalesForm">
+          <div class="grid">
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="cif"
+                >{{ t('solicitud_de_inscripcion.cif') }}*</label
+              >
+              <div class="w-full">
+                <input
+                  id="cif"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="cif"
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <label
+                class="labelStyle"
+                for="razonSocial"
+                >{{ t('solicitud_de_inscripcion.razon_social') }}*</label
+              >
+              <div class="w-full">
+                <input
+                  id="razonSocial"
+                  type="text"
+                  [maxLength]="250"
+                  class="p-inputtext"
+                  formControlName="razonSocial"
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <label
+                class="labelStyle"
+                for="lastname2"
+                >{{ t('solicitud_de_inscripcion.domicilio_social') }}*</label
+              >
+              <div class="w-full">
+                <input
+                  id="domicilioSocia"
+                  type="text"
+                  [maxLength]="250"
+                  class="p-inputtext"
+                  formControlName="domicilioSocia"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="col col-6">
+              <div class="grid">
+                <div class="col-4">
+                  <label
+                    class="labelStyle"
+                    for="provincia"
+                  >
+                    {{ t('solicitud_de_inscripcion.provincia') }}</label
+                  >
+                  <div class="w-full">
+                    <p-dropdown
+                      id="provincia"
+                      styleClass="dropdown"
+                      [editable]="true"
+                      optionLabel="name"
+                      placeholder=" "
+                      formControlName="provincia"
+                    ></p-dropdown>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label
+                    class="labelStyle"
+                    for="municipio"
+                  >
+                    {{ t('solicitud_de_inscripcion.municipio') }}
+                  </label>
+                  <div class="w-full">
+                    <p-dropdown
+                      styleClass="dropdown"
+                      [editable]="true"
+                      optionLabel="name"
+                      placeholder=" "
+                      formControlName="municipio"
+                    ></p-dropdown>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label
+                    class="labelStyle"
+                    for="cPostal"
+                  >
+                    {{ t('solicitud_de_inscripcion.c_postal') }}</label
+                  >
+                  <div class="w-full">
+                    <p-dropdown
+                      id="cPostal"
+                      styleClass="dropdown"
+                      [editable]="true"
+                      optionLabel="name"
+                      placeholder=" "
+                      formControlName="cPostal"
+                    ></p-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col col-6">
+              <div class="grid">
+                <div class="col-3">
+                  <label
+                    class="labelStyle"
+                    for="nRegistro"
+                  >
+                    {{ t('solicitud_de_inscripcion.n_registro') }}</label
+                  >
+                  <div class="w-full">
+                    <input
+                      id="nRegistro"
+                      type="text"
+                      [maxLength]="9"
+                      class="p-inputtext"
+                      formControlName="nRegistro"
+                    />
+                  </div>
+                </div>
+                <div class="col-5">
+                  <label
+                    class="labelStyle"
+                    for="fechaSolicitudDeInscripción"
+                  >
+                    {{
+                      t(
+                        'solicitud_de_inscripcion.fecha_solicitud_de_inscripcion'
+                      )
+                    }}
+                  </label>
+                  <div class="w-full">
+                    <p-calendar
+                      id="fechaSolicitudDeInscripción"
+                      styleClass="calender"
+                      dateFormat="dd/mm/yy"
+                      [showIcon]="true"
+                      placeholder="dd.mm.yyyy"
+                      formControlName="fechaSolicitudDeInscripción"
+                    ></p-calendar>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label
+                    class="labelStyle"
+                    for="fechaBaja"
+                  >
+                    {{ t('solicitud_de_inscripcion.fecha_baja') }}
+                  </label>
+                  <div class="w-full calender-container">
+                    <p-calendar
+                      id="fechaBaja"
+                      styleClass="calender"
+                      placeholder="dd.mm.yyyy"
+                      formControlName="fechaBaja"
+                      [showIcon]="true"
+                      [showOnFocus]="false"
+                    >
+                    </p-calendar>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="col-3">
+              <label
+                class="labelStyle"
+                for="email"
+              >
+                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+              >
+              <div class="w-100">
+                <input
+                  id="email"
+                  type="text"
+                  [maxLength]="50"
+                  class="p-inputtext"
+                  formControlName="email"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="telefono"
+              >
+                {{ t('solicitud_de_inscripcion.telefono') }}</label
+              >
+              <div class="w-full">
+                <input
+                  id="telefono"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="telefono"
+                />
+              </div>
+            </div>
+            <div class="col-3">
+              <label
+                class="labelStyle"
+                for="fax"
+              >
+                {{ t('solicitud_de_inscripcion.fax') }}</label
+              >
+              <div class="w-100">
+                <input
+                  id="fax"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="fax"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="publicarEnWeb"
+              >
+                {{ t('solicitud_de_inscripcion.publicar_en_web') }}</label
+              >
+              <div class="w-full">
+                <p-checkbox
+                  [binary]="true"
+                  id="publicEnWeb"
+                  formControlName="publicarEnWeb"
+                ></p-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="col-12">
+              <label
+                class="labelStyle"
+                for="observaciones"
+              >
+                {{ t('solicitud_de_inscripcion.observaciones') }}</label
+              >
+              <div class="w-100">
+                <input
+                  id="observaciones"
+                  type="text"
+                  [maxLength]="80"
+                  class="p-inputtext"
+                  formControlName="observaciones"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </ng-template>
+    </p-accordionTab>
+  </p-accordion>
+</div>
