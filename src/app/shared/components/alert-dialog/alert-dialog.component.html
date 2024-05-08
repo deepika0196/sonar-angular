@@ -49,10 +49,10 @@
     class="buttonStyle"
     [disabled]="button.validate && button.validate(inputValues)"
   >
-    <i
+    <span
       *ngIf="button.icon"
       class="material-icons"
-      >{{ button.icon }}</i
+      >{{ button.icon }}</span
     >
     {{ button.label }}
   </button>

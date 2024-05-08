@@ -24,6 +24,7 @@
           pSortableColumn="{{ column.field }}"
           [pSortableColumnDisabled]="!column.sortable"
           class="{{ column.class }}"
+          id="{{column.field}}"
         >
           {{ column.header | transloco }}
           <p-sortIcon
@@ -31,7 +32,7 @@
             field="{{ column.field }}"
           ></p-sortIcon>
         </th>
-        <th class="table-col-width-fix"></th>
+        <th class="table-col-width-fix" id="action"></th>
       </tr>
     </ng-template>
     <ng-template
