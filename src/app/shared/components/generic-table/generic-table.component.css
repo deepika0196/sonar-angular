@@ -1,0 +1,6 @@
+.columnStyle {
+  background-color: var(--white-grey) !important;
+  font-size: 1rem;
+  color: var(--grey-black) !important;
+  text-transform: uppercase;
+}

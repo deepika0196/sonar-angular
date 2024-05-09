@@ -1,47 +1,67 @@
 .labelStyle {
-    font-size: 1rem;
-    color: var(--grey-black);
+  font-size: 1rem;
+  color: var(--grey-black);
 }
 
 .inputStyle {
-    border: 2px solid var(--light-grey);
-    height: 2.125rem;
-    font-size: 1rem;
-    border-radius: 0%;
+  border: 2px solid var(--light-grey);
+  height: 2.125rem;
+  font-size: 1rem;
+  border-radius: 0%;
+}
+
+.inputStyle:hover,
+.inputStyle:focus {
+  border: 2px solid var(--dark-blue);
 }
 
 .inputStyle.p-inputtext {
-    color: var(--dark-grey);
+  color: var(--dark-grey);
 }
 
 :host ::ng-deep .p-button.actionStyle {
-    background-color: var(--blue);
-    border-radius: 0rem;
+  background-color: var(--blue);
+  border-radius: 0rem;
+  border: none;
 
-    .iconStyle {
-        color: var(--light-blue);
-    }
+  .iconStyle {
+    color: var(--light-blue);
+    padding-left: 0.4rem;
+  }
+}
+
+:host ::ng-deep .p-button.actionStyle:not([disabled]):hover {
+  background-color: var(--dark-blue);
+}
+
+:host ::ng-deep .p-button.actionStyle:disabled {
+  background-color: var(--disable-items);
+
+  .iconStyle {
+    color: var(--white);
+    padding-left: 0.4rem;
+  }
 }
 
 .headerStyle {
-    color: var(--light-blue);
-    font-size: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
+  color: var(--light-blue);
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 ::ng-deep .paginator-override {
-    .p-paginator .p-paginator-pages .p-paginator-page {
-        border-radius: 10% !important;
-    }
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    border-radius: 10% !important;
+  }
 
-    .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-        background: var(--light-blue);
-        border-color: var(--light-blue);
-        color: white;
-    }
+  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: var(--light-blue);
+    border-color: var(--light-blue);
+    color: white;
+  }
 
-    .p-paginator {
-        justify-content: right;
-    }
+  .p-paginator {
+    justify-content: right;
+  }
 }

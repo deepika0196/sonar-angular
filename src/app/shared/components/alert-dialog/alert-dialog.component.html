@@ -42,18 +42,18 @@
   </div>
 </div>
 <div class="{{ headerExist ? 'alertStyle' : '' }} app-dialog-footer">
-  <button
+  <gva-button
     *ngFor="let button of actionButtons; let i = index"
-    pButton
-    (click)="button.action(inputValues)"
-    class="buttonStyle"
-    [disabled]="button.validate && button.validate(inputValues)"
+    [btnLabel]="button.label"
+    [iconPosition]="'left'"
+    [btnClass]="'buttonStyle'"
+    (btnClick)="button.action(inputValues)"
+    [btnDisabled]="button.validate ? button.validate(inputValues) : false"
   >
     <span
       *ngIf="button.icon"
       class="material-icons"
       >{{ button.icon }}</span
     >
-    {{ button.label }}
-  </button>
+  </gva-button>
 </div>

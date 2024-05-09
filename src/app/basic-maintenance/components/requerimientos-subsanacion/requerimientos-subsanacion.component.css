@@ -10,6 +10,11 @@
   border-radius: 0%;
 }
 
+.inputStyle:hover,
+.inputStyle:focus {
+  border: 2px solid var(--dark-blue);
+}
+
 .inputStyle.p-inputtext {
   color: var(--dark-grey);
 }
@@ -17,9 +22,24 @@
 :host ::ng-deep .p-button.actionStyle {
   background-color: var(--blue);
   border-radius: 0rem;
+  border: none;
 
   .iconStyle {
     color: var(--light-blue);
+    padding-left: 0.4rem;
+  }
+}
+
+:host ::ng-deep .p-button.actionStyle:not([disabled]):hover {
+  background-color: var(--dark-blue);
+}
+
+:host ::ng-deep .p-button.actionStyle:disabled {
+  background-color: var(--disable-items);
+
+  .iconStyle {
+    color: var(--white);
+    padding-left: 0.4rem;
   }
 }
 
