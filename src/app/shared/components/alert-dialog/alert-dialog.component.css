@@ -108,3 +108,7 @@
   padding: 0rem 0rem 2.8rem;
   word-wrap: break-word;
 }
+
+.titleStyle {
+  font-weight: bold;
+}
