@@ -113,7 +113,7 @@ export class CIFValidator {
     return resultado;
   }
 
-  private static esCif(valor: string): boolean {
+  public static esCif(valor: string): boolean {
     let resultado = true;
 
     try {

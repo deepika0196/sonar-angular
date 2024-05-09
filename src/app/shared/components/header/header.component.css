@@ -6,10 +6,7 @@
 .logo {
   height: 2.6rem;
 }
-.header {
-  border-bottom: 0.32rem solid #e5e7eb !important;
-  height: auto;
-}
+
 ::ng-deep .p-menubar {
   height: 3rem;
   background-color: white;

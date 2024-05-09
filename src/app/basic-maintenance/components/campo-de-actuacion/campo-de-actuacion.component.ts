@@ -148,6 +148,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
               next: (data) => {
                 if (data.success === false && data.errorCode) {
                   this.openAlertDialog(
+                    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                     this.translocoService.translate('errors.' + data.errorCode),
                     'warn'
                   );
@@ -245,6 +246,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
           next: (data) => {
             if (data.success === false && data.errorCode) {
               this.openAlertDialog(
+                // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                 this.translocoService.translate('errors.' + data.errorCode),
                 'warn'
               );
@@ -352,6 +354,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
               next: (data) => {
                 if (data.success === false && data.errorCode) {
                   this.openAlertDialog(
+                    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                     this.translocoService.translate('errors.' + data.errorCode),
                     'warn'
                   );

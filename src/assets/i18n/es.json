@@ -32,11 +32,7 @@
   },
 
   "solicitud_de_inscripcion": {
-    "title": "Registre d'entitats",
-    "volver_button": "Tornar",
-    "guardar_button": "Guardar",
-    "archivar_button": "Arxivar",
-    "restaurar_button": "Restaurar",
+    "title": "Sol·licitud d'Inscripció en el registre",
     "title_tab_1": "es_Dades principals de l'empresa",
     "cif": "CIF",
     "razon_social": "Raó Social",
@@ -45,13 +41,18 @@
     "municipio": "Municipio",
     "c_postal": "C. Postal",
     "n_registro": "Núm. Registre",
-    "fecha_solicitud_de_inscripcion": "Data Sol·licitud d'Inscripció",
+    "feentrada": "Data Sol·licitud d'Inscripció",
     "fecha_baja": "Data Baixa",
     "e-mail": "E-mail",
     "telefono": "Teléfono ",
     "fax": "Fax",
     "publicar_en_web": "Publicar en web",
-    "observaciones": "Observaciones"
+    "observaciones": "Observaciones",
+    "title_tab_2": "Dirección Notificaciones",
+    "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
+    "domicilio": "Domicilio",
+    "archivar_message": "Desitja arxivar este expedient",
+    "restaurar_message": "Desitja restaurar este expedient?"
   },
 
   "errors": {
@@ -72,7 +73,10 @@
     "update": "Actualizar",
     "yes": "Si",
     "no": "No",
-    "accept": "Aceptar"
+    "accept": "Aceptar",
+    "back": "Back",
+    "archivar": "Arxivar",
+    "restaurar": "Restaurar"
   },
 
   "toast_messages": {

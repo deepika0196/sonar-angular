@@ -18,11 +18,7 @@
   },
 
   "solicitud_de_inscripcion": {
-    "title": "Entity registrations",
-    "volver_button": "Pervious screen",
-    "guardar_button": "Save",
-    "archivar_button": "File",
-    "restaurar_button": "Restore",
+    "title": "Application for Registration in the registry",
     "title_tab_1": "Main company data",
     "cif": "CIF",
     "razon_social": "Razón Social",
@@ -31,13 +27,22 @@
     "municipio": "Municipio",
     "c_postal": "C. Postal",
     "n_registro": "Nº Registro",
-    "fecha_solicitud_de_inscripcion": "Fecha Solicitud de Inscripción ",
+    "feentrada": "Fecha Solicitud de Inscripción ",
     "fecha_baja": "Fecha Baja",
     "e-mail": "E-mail",
     "telefono": "Teléfono ",
     "fax": "Fax",
     "publicar_en_web": "Publicar en web",
-    "observaciones": "Observaciones"
+    "observaciones": "Observaciones",
+    "title_tab_2": "Dirección Notificaciones",
+    "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
+    "domicilio": "Domicilio",
+    "archivar_message": "Do you want to archive this file?",
+    "restaurar_message": "Do you want to restore this file",
+    "title_tab_3": "Representante legal",
+    "nif_cif": "NIF/CIF",
+    "nombre": "Nombre",
+    "apellidos": "Apellidos"
   },
 
   "campoDeActuacion": {
@@ -70,7 +75,10 @@
     "update": "Update",
     "yes": "Yes",
     "no": "No",
-    "accept": "Accept"
+    "accept": "Accept",
+    "back": "Back",
+    "archivar": "File",
+    "restaurar": "Restore"
   },
   "toast_messages": {
     "add_success": "Record added",

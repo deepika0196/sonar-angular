@@ -7,8 +7,9 @@
   margin: 0%;
 }
 
-.disabled {
+.disabled-inputs {
   background-color: var(--grey);
+  color: white;
 }
 
 ::ng-deep .accordion {
@@ -28,21 +29,6 @@
   }
 }
 
-::ng-deep .custom-button {
-  padding: 0.4rem;
-  margin: 0.2rem;
-  font-size: 1rem;
-  font-weight: 700;
-  background-color: var(--blue);
-  .icon-only {
-    color: var(--dark-blue);
-  }
-}
-
-::ng-deep .custom-button:hover:not(:disabled) {
-  background-color: var(--blue) !important;
-}
-
 input {
   height: 0.8rem;
   width: 100%;
@@ -51,13 +37,37 @@ input {
 }
 
 .labelStyle {
-  font-size: 12px;
+  font-size: 0.9rem;
 }
 ::ng-deep .dropdown {
   height: 1.6rem;
   border-radius: 0.2rem;
-  border-color: var(--black);
+
   .p-icon {
+    color: var(--light-blue);
+    background-color: none;
+  }
+
+  .p-inputtext {
+    margin: 0;
+    border-radius: 3px;
+    border-color: var(--black);
+    border-right: none;
+  }
+  .p-button.p-button-icon-only {
+    width: 3rem;
+    padding: 0.75rem 0;
+    background-color: white;
+    border-left: none;
+    border-color: var(--black);
+  }
+}
+
+:host ::ng-deep .p-button.actionStyle {
+  background-color: var(--blue);
+  border-radius: 0rem;
+
+  .iconStyle {
     color: var(--light-blue);
   }
 }

@@ -32,6 +32,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -70,7 +71,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     InputTextareaModule,
     TooltipModule,
     RadioButtonModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    AutoCompleteModule,
   ],
 })
 export class PrimeNgModule {}

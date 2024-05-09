@@ -6,59 +6,49 @@
       </p>
     </div>
     <div class="col-6 justify-content-end d-flex">
-      <button
-        pButton
-        type="button"
-        class="custom-button ml-1"
+      <gva-button
+        [btnLabel]="'buttons.back'"
+        [iconPosition]="'left'"
+        [btnClass]="'actionStyle mr-2'"
       >
-        {{ t('solicitud_de_inscripcion.volver_button') }}
-        <span class="material-icons icon-only"> arrow_back </span>
-      </button>
+        <span class="material-icons iconStyle"> arrow_back </span>
+      </gva-button>
 
-      <button
-        pButton
-        type="submit"
-        class="custom-button"
-        [ngClass]="{ disabled: !isValidForm }"
-        [disabled]="!isValidForm"
-        (click)="onSubmit()"
+      <gva-button
+        [btnLabel]="'buttons.save'"
+        [iconPosition]="'left'"
+        [btnClass]="'actionStyle mr-2'"
+        [btnDisabled]="!isValidForm"
+        (btnClick)="onSubmit()"
       >
-        {{ t('solicitud_de_inscripcion.guardar_button') }}
+        <span class="material-icons iconStyle"> save </span>
+      </gva-button>
 
-        <span class="material-icons icon-only"> save </span>
-      </button>
-      <button
-        pButton
-        type="button"
-        class="custom-button"
-        (click)="updateFechaBaja()"
+      <gva-button
+        [btnLabel]="isFechaBajaNull ? 'buttons.archivar' : 'buttons.restaurar'"
+        [iconPosition]="'left'"
+        [btnClass]="'actionStyle mr-2'"
+        (btnClick)="updateFechaBaja()"
       >
-        <span *ngIf="!isFechaBajaNull">
-          {{ t('solicitud_de_inscripcion.restaurar_button') }}
-        </span>
-        <span *ngIf="isFechaBajaNull">
-          {{ t('solicitud_de_inscripcion.archivar_button') }}</span
-        >
-        <span class="material-icons icon-only"> save </span>
-      </button>
+        <span class="material-icons iconStyle"> save </span>
+      </gva-button>
     </div>
   </div>
   <hr />
   <p-accordion
     class="accordion"
     [activeIndex]="0"
-  >
-    <p-accordionTab>
-      <ng-template pTemplate="header">
-        <div class="flex align-items-center">
-          <p>{{ t('solicitud_de_inscripcion.title_tab_1') }}</p>
-        </div>
-      </ng-template>
-      <ng-template
-        pTemplate="content"
-        contentStyle="accordion-content"
-      >
-        <form [formGroup]="datosPrincipalesForm">
+    ><form [formGroup]="datosPrincipalesForm">
+      <p-accordionTab formGroupName="entidadData">
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.title_tab_1') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
           <div class="grid">
             <div class="col-2">
               <label
@@ -121,14 +111,18 @@
                     {{ t('solicitud_de_inscripcion.provincia') }}</label
                   >
                   <div class="w-full">
-                    <p-dropdown
+                    <p-autoComplete
                       id="provincia"
-                      styleClass="dropdown"
-                      [editable]="true"
-                      optionLabel="name"
-                      placeholder=" "
                       formControlName="provincia"
-                    ></p-dropdown>
+                      styleClass="dropdown"
+                      [(ngModel)]="selectedProvincia"
+                      [dropdown]="true"
+                      [suggestions]="filteredProvincia"
+                      (completeMethod)="filterProvincia($event)"
+                      field="provDenominacion"
+                      (onSelect)="provinciaSelected()"
+                    >
+                    </p-autoComplete>
                   </div>
                 </div>
                 <div class="col-4">
@@ -139,13 +133,18 @@
                     {{ t('solicitud_de_inscripcion.municipio') }}
                   </label>
                   <div class="w-full">
-                    <p-dropdown
-                      styleClass="dropdown"
-                      [editable]="true"
-                      optionLabel="name"
-                      placeholder=" "
+                    <p-autoComplete
+                      id="municipio"
                       formControlName="municipio"
-                    ></p-dropdown>
+                      styleClass="dropdown"
+                      [(ngModel)]="selectedMunicipio"
+                      [dropdown]="true"
+                      [suggestions]="filteredMunicipio"
+                      (completeMethod)="filterMacc($event)"
+                      (onSelect)="municipioSelected()"
+                      field="muniDenominacion"
+                    >
+                    </p-autoComplete>
                   </div>
                 </div>
                 <div class="col-4">
@@ -156,14 +155,18 @@
                     {{ t('solicitud_de_inscripcion.c_postal') }}</label
                   >
                   <div class="w-full">
-                    <p-dropdown
+                    <p-autoComplete
                       id="cPostal"
-                      styleClass="dropdown"
-                      [editable]="true"
-                      optionLabel="name"
-                      placeholder=" "
                       formControlName="cPostal"
-                    ></p-dropdown>
+                      styleClass="dropdown"
+                      [(ngModel)]="selectedProvincia"
+                      [dropdown]="true"
+                      [suggestions]="filteredProvincia"
+                      (completeMethod)="filterProvincia($event)"
+                      field="provDenominacion"
+                      (onSelect)="provinciaSelected()"
+                    >
+                    </p-autoComplete>
                   </div>
                 </div>
               </div>
@@ -182,6 +185,7 @@
                     <input
                       id="nRegistro"
                       type="text"
+                      placeholder="/ECMCA"
                       [maxLength]="9"
                       class="p-inputtext"
                       formControlName="nRegistro"
@@ -191,22 +195,18 @@
                 <div class="col-5">
                   <label
                     class="labelStyle"
-                    for="fechaSolicitudDeInscripción"
+                    for="feentrada"
                   >
-                    {{
-                      t(
-                        'solicitud_de_inscripcion.fecha_solicitud_de_inscripcion'
-                      )
-                    }}
+                    {{ t('solicitud_de_inscripcion.feentrada') }}
                   </label>
                   <div class="w-full">
                     <p-calendar
-                      id="fechaSolicitudDeInscripción"
+                      id="feentrada"
                       styleClass="calender"
                       dateFormat="dd/mm/yy"
                       [showIcon]="true"
                       placeholder="dd.mm.yyyy"
-                      formControlName="fechaSolicitudDeInscripción"
+                      formControlName="feentrada"
                     ></p-calendar>
                   </div>
                 </div>
@@ -225,6 +225,7 @@
                       formControlName="fechaBaja"
                       [showIcon]="true"
                       [showOnFocus]="false"
+                      readonly
                     >
                     </p-calendar>
                   </div>
@@ -248,7 +249,6 @@
                   [maxLength]="50"
                   class="p-inputtext"
                   formControlName="email"
-                  readonly
                 />
               </div>
             </div>
@@ -322,8 +322,337 @@
               </div>
             </div>
           </div>
-        </form>
-      </ng-template>
-    </p-accordionTab>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab formGroupName="notificacionesData">
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.title_tab_2') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <div class="grid">
+            <div class="col">
+              <div class="w-full">
+                <p-checkbox
+                  [binary]="true"
+                  id="addressCopy"
+                  formControlName="addressCopy"
+                ></p-checkbox>
+                <label
+                  class="labelStyle"
+                  for="addressCopy"
+                >
+                  {{
+                    t(
+                      'solicitud_de_inscripcion.copiar_la_direccion_principal_para_notificaciones'
+                    )
+                  }}</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="col-4">
+              <label
+                class="labelStyle"
+                for="domicilio"
+              >
+                {{ t('solicitud_de_inscripcion.domicilio') }}</label
+              >
+              <div class="w-full">
+                <input
+                  id="domicilio"
+                  type="text"
+                  [maxLength]="250"
+                  class="p-inputtext"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [disabled]="copyAdress"
+                  formControlName="domicilio"
+                />
+              </div>
+            </div>
+
+            <div class="col-3">
+              <label
+                class="labelStyle"
+                for="notificacionesDataProvincia"
+              >
+                {{ t('solicitud_de_inscripcion.provincia') }}</label
+              >
+              <div class="w-full">
+                <p-dropdown
+                  id="notificacionesDataProvincia"
+                  styleClass="dropdown"
+                  [editable]="true"
+                  optionLabel="name"
+                  placeholder="  "
+                  formControlName="provincia"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [disabled]="copyAdress"
+                ></p-dropdown>
+              </div>
+            </div>
+            <div class="col-3">
+              <label
+                class="labelStyle"
+                for="notificacionesDataMunicipio"
+              >
+                {{ t('solicitud_de_inscripcion.municipio') }}
+              </label>
+              <div class="w-full">
+                <p-dropdown
+                  id="notificacionesDataMunicipio"
+                  styleClass="dropdown"
+                  [editable]="true"
+                  optionLabel="name"
+                  placeholder=" "
+                  formControlName="municipio"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [disabled]="copyAdress"
+                ></p-dropdown>
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="notificacionesDataCPostal"
+              >
+                {{ t('solicitud_de_inscripcion.c_postal') }}</label
+              >
+              <div class="w-full">
+                <p-dropdown
+                  id="notificacionesDataCPostal"
+                  styleClass="dropdown"
+                  [editable]="true"
+                  optionLabel="name"
+                  placeholder=" "
+                  formControlName="cPostal"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [disabled]="copyAdress"
+                ></p-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="col-3">
+              <label
+                class="labelStyle"
+                for="notificacionesDataEmail"
+              >
+                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+              >
+              <div class="w-full">
+                <input
+                  id="notificacionesDataEmail"
+                  type="text"
+                  [maxLength]="50"
+                  class="p-inputtext"
+                  formControlName="email"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [readonly]="'readonly'"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="notificacionesDataTelefono"
+              >
+                {{ t('solicitud_de_inscripcion.telefono') }}</label
+              >
+              <div class="w-full">
+                <input
+                  id="notificacionesDataTelefono"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="telefono"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [disabled]="copyAdress"
+                  [readonly]="'readonly'"
+                />
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab formGroupName="representanteLegal">
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.title_tab_3') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <div class="grid">
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="nifCif"
+                >{{ t('solicitud_de_inscripcion.nif_cif') }}*</label
+              >
+              <div class="w-full">
+                <input
+                  id="nifCif"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="nifCif"
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <label
+                class="labelStyle"
+                for="nombre"
+                >{{ t('solicitud_de_inscripcion.nombre') }}*</label
+              >
+              <div class="w-full">
+                <input
+                  id="nombre"
+                  type="text"
+                  [maxLength]="250"
+                  class="p-inputtext"
+                  formControlName="nombre"
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <label
+                class="labelStyle"
+                for="apellidos"
+                >{{ t('solicitud_de_inscripcion.apellidos') }}*</label
+              >
+              <div class="w-full">
+                <input
+                  id="domicilioSocia"
+                  type="text"
+                  [maxLength]="250"
+                  class="p-inputtext"
+                  formControlName="apellidos"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="col-4">
+              <label
+                class="labelStyle"
+                for="domicilio"
+              >
+                {{ t('solicitud_de_inscripcion.domicilio') }}</label
+              >
+              <div class="w-full">
+                <input
+                  id="domicilio"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="domicilio"
+                />
+              </div>
+            </div>
+
+            <div class="col-3">
+              <label
+                class="labelStyle"
+                for="provincia"
+              >
+                {{ t('solicitud_de_inscripcion.provincia') }}</label
+              >
+              <div class="w-full">
+                <p-dropdown
+                  id="provincia"
+                  styleClass="dropdown"
+                  [editable]="true"
+                  optionLabel="name"
+                  placeholder=" "
+                  formControlName="provincia"
+                ></p-dropdown>
+              </div>
+            </div>
+            <div class="col-3">
+              <label
+                class="labelStyle"
+                for="municipio"
+              >
+                {{ t('solicitud_de_inscripcion.municipio') }}
+              </label>
+              <div class="w-full">
+                <p-dropdown
+                  styleClass="dropdown"
+                  [editable]="true"
+                  optionLabel="name"
+                  placeholder=" "
+                  formControlName="municipio"
+                ></p-dropdown>
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="cPostal"
+              >
+                {{ t('solicitud_de_inscripcion.c_postal') }}</label
+              >
+              <div class="w-full">
+                <p-dropdown
+                  id="cPostal"
+                  styleClass="dropdown"
+                  [editable]="true"
+                  optionLabel="name"
+                  placeholder=" "
+                  formControlName="cPostal"
+                ></p-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="col-3">
+              <label
+                class="labelStyle"
+                for="email"
+              >
+                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+              >
+              <div class="w-100">
+                <input
+                  id="email"
+                  type="text"
+                  [maxLength]="50"
+                  class="p-inputtext"
+                  formControlName="email"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="telefono"
+              >
+                {{ t('solicitud_de_inscripcion.telefono') }}</label
+              >
+              <div class="w-full">
+                <input
+                  id="telefono"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="telefono"
+                />
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-accordionTab>
+    </form>
   </p-accordion>
 </div>

@@ -47,7 +47,10 @@
     "update": "Actualitzar",
     "yes": "Si",
     "no": "No",
-    "accept": "Acceptar"
+    "accept": "Acceptar",
+    "back": "Volver",
+    "archivar": "Archivar",
+    "restaurar": "Restaurar"
   },
   "toast_messages": {
     "add_success": "Registre afegit",
@@ -67,12 +70,8 @@
   },
 
   "solicitud_de_inscripcion": {
-    "title": "ca_Registro de entidades",
-    "volver_button": "Volver",
-    "guardar_button": "Guardar",
-    "archivar_button": "Archivar ",
-    "restaurar_button": "Restaurar",
-    "title_tab_1": "ca_Datos principales de la empresa",
+    "title": "Solicitud de Inscripción en el registro",
+    "title_tab_1": "Entidad",
     "cif": "CIF",
     "razon_social": "Razón Social",
     "domicilio_social": "Domicilio Social",
@@ -80,13 +79,18 @@
     "municipio": "Municipio",
     "c_postal": "C. Postal",
     "n_registro": "Nº Registro",
-    "fecha_solicitud_de_inscripcion": "Fecha Solicitud de Inscripción ",
+    "feentrada": "Fecha Solicitud de Inscripción ",
     "fecha_baja": "Fecha Baja",
     "e-mail": "E-mail",
     "telefono": "Teléfono ",
     "fax": "Fax",
     "publicar_en_web": "Publicar en web",
-    "observaciones": "Observaciones"
+    "observaciones": "Observaciones",
+    "title_tab_2": "Dirección Notificaciones",
+    "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
+    "domicilio": "Domicilio",
+    "archivar_message": "¿Desea archivar este expediente?",
+    "restaurar_message": "¿Desea restaurar este expediente?"
   },
 
   "title": "ca_Exemple dús",
