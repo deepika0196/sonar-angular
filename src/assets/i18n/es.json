@@ -53,7 +53,8 @@
     "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
     "domicilio": "Domicilio",
     "archivar_message": "Desitja arxivar este expedient",
-    "restaurar_message": "Desitja restaurar este expedient?"
+    "restaurar_message": "Desitja restaurar este expedient?",
+    "title_tab_3": "Representante legal"
   },
 
   "errors": {

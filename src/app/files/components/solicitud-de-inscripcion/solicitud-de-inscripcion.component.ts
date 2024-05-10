@@ -39,7 +39,7 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
   isValidForm = false;
   isFechaBajaNull = true;
   alertmsg = '';
-  copyAdress = true;
+  copyAdress: boolean;
   entidadData: Entidad = {};
   datosPrincipalesForm: FormGroup;
   deleteDialogRef: DynamicDialogRef | undefined;
@@ -109,7 +109,10 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
         telefono: [null],
       }),
     });
+  }
 
+  ngOnInit(): void {
+    this.copyAdress = true;
     this.copyAddressFieldsOfEntidadData();
 
     this.datosPrincipalesForm.get('entidad')?.valueChanges.subscribe(() => {
@@ -129,9 +132,7 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
           this.clearNotificacioneFields();
         }
       });
-  }
 
-  ngOnInit(): void {
     this.datosPrincipalesForm.get('entidad')?.valueChanges.subscribe(() => {
       this.isValidForm =
         this.datosPrincipalesForm.get('entidad')?.valid ?? false;
@@ -155,7 +156,16 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.solicitudDeInscripcionService.postEnten(this.mapToBackendData());
+    console.log(this.mapToBackendData());
+    this.solicitudDeInscripcionService
+      .postSolicitudDeInscripcion(this.mapToBackendData())
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {
+          console.log('success : ', data);
+        },
+        error: (err: Error) => console.error(err),
+      });
   }
 
   mapToBackendData(): Entidad {
@@ -222,6 +232,19 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
       });
   }
 
+  fetchDeatails(event: Event) {
+    const cif = (event.target as HTMLInputElement).value;
+    console.log('cif = ', cif);
+    this.solicitudDeInscripcionService
+      .getByNifCif(cif)
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err: Error) => console.error(err),
+      });
+  }
   notOnlyWhitespace(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       const value: string = control.value;

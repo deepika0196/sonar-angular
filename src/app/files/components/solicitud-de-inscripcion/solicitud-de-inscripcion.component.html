@@ -62,6 +62,7 @@
                   type="text"
                   [maxLength]="9"
                   class="p-inputtext"
+                  (blur)="fetchDeatails($event)"
                   formControlName="cif"
                 />
               </div>
@@ -394,9 +395,9 @@
                   [suggestions]="filteredProvincia"
                   (completeMethod)="!copyAdress && filterProvincia($event)"
                   field="provDenominacion"
-                  [ngClass]="{ 'disabled-inputs': copyAdress }"
-                  [readonly]="copyAdress"
-                  [disabled]="copyAdress"
+                  [ngClass]="{ 'disabled-inputs': true }"
+                  [readonly]="true"
+                  [disabled]="true"
                   (onSelect)="provinciaSelected()"
                 >
                 </p-autoComplete>
