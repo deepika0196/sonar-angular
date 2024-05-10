@@ -1,11 +1,11 @@
 {
   "header": {
-    "sign-out": "Log out",
+    "signout": "Log out",
     "cambiar_idioma": "Change language"
   },
   "menu_items": {
     "mantenimientos_basicos": "Basic maintenance",
-    "expedientes": "Files",
+    "expedientes": "FILES",
     "informes": "Reports",
     "sub_menu": {
       "entidades_solicitantes": "Requesting Entities",

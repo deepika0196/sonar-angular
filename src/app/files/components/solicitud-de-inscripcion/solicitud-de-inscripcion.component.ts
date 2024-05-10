@@ -2,13 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
-  FormControl,
   Validators,
+  FormControl,
   ValidatorFn,
   AbstractControl,
 } from '@angular/forms';
-
-import { GlobalConstant } from '@app/core/constants/globalConstants';
+import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Subject, takeUntil } from 'rxjs';
+import { TranslocoService } from '@ngneat/transloco';
 
 import {
   Entidad,
@@ -16,18 +18,15 @@ import {
   Provincia,
 } from '@app/files/interfaces/solicitud-de-inscripcion';
 import { SolicitudDeInscripcionService } from '@app/files/services/solicitud-de-inscripcion.service';
+import { SolicituddeCodigoPostalService } from '@app/files/services/solicitudde-codigo-postal.service';
 import { SolicitudeMunicipioService } from '@app/files/services/solicitude-municipio.service';
 import { SolicitudeProvinciaService } from '@app/files/services/solicitude-provincia.service';
 import { AlertDialogComponent } from '@app/shared/components/alert-dialog/alert-dialog.component';
+import { GlobalConstant } from '@app/core/constants/globalConstants';
 import {
   ActionButtons,
   GenericDialog,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
-import { TranslocoService } from '@ngneat/transloco';
-
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-solicitud-de-inscripcion',
@@ -46,136 +45,154 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
   deleteDialogRef: DynamicDialogRef | undefined;
   alertDialogRef: DynamicDialogRef | undefined;
 
-  municipioList: Municipio[];
-  selectedMunicipio: Municipio;
-  filteredMunicipio: Municipio[];
+  postalList: any[] = [];
+  filteredPostal: any[] = [];
+  selectedPostal: any;
+  selectdircp: any;
 
-  provinciaList: Provincia[];
+  municipioList: Municipio[] = [];
+  selectedMunicipio!: Municipio;
+  selecteddDirMunicipio: Municipio;
+  filteredMunicipio: Municipio[] = [];
+
+  provinciaList: Provincia[] = [];
   selectedProvincia: Provincia;
-  filteredProvincia: Provincia[];
+  selecteddDirProvincia: Provincia;
+  filteredProvincia: Provincia[] = [];
 
   private subscription = new Subject<void>();
+
   constructor(
     private fb: FormBuilder,
     private translocoService: TranslocoService,
     private dialogService: DialogService,
     private solicitudProvinciaService: SolicitudeProvinciaService,
     private solicitudeMunicipioService: SolicitudeMunicipioService,
-    private solicitudDeInscripcionService: SolicitudDeInscripcionService
+    private solicitudDeInscripcionService: SolicitudDeInscripcionService,
+    private solicituddeCodigoPostalService: SolicituddeCodigoPostalService
   ) {
     this.datosPrincipalesForm = this.fb.group({
-      entidadData: this.fb.group({
-        cif: new FormControl(null, [
-          Validators.required,
-          this.notOnlyWhitespace(),
-        ]),
-        razonSocial: new FormControl(null, [
-          Validators.required,
-          this.notOnlyWhitespace(),
-        ]),
-        domicilioSocia: new FormControl(null, [
-          Validators.required,
-          this.notOnlyWhitespace(),
-        ]),
-        provincia: new FormControl(null),
-        municipio: new FormControl(null),
-        cPostal: new FormControl(null),
-        nRegistro: new FormControl(null),
-        feentrada: new FormControl(null),
-        fechaBaja: new FormControl({
-          value: '',
-          disabled: true,
-        }),
-        email: new FormControl(null, Validators.email),
-        telefono: new FormControl(null),
-        fax: new FormControl(null),
-        publicarEnWeb: new FormControl(null),
-        observaciones: new FormControl(null),
+      entidad: this.fb.group({
+        cif: [null, [Validators.required, this.notOnlyWhitespace()]],
+        razonSocial: [null, [Validators.required, this.notOnlyWhitespace()]],
+        domicilioSocia: [null, [Validators.required, this.notOnlyWhitespace()]],
+        provincia: [null],
+        municipio: [null],
+        cPostal: [null],
+        nRegistro: [null],
+        feentrada: [null],
+        fechaBaja: [{ value: '', disabled: true }],
+        email: [null, Validators.email],
+        telefono: [null],
+        fax: [null],
+        publicarEnWeb: [null],
+        observaciones: [null],
       }),
-      notificacionesData: this.fb.group({
-        addressCopy: new FormControl(true),
-        domicilio: new FormControl(null),
-        provincia: new FormControl(null),
-        municipio: new FormControl(null),
-        cPostal: new FormControl(null),
-        email: new FormControl(null, Validators.email),
-        telefono: new FormControl(null),
+      notificaciones: this.fb.group({
+        addressCopy: [true],
+        dirDomicilio: [null],
+        dirProvincia: [null],
+        dirMunicipio: [null],
+        dirCPostal: [null],
+        dirEmail: [null, Validators.email],
+        dirTelefono: [null],
       }),
       representanteLegal: this.fb.group({
-        nifCif: new FormControl(),
-        nombre: new FormControl(null),
-        apellidos: new FormControl(),
-        domicilio: new FormControl(null),
-        provincia: new FormControl(null),
-        municipio: new FormControl(null),
-        cPostal: new FormControl(null),
-        email: new FormControl(null, Validators.email),
-        telefono: new FormControl(null),
+        nifCif: [null],
+        nombre: [null],
+        apellidos: [null],
+        domicilio: [null],
+        provincia: [null],
+        municipio: [null],
+        cPostal: [null],
+        email: [null, Validators.email],
+        telefono: [null],
       }),
     });
+
     this.copyAddressFieldsOfEntidadData();
-    this.datosPrincipalesForm.get('entidadData')?.valueChanges.subscribe(() => {
+
+    this.datosPrincipalesForm.get('entidad')?.valueChanges.subscribe(() => {
       if (this.copyAdress) {
         this.copyAddressFieldsOfEntidadData();
       }
     });
 
     this.datosPrincipalesForm
-      .get('notificacionesData.addressCopy')
+      .get('notificaciones.addressCopy')
       ?.valueChanges.subscribe((value) => {
         if (value) {
           this.copyAdress = value;
           this.copyAddressFieldsOfEntidadData();
         } else {
           this.copyAdress = false;
-          this.clearnotificacioneFields();
+          this.clearNotificacioneFields();
         }
       });
   }
 
   ngOnInit(): void {
-    this.datosPrincipalesForm.get('entidadData')?.valueChanges.subscribe(() => {
+    this.datosPrincipalesForm.get('entidad')?.valueChanges.subscribe(() => {
       this.isValidForm =
-        this.datosPrincipalesForm.get('entidadData')?.valid ?? false;
+        this.datosPrincipalesForm.get('entidad')?.valid ?? false;
     });
+
     this.solicitudProvinciaService
       .getProvincia()
       .pipe(takeUntil(this.subscription))
       .subscribe({
         next: (data) => {
           this.provinciaList = data.response;
-          console.log(this.provinciaList);
         },
         error: (err: Error) => console.error(err),
-        complete: () => {},
       });
 
     this.datosPrincipalesForm
-      .get('entidadData.fechaBaja')
+      .get('entidad.fechaBaja')
       ?.valueChanges.subscribe((value) => {
         this.isFechaBajaNull = value === null;
-      });
-
-    this.datosPrincipalesForm
-      .get('notificacionesData.addressCopy')
-      ?.valueChanges.subscribe((value) => {
-        this.copyAdress = value;
-        this.datosPrincipalesForm
-          .get('entidadData')
-          ?.valueChanges.subscribe(() => {
-            this.isValidForm =
-              this.datosPrincipalesForm.get('entidadData')?.valid ?? false;
-          });
       });
   }
 
   onSubmit() {
-    this.entidadData.nifcif =
-      this.datosPrincipalesForm.get('entidadData.cif')?.value;
-    this.entidadData.email =
-      this.datosPrincipalesForm.get('entidadData.email')?.value;
-    console.log(this.entidadData);
-    this.solicitudDeInscripcionService.postEnten(this.entidadData);
+    this.solicitudDeInscripcionService.postEnten(this.mapToBackendData());
+  }
+
+  mapToBackendData(): Entidad {
+    return {
+      nifcif: this.datosPrincipalesForm.get('entidad.cif')?.value || '',
+      denomsocial:
+        this.datosPrincipalesForm.get('entidad.razonSocial')?.value || '',
+      domsocial:
+        this.datosPrincipalesForm.get('entidad.domicilioSocia')?.value || '',
+      codpro: this.selectedProvincia?.provDenominacion || '',
+      codmun: this.selectedMunicipio?.muniDenominacion || '',
+      cp: this.selectedPostal.cpostMunicipio || '',
+      numinscripcion:
+        this.datosPrincipalesForm.get('entidad.nRegistro')?.value || '',
+      feentrada:
+        this.datosPrincipalesForm.get('entidad.feentrada')?.value || '',
+      fbaja: this.datosPrincipalesForm.get('entidad.fechaBaja')?.value || '',
+      email: this.datosPrincipalesForm.get('entidad.email')?.value || '',
+      telefono: this.datosPrincipalesForm.get('entidad.telefono')?.value || '',
+      fax: this.datosPrincipalesForm.get('entidad.fax')?.value || '',
+      publicaWeb:
+        this.datosPrincipalesForm.get('entidad.publicarEnWeb')?.value || '',
+      observaciones:
+        this.datosPrincipalesForm.get('entidad.observaciones')?.value || '',
+      dirDomicilio:
+        this.datosPrincipalesForm.get('notificaciones.dirDomicilio')?.value ||
+        '',
+      dirCodpro:
+        this.datosPrincipalesForm.get('notificaciones.dirProvincia')?.value
+          ?.provDenominacion || '',
+      dirCodmun:
+        this.datosPrincipalesForm.get('notificaciones.dirMunicipio')?.value
+          ?.muniDenominacion || '',
+      dirCp:
+        this.datosPrincipalesForm.get('notificaciones.dirCPostal')?.value
+          ?.muniDenominacion || '',
+    };
   }
 
   provinciaSelected() {
@@ -187,12 +204,22 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
           this.municipioList = data.response;
         },
         error: (err: Error) => console.error(err),
-        complete: () => {},
       });
   }
 
   municipioSelected() {
-    console.log(this.selectedMunicipio);
+    this.solicituddeCodigoPostalService
+      .getMunicipio(
+        this.selectedMunicipio.id.muniCodProvincia,
+        this.selectedMunicipio.id.muniCodMunicipio
+      )
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {
+          this.postalList = data.response;
+        },
+        error: (err: Error) => console.error(err),
+      });
   }
 
   notOnlyWhitespace(): ValidatorFn {
@@ -213,10 +240,9 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
       {
         label: this.translocoService.translate('buttons.yes'),
         icon: 'check',
-
         action: () => {
           this.datosPrincipalesForm
-            .get('entidadData')
+            .get('entidad')
             ?.patchValue({ fechaBaja: fechaBajaValue });
           this.deleteDialogRef?.close();
         },
@@ -262,44 +288,63 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
   }
 
   private copyAddressFieldsOfEntidadData() {
-    this.datosPrincipalesForm.get('notificacionesData')?.patchValue({
-      domicilio: this.datosPrincipalesForm.get('entidadData.domicilioSocia')
+    this.selecteddDirProvincia = this.selectedProvincia;
+    this.selecteddDirMunicipio = this.selectedMunicipio;
+    this.selectdircp = this.selectedPostal;
+    this.datosPrincipalesForm.get('notificaciones')?.patchValue({
+      dirDomicilio: this.datosPrincipalesForm.get('entidad.domicilioSocia')
         ?.value,
-      provincia: this.datosPrincipalesForm.get('entidadData.provincia')?.value,
-      municipio: this.datosPrincipalesForm.get('entidadData.municipio')?.value,
-      cPostal: this.datosPrincipalesForm.get('entidadData.cPostal')?.value,
-      email: this.datosPrincipalesForm.get('entidadData.email')?.value,
-      telefono: this.datosPrincipalesForm.get('entidadData.telefono')?.value,
+      dirProvincia: this.datosPrincipalesForm.get('entidad.provincia')?.value,
+      dirMunicipio: this.datosPrincipalesForm.get('entidad.municipio')?.value,
+      dirCPostal: this.datosPrincipalesForm.get('entidad.cPostal')?.value,
+      dirEmail: this.datosPrincipalesForm.get('entidad.email')?.value,
+      dirTelefono: this.datosPrincipalesForm.get('entidad.telefono')?.value,
     });
   }
 
-  private clearnotificacioneFields() {
-    this.datosPrincipalesForm.get('notificacionesData')?.patchValue({
-      domicilio: '',
-      provincia: '',
-      municipio: '',
-      cPostal: '',
-      email: '',
-      telefono: '',
+  private clearNotificacioneFields() {
+    this.datosPrincipalesForm.get('notificaciones')?.patchValue({
+      dirDomicilio: '',
+      dirProvincia: '',
+      dirMunicipio: '',
+      dirCPostal: '',
+      dirEmail: '',
+      dirTelefono: '',
     });
   }
+
   filterProvincia(event: any) {
     const query = event.query.toLowerCase();
     this.filteredProvincia = this.provinciaList.filter((provincia) =>
-      provincia.provCapital.toLowerCase().startsWith(query)
+      provincia.provDenominacion.toLowerCase().startsWith(query)
     );
   }
 
-  filterMacc(event: any) {
+  filterMunicipio(event: any) {
     const query = event.query.toLowerCase();
     this.filteredMunicipio = this.municipioList.filter((municipio) =>
       municipio.muniDenominacion.toLowerCase().startsWith(query)
     );
   }
 
+  filterPostal(event: any) {
+    const query = event.query.toLowerCase();
+    const uniquePostalCodes: string[] = [];
+
+    this.filteredPostal = this.postalList.filter((postal) => {
+      const postalCode = postal.cpostMunicipio.toLowerCase();
+      if (
+        !uniquePostalCodes.includes(postalCode) &&
+        postalCode.startsWith(query)
+      ) {
+        uniquePostalCodes.push(postalCode);
+        return true;
+      }
+      return false;
+    });
+  }
+
   ngOnDestroy(): void {
-    this.provinciaList = [];
-    this.municipioList = [];
     this.subscription.next();
     this.subscription.complete();
   }

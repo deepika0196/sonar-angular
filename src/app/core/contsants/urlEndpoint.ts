@@ -4,4 +4,6 @@ export class UrlEndpoints {
   public static reccaRequerimientos = 'reccaRequerimientos';
   public static vmcrcProvincia = 'vmcrcProvincia';
   public static vmcrcMunicipio = 'vmcrcMunicipio/findMunicipioByProvincia';
+  public static vmcrcCodigoPostal =
+    'vmcrcCodigoPostal/findCodigoPostalByProvinciaAndMunicipio';
 }

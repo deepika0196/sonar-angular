@@ -17,7 +17,7 @@ import {
 export class SolicitudeMunicipioService extends CommonService {
   getMunicipio(provCodProvincia: string) {
     const params = { provCodProvincia };
-    return this._arqHttpClient.get<CustomResponse<any>>(
+    return this._arqHttpClient.get<CustomResponse<Municipio>>(
       this.urlBuilder(UrlEndpoints.vmcrcMunicipio),
       { params }
     );

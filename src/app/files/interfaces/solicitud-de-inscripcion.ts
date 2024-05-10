@@ -1,4 +1,5 @@
 export interface Provincia {
+  muniDenominacion: string;
   provCodProvincia: string;
   provDenominacion: string;
   provCapital: string;
@@ -13,29 +14,32 @@ export interface Municipio {
   muniDenominacion: string;
 }
 
+export interface postalCode {
+  xx: string;
+}
 export interface Entidad {
   id?: number;
-  codidfiscal?: 'string';
-  codmun?: 'string';
-  codpro?: 'string';
-  cp?: 'string';
-  denomsocial?: 'string'; //Razón Social
-  dirCodmun?: 'string';
-  dirCodpro?: 'string';
-  dirCp?: 'string';
-  dirDomicilio?: 'string';
-  dirEmail?: 'string';
-  dirFax?: 'string';
-  dirTelefono?: 'string';
-  domsocial?: 'string'; //Domicilio Social
-  email?: 'string';
-  fax?: 'string';
-  fbaja?: '2024-05-08T11:11:55.747Z';
-  feentrada?: '2024-05-08T11:11:55.747Z';
-  nifcif?: 'string'; //cif
-  numinscripcion?: 'string'; // Nº Registro
-  observaciones?: 'string';
-  publicaWeb?: 'string';
-  telefono?: 'string';
-  web?: 'string';
+  codidfiscal?: string;
+  codmun?: string;
+  codpro?: string;
+  cp?: string;
+  denomsocial?: string; //Razón Social
+  dirCodmun?: string;
+  dirCodpro?: string;
+  dirCp?: string;
+  dirDomicilio?: string;
+  dirEmail?: string;
+  dirFax?: string;
+  dirTelefono?: string;
+  domsocial?: string; //Domicilio Social
+  email?: string;
+  fax?: string;
+  fbaja?: Date;
+  feentrada?: Date;
+  nifcif?: string; //cif
+  numinscripcion?: string; // Nº Registro
+  observaciones?: string;
+  publicaWeb?: string;
+  telefono?: string;
+  web?: string;
 }

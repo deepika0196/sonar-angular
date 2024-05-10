@@ -1,20 +1,20 @@
 {
   "header": {
-    "sign-out": "ca_Cerrar sesión",
-    "cambiar_idioma": "ca_Cambiar Idioma"
+    "signout": "errar sesión",
+    "cambiar_idioma": "Cambiar Idioma"
   },
 
   "menu_items": {
-    "mantenimientos_basicos": "ca_Mantenimientos básicos",
-    "expedientes": "ca_Expedientes",
-    "informes": "ca_Informes",
+    "mantenimientos_basicos": "Mantenimientos básicos",
+    "expedientes": "Expedientes",
+    "informes": "Informes",
     "sub_menu": {
-      "entidades_solicitantes": "ca_Entidades Solicitantes",
-      "campos_de_actuacion": "ca_Campos de Actuación",
-      "requerimientos_subsanacion": "ca_Requerimientos Subsanación",
-      "representantes_de_entidad": "ca_Representantes de Entidad",
-      "solicitud_de_inscripcion": "ca_Solicitud de Inscripción",
-      "generacion_de_informes": "ca_Generación de Informes"
+      "entidades_solicitantes": "Entidades Solicitantes",
+      "campos_de_actuacion": "Campos de Actuación",
+      "requerimientos_subsanacion": "Requerimientos Subsanación",
+      "representantes_de_entidad": "Representantes de Entidad",
+      "solicitud_de_inscripcion": "Solicitud de Inscripción",
+      "generacion_de_informes": "Generación de Informes"
     }
   },
 

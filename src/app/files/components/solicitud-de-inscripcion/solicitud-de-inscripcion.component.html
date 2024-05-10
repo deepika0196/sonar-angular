@@ -39,7 +39,7 @@
     class="accordion"
     [activeIndex]="0"
     ><form [formGroup]="datosPrincipalesForm">
-      <p-accordionTab formGroupName="entidadData">
+      <p-accordionTab formGroupName="entidad">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p>{{ t('solicitud_de_inscripcion.title_tab_1') }}</p>
@@ -140,7 +140,7 @@
                       [(ngModel)]="selectedMunicipio"
                       [dropdown]="true"
                       [suggestions]="filteredMunicipio"
-                      (completeMethod)="filterMacc($event)"
+                      (completeMethod)="filterMunicipio($event)"
                       (onSelect)="municipioSelected()"
                       field="muniDenominacion"
                     >
@@ -159,11 +159,11 @@
                       id="cPostal"
                       formControlName="cPostal"
                       styleClass="dropdown"
-                      [(ngModel)]="selectedProvincia"
+                      [(ngModel)]="selectedPostal"
                       [dropdown]="true"
-                      [suggestions]="filteredProvincia"
-                      (completeMethod)="filterProvincia($event)"
-                      field="provDenominacion"
+                      [suggestions]="filteredPostal"
+                      (completeMethod)="filterPostal($event)"
+                      field="cpostMunicipio"
                       (onSelect)="provinciaSelected()"
                     >
                     </p-autoComplete>
@@ -205,7 +205,7 @@
                       styleClass="calender"
                       dateFormat="dd/mm/yy"
                       [showIcon]="true"
-                      placeholder="dd.mm.yyyy"
+                      placeholder="dd/mm/yyyy"
                       formControlName="feentrada"
                     ></p-calendar>
                   </div>
@@ -220,9 +220,9 @@
                   <div class="w-full calender-container">
                     <p-calendar
                       id="fechaBaja"
-                      styleClass="calender"
-                      placeholder="dd.mm.yyyy"
                       formControlName="fechaBaja"
+                      styleClass="calender"
+                      placeholder="dd/mm/yyyy"
                       [showIcon]="true"
                       [showOnFocus]="false"
                       readonly
@@ -325,7 +325,7 @@
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab formGroupName="notificacionesData">
+      <p-accordionTab formGroupName="notificaciones">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p>{{ t('solicitud_de_inscripcion.title_tab_2') }}</p>
@@ -360,19 +360,19 @@
             <div class="col-4">
               <label
                 class="labelStyle"
-                for="domicilio"
+                for="dirDomicilio"
               >
                 {{ t('solicitud_de_inscripcion.domicilio') }}</label
               >
               <div class="w-full">
                 <input
-                  id="domicilio"
+                  id="dirDomicilio"
+                  formControlName="dirDomicilio"
                   type="text"
                   [maxLength]="250"
                   class="p-inputtext"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
-                  [disabled]="copyAdress"
-                  formControlName="domicilio"
+                  [readonly]="copyAdress ? 'readonly' : ''"
                 />
               </div>
             </div>
@@ -380,61 +380,76 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="notificacionesDataProvincia"
+                for="dirProvincia"
               >
                 {{ t('solicitud_de_inscripcion.provincia') }}</label
               >
               <div class="w-full">
-                <p-dropdown
-                  id="notificacionesDataProvincia"
+                <p-autoComplete
+                  id="dirProvincia"
+                  formControlName="dirProvincia"
                   styleClass="dropdown"
-                  [editable]="true"
-                  optionLabel="name"
-                  placeholder="  "
-                  formControlName="provincia"
+                  [(ngModel)]="selecteddDirProvincia"
+                  [dropdown]="true"
+                  [suggestions]="filteredProvincia"
+                  (completeMethod)="!copyAdress && filterProvincia($event)"
+                  field="provDenominacion"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [readonly]="copyAdress"
                   [disabled]="copyAdress"
-                ></p-dropdown>
+                  (onSelect)="provinciaSelected()"
+                >
+                </p-autoComplete>
               </div>
             </div>
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="notificacionesDataMunicipio"
+                for="dirMunicipio"
               >
                 {{ t('solicitud_de_inscripcion.municipio') }}
               </label>
               <div class="w-full">
-                <p-dropdown
-                  id="notificacionesDataMunicipio"
+                <p-autoComplete
+                  id="dirMunicipio"
+                  formControlName="dirMunicipio"
                   styleClass="dropdown"
-                  [editable]="true"
-                  optionLabel="name"
-                  placeholder=" "
-                  formControlName="municipio"
+                  [(ngModel)]="selecteddDirMunicipio"
+                  [dropdown]="true"
+                  [suggestions]="filteredMunicipio"
+                  (completeMethod)="!copyAdress && filterMunicipio($event)"
+                  (onSelect)="municipioSelected()"
+                  field="muniDenominacion"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [readonly]="copyAdress"
                   [disabled]="copyAdress"
-                ></p-dropdown>
+                >
+                </p-autoComplete>
               </div>
             </div>
             <div class="col-2">
               <label
                 class="labelStyle"
-                for="notificacionesDataCPostal"
+                for="dirCPostal"
               >
                 {{ t('solicitud_de_inscripcion.c_postal') }}</label
               >
               <div class="w-full">
-                <p-dropdown
-                  id="notificacionesDataCPostal"
+                <p-autoComplete
+                  id="dirCPostal"
+                  formControlName="dirCPostal"
                   styleClass="dropdown"
-                  [editable]="true"
-                  optionLabel="name"
-                  placeholder=" "
-                  formControlName="cPostal"
+                  field="cpostMunicipio"
+                  [(ngModel)]="selectdircp"
+                  [dropdown]="true"
+                  [suggestions]="filteredPostal"
+                  (completeMethod)="!copyAdress && filterPostal($event)"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [readonly]="copyAdress"
                   [disabled]="copyAdress"
-                ></p-dropdown>
+                  (onSelect)="provinciaSelected()"
+                >
+                </p-autoComplete>
               </div>
             </div>
           </div>
@@ -442,39 +457,38 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="notificacionesDataEmail"
+                for="dirEmail"
               >
                 {{ t('solicitud_de_inscripcion.e-mail') }}</label
               >
               <div class="w-full">
                 <input
-                  id="notificacionesDataEmail"
+                  id="dirEmail"
                   type="text"
                   [maxLength]="50"
                   class="p-inputtext"
-                  formControlName="email"
+                  formControlName="dirEmail"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
-                  [readonly]="'readonly'"
+                  [readonly]="copyAdress ? 'readonly' : ''"
                 />
               </div>
             </div>
             <div class="col-2">
               <label
                 class="labelStyle"
-                for="notificacionesDataTelefono"
+                for="dirTelefono"
               >
                 {{ t('solicitud_de_inscripcion.telefono') }}</label
               >
               <div class="w-full">
                 <input
-                  id="notificacionesDataTelefono"
+                  id="dirTelefono"
                   type="text"
                   [maxLength]="9"
                   class="p-inputtext"
-                  formControlName="telefono"
+                  formControlName="dirTelefono"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
-                  [disabled]="copyAdress"
-                  [readonly]="'readonly'"
+                  [readonly]="copyAdress ? 'readonly' : ''"
                 />
               </div>
             </div>
