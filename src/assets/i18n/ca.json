@@ -20,6 +20,7 @@
 
   "campoDeActuacion": {
     "title": "Camps d'actuació",
+    "dialog_title": "Camp d'actuació",
     "field_id": "Codi",
     "field_description": "Descripció castellà",
     "field_descriptionVal": "Descripció valencià"

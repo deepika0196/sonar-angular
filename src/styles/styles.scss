@@ -33,3 +33,18 @@ app-button {
 .table-col-width-fix {
   min-width: 7rem;
 }
+.inputStyle {
+  border: 2px solid var(--light-grey) !important;
+  height: 2.125rem;
+  font-size: 1rem !important;
+  border-radius: 0% !important;
+}
+
+.inputStyle:not([disabled]):hover,
+.inputStyle:not([disabled]):focus {
+  border: 2px solid var(--dark-blue) !important;
+}
+
+.inputStyle.p-inputtext {
+  color: var(--dark-grey) !important;
+}

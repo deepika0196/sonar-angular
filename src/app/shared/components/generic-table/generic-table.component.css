@@ -2,5 +2,21 @@
   background-color: var(--white-grey) !important;
   font-size: 1rem;
   color: var(--grey-black) !important;
-  text-transform: uppercase;
+}
+
+td.buttons-right {
+  text-align: end !important;
+}
+
+::ng-deep .column-gap {
+  .p-datatable-table {
+    border-spacing: 0.2rem 0rem !important;
+  }
+  .p-datatable .p-sortable-column:focus {
+    box-shadow: inset 0 0 0 0.15rem var(--dark-blue);
+    outline: 0 none;
+  }
+  .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+    color: var(--light-blue);
+  }
 }

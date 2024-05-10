@@ -42,6 +42,7 @@
 
   "campoDeActuacion": {
     "title": "Fields of action",
+    "dialog_title": "Field of action",
     "field_id": "Code",
     "field_description": "Spanish description",
     "field_descriptionVal": "Valencian description"

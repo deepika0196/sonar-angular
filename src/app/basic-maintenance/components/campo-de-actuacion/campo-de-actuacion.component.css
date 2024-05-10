@@ -3,22 +3,6 @@
   color: var(--grey-black);
 }
 
-.inputStyle {
-  border: 2px solid var(--light-grey);
-  height: 2.125rem;
-  font-size: 1rem;
-  border-radius: 0%;
-}
-
-.inputStyle:hover,
-.inputStyle:focus {
-  border: 2px solid var(--dark-blue);
-}
-
-.inputStyle.p-inputtext {
-  color: var(--dark-grey);
-}
-
 :host ::ng-deep .p-button.actionStyle {
   background-color: var(--blue);
   border-radius: 0rem;
@@ -47,7 +31,7 @@
   color: var(--light-blue);
   font-size: 20px;
   font-weight: bold;
-  text-transform: uppercase;
+  padding-left: 1rem;
 }
 
 ::ng-deep .paginator-override {

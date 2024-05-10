@@ -9,6 +9,7 @@
     [showCurrentPageReport]="paginatorConfig.showCurrentPageReport"
     [rowsPerPageOptions]="paginatorConfig.rowsPerPageOptions"
     styleClass="{{ tableConfig.styleClass }}"
+    class="column-gap"
     [currentPageReportTemplate]="
       t('pagination_text', {
         first: '{first}',
@@ -46,7 +47,10 @@
         <td *ngFor="let column of columns; let ind = index">
           {{ item[column.field] }}
         </td>
-        <td *ngIf="tableConfig.showDelete || tableConfig.showEdit">
+        <td
+          *ngIf="tableConfig.showDelete || tableConfig.showEdit"
+          class="buttons-right"
+        >
           <div>
             <button
               *ngIf="tableConfig.showEdit"
