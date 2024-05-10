@@ -20,6 +20,7 @@
 
   "campoDeActuacion": {
     "title": "Campos de actuación",
+    "dialog_title": "Campo de actuación",
     "field_id": "Código",
     "field_description": "Descripción castellano",
     "field_descriptionVal": "Descripción valenciano"

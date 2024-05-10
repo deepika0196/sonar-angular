@@ -15,7 +15,7 @@
         >
       </div>
       <div class="d-flex flex-column gap-2 col-10">
-        <span>{{ headerStyle?.title }}</span>
+        <span class="titleStyle">{{ headerStyle?.title }}</span>
         <span class="messageStyle mt-3">{{ alertMessage }}</span>
       </div>
     </div>
@@ -42,18 +42,18 @@
   </div>
 </div>
 <div class="{{ headerExist ? 'alertStyle' : '' }} app-dialog-footer">
-  <button
+  <gva-button
     *ngFor="let button of actionButtons; let i = index"
-    pButton
-    (click)="button.action(inputValues)"
-    class="buttonStyle"
-    [disabled]="button.validate && button.validate(inputValues)"
+    [btnLabel]="button.label"
+    [iconPosition]="'left'"
+    [btnClass]="'buttonStyle'"
+    (btnClick)="button.action(inputValues)"
+    [btnDisabled]="button.validate ? button.validate(inputValues) : false"
   >
-    <i
+    <span
       *ngIf="button.icon"
       class="material-icons"
-      >{{ button.icon }}</i
+      >{{ button.icon }}</span
     >
-    {{ button.label }}
-  </button>
+  </gva-button>
 </div>

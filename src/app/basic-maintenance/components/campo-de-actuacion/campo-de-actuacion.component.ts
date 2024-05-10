@@ -57,13 +57,13 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
     {
       field: 'deseccion',
       header: 'campoDeActuacion.field_description',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
     {
       field: 'deseccionVal',
       header: 'campoDeActuacion.field_descriptionVal',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
   ];
@@ -215,7 +215,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
     };
     const addDialogConfig: GenericDialog = {
       header: this.translocoService.translate('dialog_header.add', {
-        title: this.translocoService.translate('campoDeActuacion.title'),
+        title: this.translocoService.translate('campoDeActuacion.dialog_title'),
       }),
       width: '50%',
       contentStyle: {

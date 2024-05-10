@@ -46,13 +46,13 @@ export class RequerimientosSubsanacionComponent implements OnInit, OnDestroy {
     {
       field: 'derequerimiento',
       header: 'requerimientosSubsanacion.field_description',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
     {
       field: 'derequerimientoVal',
       header: 'requerimientosSubsanacion.field_descriptionVal',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
   ];
