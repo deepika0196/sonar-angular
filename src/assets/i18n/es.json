@@ -53,7 +53,12 @@
     "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
     "domicilio": "Domicilio",
     "archivar_message": "Desitja arxivar este expedient",
-    "restaurar_message": "Desitja restaurar este expedient?"
+    "restaurar_message": "Desitja restaurar este expedient?",
+    "title_tab_3": "Representante legal",
+    "nif_cif": "NIF/CIF",
+    "nombre": "Nombre",
+    "apellidos": "Apellidos",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana expanded"
   },
 
   "errors": {
