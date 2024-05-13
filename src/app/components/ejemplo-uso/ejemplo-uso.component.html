@@ -1,4 +1,4 @@
-<arq-toolbar [menuItems]="menuItemList" [languages]="languages" (idiomSelected)="selectIdiom($event)" [user]="user">
+<!-- <arq-toolbar [menuItems]="menuItemList" [languages]="languages" (idiomSelected)="selectIdiom($event)" [user]="user">
 </arq-toolbar>
 
 <section>
@@ -24,11 +24,11 @@
               </div>
 
               <!-- Inputs dependientes -->
-              <div class="col-12 px-0">
+<!-- <div class="col-12 px-0">
                 <arq-dependent-inputs [inputs]="inputs" [form]="this.fgDependedInputs"></arq-dependent-inputs>
               </div>
               <!--  -->
-              <ng-container formGroupName="country">
+<!-- <ng-container formGroupName="country">
                 <div class="col-lg-4 col-12">
                   <arq-text-input [label]="'Codigo Municipio'" [placeholder]="'Ingrese el código del Municipio'"
                     [value]="'denominacion'" [fGroup]="$any(this.formGroup.controls['municipalities'])">
@@ -85,10 +85,10 @@
       </arq-tab-item>
       <arq-tab-item>
         <arq-tab-item-header title="{{ 'title_tab_2' | transloco }}"></arq-tab-item-header>
-        <arq-tab-item-content>
-          <!-- <arq-datatable [loadedData]="ejemploService.loadedData$" [columnsSchema]="columns" [tableConfig]="tableConfig"
+        <arq-tab-item-content>-->
+<!-- <arq-datatable [loadedData]="ejemploService.loadedData$" [columnsSchema]="columns" [tableConfig]="tableConfig"
             (loadDataEvent)="requireData($event)"></arq-datatable> -->
-          <ng-container *ngIf="(columnsSchema$ | async) && (tableConfig$ | async)">
+<!--<ng-container *ngIf="(columnsSchema$ | async) && (tableConfig$ | async)">
             <arq-datatable [loadDataFn]="ejemploService.loadData" [columnsSchema]="setColumnsSchema()"
               [tableConfig]="setTableConfig()" [form]="this.fgDatatable" [isEditing]="editing"
               [itemsPerPageLabel]="'Ítems'" (selectEvent)="handleSelectEvent($event)">
@@ -104,4 +104,4 @@
       </arq-tab-item>
     </arq-tab-group>
   </div>
-</section>
+</section> -->

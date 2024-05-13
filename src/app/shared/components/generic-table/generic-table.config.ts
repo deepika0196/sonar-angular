@@ -11,6 +11,8 @@ export interface TableConfig {
   paginator: boolean;
   showDelete?: boolean;
   showEdit?: boolean;
+  disableDelete?: boolean;
+  disableEdit?: boolean;
   styleClass?: string;
   tableStyle?: { 'min-width': string; 'max-height'?: string };
 }

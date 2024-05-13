@@ -1,53 +1,107 @@
 {
   "header": {
-    "sign-out": "es_Cerrar sesión",
-    "cambiar_idioma": "es_Cambiar Idioma"
+    "signout": "Cerrar sesión",
+    "cambiar_idioma": "Cambiar Idioma"
   },
 
   "menu_items": {
-    "mantenimientos_basicos": "es_Mantenimientos básicos",
-    "expedientes": "es_Expedientes",
-    "informes": "es_Informes",
+    "mantenimientos_basicos": "Mantenimientos Básicos",
+    "expedientes": "Expedientes",
+    "informes": "Informes",
     "sub_menu": {
-      "entidades_solicitantes": "es_Entidades Solicitantes",
-      "campos_de_actuacion": "es_Campos de Actuación",
-      "requerimientos_subsanacion": "es_Requerimientos Subsanación",
-      "representantes_de_entidad": "es_Representantes de Entidad",
-      "solicitud_de_inscripcion": "es_Solicitud de Inscripción",
-      "generacion_de_informes": "es_Generación de Informes"
+      "entidades_solicitantes": "Entidades Solicitantes",
+      "campos_de_actuacion": "Campos de Actuación",
+      "requerimientos_subsanacion": "Requerimientos Subsanación",
+      "representantes_de_entidad": "Representantes de Entidad",
+      "solicitud_de_inscripcion": "Solicitud de Inscripción",
+      "generacion_de_informes": "Generación de Informes"
     }
   },
 
   "campoDeActuacion": {
     "title": "Campos de actuación",
+    "dialog_title": "Campo de actuación",
     "field_id": "Código",
     "field_description": "Descripción castellano",
-    "field_descriptionVal": "Descripción valenciano",
-    "search_button": "Buscar",
-    "clear_button": "Limpiar",
-    "add_button": "Alta",
-    "previous": "Anterior",
-    "next": "Siguiente",
-    "delete_alert": "No se ha podido borrar el registro porque existe información asociada.",
-    "insert_alert": "El registro ya ha sido insertado o está duplicado. Revíselo.",
-    "descriptionval_required": "Debe añadir una descripción en valenciano.",
-    "description_required": "Debe añadir una descripción en castellano.",
-    "delete_existing_alert": "¿Desea borrar definitivamente este registro?",
-    "modify_alert": "¿Desea guardar los cambios realizados ?",
-    "add_dialog_header": "Añadir Campo de actuación",
-    "delete_dialog_header": "Consulta",
-    "update_dialog_header": "Modificar Campo de actuación",
-    "alert_dialog_header": "Atención",
-    "save_button": "Guardar",
-    "cancel_button": "Cancelar",
-    "modify_button": "Modificar",
-    "update_button": "Actualizar",
-    "yes_button": "Si",
-    "no_button": "No",
-    "required_text": "Debe rellenar el campo."
+    "field_descriptionVal": "Descripción valenciano"
+  },
+  "requerimientosSubsanacion": {
+    "title": "Requerimientos de subsanación",
+    "field_id": "Código",
+    "field_description": "Descripción castellano",
+    "field_descriptionVal": "Descripción valenciano"
   },
 
-  "errors": {},
+  "solicitud_de_inscripcion": {
+    "title": "Sol·licitud d'Inscripció en el registre",
+    "title_tab_1": "es_Dades principals de l'empresa",
+    "cif": "CIF",
+    "razon_social": "Raó Social",
+    "domicilio_social": "Domicilio Social",
+    "provincia": "Provincia ",
+    "municipio": "Municipio",
+    "c_postal": "C. Postal",
+    "n_registro": "Núm. Registre",
+    "feentrada": "Data Sol·licitud d'Inscripció",
+    "fecha_baja": "Data Baixa",
+    "e-mail": "E-mail",
+    "telefono": "Teléfono ",
+    "fax": "Fax",
+    "publicar_en_web": "Publicar en web",
+    "observaciones": "Observaciones",
+    "title_tab_2": "Dirección Notificaciones",
+    "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
+    "domicilio": "Domicilio",
+    "archivar_message": "Desitja arxivar este expedient",
+    "restaurar_message": "Desitja restaurar este expedient?",
+    "title_tab_3": "Representante legal",
+    "nif_cif": "NIF/CIF",
+    "nombre": "Nombre",
+    "apellidos": "Apellidos",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana expanded"
+  },
+
+  "errors": {
+    "REGISTRATION_DUPLICATE_ERROR": "El registro ya ha sido insertado o está duplicado. Revíselo.",
+    "UPDATE_REFERENCE_ERROR": "No se ha podido editar el registro porque existe información asociada.",
+    "DELETE_REFERENCE_ERROR": "No se ha podido borrar el registro porque existe información asociada."
+  },
+
+  "buttons": {
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "search": "Buscar",
+    "clear": "Limpiar",
+    "add": "Alta",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "modify": "Modificar",
+    "update": "Actualizar",
+    "yes": "Si",
+    "no": "No",
+    "accept": "Aceptar",
+    "back": "Back",
+    "archivar": "Arxivar",
+    "restaurar": "Restaurar"
+  },
+
+  "toast_messages": {
+    "add_success": "Registro añadido",
+    "update_success": "Registro editado",
+    "delete_success": "Registro borrado"
+  },
+
+  "dialog_header": {
+    "add": "Añadir {{title}}",
+    "delete": "Consulta",
+    "update": "Modificar {{title}}",
+    "alert": "Atención"
+  },
+
+  "dialog_content": {
+    "delete_alert": "¿Desea borrar definitivamente este registro?",
+    "modify_alert": "¿Desea guardar los cambios realizados ?"
+  },
 
   "title": "es_Exemple dús",
   "title_tab_1": "es_Afegeix dades:",
@@ -77,5 +131,7 @@
   "snackbar_txt_success": "es_Dades mostrades correctament",
   "snackbar_txt_error": "es_No s'han pogut obtenir les dades",
   "snackbar_txt_validate": "es_Completeu les dades obligatòries",
-  "pagination_text": "Registros del {{first}} al {{last}} (Total {{totalRecords}})"
+  "pagination_text": "Registros del {{first}} al {{last}} (Total {{totalRecords}})",
+  "empty_message": "No se encontró ninguna coincidencia",
+  "required_text": "Debe rellenar el campo."
 }

@@ -1,20 +1,21 @@
 import { TestBed } from '@angular/core/testing';
+
+import { SolicituddeCodigoPostalService } from './solicitudde-codigo-postal.service';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { CampoDeActuacionService } from './campo-de-actuacion.service';
 
-describe('CampoDeActuacionService', () => {
-  let service: CampoDeActuacionService;
+describe('SolicituddeCodigoPostalService', () => {
+  let service: SolicituddeCodigoPostalService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [CampoDeActuacionService],
+      providers: [SolicituddeCodigoPostalService],
     });
-    service = TestBed.inject(CampoDeActuacionService);
+    service = TestBed.inject(SolicituddeCodigoPostalService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 

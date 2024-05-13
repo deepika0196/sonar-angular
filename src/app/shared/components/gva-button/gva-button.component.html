@@ -1,12 +1,12 @@
 <div *transloco="let t">
   <button
     pButton
-    [label]="t(btnLabel)"
     [iconPos]="iconPosition"
     [class]="btnClass"
     [disabled]="btnDisabled"
     (click)="buttonClick()"
   >
+    <span>{{ t(btnLabel) }}</span>
     <ng-content></ng-content>
   </button>
 </div>

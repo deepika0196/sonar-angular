@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemExampleService } from '@services/item-example.service';
 import { ItemExample } from '@shared/interfaces/itemExample';
-import { MessageService, SelectItem } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-item-example',
   templateUrl: './item-example.component.html',

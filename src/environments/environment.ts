@@ -35,7 +35,7 @@ export const environment = {
     hostDynamic: 'http://localhost:8081/prototipo-backend',
   },
   locale: {
-    default: 'en',
+    default: 'ca',
     cultures: ['ca', 'es', 'en'],
   },
 };

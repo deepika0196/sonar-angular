@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CampoDeActuacion } from '../interfaces/campoDeActuacion';
-import { CommonService } from '@app/shared/services/common.service';
+import {
+  CommonService,
+  CustomResponse,
+} from '@app/shared/services/common.service';
 import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 
 @Injectable({
@@ -8,28 +11,28 @@ import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 })
 export class CampoDeActuacionService extends CommonService {
   getCampoDeActuacions() {
-    return this._arqHttpClient.get<Array<CampoDeActuacion>>(
+    return this._arqHttpClient.get<CustomResponse<CampoDeActuacion>>(
       this.urlBuilder(UrlEndpoints.reccaSecciones)
     );
   }
 
   postCampoDeActuacions(campDetails: CampoDeActuacion) {
-    return this._arqHttpClient.post<CampoDeActuacion>(
+    return this._arqHttpClient.post<CustomResponse<CampoDeActuacion>>(
       this.urlBuilder(UrlEndpoints.reccaSecciones),
       campDetails
     );
   }
 
   updateCampoDeActuacions(campDetails: CampoDeActuacion) {
-    return this._arqHttpClient.put<CampoDeActuacion>(
+    return this._arqHttpClient.put<CustomResponse<CampoDeActuacion>>(
       this.urlBuilder(UrlEndpoints.reccaSecciones),
       campDetails
     );
   }
 
-  deleteCampoDeActuacions(campDetails: CampoDeActuacion) {
-    return this._arqHttpClient.delete<CampoDeActuacion>(
-      this.urlBuilder(UrlEndpoints.reccaSecciones) + `/${campDetails.codigo}`
+  deleteCampoDeActuacions(codigo: string) {
+    return this._arqHttpClient.delete<CustomResponse<CampoDeActuacion>>(
+      this.urlBuilder(UrlEndpoints.reccaSecciones) + `/${codigo}`
     );
   }
 

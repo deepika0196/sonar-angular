@@ -40,6 +40,7 @@ export class LoginSimulatedComponent {
     private toast: ToastrService
   ) {
     this.entorno = environment;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     route.params.subscribe((params: Params) => {
       this.callback = this.route.snapshot.queryParams['url'];
       if (this.callback == null) {
@@ -58,8 +59,10 @@ export class LoginSimulatedComponent {
       .subscribe({
         next: (data) => {
           this.token = data;
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           window.location.href = this.callback + '?token=' + this.token.token;
         },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         error: (e) => this.toast.error('No token for his nif', 'Error token'),
       });
   }

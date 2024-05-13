@@ -1,14 +1,21 @@
 import { Injectable, TemplateRef, ViewContainerRef } from '@angular/core';
-import { ArqDialogService, ArqPageableRequest, ArqPageableResponse } from 'arq-sdk';
+import {
+  // ArqDialogService,
+  ArqPageableRequest,
+  ArqPageableResponse,
+} from 'arq-sdk';
 import { Observable, delay, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
-  constructor(){}
+  constructor() {}
 
-  static loadMockedData(request: ArqPageableRequest, data: any): Observable<ArqPageableResponse> {
+  static loadMockedData(
+    request: ArqPageableRequest,
+    data: any
+  ): Observable<ArqPageableResponse> {
     // Filter Mocking
     if (request.filterCol) {
       if (request.filterCol === 'global')
@@ -17,21 +24,25 @@ export class UtilsService {
         );
       else
         data = data.filter((el: any) => {
-          let value = el[request.filterCol!];
-          if (value && value.value) {
-            return (
-              el[request.filterCol!].description
+          if (request.filterCol) {
+            const value = el[request.filterCol];
+            if (value && value.value) {
+              return (
+                el[request.filterCol].description
+                  .toLowerCase()
+                  .includes(request.filter?.toLowerCase()) ||
+                el[request.filterCol].descriptionV
+                  .toLowerCase()
+                  .includes(request.filter?.toLowerCase()) ||
+                el[request.filterCol].value
+                  .toLowerCase()
+                  .includes(request.filter?.toLowerCase())
+              );
+            } else {
+              return value
                 .toLowerCase()
-                .includes(request.filter?.toLowerCase()) ||
-              el[request.filterCol!].descriptionV
-                .toLowerCase()
-                .includes(request.filter?.toLowerCase()) ||
-              el[request.filterCol!].value
-                .toLowerCase()
-                .includes(request.filter?.toLowerCase())
-            );
-          } else {
-            return value.toLowerCase().includes(request.filter?.toLowerCase());
+                .includes(request.filter?.toLowerCase());
+            }
           }
         });
     }
@@ -39,9 +50,12 @@ export class UtilsService {
     // Sort Mocking
     if (request.sort) {
       data.sort((a: any, b: any) => {
-        if (a[request.sort!] < b[request.sort!]) return -1;
-        else if (a[request.sort!] > b[request.sort!]) return 1;
-        else return 0;
+        if (request.sort) {
+          if (a[request.sort] < b[request.sort]) return -1;
+          else if (a[request.sort] > b[request.sort]) return 1;
+          else return 0;
+        }
+        return 0;
       });
       if (request.sort === 'desc') data.reverse();
     }
@@ -84,6 +98,4 @@ export class UtilsService {
     outletRef?.clear();
     outletRef?.createEmbeddedView(contentRef);
   }
-  
 }
-

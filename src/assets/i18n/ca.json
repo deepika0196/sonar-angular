@@ -1,52 +1,104 @@
 {
   "header": {
-    "sign-out": "ca_Cerrar sesión",
-    "cambiar_idioma": "ca_Cambiar Idioma"
+    "signout": "errar sesión",
+    "cambiar_idioma": "Cambiar Idioma"
   },
 
   "menu_items": {
-    "mantenimientos_basicos": "ca_Mantenimientos básicos",
-    "expedientes": "ca_Expedientes",
-    "informes": "ca_Informes",
+    "mantenimientos_basicos": "Mantenimientos básicos",
+    "expedientes": "Expedientes",
+    "informes": "Informes",
     "sub_menu": {
-      "entidades_solicitantes": "ca_Entidades Solicitantes",
-      "campos_de_actuacion": "ca_Campos de Actuación",
-      "requerimientos_subsanacion": "ca_Requerimientos Subsanación",
-      "representantes_de_entidad": "ca_Representantes de Entidad",
-      "solicitud_de_inscripcion": "ca_Solicitud de Inscripción",
-      "generacion_de_informes": "ca_Generación de Informes"
+      "entidades_solicitantes": "Entidades Solicitantes",
+      "campos_de_actuacion": "Campos de Actuación",
+      "requerimientos_subsanacion": "Requerimientos Subsanación",
+      "representantes_de_entidad": "Representantes de Entidad",
+      "solicitud_de_inscripcion": "Solicitud de Inscripción",
+      "generacion_de_informes": "Generación de Informes"
     }
   },
 
   "campoDeActuacion": {
     "title": "Camps d'actuació",
+    "dialog_title": "Camp d'actuació",
     "field_id": "Codi",
     "field_description": "Descripció castellà",
-    "field_descriptionVal": "Descripció valencià",
-    "search_button": "Cercar",
-    "clear_button": "Netejar",
-    "add_button": "Alta",
+    "field_descriptionVal": "Descripció valencià"
+  },
+  "requerimientosSubsanacion": {
+    "title": "Requeriments d'esmena",
+    "field_id": "Codi",
+    "field_description": "Descripció castellà",
+    "field_descriptionVal": "Descripció valencià"
+  },
+  "errors": {
+    "REGISTRATION_DUPLICATE_ERROR": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
+    "UPDATE_REFERENCE_ERROR": "No s'ha pogut editar el registre perquè existix informació associada.",
+    "DELETE_REFERENCE_ERROR": "No s'ha pogut esborrar el registre perquè existix informació associada."
+  },
+  "buttons": {
     "previous": "Anterior",
     "next": "Següent",
-    "delete_alert": "No s'ha pogut esborrar el registre perquè existix informació associada.",
-    "insert_alert": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
-    "descriptionval_required": "Ha d'afegir una descripció en valencià.",
-    "description_required": "Ha d'afegir una descripció en castellà.",
-    "delete_existing_alert": "Desitja esborrar definitivament este registre?",
-    "modify_alert": "Desitja guardar els canvis realitzats ?",
-    "add_dialog_header": "Afegir Camp d'actuació",
-    "delete_dialog_header": "Consulta",
-    "update_dialog_header": "Moficiar Camp d'actuació",
-    "alert_dialog_header": "Atenció",
-    "save_button": "Guardar",
-    "cancel_button": "Cancel·lar",
-    "modify_button": "Moficiar",
-    "update_button": "Actualitzar",
-    "yes_button": "Si",
-    "no_button": "No",
-    "required_text": "Cal emplenar el camp."
+    "search": "Cercar",
+    "clear": "Netejar",
+    "add": "Alta",
+    "save": "Guardar",
+    "cancel": "Cancel·lar",
+    "modify": "Moficiar",
+    "update": "Actualitzar",
+    "yes": "Si",
+    "no": "No",
+    "accept": "Acceptar",
+    "back": "Volver",
+    "archivar": "Archivar",
+    "restaurar": "Restaurar"
   },
-  "errors": {},
+  "toast_messages": {
+    "add_success": "Registre afegit",
+    "update_success": "Registre editat",
+    "delete_success": "Registre esborrat"
+  },
+  "dialog_header": {
+    "add": "Afegir {{title}}",
+    "delete": "Consulta",
+    "update": "Moficiar {{title}}",
+    "alert": "Atenció"
+  },
+
+  "dialog_content": {
+    "delete_alert": "Desitja esborrar definitivament este registre?",
+    "modify_alert": "Desitja guardar els canvis realitzats ?"
+  },
+
+  "solicitud_de_inscripcion": {
+    "title": "Solicitud de Inscripción en el registro",
+    "title_tab_1": "Entidad",
+    "cif": "CIF",
+    "razon_social": "Razón Social",
+    "domicilio_social": "Domicilio Social",
+    "provincia": "Provincia ",
+    "municipio": "Municipio",
+    "c_postal": "C. Postal",
+    "n_registro": "Nº Registro",
+    "feentrada": "Fecha Solicitud de Inscripción ",
+    "fecha_baja": "Fecha Baja",
+    "e-mail": "E-mail",
+    "telefono": "Teléfono ",
+    "fax": "Fax",
+    "publicar_en_web": "Publicar en web",
+    "observaciones": "Observaciones",
+    "title_tab_2": "Dirección Notificaciones",
+    "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
+    "domicilio": "Domicilio",
+    "archivar_message": "¿Desea archivar este expediente?",
+    "restaurar_message": "¿Desea restaurar este expediente?",
+    "title_tab_3": "Representante legal",
+    "nif_cif": "NIF/CIF",
+    "nombre": "Nombre",
+    "apellidos": "Apellidos",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded"
+  },
+
   "title": "ca_Exemple dús",
   "title_tab_1": "ca_Afegeix dades:",
   "title_tab_2": "ca_Col·laboradors:",
@@ -75,5 +127,7 @@
   "snackbar_txt_success": "ca_Dades mostrades correctament",
   "snackbar_txt_error": "ca_No s'han pogut obtenir les dades",
   "snackbar_txt_validate": "ca_Completeu les dades obligatòries",
-  "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})"
+  "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})",
+  "empty_message": "No es va trobar cap coincidència",
+  "required_text": "Cal emplenar el camp."
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ArqApiService, ArqHttpClient, ArqPageableResponse } from 'arq-sdk';
+import { ArqHttpClient } from 'arq-sdk';
 import { environment } from '@env/environment';
 import { ItemExample } from '../shared/interfaces/itemExample';
 import { Observable } from 'rxjs';

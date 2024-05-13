@@ -6,12 +6,9 @@
 .logo {
   height: 2.6rem;
 }
-.header {
-  border-bottom: 0.32rem solid #e5e7eb !important;
-  height: auto;
-}
+
 ::ng-deep .p-menubar {
-  height: 2.8rem;
+  height: 3rem;
   background-color: white;
   border: none;
 }
@@ -51,10 +48,7 @@ ng-deep .p-menubar .p-submenu-list {
   .p-dropdown-items-wrapper {
     margin-top: 0.5rem;
   }
-  .p-icon {
-    width: 0rem;
-    height: 0rem;
-  }
+
   .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
     padding: 0.45rem 0.7rem !important;
   }
@@ -63,8 +57,7 @@ ng-deep .p-menubar .p-submenu-list {
   }
 }
 
-::ng-deep .nav-button {
-  width: 3rem;
-  padding: 0.75rem 0;
+::ng-deep .nav-icons {
+  font-size: 1.4rem;
   color: black !important;
 }

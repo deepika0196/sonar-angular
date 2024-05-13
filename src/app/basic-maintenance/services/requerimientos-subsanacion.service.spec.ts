@@ -3,25 +3,25 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { CampoDeActuacionService } from './campo-de-actuacion.service';
+import { RequerimientosSubsanacionService } from './requerimientos-subsanacion.service';
 
-describe('CampoDeActuacionService', () => {
-  let service: CampoDeActuacionService;
+describe('RequerimientosSubsanacionService', () => {
+  let service: RequerimientosSubsanacionService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [CampoDeActuacionService],
+      providers: [RequerimientosSubsanacionService],
     });
-    service = TestBed.inject(CampoDeActuacionService);
+    service = TestBed.inject(RequerimientosSubsanacionService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
     httpMock.verify();
   });
-
+  
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

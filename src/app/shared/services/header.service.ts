@@ -37,6 +37,8 @@ export class HeaderService {
             label: this.translocoService.translate(
               'menu_items.sub_menu.requerimientos_subsanacion'
             ),
+            routerLink: ['/basic-maintenance/requerimientosSubsanacion'],
+            routerLinkActiveOptions: { exact: true },
           },
           {
             label: this.translocoService.translate(
@@ -53,6 +55,8 @@ export class HeaderService {
             label: this.translocoService.translate(
               'menu_items.sub_menu.solicitud_de_inscripcion'
             ),
+            routerLink: ['/files/solicitudDeInscripcion'],
+            routerLinkActiveOptions: { exact: true },
           },
         ],
       },

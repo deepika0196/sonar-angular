@@ -12,30 +12,38 @@
         src="assets/images/logo_ecmca.png"
         class="logo2 mr-5"
       />
-      <b class="mb-3">{{ ecmca }}</b>
+      <b class="mb-k4 mt-3">
+        {{ ecmca }}
+      </b>
     </ng-template>
     <ng-template pTemplate="end">
       <p-dropdown
+        class="mr-2"
+        [pTooltip]="t('header.cambiar_idioma')"
+        tooltipPosition="bottom"
         styleClass="dropdown-css-override"
         [options]="languages"
         [(ngModel)]="selectedLanguage"
         (onChange)="changeLanguage()"
       >
         <ng-template pTemplate="selectedItem">
-          <i
-            [pTooltip]="t('header.cambiar_idioma')"
-            tooltipPosition="bottom"
-            class="pi pi-language"
+          <span
+            class="material-icons nav-icons"
             aria-hidden="true"
-          ></i>
-          <span class="dropdown-label"></span>
+          >
+            translate
+          </span>
         </ng-template>
       </p-dropdown>
 
       <p-button
-        icon="pi pi-sign-out"
-        styleClass="p-button-text nav-button"
-      ></p-button>
+        class="mr-2"
+        styleClass="p-button-text"
+        tooltipPosition="bottom"
+        [pTooltip]="t('header.signout')"
+      >
+        <span class="material-icons nav-icons"> logout </span>
+      </p-button>
     </ng-template>
   </p-menubar>
 </div>

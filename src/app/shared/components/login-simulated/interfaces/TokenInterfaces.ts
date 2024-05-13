@@ -1,15 +1,15 @@
-export interface TokenRequest{
-    application:String,
-    userInfo: TokenData
+export interface TokenRequest {
+  application: string;
+  userInfo: TokenData;
 }
 
-export interface TokenData{
-    nif:String,
-    name:String,
-    email:String,
-    rol:String,
+export interface TokenData {
+  nif: string;
+  name: string;
+  email: string;
+  rol: string;
 }
 
-export interface TokenSimulated{
-    token:String
-  }
+export interface TokenSimulated {
+  token: string;
+}
