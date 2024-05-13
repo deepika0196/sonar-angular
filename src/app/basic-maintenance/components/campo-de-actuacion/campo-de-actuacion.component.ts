@@ -111,19 +111,19 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
     const values = this.cloneCampoDeActuacionRecords.filter(
       (obj: CampoDeActuacion) => {
         let result = false;
-        if (obj.codigo) {
+        if (obj?.codigo) {
           result = obj.codigo
             .toLowerCase()
             .includes(this.codigo.trim().toLowerCase());
         }
-        if (obj.deseccion) {
+        if (obj?.deseccion) {
           result =
             result &&
             obj.deseccion
               .toLowerCase()
               .includes(this.deseccion.trim().toLowerCase());
         }
-        if (obj.deseccionVal) {
+        if (obj?.deseccionVal) {
           result =
             result &&
             obj.deseccionVal
@@ -146,10 +146,11 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.subscription))
             .subscribe({
               next: (data) => {
-                if (data.success === false && data.errorCode) {
+                if (data?.success === false && data?.errorCode) {
                   this.openAlertDialog(
-                    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                    this.translocoService.translate('errors.' + data.errorCode),
+                    this.translocoService.translate(
+                      'errors.' + data.errorCode.toString()
+                    ),
                     'warn'
                   );
                 } else {
@@ -244,10 +245,11 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: (data) => {
-            if (data.success === false && data.errorCode) {
+            if (data?.success === false && data?.errorCode) {
               this.openAlertDialog(
-                // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                this.translocoService.translate('errors.' + data.errorCode),
+                this.translocoService.translate(
+                  'errors.' + data.errorCode.toString()
+                ),
                 'warn'
               );
             } else {
@@ -352,10 +354,11 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.subscription))
             .subscribe({
               next: (data) => {
-                if (data.success === false && data.errorCode) {
+                if (data?.success === false && data?.errorCode) {
                   this.openAlertDialog(
-                    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                    this.translocoService.translate('errors.' + data.errorCode),
+                    this.translocoService.translate(
+                      'errors.' + data.errorCode.toString()
+                    ),
                     'warn'
                   );
                 } else {

@@ -4,7 +4,7 @@
 }
 
 .inputStyle {
-  border: 2px solid var(--light-grey);
+  border: 0.125rem solid var(--light-grey);
   height: 2.125rem;
   font-size: 1rem;
   margin-bottom: 0.2rem;
@@ -16,7 +16,7 @@
 
 .inputStyle:hover,
 .inputStyle:focus {
-  border: 2px solid var(--dark-blue);
+  border: 0.125rem solid var(--dark-blue);
 }
 
 .inputStyle.p-inputtext {
@@ -53,7 +53,7 @@
 .app-dialog-footer {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 0.5rem;
   justify-content: flex-end;
   position: fixed;
   left: 0;

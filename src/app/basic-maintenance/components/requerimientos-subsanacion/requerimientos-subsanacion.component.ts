@@ -99,19 +99,19 @@ export class RequerimientosSubsanacionComponent implements OnInit, OnDestroy {
     const values = this.cloneRequerimientosSubsanacionRecords.filter(
       (obj: RequerimientosSubsanacion) => {
         let result = false;
-        if (obj.codigo) {
+        if (obj?.codigo) {
           result = obj.codigo
             .toLowerCase()
             .includes(this.codigo.trim().toLowerCase());
         }
-        if (obj.derequerimiento) {
+        if (obj?.derequerimiento) {
           result =
             result &&
             obj.derequerimiento
               .toLowerCase()
               .includes(this.derequerimiento.trim().toLowerCase());
         }
-        if (obj.derequerimientoVal) {
+        if (obj?.derequerimientoVal) {
           result =
             result &&
             obj.derequerimientoVal
