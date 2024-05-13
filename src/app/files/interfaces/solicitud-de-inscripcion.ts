@@ -15,7 +15,12 @@ export interface Municipio {
 }
 
 export interface postalCode {
-  xx: string;
+  cpostMunicipio: string;
+  id: {
+    cpostCodMuni: string;
+    cpostCodPostal: string;
+    cpostCodProv: string;
+  };
 }
 export interface Entidad {
   id?: number;

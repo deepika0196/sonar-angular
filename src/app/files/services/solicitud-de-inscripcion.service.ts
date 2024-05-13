@@ -10,8 +10,17 @@ import {
   providedIn: 'root',
 })
 export class SolicitudDeInscripcionService extends CommonService {
-  postEnten(data: any) {
-    console.log(data);
+  postSolicitudDeInscripcion(entidadDetials: Entidad) {
+    return this._arqHttpClient.post<CustomResponse<Entidad>>(
+      this.urlBuilder(UrlEndpoints.reccaEntidades),
+      entidadDetials
+    );
+  }
+
+  getByNifCif(cif: string) {
+    return this._arqHttpClient.get<CustomResponse<Entidad>>(
+      this.urlBuilder(UrlEndpoints.reccaEntidades) + `/findByNifcif/${cif}`
+    );
   }
 
   getSolicitudDeInscripcions() {
