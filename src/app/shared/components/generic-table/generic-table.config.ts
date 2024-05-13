@@ -13,6 +13,10 @@ export interface TableConfig {
   showEdit?: boolean;
   disableDelete?: boolean;
   disableEdit?: boolean;
+  showRestore?: boolean;
+  disableRestore?: boolean;
+  showArchive?: boolean;
+  disableArchive?: boolean;
   styleClass?: string;
   tableStyle?: { 'min-width': string; 'max-height'?: string };
 }

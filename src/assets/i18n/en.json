@@ -58,6 +58,18 @@
     "field_description": "Spanish description",
     "field_descriptionVal": "Valencian description"
   },
+  "solicitudDeInscripcion": {
+    "title": "Entity Search",
+    "business_name": "Razón Social",
+    "cif": "CIF",
+    "registration_no": "Nº Registro",
+    "application_date": "Fecha Solicitud",
+    "include_canceled_files": "Incluir expedientes dados de baja",
+    "low_date": "Fecha Baja",
+    "province": "Provincia",
+    "municipality": "Municipio",
+    "NIF/CIF_legal_representative": "NIF/CIF Representante Legal"
+  },
 
   "errors": {
     "REGISTRATION_DUPLICATE_ERROR": "The record has already been inserted or is duplicated. Review it.",

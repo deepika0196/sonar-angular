@@ -31,6 +31,18 @@
     "field_description": "Descripción castellano",
     "field_descriptionVal": "Descripción valenciano"
   },
+  "solicitudDeInscripcion": {
+    "title": "Búsqueda de entidades",
+    "business_name": "Razón Social",
+    "cif": "CIF",
+    "registration_no": "Nº Registro",
+    "application_date": "Fecha Solicitud",
+    "include_canceled_files": "Incluir expedientes dados de baja",
+    "low_date": "Fecha Baja",
+    "province": "Provincia",
+    "municipality": "Municipio",
+    "NIF/CIF_legal_representative": "NIF/CIF Representante Legal"
+  },
 
   "solicitud_de_inscripcion": {
     "title": "Sol·licitud d'Inscripció en el registre",

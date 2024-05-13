@@ -1,0 +1,216 @@
+<div
+  class="mainStyle"
+  style="flex: 0 0 100%"
+  *transloco="let t"
+>
+  <span class="headerStyle">{{ t('solicitudDeInscripcion.title') }}</span>
+  <form [formGroup]="solicitudDeInscripcionForm">
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <div class="d-flex flex-column gap-1 col-1">
+        <label
+          htmlFor="cif"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.cif') }}</label
+        >
+        <input
+          pInputText
+          id="cif"
+          class="inputStyle"
+          aria-describedby="codigo-help"
+          formControlName="cif"
+        />
+      </div>
+      <div class="d-flex flex-column gap-1 col-5">
+        <label
+          htmlFor="razonSocial"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.business_name') }}</label
+        >
+        <input
+          pInputText
+          id="razonSocial"
+          class="inputStyle"
+          aria-describedby="deseccion-help"
+          formControlName="razonSocial"
+        />
+      </div>
+      <div class="d-flex flex-column gap-1 col-2">
+        <label
+          htmlFor="provincia"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.province') }}</label
+        >
+        <p-dropdown
+          [options]="provinciaList"
+          formControlName="provincia"
+          optionLabel="provDenominacion"
+          [filter]="true"
+          filterBy="provDenominacion"
+          [showClear]="true"
+          placeholder="--Seleccionar--"
+          class="dropdownStyle"
+          (onChange)="onProvinciaSelected($event.value)"
+        >
+          <ng-template
+            let-item
+            pTemplate="selectedItem"
+          >
+            <div class="flex align-items-center gap-2">
+              <div>{{ item.provDenominacion }}</div>
+            </div>
+          </ng-template>
+          <ng-template
+            let-item
+            pTemplate="item"
+          >
+            <div class="flex align-items-center gap-2">
+              <div>{{ item.provDenominacion }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="d-flex flex-column gap-1 col-2">
+        <label
+          htmlFor="municipio"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.municipality') }}</label
+        >
+        <p-dropdown
+          [options]="municipioList"
+          formControlName="municipio"
+          optionLabel="muniDenominacion"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+          placeholder="--Seleccionar--"
+          class="dropdownStyle"
+        >
+          <ng-template
+            let-item
+            pTemplate="selectedItem"
+          >
+            <div class="flex align-items-center gap-2">
+              <div>{{ item.muniDenominacion }}</div>
+            </div>
+          </ng-template>
+          <ng-template
+            let-item
+            pTemplate="item"
+          >
+            <div class="flex align-items-center gap-2">
+              <div>{{ item.muniDenominacion }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="d-flex flex-column gap-1 col-2">
+        <label
+          htmlFor="nRegistro"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.registration_no') }}</label
+        >
+        <input
+          pInputText
+          id="nRegistro"
+          class="inputStyle"
+          aria-describedby="deseccion-help"
+          formControlName="nRegistro"
+        />
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-between mt-2">
+      <div class="d-flex flex-column gap-1 col-2">
+        <label
+          htmlFor="fechaSolicitud"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.application_date') }}</label
+        >
+        <p-calendar
+          formControlName="fechaSolicitud"
+          [showIcon]="true"
+          class="calenderStyle"
+        ></p-calendar>
+      </div>
+      <div class="d-flex flex-column gap-1 col-2">
+        <span class="pt-3"></span>
+        <span>
+          <label
+            htmlFor="incluirExpedientesBaja"
+            class="labelStyle"
+            >{{ t('solicitudDeInscripcion.include_canceled_files') }}</label
+          >
+          <p-checkbox
+            incluirExpedientesBaja="incluirExpedientesBaja"
+            [binary]="true"
+            inputId="binary"
+          ></p-checkbox>
+        </span>
+      </div>
+      <div class="d-flex flex-column gap-1 col-1">
+        <label
+          htmlFor="fechaBaja"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.low_date') }}</label
+        >
+        <p-calendar
+          formControlName="fechaBaja"
+          [showIcon]="true"
+          class="calenderStyle"
+        ></p-calendar>
+      </div>
+      <div class="d-flex flex-column gap-1 col-1"></div>
+      <div class="d-flex flex-column gap-1 col-3">
+        <label
+          htmlFor="representanteLegal"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.NIF/CIF_legal_representative') }}</label
+        >
+        <input
+          pInputText
+          id="representanteLegal"
+          class="inputStyle"
+          aria-describedby="deseccionVal-help"
+          formControlName="representanteLegal"
+        />
+      </div>
+      <div class="d-flex flex-column gap-1 col-3"></div>
+    </div>
+  </form>
+  <div class="d-flex justify-content-end my-4 mr-2">
+    <gva-button
+      [btnLabel]="'buttons.search'"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="filterHandler()"
+    >
+      <i class="material-icons iconStyle">search</i>
+    </gva-button>
+    <gva-button
+      [btnLabel]="'buttons.clear'"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="clearAll()"
+    >
+      <img src="assets/images/ink_eraser.svg" />
+    </gva-button>
+    <gva-button
+      [btnLabel]="'buttons.add'"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="openAddDialog()"
+    >
+      <i class="material-icons iconStyle">add</i>
+    </gva-button>
+  </div>
+  <div class="card">
+    <p-toast></p-toast>
+    <generic-table
+      [data]="solicitudDeInscripcions"
+      [columns]="columns"
+      [paginatorConfig]="paginatorConfig"
+      [tableConfig]="tableConfig"
+      (openEdit)="openUpdateDialog($event)"
+      (openDelete)="onDeleteHandler($event)"
+    ></generic-table>
+  </div>
+</div>
