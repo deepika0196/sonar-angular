@@ -92,7 +92,11 @@
     "domicilio": "Domicilio",
     "archivar_message": "¿Desea archivar este expediente?",
     "restaurar_message": "¿Desea restaurar este expediente?",
-    "title_tab_3": "Representante legal"
+    "title_tab_3": "Representante legal",
+    "nif_cif": "NIF/CIF",
+    "nombre": "Nombre",
+    "apellidos": "Apellidos",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded"
   },
 
   "title": "ca_Exemple dús",

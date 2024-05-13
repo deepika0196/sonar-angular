@@ -53,49 +53,49 @@
             <div class="col-2">
               <label
                 class="labelStyle"
-                for="cif"
+                for="nifcif"
                 >{{ t('solicitud_de_inscripcion.cif') }}*</label
               >
               <div class="w-full">
                 <input
-                  id="cif"
+                  id="nifcif"
                   type="text"
                   [maxLength]="9"
                   class="p-inputtext"
                   (blur)="fetchDeatails($event)"
-                  formControlName="cif"
+                  formControlName="nifcif"
                 />
               </div>
             </div>
             <div class="col-4">
               <label
                 class="labelStyle"
-                for="razonSocial"
+                for="denomsocial"
                 >{{ t('solicitud_de_inscripcion.razon_social') }}*</label
               >
               <div class="w-full">
                 <input
-                  id="razonSocial"
+                  id="denomsocial"
                   type="text"
                   [maxLength]="250"
                   class="p-inputtext"
-                  formControlName="razonSocial"
+                  formControlName="denomsocial"
                 />
               </div>
             </div>
             <div class="col-6">
               <label
                 class="labelStyle"
-                for="lastname2"
+                for="domsocial"
                 >{{ t('solicitud_de_inscripcion.domicilio_social') }}*</label
               >
               <div class="w-full">
                 <input
-                  id="domicilioSocia"
+                  id="domsocial"
                   type="text"
                   [maxLength]="250"
                   class="p-inputtext"
-                  formControlName="domicilioSocia"
+                  formControlName="domsocial"
                 />
               </div>
             </div>
@@ -107,21 +107,21 @@
                 <div class="col-4">
                   <label
                     class="labelStyle"
-                    for="provincia"
+                    for="codpro"
                   >
                     {{ t('solicitud_de_inscripcion.provincia') }}</label
                   >
                   <div class="w-full">
                     <p-autoComplete
-                      id="provincia"
-                      formControlName="provincia"
+                      id="codpro"
+                      formControlName="codpro"
                       styleClass="dropdown"
                       [(ngModel)]="selectedProvincia"
                       [dropdown]="true"
                       [suggestions]="filteredProvincia"
                       (completeMethod)="filterProvincia($event)"
                       field="provDenominacion"
-                      (onSelect)="provinciaSelected()"
+                      (onSelect)="loadMunicipio()"
                     >
                     </p-autoComplete>
                   </div>
@@ -129,20 +129,20 @@
                 <div class="col-4">
                   <label
                     class="labelStyle"
-                    for="municipio"
+                    for="codmun"
                   >
                     {{ t('solicitud_de_inscripcion.municipio') }}
                   </label>
                   <div class="w-full">
                     <p-autoComplete
-                      id="municipio"
-                      formControlName="municipio"
+                      id="codmun"
+                      formControlName="codmun"
                       styleClass="dropdown"
                       [(ngModel)]="selectedMunicipio"
                       [dropdown]="true"
                       [suggestions]="filteredMunicipio"
                       (completeMethod)="filterMunicipio($event)"
-                      (onSelect)="municipioSelected()"
+                      (onSelect)="loadCP()"
                       field="muniDenominacion"
                     >
                     </p-autoComplete>
@@ -151,21 +151,21 @@
                 <div class="col-4">
                   <label
                     class="labelStyle"
-                    for="cPostal"
+                    for="cp"
                   >
                     {{ t('solicitud_de_inscripcion.c_postal') }}</label
                   >
                   <div class="w-full">
                     <p-autoComplete
-                      id="cPostal"
-                      formControlName="cPostal"
+                      id="cp"
+                      formControlName="cp"
                       styleClass="dropdown"
                       [(ngModel)]="selectedPostal"
                       [dropdown]="true"
                       [suggestions]="filteredPostal"
                       (completeMethod)="filterPostal($event)"
                       field="cpostMunicipio"
-                      (onSelect)="provinciaSelected()"
+                      (onSelect)="loadMunicipio()"
                     >
                     </p-autoComplete>
                   </div>
@@ -178,18 +178,17 @@
                 <div class="col-3">
                   <label
                     class="labelStyle"
-                    for="nRegistro"
+                    for="numinscripcion"
                   >
                     {{ t('solicitud_de_inscripcion.n_registro') }}</label
                   >
                   <div class="w-full">
                     <input
-                      id="nRegistro"
+                      id="numinscripcion"
                       type="text"
-                      placeholder="/ECMCA"
                       [maxLength]="9"
                       class="p-inputtext"
-                      formControlName="nRegistro"
+                      formControlName="numinscripcion"
                     />
                   </div>
                 </div>
@@ -204,7 +203,7 @@
                     <p-calendar
                       id="feentrada"
                       styleClass="calender"
-                      dateFormat="dd/mm/yy"
+                      [dateFormat]="dateFormat"
                       [showIcon]="true"
                       placeholder="dd/mm/yyyy"
                       formControlName="feentrada"
@@ -214,16 +213,17 @@
                 <div class="col-4">
                   <label
                     class="labelStyle"
-                    for="fechaBaja"
+                    for="fbaja"
                   >
                     {{ t('solicitud_de_inscripcion.fecha_baja') }}
                   </label>
                   <div class="w-full calender-container">
                     <p-calendar
-                      id="fechaBaja"
-                      formControlName="fechaBaja"
+                      id="fbaja"
+                      formControlName="fbaja"
                       styleClass="calender"
                       placeholder="dd/mm/yyyy"
+                      [dateFormat]="dateFormat"
                       [showIcon]="true"
                       [showOnFocus]="false"
                       readonly
@@ -290,15 +290,15 @@
             <div class="col-2">
               <label
                 class="labelStyle"
-                for="publicarEnWeb"
+                for="publicaWeb"
               >
                 {{ t('solicitud_de_inscripcion.publicar_en_web') }}</label
               >
               <div class="w-full">
                 <p-checkbox
                   [binary]="true"
-                  id="publicEnWeb"
-                  formControlName="publicarEnWeb"
+                  id="publicaWeb"
+                  formControlName="publicaWeb"
                 ></p-checkbox>
               </div>
             </div>
@@ -381,14 +381,14 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="dirProvincia"
+                for="dirPro"
               >
                 {{ t('solicitud_de_inscripcion.provincia') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
-                  id="dirProvincia"
-                  formControlName="dirProvincia"
+                  id="dirPro"
+                  formControlName="dirPro"
                   styleClass="dropdown"
                   [(ngModel)]="selecteddDirProvincia"
                   [dropdown]="true"
@@ -398,7 +398,7 @@
                   [ngClass]="{ 'disabled-inputs': true }"
                   [readonly]="true"
                   [disabled]="true"
-                  (onSelect)="provinciaSelected()"
+                  (onSelect)="loadMunicipio()"
                 >
                 </p-autoComplete>
               </div>
@@ -406,20 +406,20 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="dirMunicipio"
+                for="dirMun"
               >
                 {{ t('solicitud_de_inscripcion.municipio') }}
               </label>
               <div class="w-full">
                 <p-autoComplete
-                  id="dirMunicipio"
-                  formControlName="dirMunicipio"
+                  id="dirMun"
+                  formControlName="dirMun"
                   styleClass="dropdown"
                   [(ngModel)]="selecteddDirMunicipio"
                   [dropdown]="true"
                   [suggestions]="filteredMunicipio"
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
-                  (onSelect)="municipioSelected()"
+                  (onSelect)="loadCP()"
                   field="muniDenominacion"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress"
@@ -431,14 +431,14 @@
             <div class="col-2">
               <label
                 class="labelStyle"
-                for="dirCPostal"
+                for="dirCp"
               >
                 {{ t('solicitud_de_inscripcion.c_postal') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
-                  id="dirCPostal"
-                  formControlName="dirCPostal"
+                  id="dirCp"
+                  formControlName="dirCp"
                   styleClass="dropdown"
                   field="cpostMunicipio"
                   [(ngModel)]="selectdircp"
@@ -448,7 +448,7 @@
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
-                  (onSelect)="provinciaSelected()"
+                  (onSelect)="loadMunicipio()"
                 >
                 </p-autoComplete>
               </div>
@@ -511,67 +511,67 @@
             <div class="col-2">
               <label
                 class="labelStyle"
-                for="nifCif"
+                for="sNifCif"
                 >{{ t('solicitud_de_inscripcion.nif_cif') }}*</label
               >
               <div class="w-full">
                 <input
-                  id="nifCif"
+                  id="sNifCif"
                   type="text"
                   [maxLength]="9"
                   class="p-inputtext"
-                  formControlName="nifCif"
+                  formControlName="sNifCif"
                 />
               </div>
             </div>
             <div class="col-4">
               <label
                 class="labelStyle"
-                for="nombre"
+                for="sNombre"
                 >{{ t('solicitud_de_inscripcion.nombre') }}*</label
               >
               <div class="w-full">
                 <input
-                  id="nombre"
+                  id="sNombre"
                   type="text"
                   [maxLength]="250"
                   class="p-inputtext"
-                  formControlName="nombre"
+                  formControlName="sNombre"
                 />
               </div>
             </div>
             <div class="col-6">
               <label
                 class="labelStyle"
-                for="apellidos"
+                for="sApellidos"
                 >{{ t('solicitud_de_inscripcion.apellidos') }}*</label
               >
               <div class="w-full">
                 <input
-                  id="domicilioSocia"
+                  id="sApellidos"
                   type="text"
                   [maxLength]="250"
                   class="p-inputtext"
-                  formControlName="apellidos"
+                  formControlName="sApellidos"
                 />
               </div>
             </div>
           </div>
           <div class="grid">
-            <div class="col-4">
+            <div class="col-3">
               <label
                 class="labelStyle"
-                for="domicilio"
+                for="sDomicilio"
               >
                 {{ t('solicitud_de_inscripcion.domicilio') }}</label
               >
               <div class="w-full">
                 <input
-                  id="domicilio"
+                  id="sDomicilio"
                   type="text"
                   [maxLength]="9"
                   class="p-inputtext"
-                  formControlName="domicilio"
+                  formControlName="sDomicilio"
                 />
               </div>
             </div>
@@ -579,53 +579,54 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="provincia"
+                for="sCodePro"
               >
                 {{ t('solicitud_de_inscripcion.provincia') }}</label
               >
               <div class="w-full">
                 <p-dropdown
-                  id="provincia"
+                  id="sCodePro"
                   styleClass="dropdown"
                   [editable]="true"
                   optionLabel="name"
                   placeholder=" "
-                  formControlName="provincia"
+                  formControlName="sCodePro"
                 ></p-dropdown>
               </div>
             </div>
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="municipio"
+                for="sCodMun"
               >
                 {{ t('solicitud_de_inscripcion.municipio') }}
               </label>
               <div class="w-full">
                 <p-dropdown
+                  id="sCodMun"
                   styleClass="dropdown"
                   [editable]="true"
                   optionLabel="name"
                   placeholder=" "
-                  formControlName="municipio"
+                  formControlName="sCodMun"
                 ></p-dropdown>
               </div>
             </div>
-            <div class="col-2">
+            <div class="col-3">
               <label
                 class="labelStyle"
-                for="cPostal"
+                for="sCP"
               >
                 {{ t('solicitud_de_inscripcion.c_postal') }}</label
               >
               <div class="w-full">
                 <p-dropdown
-                  id="cPostal"
+                  id="sCP"
                   styleClass="dropdown"
                   [editable]="true"
                   optionLabel="name"
                   placeholder=" "
-                  formControlName="cPostal"
+                  formControlName="sCP"
                 ></p-dropdown>
               </div>
             </div>
@@ -634,38 +635,68 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="email"
+                for="sEmail"
               >
                 {{ t('solicitud_de_inscripcion.e-mail') }}</label
               >
-              <div class="w-100">
+              <div class="w-full">
                 <input
-                  id="email"
+                  id="sEmail"
                   type="text"
                   [maxLength]="50"
                   class="p-inputtext"
-                  formControlName="email"
+                  formControlName="sEmail"
                 />
               </div>
             </div>
             <div class="col-2">
               <label
                 class="labelStyle"
-                for="telefono"
+                for="sTelefono"
               >
                 {{ t('solicitud_de_inscripcion.telefono') }}</label
               >
               <div class="w-full">
                 <input
-                  id="telefono"
+                  id="sTelefono"
                   type="text"
                   [maxLength]="9"
                   class="p-inputtext"
-                  formControlName="telefono"
+                  formControlName="sTelefono"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="sFax"
+              >
+                {{ t('solicitud_de_inscripcion.fax') }}</label
+              >
+              <div class="w-full">
+                <input
+                  id="sFax"
+                  type="text"
+                  [maxLength]="9"
+                  class="p-inputtext"
+                  formControlName="sFax"
                 />
               </div>
             </div>
           </div>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab formGroupName="entidad">
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.title_tab_4') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
         </ng-template>
       </p-accordionTab>
     </form>
