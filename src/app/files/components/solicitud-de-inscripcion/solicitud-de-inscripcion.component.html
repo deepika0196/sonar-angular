@@ -396,8 +396,8 @@
                   (completeMethod)="!copyAdress && filterProvincia($event)"
                   field="provDenominacion"
                   [ngClass]="{ 'disabled-inputs': true }"
-                  [readonly]="true"
-                  [disabled]="true"
+                  [readonly]="copyAdress"
+                  [disabled]="copyAdress"
                   (onSelect)="loadMunicipio()"
                 >
                 </p-autoComplete>

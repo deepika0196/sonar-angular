@@ -61,6 +61,11 @@ input {
     border-left: none;
     border-color: var(--black);
   }
+
+  .p-disabled {
+    background-color: var(--grey);
+    color: white;
+  }
 }
 
 :host ::ng-deep .p-button.actionStyle {
