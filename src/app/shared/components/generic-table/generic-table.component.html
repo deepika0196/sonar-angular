@@ -33,25 +33,26 @@
             field="{{ column.field }}"
           ></p-sortIcon>
         </th>
-        <th
-          class="table-col-width-fix columnStyle"
-          id="action"
-        ></th>
+      </tr>
+      <tr *ngIf="tableConfig.columnFilter">
+        <th *ngFor="let column of columns; let ind = index">
+          <div *ngIf="column.filter">
+            <p-columnFilter
+              type="text"
+              field="{{ column.field }}"
+            ></p-columnFilter>
+          </div>
+        </th>
       </tr>
     </ng-template>
+
     <ng-template
       pTemplate="body"
       let-item
     >
       <tr>
         <td *ngFor="let column of columns; let ind = index">
-          {{ item[column.field] }}
-        </td>
-        <td
-          *ngIf="tableConfig.showDelete || tableConfig.showEdit"
-          class="buttons-right"
-        >
-          <div>
+          <div *ngIf="column.field === 'action'">
             <button
               *ngIf="tableConfig.showEdit"
               pButton
@@ -61,7 +62,11 @@
               [disabled]="tableConfig.disableEdit"
               class="p-button-rounded p-button-text p-0 mr-2"
             >
-              <span class="material-icons iconStyle"> edit </span>
+              <img
+                src="assets/images/glyphicons-halflings-13-pencil@2x.png"
+                alt="edit"
+                height="20"
+              />
             </button>
             <button
               *ngIf="tableConfig.showDelete"
@@ -72,9 +77,16 @@
               [disabled]="tableConfig.disableDelete"
               (click)="onDelete(item)"
             >
-              <span class="material-icons iconStyle"> delete </span>
+              <img
+                src="assets/images/glyphicons-halflings-7-bin@2x.png"
+                alt="delete"
+                height="20"
+              />
             </button>
           </div>
+          <span *ngIf="column.field !== 'action'">{{
+            item[column.field]
+          }}</span>
         </td>
       </tr>
     </ng-template>

@@ -11,6 +11,7 @@ export interface TableConfig {
   paginator: boolean;
   showDelete?: boolean;
   showEdit?: boolean;
+  columnFilter?: boolean;
   disableDelete?: boolean;
   disableEdit?: boolean;
   styleClass?: string;
