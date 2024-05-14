@@ -4,43 +4,13 @@
   font-weight: normal;
 }
 
-.inputStyle {
-  border: 2px solid var(--light-grey);
-  height: 2.125rem;
-  font-size: 1rem;
-  border-radius: 0%;
-}
-
-:host ::ng-deep .dropdownStyle .p-dropdown {
-  border: 2px solid var(--light-grey);
-  height: 2.125rem;
-  font-size: 1rem;
-  border-radius: 0%;
-  align-items: center;
-}
-:host ::ng-deep .calenderStyle {
-  .p-calendar {
-    height: 2.125rem;
-    .p-inputtext,
-    .p-datepicker-trigger {
-      border-radius: 0%;
-    }
-    .p-datepicker-trigger.p-button {
-      background-color: var(--blue);
-    }
-  }
-}
-
-.inputStyle.p-inputtext {
-  color: var(--dark-grey);
-}
-
 :host ::ng-deep .p-button.actionStyle {
   background-color: var(--blue);
   border-radius: 0rem;
 
   .iconStyle {
     color: var(--light-blue);
+    padding-left: 0.4rem;
   }
 }
 

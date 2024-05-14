@@ -6,7 +6,7 @@
   <span class="headerStyle">{{ t('solicitudDeInscripcion.title') }}</span>
   <form [formGroup]="solicitudDeInscripcionForm">
     <div class="d-flex flex-row justify-content-between mt-2">
-      <div class="d-flex flex-column gap-1 col-1">
+      <div class="d-flex flex-column gap-1 col-2">
         <label
           htmlFor="cif"
           class="labelStyle"
@@ -20,7 +20,7 @@
           formControlName="cif"
         />
       </div>
-      <div class="d-flex flex-column gap-1 col-5">
+      <div class="d-flex flex-column gap-1 col-4">
         <label
           htmlFor="razonSocial"
           class="labelStyle"
@@ -47,7 +47,7 @@
           [filter]="true"
           filterBy="provDenominacion"
           [showClear]="true"
-          placeholder="--Seleccionar--"
+          placeholder="--{{ t('dropdown.placeholder') }}--"
           class="dropdownStyle"
           (onChange)="onProvinciaSelected($event.value)"
         >
@@ -82,7 +82,7 @@
           [filter]="true"
           filterBy="name"
           [showClear]="true"
-          placeholder="--Seleccionar--"
+          placeholder="--{{ t('dropdown.placeholder') }}--"
           class="dropdownStyle"
         >
           <ng-template
@@ -146,7 +146,7 @@
           ></p-checkbox>
         </span>
       </div>
-      <div class="d-flex flex-column gap-1 col-1">
+      <div class="d-flex flex-column gap-1 col-2">
         <label
           htmlFor="fechaBaja"
           class="labelStyle"
@@ -158,8 +158,7 @@
           class="calenderStyle"
         ></p-calendar>
       </div>
-      <div class="d-flex flex-column gap-1 col-1"></div>
-      <div class="d-flex flex-column gap-1 col-3">
+      <div class="d-flex flex-column gap-1 col-2">
         <label
           htmlFor="representanteLegal"
           class="labelStyle"
@@ -173,7 +172,7 @@
           formControlName="representanteLegal"
         />
       </div>
-      <div class="d-flex flex-column gap-1 col-3"></div>
+      <div class="d-flex flex-column gap-1 col-4"></div>
     </div>
   </form>
   <div class="d-flex justify-content-end my-4 mr-2">
@@ -191,7 +190,11 @@
       [btnClass]="'actionStyle mr-2'"
       (btnClick)="clearAll()"
     >
-      <img src="assets/images/ink_eraser.svg" />
+      <img
+        class="iconStyle"
+        src="assets/images/ink_eraser.svg"
+        alt=""
+      />
     </gva-button>
     <gva-button
       [btnLabel]="'buttons.add'"

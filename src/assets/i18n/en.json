@@ -110,6 +110,12 @@
     "delete_alert": "Do you want to permanently delete this record?",
     "modify_alert": "Do you want to save the changes you made?"
   },
+
+  "dropdown": {
+    "placeholder": "Select",
+    "no_result_loaded": "Results cannot be displayed"
+  },
+
   "title": "Example of use",
   "title_tab_1": "Add data:",
   "title_tab_2": "Collaborators:",

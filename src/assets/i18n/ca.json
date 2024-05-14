@@ -111,6 +111,11 @@
     "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded"
   },
 
+  "dropdown": {
+    "placeholder": "Seleccionar",
+    "no_result_loaded": "No es poden mostrar els resultats"
+  },
+
   "title": "ca_Exemple dús",
   "title_tab_1": "ca_Afegeix dades:",
   "title_tab_2": "ca_Col·laboradors:",

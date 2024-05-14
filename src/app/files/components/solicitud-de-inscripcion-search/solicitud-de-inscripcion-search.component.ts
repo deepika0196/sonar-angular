@@ -5,8 +5,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { CampoDeActuacion } from '@app/basic-maintenance/interfaces/campoDeActuacion';
-import { CampoDeActuacionService } from '@app/basic-maintenance/services/campo-de-actuacion.service';
 import {
   Entidad,
   Municipio,
@@ -54,7 +52,8 @@ export class SolicitudDeInscripcionSearchComponent
     sortable: true,
     tableStyle: { 'min-width': '60rem' },
     showDelete: true,
-    showEdit: true,
+    showEdit: false,
+    showView: true,
     showRestore: false,
     showArchive: true,
   };
@@ -70,7 +69,7 @@ export class SolicitudDeInscripcionSearchComponent
     {
       field: 'nifcif',
       header: 'solicitudDeInscripcion.cif',
-      sortable: true,
+      sortable: false,
       class: 'table-col-width-fix',
     },
     {
@@ -94,20 +93,20 @@ export class SolicitudDeInscripcionSearchComponent
     {
       field: 'numinscripcion',
       header: 'solicitudDeInscripcion.registration_no',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
     {
       field: 'feentrada',
       header: 'solicitudDeInscripcion.application_date',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
       pipe: 'dd/MM/yyyy',
     },
     {
       field: 'fbaja',
       header: 'solicitudDeInscripcion.low_date',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
     {
@@ -118,9 +117,6 @@ export class SolicitudDeInscripcionSearchComponent
     },
   ];
   private subscription = new Subject<void>();
-  countries: any[];
-
-  selectedCountry: any;
   date: Date;
   checked: boolean;
   solicitudDeInscripcionForm;
@@ -155,18 +151,6 @@ export class SolicitudDeInscripcionSearchComponent
   deseccionVal = '';
 
   ngOnInit() {
-    this.countries = [
-      { name: 'Australia', code: 'AU' },
-      { name: 'Brazil', code: 'BR' },
-      { name: 'China', code: 'CN' },
-      { name: 'Egypt', code: 'EG' },
-      { name: 'France', code: 'FR' },
-      { name: 'Germany', code: 'DE' },
-      { name: 'India', code: 'IN' },
-      { name: 'Japan', code: 'JP' },
-      { name: 'Spain', code: 'ES' },
-      { name: 'United States', code: 'US' },
-    ];
     this.fetchAllSolicitudDeInscripcion();
     this.fetchAllProvincia();
   }
@@ -177,7 +161,6 @@ export class SolicitudDeInscripcionSearchComponent
       .pipe(takeUntil(this.subscription))
       .subscribe({
         next: (data) => {
-          console.log(data);
           this.solicitudDeInscripcions = data.response;
           this.cloneSolicitudDeInscripcionRecords = data.response;
         },
@@ -199,16 +182,19 @@ export class SolicitudDeInscripcionSearchComponent
   }
 
   onProvinciaSelected(selectedProvincia: Provincia) {
-    console.log('ss', selectedProvincia);
-    this.solicitudeMunicipioService
-      .getMunicipio(selectedProvincia.provCodProvincia)
-      .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          this.municipioList = data.response;
-        },
-        error: (err: Error) => console.error(err),
-      });
+    if (selectedProvincia) {
+      this.solicitudeMunicipioService
+        .getMunicipio(selectedProvincia.provCodProvincia)
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: (data) => {
+            this.municipioList = data.response;
+          },
+          error: (err: Error) => console.error(err),
+        });
+    } else {
+      this.municipioList = [];
+    }
   }
 
   clearAll() {
@@ -346,7 +332,7 @@ export class SolicitudDeInscripcionSearchComponent
     // );
   }
 
-  openUpdateDialog(campoDetails: any) {
+  openUpdateDialog(campoDetails: Entidad) {
     // const updateHandler = (input: CampoDeActuacion) => {
     //   this.campoDeActuacionService
     //     .updateCampoDeActuacions(input)
@@ -523,7 +509,7 @@ export class SolicitudDeInscripcionSearchComponent
     alertMessage: string,
     dialogType: string,
     callback?: (input?: any) => void,
-    campoDetails?: CampoDeActuacion
+    campoDetails?: Entidad
   ) {
     // const actionButtons: ActionButtons[] =
     //   dialogType === 'confirm'

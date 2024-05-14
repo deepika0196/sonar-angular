@@ -115,6 +115,11 @@
     "modify_alert": "¿Desea guardar los cambios realizados ?"
   },
 
+  "dropdown": {
+    "placeholder": "Seleccionar",
+    "no_result_loaded": "No se pueden mostrar los resultados"
+  },
+
   "title": "es_Exemple dús",
   "title_tab_1": "es_Afegeix dades:",
   "title_tab_2": "es_Col·laboradors:",
