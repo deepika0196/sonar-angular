@@ -18,6 +18,7 @@
           class="inputStyle"
           aria-describedby="codigo-help"
           formControlName="cif"
+          maxlength="9"
         />
       </div>
       <div class="d-flex flex-column gap-1 col-4">
@@ -115,6 +116,7 @@
           class="inputStyle"
           aria-describedby="deseccion-help"
           formControlName="nRegistro"
+          maxlength="10"
         />
       </div>
     </div>
@@ -170,6 +172,7 @@
           class="inputStyle"
           aria-describedby="deseccionVal-help"
           formControlName="representanteLegal"
+          maxlength="9"
         />
       </div>
       <div class="d-flex flex-column gap-1 col-4"></div>
@@ -212,8 +215,10 @@
       [columns]="columns"
       [paginatorConfig]="paginatorConfig"
       [tableConfig]="tableConfig"
-      (openEdit)="openUpdateDialog($event)"
-      (openDelete)="onDeleteHandler($event)"
+      (openView)="onViewHandler($event)"
+      (openEdit)="onEditHandler($event)"
+      (openArchive)="onDeleteHandler($event)"
+      (openRestore)="onDeleteHandler($event)"
     ></generic-table>
   </div>
 </div>

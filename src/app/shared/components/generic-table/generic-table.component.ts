@@ -18,12 +18,13 @@ import {
 import { HeaderService } from '@shared/services/header.service';
 import { Subject } from 'rxjs';
 
-interface TableColumns {
+export interface TableColumns {
   field: string;
   header: string;
   sortable?: boolean;
   class?: string;
   pipe?: string;
+  pipeFormat?: string;
 }
 export type StringEnumLike = string;
 @Component({
@@ -47,6 +48,12 @@ export class GenericTableComponent<T> implements OnInit, OnChanges, OnDestroy {
   @Input() columns: TableColumns[] = [];
 
   @Output() openEdit: EventEmitter<T> = new EventEmitter();
+
+  @Output() openView: EventEmitter<T> = new EventEmitter();
+
+  @Output() openRestore: EventEmitter<T> = new EventEmitter();
+
+  @Output() openArchive: EventEmitter<T> = new EventEmitter();
 
   @Output() openDelete: EventEmitter<T> = new EventEmitter();
 
@@ -80,6 +87,18 @@ export class GenericTableComponent<T> implements OnInit, OnChanges, OnDestroy {
 
   onEdit(item: T) {
     this.openEdit.emit(item);
+  }
+
+  onView(item: T) {
+    this.openView.emit(item);
+  }
+
+  onRestore(item: T) {
+    this.openRestore.emit(item);
+  }
+
+  onArchive(item: T) {
+    this.openArchive.emit(item);
   }
 
   ngOnDestroy(): void {

@@ -19,6 +19,7 @@ import {
   GenericDialog,
   InputField,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
+import { TableColumns } from '@app/shared/components/generic-table/generic-table.component';
 import {
   PaginatorConfig,
   TableConfig,
@@ -51,8 +52,8 @@ export class SolicitudDeInscripcionSearchComponent
     paginator: true,
     sortable: true,
     tableStyle: { 'min-width': '60rem' },
-    showDelete: true,
-    showEdit: false,
+    showDelete: false,
+    showEdit: true,
     showView: true,
     showRestore: false,
     showArchive: true,
@@ -65,7 +66,7 @@ export class SolicitudDeInscripcionSearchComponent
     rowsPerPageOptions: [10, 25, 50],
   };
 
-  columns = [
+  columns: TableColumns[] = [
     {
       field: 'nifcif',
       header: 'solicitudDeInscripcion.cif',
@@ -101,7 +102,8 @@ export class SolicitudDeInscripcionSearchComponent
       header: 'solicitudDeInscripcion.application_date',
       sortable: true,
       class: 'table-col-width',
-      pipe: 'dd/MM/yyyy',
+      pipe: 'date',
+      pipeFormat: 'dd/MM/yyyy',
     },
     {
       field: 'fbaja',
@@ -132,7 +134,7 @@ export class SolicitudDeInscripcionSearchComponent
     private translocoService: TranslocoService
   ) {
     this.solicitudDeInscripcionForm = new FormGroup({
-      cif: new FormControl(null),
+      cif: new FormControl(null, [Validators.maxLength(9)]),
       razonSocial: new FormControl(null),
       nRegistro: new FormControl(null),
       fechaSolicitud: new FormControl(null),
@@ -504,6 +506,9 @@ export class SolicitudDeInscripcionSearchComponent
     //   deleteDialogConfig
     // );
   }
+
+  onViewHandler(entidad: Entidad) {}
+  onEditHandler(entidad: Entidad) {}
 
   openAlertDialog(
     alertMessage: string,
