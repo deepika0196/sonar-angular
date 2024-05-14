@@ -23,6 +23,7 @@ interface TableColumns {
   header: string;
   sortable?: boolean;
   class?: string;
+  filter?: boolean;
 }
 export type StringEnumLike = string;
 @Component({
