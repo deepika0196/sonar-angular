@@ -7,7 +7,7 @@
     </div>
     <div class="col-6 justify-content-end d-flex">
       <gva-button
-        [btnLabel]="'buttons.back'"
+        [btnLabel]="t('buttons.back')"
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
       >
@@ -15,7 +15,7 @@
       </gva-button>
 
       <gva-button
-        [btnLabel]="'buttons.save'"
+        [btnLabel]="t('buttons.save')"
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
         [btnDisabled]="!isValidForm"
@@ -25,7 +25,9 @@
       </gva-button>
 
       <gva-button
-        [btnLabel]="isFechaBajaNull ? 'buttons.archivar' : 'buttons.restaurar'"
+        [btnLabel]="
+          isFechaBajaNull ? t('buttons.archivar') : t('buttons.restaurar')
+        "
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
         (btnClick)="updateFechaBaja()"

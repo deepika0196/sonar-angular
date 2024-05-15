@@ -79,7 +79,9 @@
 
   "dialog_content": {
     "delete_alert": "Desitja esborrar definitivament este registre?",
-    "modify_alert": "Desitja guardar els canvis realitzats ?"
+    "modify_alert": "Desitja guardar els canvis realitzats ?",
+    "archive_alert": "Desitja arxivar este expedient?",
+    "restore_alert": "Desitja restaurar este expedient?"
   },
 
   "solicitud_de_inscripcion": {
