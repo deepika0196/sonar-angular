@@ -56,7 +56,7 @@ export class SolicitudDeInscripcionSearchComponent
     showDelete: false,
     showEdit: true,
     showView: true,
-    showRestore: false,
+    showRestore: true,
     showArchive: true,
   };
 
@@ -81,13 +81,13 @@ export class SolicitudDeInscripcionSearchComponent
       class: 'table-col-width',
     },
     {
-      field: 'codpro',
+      field: 'provDenominacion',
       header: 'solicitudDeInscripcion.province',
       sortable: false,
       class: 'table-col-width',
     },
     {
-      field: 'deseccionVal',
+      field: 'muniDenominacion',
       header: 'solicitudDeInscripcion.municipality',
       sortable: false,
       class: 'table-col-width',
@@ -218,10 +218,12 @@ export class SolicitudDeInscripcionSearchComponent
     }
   }
   clearAll() {
+    this.solicitudDeInscripcionForm.reset();
     this.solicitudDeInscripcions = [...this.cloneSolicitudDeInscripcionRecords];
   }
 
   filterHandler() {
+    console.log(this.solicitudDeInscripcionForm.value);
     const values = this.cloneSolicitudDeInscripcionRecords.filter(
       (obj: Entidad) => {
         // let result = false;
@@ -451,7 +453,7 @@ export class SolicitudDeInscripcionSearchComponent
     // );
   }
 
-  onDeleteHandler(campoDetails: Entidad) {
+  onArchiveHandler(campoDetails: Entidad) {
     const actionButtons: ActionButtons[] = [
       {
         label: this.translocoService.translate('buttons.yes'),
@@ -509,6 +511,77 @@ export class SolicitudDeInscripcionSearchComponent
         actionButtons: actionButtons,
         alertMessage: this.translocoService.translate(
           'dialog_content.archive_alert'
+        ),
+        headerStyle: {
+          icon: 'info',
+          dialogType: 'confirm',
+          title: this.translocoService.translate('dialog_header.delete'),
+        },
+      },
+    };
+    this.deleteDialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      deleteDialogConfig
+    );
+  }
+  onRestoreHandler(campoDetails: Entidad) {
+    const actionButtons: ActionButtons[] = [
+      {
+        label: this.translocoService.translate('buttons.yes'),
+        icon: 'check',
+        action: () => {
+          console.log('yes');
+          // this.campoDeActuacionService
+          //   .deleteCampoDeActuacions(campoDetails.codigo)
+          //   .pipe(takeUntil(this.subscription))
+          //   .subscribe({
+          //     next: (data) => {
+          //       if (data.success === false && data.errorCode) {
+          //         this.openAlertDialog(
+          //           this.translocoService.translate('errors.' + data.errorCode),
+          //           'warn'
+          //         );
+          //       } else {
+          //         this.fetchAllCamposDeActuacion();
+          //         this.deleteDialogRef?.close();
+          //         this.messageService.add({
+          //           severity: 'success',
+          //           summary: this.translocoService.translate(
+          //             'campoDeActuacion.title'
+          //           ),
+          //           detail: this.translocoService.translate(
+          //             'toast_messages.delete_success'
+          //           ),
+          //         });
+          //       }
+          //     },
+          //     error: (err: Error) => console.error(err),
+          //     complete: () => {},
+          //   });
+        },
+        disabled: false,
+      },
+      {
+        label: this.translocoService.translate('buttons.no'),
+        action: () => {
+          this.deleteDialogRef?.close();
+        },
+        disabled: false,
+      },
+    ];
+    const deleteDialogConfig: GenericDialog = {
+      width: '40%',
+      contentStyle: {
+        overflow: 'none',
+      },
+      showHeader: false,
+      closable: false,
+      baseZIndex: 10000,
+      styleClass: 'dialogStyle',
+      data: {
+        actionButtons: actionButtons,
+        alertMessage: this.translocoService.translate(
+          'dialog_content.restore_alert'
         ),
         headerStyle: {
           icon: 'info',

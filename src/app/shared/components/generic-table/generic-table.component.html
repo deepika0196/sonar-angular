@@ -91,7 +91,7 @@
               <span class="material-icons iconStyle"> delete </span>
             </button>
             <button
-              *ngIf="tableConfig.showArchive"
+              *ngIf="tableConfig.showArchive && item['fbaja'] === null"
               pButton
               pRipple
               type="button"
@@ -101,7 +101,7 @@
               <span class="material-icons iconStyle">archive</span>
             </button>
             <button
-              *ngIf="tableConfig.showRestore"
+              *ngIf="tableConfig.showRestore && item['fbaja'] !== null"
               pButton
               pRipple
               type="button"
