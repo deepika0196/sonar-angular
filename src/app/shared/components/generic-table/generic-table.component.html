@@ -33,37 +33,29 @@
             field="{{ column.field }}"
           ></p-sortIcon>
         </th>
-        <th
-          class="table-col-width-fix columnStyle"
-          id="action"
-        ></th>
+      </tr>
+      <tr *ngIf="tableConfig.columnFilter">
+        <th *ngFor="let column of columns; let ind = index">
+          <div *ngIf="column.filter">
+            <p-columnFilter
+              type="text"
+              field="{{ column.field }}"
+            ></p-columnFilter>
+          </div>
+        </th>
       </tr>
     </ng-template>
+
     <ng-template
       pTemplate="body"
       let-item
     >
       <tr>
         <td *ngFor="let column of columns; let ind = index">
-          <span
-            *ngIf="column.pipe && column.pipe === 'date'; else other_content"
-            >{{ item[column.field] | date : column.pipeFormat }}</span
+          <div
+            *ngIf="column.field === 'action'"
+            class="buttons-right"
           >
-          <ng-template #other_content
-            ><span else>{{ item[column.field] }}</span></ng-template
-          >
-        </td>
-        <td
-          *ngIf="
-            tableConfig.showDelete ||
-            tableConfig.showEdit ||
-            tableConfig.showView ||
-            tableConfig.showArchive ||
-            tableConfig.showRestore
-          "
-          class="buttons-right"
-        >
-          <div>
             <button
               *ngIf="tableConfig.showView"
               pButton
@@ -121,6 +113,15 @@
               >
             </button>
           </div>
+          <span *ngIf="column.field !== 'action'">
+            <span
+              *ngIf="column.pipe && column.pipe === 'date'; else other_content"
+              >{{ item[column.field] | date : column.pipeFormat }}</span
+            >
+            <ng-template #other_content
+              ><span else>{{ item[column.field] }}</span></ng-template
+            >
+          </span>
         </td>
       </tr>
     </ng-template>

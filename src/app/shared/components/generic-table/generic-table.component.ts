@@ -25,6 +25,7 @@ export interface TableColumns {
   class?: string;
   pipe?: string;
   pipeFormat?: string;
+  filter?: boolean;
 }
 export type StringEnumLike = string;
 @Component({

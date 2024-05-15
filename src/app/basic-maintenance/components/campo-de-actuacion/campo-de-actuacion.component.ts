@@ -66,6 +66,12 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
       sortable: true,
       class: 'table-col-width',
     },
+    {
+      field: 'action',
+      header: '',
+      sortable: false,
+      class: 'table-col-width-fix',
+    },
   ];
   private subscription = new Subject<void>();
 

@@ -120,6 +120,12 @@ export class SolicitudDeInscripcionSearchComponent
       sortable: false,
       class: 'table-col-width',
     },
+    {
+      field: 'action',
+      header: '',
+      sortable: false,
+      class: 'table-col-width-fix',
+    },
   ];
   private subscription = new Subject<void>();
   date: Date;
