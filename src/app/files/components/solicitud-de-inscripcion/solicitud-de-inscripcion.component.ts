@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -36,7 +36,9 @@ import { CIFValidator } from '@app/core/utils/cif-validator';
   styleUrls: ['./solicitud-de-inscripcion.component.css'],
   providers: [MessageService, DialogService, DynamicDialogRef],
 })
-export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
+export class SolicitudDeInscripcionComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   registroDeEntidades: string = GlobalConstant.RegistroDeEntidades;
   isValidForm = false;
   isFechaBajaNull = true;
@@ -93,7 +95,7 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
         observaciones: [null],
       }),
       notificaciones: this.fb.group({
-        addressCopy: [true],
+        addressCopy: [false],
         dirDomicilio: [null],
         dirPro: [null],
         dirMun: [null],
@@ -117,6 +119,13 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.datosPrincipalesForm.get('notificaciones.addressCopy')?.setValue(true);
+    this.datosPrincipalesForm.get('notificaciones.dirPro')?.disable();
+    this.datosPrincipalesForm.get('notificaciones.dirMun')?.disable();
+    this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
+  }
+
   ngOnInit(): void {
     this.copyAdress = true;
 
@@ -127,10 +136,10 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
         next: (value) => {
           if (value) {
             this.copyAdress = value;
-            this.copyAddressFieldsOfEntidadData();
+            // this.copyAddressFieldsOfEntidadData();
           } else {
             this.copyAdress = false;
-            this.clearNotificacioneFields();
+            // this.clearNotificacioneFields();
           }
         },
         error: (err: Error) => console.error(err),
