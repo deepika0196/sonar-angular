@@ -313,6 +313,8 @@ export class SolicitudDeInscripcionComponent
     const codproValue = this.provinciaList.find(
       (provincia) => provincia.provCodProvincia === response.codpro
     );
+    this.datosPrincipalesForm.get('')?.setValue(codproValue);
+
     this.loadMunicipio(response.codpro);
     const codmunValue =
       this.municipioList.find(
@@ -322,7 +324,7 @@ export class SolicitudDeInscripcionComponent
       ) || null;
 
     console.log(response.codmun, '===', response.codpro);
-
+    this.datosPrincipalesForm.get('entidad.codpro')?.setValue(codproValue);
     const publicaWebValue = response.publicaWeb === 'Y' ? true : false;
     this.datosPrincipalesForm.patchValue({
       id: response.id,

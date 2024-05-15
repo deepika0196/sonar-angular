@@ -597,14 +597,20 @@
                 {{ t('solicitud_de_inscripcion.provincia') }}</label
               >
               <div class="w-full">
-                <p-dropdown
+                <p-autoComplete
                   id="sCodePro"
-                  styleClass="dropdownStyle w-full"
-                  [editable]="true"
-                  optionLabel="name"
-                  placeholder=" "
                   formControlName="sCodePro"
-                ></p-dropdown>
+                  class="autoCompleteStyle w-full"
+                  [(ngModel)]="selecteddDirProvincia"
+                  [dropdown]="true"
+                  [suggestions]="filteredProvincia"
+                  (completeMethod)="!copyAdress && filterProvincia($event)"
+                  field="provDenominacion"
+                  [ngClass]="{ 'disabled-inputs': true }"
+                  [readonly]="copyAdress"
+                  [disabled]="copyAdress"
+                >
+                </p-autoComplete>
               </div>
             </div>
             <div class="col-3">
