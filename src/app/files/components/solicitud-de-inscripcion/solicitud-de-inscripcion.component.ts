@@ -28,6 +28,7 @@ import {
   GenericDialog,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
 import { CIFValidator } from '@app/core/utils/cif-validator';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-solicitud-de-inscripcion',
@@ -74,7 +75,8 @@ export class SolicitudDeInscripcionComponent
     private solicitudProvinciaService: SolicitudeProvinciaService,
     private solicitudeMunicipioService: SolicitudeMunicipioService,
     private solicitudDeInscripcionService: SolicitudDeInscripcionService,
-    private solicituddeCodigoPostalService: SolicituddeCodigoPostalService
+    private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
+    private location: Location
   ) {
     this.initializeForm();
   }
@@ -87,6 +89,8 @@ export class SolicitudDeInscripcionComponent
   }
 
   ngOnInit(): void {
+    console.log(this.location.getState());
+
     this.copyAdress = true;
 
     this.datosPrincipalesForm

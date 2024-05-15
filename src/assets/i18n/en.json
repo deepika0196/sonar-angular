@@ -109,7 +109,9 @@
 
   "dialog_content": {
     "delete_alert": "Do you want to permanently delete this record?",
-    "modify_alert": "Do you want to save the changes you made?"
+    "modify_alert": "Do you want to save the changes you made?",
+    "archive_alert": "Do you want to archive this file?",
+    "restore_alert": "Do you want to restore this file?"
   },
 
   "dropdown": {
