@@ -41,7 +41,7 @@
     "low_date": "Fecha Baja",
     "province": "Provincia",
     "municipality": "Municipio",
-    "NIF/CIF_legal_representative": "NIF/CIF Representante Legal"
+    "NIF_CIF_legal_representative": "NIF/CIF Representante Legal"
   },
 
   "solicitud_de_inscripcion": {
