@@ -100,7 +100,8 @@
   "toast_messages": {
     "add_success": "Registro añadido",
     "update_success": "Registro editado",
-    "delete_success": "Registro borrado"
+    "delete_success": "Registro borrado",
+    "invalid_cif": "El NIF/NIE introducido no es válido."
   },
 
   "dialog_header": {

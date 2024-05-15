@@ -68,7 +68,8 @@
   "toast_messages": {
     "add_success": "Registre afegit",
     "update_success": "Registre editat",
-    "delete_success": "Registre esborrat"
+    "delete_success": "Registre esborrat",
+    "invalid_cif": "El NIF/NIE introduït no és valid."
   },
   "dialog_header": {
     "add": "Afegir {{title}}",

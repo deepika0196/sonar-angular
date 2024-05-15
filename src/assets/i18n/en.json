@@ -97,7 +97,8 @@
   "toast_messages": {
     "add_success": "Record added",
     "update_success": "Record edited",
-    "delete_success": "Record deleted"
+    "delete_success": "Record deleted",
+    "invalid_cif": "The NIF/NIE entered is not valid"
   },
   "dialog_header": {
     "add": "Add {{title}}",

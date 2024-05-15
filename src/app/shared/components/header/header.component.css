@@ -6,6 +6,11 @@
 .logo {
   height: 2.6rem;
 }
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
 ::ng-deep .p-menubar {
   height: 3rem;

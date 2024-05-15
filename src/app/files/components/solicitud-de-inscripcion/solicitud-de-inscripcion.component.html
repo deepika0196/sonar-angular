@@ -39,6 +39,11 @@
     class="accordion"
     [activeIndex]="0"
     ><form [formGroup]="datosPrincipalesForm">
+      <input
+        id="id"
+        type="hidden"
+        formControlName="id"
+      />
       <p-accordionTab formGroupName="entidad">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
@@ -61,7 +66,7 @@
                   id="nifcif"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   (blur)="fetchDeatails($event)"
                   formControlName="nifcif"
                 />
@@ -78,7 +83,7 @@
                   id="denomsocial"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="denomsocial"
                 />
               </div>
@@ -94,7 +99,7 @@
                   id="domsocial"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="domsocial"
                 />
               </div>
@@ -115,13 +120,15 @@
                     <p-autoComplete
                       id="codpro"
                       formControlName="codpro"
-                      styleClass="dropdown"
+                      class="autoCompleteStyle"
                       [(ngModel)]="selectedProvincia"
                       [dropdown]="true"
                       [suggestions]="filteredProvincia"
                       (completeMethod)="filterProvincia($event)"
+                      (onSelect)="
+                        loadMunicipio(selectedProvincia.provCodProvincia)
+                      "
                       field="provDenominacion"
-                      (onSelect)="loadMunicipio()"
                     >
                     </p-autoComplete>
                   </div>
@@ -137,7 +144,7 @@
                     <p-autoComplete
                       id="codmun"
                       formControlName="codmun"
-                      styleClass="dropdown"
+                      class="autoCompleteStyle"
                       [(ngModel)]="selectedMunicipio"
                       [dropdown]="true"
                       [suggestions]="filteredMunicipio"
@@ -159,13 +166,15 @@
                     <p-autoComplete
                       id="cp"
                       formControlName="cp"
-                      styleClass="dropdown"
+                      class="autoCompleteStyle"
                       [(ngModel)]="selectedPostal"
                       [dropdown]="true"
                       [suggestions]="filteredPostal"
                       (completeMethod)="filterPostal($event)"
                       field="cpostMunicipio"
-                      (onSelect)="loadMunicipio()"
+                      (change)="
+                        loadMunicipio(selectedProvincia.provCodProvincia)
+                      "
                     >
                     </p-autoComplete>
                   </div>
@@ -186,8 +195,8 @@
                     <input
                       id="numinscripcion"
                       type="text"
-                      [maxLength]="9"
-                      class="p-inputtext"
+                      [maxLength]="10"
+                      class="p-inputtext inputStyle w-full"
                       formControlName="numinscripcion"
                     />
                   </div>
@@ -202,7 +211,7 @@
                   <div class="w-full">
                     <p-calendar
                       id="feentrada"
-                      styleClass="calender"
+                      class="calenderStyle w-full"
                       [dateFormat]="dateFormat"
                       [showIcon]="true"
                       placeholder="dd/mm/yyyy"
@@ -217,11 +226,11 @@
                   >
                     {{ t('solicitud_de_inscripcion.fecha_baja') }}
                   </label>
-                  <div class="w-full calender-container">
+                  <div class="w-full">
                     <p-calendar
                       id="fbaja"
                       formControlName="fbaja"
-                      styleClass="calender"
+                      class="calenderStyle w-full"
                       placeholder="dd/mm/yyyy"
                       [dateFormat]="dateFormat"
                       [showIcon]="true"
@@ -248,7 +257,7 @@
                   id="email"
                   type="text"
                   [maxLength]="50"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="email"
                 />
               </div>
@@ -265,7 +274,7 @@
                   id="telefono"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="telefono"
                 />
               </div>
@@ -282,7 +291,7 @@
                   id="fax"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="fax"
                 />
               </div>
@@ -317,7 +326,7 @@
                   id="observaciones"
                   type="text"
                   [maxLength]="80"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="observaciones"
                 />
               </div>
@@ -371,7 +380,7 @@
                   formControlName="dirDomicilio"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress ? 'readonly' : ''"
                 />
@@ -389,16 +398,15 @@
                 <p-autoComplete
                   id="dirPro"
                   formControlName="dirPro"
-                  styleClass="dropdown"
+                  class="autoCompleteStyle w-full"
                   [(ngModel)]="selecteddDirProvincia"
                   [dropdown]="true"
                   [suggestions]="filteredProvincia"
                   (completeMethod)="!copyAdress && filterProvincia($event)"
                   field="provDenominacion"
-                  [ngClass]="{ 'disabled-inputs': true }"
-                  [readonly]="true"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [readonly]="copyAdress"
                   [disabled]="true"
-                  (onSelect)="loadMunicipio()"
                 >
                 </p-autoComplete>
               </div>
@@ -414,16 +422,16 @@
                 <p-autoComplete
                   id="dirMun"
                   formControlName="dirMun"
-                  styleClass="dropdown"
+                  class="autoCompleteStyle w-full"
                   [(ngModel)]="selecteddDirMunicipio"
                   [dropdown]="true"
                   [suggestions]="filteredMunicipio"
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
                   (onSelect)="loadCP()"
                   field="muniDenominacion"
-                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [ngClass]="{ 'disabled-inputs': true }"
                   [readonly]="copyAdress"
-                  [disabled]="copyAdress"
+                  [disabled]="true"
                 >
                 </p-autoComplete>
               </div>
@@ -439,7 +447,7 @@
                 <p-autoComplete
                   id="dirCp"
                   formControlName="dirCp"
-                  styleClass="dropdown"
+                  class="autoCompleteStyle w-full"
                   field="cpostMunicipio"
                   [(ngModel)]="selectdircp"
                   [dropdown]="true"
@@ -448,7 +456,7 @@
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
-                  (onSelect)="loadMunicipio()"
+                  (onSelect)="loadMunicipio(selectedProvincia.provCodProvincia)"
                 >
                 </p-autoComplete>
               </div>
@@ -467,7 +475,7 @@
                   id="dirEmail"
                   type="text"
                   [maxLength]="50"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="dirEmail"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress ? 'readonly' : ''"
@@ -486,7 +494,7 @@
                   id="dirTelefono"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="dirTelefono"
                   [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress ? 'readonly' : ''"
@@ -519,7 +527,7 @@
                   id="sNifCif"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sNifCif"
                 />
               </div>
@@ -535,7 +543,7 @@
                   id="sNombre"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sNombre"
                 />
               </div>
@@ -551,7 +559,7 @@
                   id="sApellidos"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sApellidos"
                 />
               </div>
@@ -570,7 +578,7 @@
                   id="sDomicilio"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sDomicilio"
                 />
               </div>
@@ -586,7 +594,7 @@
               <div class="w-full">
                 <p-dropdown
                   id="sCodePro"
-                  styleClass="dropdown"
+                  styleClass="dropdownStyle w-full"
                   [editable]="true"
                   optionLabel="name"
                   placeholder=" "
@@ -604,7 +612,7 @@
               <div class="w-full">
                 <p-dropdown
                   id="sCodMun"
-                  styleClass="dropdown"
+                  styleClass="dropdownStyle w-full"
                   [editable]="true"
                   optionLabel="name"
                   placeholder=" "
@@ -622,7 +630,7 @@
               <div class="w-full">
                 <p-dropdown
                   id="sCP"
-                  styleClass="dropdown"
+                  styleClass="dropdownStyle w-full"
                   [editable]="true"
                   optionLabel="name"
                   placeholder=" "
@@ -644,7 +652,7 @@
                   id="sEmail"
                   type="text"
                   [maxLength]="50"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sEmail"
                 />
               </div>
@@ -661,7 +669,7 @@
                   id="sTelefono"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sTelefono"
                 />
               </div>
@@ -678,7 +686,7 @@
                   id="sFax"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sFax"
                 />
               </div>
@@ -687,7 +695,7 @@
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab formGroupName="entidad">
+      <p-accordionTab formGroupName="representanteLegal">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p>{{ t('solicitud_de_inscripcion.title_tab_4') }}</p>
