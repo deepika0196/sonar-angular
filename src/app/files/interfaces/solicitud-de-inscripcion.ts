@@ -48,3 +48,15 @@ export interface Entidad {
   telefono?: string;
   web?: string;
 }
+
+export interface EntidadFilter {
+  codmun?: string;
+  codpro?: string;
+  cp?: string;
+  denomsocial?: string;
+  fbaja?: string;
+  feentrada?: string;
+  nifcif?: string;
+  numinscripcion?: string;
+  representantesNifcif?: string;
+}

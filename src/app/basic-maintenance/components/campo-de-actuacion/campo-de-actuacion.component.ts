@@ -70,7 +70,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
       field: 'action',
       header: '',
       sortable: false,
-      class: 'table-col-width',
+      class: 'table-col-width-fix',
     },
   ];
   private subscription = new Subject<void>();

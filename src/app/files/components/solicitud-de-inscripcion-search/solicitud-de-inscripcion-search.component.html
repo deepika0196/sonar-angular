@@ -1,0 +1,239 @@
+<div
+  class="mainStyle"
+  style="flex: 0 0 100%"
+  *transloco="let t"
+>
+  <span class="headerStyle">{{ t('solicitudDeInscripcion.title') }}</span>
+  <form [formGroup]="solicitudDeInscripcionForm">
+    <div class="flex flex-row justify-content-between mt-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
+        <label
+          htmlFor="cif"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.cif') }}</label
+        >
+        <input
+          pInputText
+          id="cif"
+          class="inputStyle"
+          aria-describedby="codigo-help"
+          formControlName="cif"
+          maxlength="9"
+        />
+      </div>
+      <div class="flex flex-column gap-1 col-4 md:col-2">
+        <label
+          htmlFor="razonSocial"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.business_name') }}</label
+        >
+        <input
+          pInputText
+          id="razonSocial"
+          class="inputStyle"
+          aria-describedby="deseccion-help"
+          formControlName="razonSocial"
+        />
+      </div>
+      <div class="flex flex-column gap-1 col-2 md:col-1">
+        <label
+          htmlFor="provincia"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.province') }}</label
+        >
+        <p-dropdown
+          [options]="provinciaList"
+          formControlName="provincia"
+          optionLabel="provDenominacion"
+          optionValue="provCodProvincia"
+          [emptyMessage]="t('dropdown.no_result_loaded')"
+          [emptyFilterMessage]="t('dropdown.no_result_loaded')"
+          [filter]="true"
+          filterBy="provDenominacion"
+          [showClear]="true"
+          placeholder="--{{ t('dropdown.placeholder') }}--"
+          class="dropdownStyle"
+          (onChange)="onProvinciaSelected($event.value)"
+        >
+          <ng-template
+            let-item
+            pTemplate="selectedItem"
+          >
+            <div class="flex align-items-center gap-2">
+              <div>{{ item.provDenominacion }}</div>
+            </div>
+          </ng-template>
+          <ng-template
+            let-item
+            pTemplate="item"
+          >
+            <div class="flex align-items-center gap-2">
+              <div>{{ item.provDenominacion }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="flex flex-column gap-1 col-2 md:col-1">
+        <label
+          htmlFor="municipio"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.municipality') }}</label
+        >
+        <p-dropdown
+          [options]="municipioList"
+          formControlName="municipio"
+          optionLabel="muniDenominacion"
+          optionValue="id.muniCodMunicipio"
+          [emptyMessage]="t('dropdown.no_result_loaded')"
+          [emptyFilterMessage]="t('dropdown.no_result_loaded')"
+          [filter]="true"
+          filterBy="name"
+          [showClear]="true"
+          placeholder="--{{ t('dropdown.placeholder') }}--"
+          class="dropdownStyle"
+        >
+          <ng-template
+            let-item
+            pTemplate="selectedItem"
+          >
+            <div class="flex align-items-center gap-2">
+              <div>{{ item.muniDenominacion }}</div>
+            </div>
+          </ng-template>
+          <ng-template
+            let-item
+            pTemplate="item"
+          >
+            <div class="flex align-items-center gap-2">
+              <div>{{ item.muniDenominacion }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="flex flex-column gap-1 col-2 md:col-1">
+        <label
+          htmlFor="nRegistro"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.registration_no') }}</label
+        >
+        <input
+          pInputText
+          id="nRegistro"
+          class="inputStyle"
+          aria-describedby="deseccion-help"
+          formControlName="nRegistro"
+          maxlength="10"
+        />
+      </div>
+    </div>
+    <div class="flex flex-row justify-content-between mt-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
+        <label
+          htmlFor="fechaSolicitud"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.application_date') }}</label
+        >
+        <p-calendar
+          formControlName="fechaSolicitud"
+          [showIcon]="true"
+          class="calenderStyle"
+          [dateFormat]="dateFormat"
+        ></p-calendar>
+      </div>
+      <div class="flex flex-column gap-1 col-2 md:col-1">
+        <span class="pt-3"></span>
+        <span>
+          <label
+            htmlFor="incluirExpedientesBaja"
+            class="labelStyle"
+            >{{ t('solicitudDeInscripcion.include_canceled_files') }}</label
+          >
+        </span>
+      </div>
+      <div class="flex flex-column justify-content-center gap-1 col-1 md:col-1">
+        <span class="pt-3"></span>
+        <span>
+          <p-checkbox
+            incluirExpedientesBaja="incluirExpedientesBaja"
+            [binary]="true"
+            inputId="binary"
+            class="checkboxStyle"
+            (onChange)="onCheckboxChange($event.checked)"
+          ></p-checkbox>
+        </span>
+      </div>
+      <div class="flex flex-column gap-1 col-2 md:col-1">
+        <label
+          htmlFor="fechaBaja"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.low_date') }}</label
+        >
+        <p-calendar
+          formControlName="fechaBaja"
+          [showIcon]="true"
+          class="calenderStyle"
+          [dateFormat]="dateFormat"
+        ></p-calendar>
+      </div>
+      <div class="flex flex-column gap-1 col-3 md:col-1">
+        <label
+          htmlFor="representanteLegal"
+          class="labelStyle"
+          >{{ t('solicitudDeInscripcion.NIF_CIF_legal_representative') }}</label
+        >
+        <input
+          pInputText
+          id="representanteLegal"
+          class="inputStyle"
+          aria-describedby="deseccionVal-help"
+          formControlName="representanteLegal"
+          maxlength="9"
+        />
+      </div>
+      <div class="flex flex-column gap-1 col-2 md:col-2"></div>
+    </div>
+  </form>
+  <div class="flex justify-content-end my-4 mr-2">
+    <gva-button
+      [btnLabel]="t('buttons.search')"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="filterHandler()"
+    >
+      <i class="material-icons iconStyle">search</i>
+    </gva-button>
+    <gva-button
+      [btnLabel]="t('buttons.clear')"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="clearAll()"
+    >
+      <img
+        class="iconStyle"
+        src="assets/images/ink_eraser.svg"
+        alt=""
+      />
+    </gva-button>
+    <gva-button
+      [btnLabel]="t('buttons.add')"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle mr-2'"
+      (btnClick)="onAddHandler()"
+    >
+      <i class="material-icons iconStyle">add</i>
+    </gva-button>
+  </div>
+  <div class="card">
+    <p-toast></p-toast>
+    <generic-table
+      [data]="solicitudDeInscripcions"
+      [columns]="columns"
+      [paginatorConfig]="paginatorConfig"
+      [tableConfig]="tableConfig"
+      (openView)="onViewHandler($event)"
+      (openEdit)="onEditHandler($event)"
+      (openArchive)="onArchiveHandler($event)"
+      (openRestore)="onRestoreHandler($event)"
+    ></generic-table>
+  </div>
+</div>

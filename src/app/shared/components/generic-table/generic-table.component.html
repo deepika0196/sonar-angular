@@ -52,7 +52,22 @@
     >
       <tr>
         <td *ngFor="let column of columns; let ind = index">
-          <div *ngIf="column.field === 'action'">
+          <div
+            *ngIf="column.field === 'action'"
+            class="buttons-right"
+          >
+            <button
+              *ngIf="tableConfig.showView"
+              pButton
+              pRipple
+              type="button"
+              (click)="onView(item)"
+              class="p-button-rounded p-button-text p-0"
+            >
+              <span class="material-icons-outlined iconStyle">
+                visibility
+              </span>
+            </button>
             <button
               *ngIf="tableConfig.showEdit"
               pButton
@@ -60,13 +75,9 @@
               type="button"
               (click)="onEdit(item)"
               [disabled]="tableConfig.disableEdit"
-              class="p-button-rounded p-button-text p-0 mr-2"
+              class="p-button-rounded p-button-text p-0 ml-2"
             >
-              <img
-                src="assets/images/glyphicons-halflings-13-pencil@2x.png"
-                alt="edit"
-                height="20"
-              />
+              <span class="material-icons iconStyle"> edit </span>
             </button>
             <button
               *ngIf="tableConfig.showDelete"
@@ -77,16 +88,40 @@
               [disabled]="tableConfig.disableDelete"
               (click)="onDelete(item)"
             >
-              <img
-                src="assets/images/glyphicons-halflings-7-bin@2x.png"
-                alt="delete"
-                height="20"
-              />
+              <span class="material-icons iconStyle"> delete </span>
+            </button>
+            <button
+              *ngIf="tableConfig.showArchive && item['fbaja'] === null"
+              pButton
+              pRipple
+              type="button"
+              class="p-button-rounded p-button-text p-0 ml-2"
+              (click)="onArchive(item)"
+            >
+              <span class="material-icons iconStyle">archive</span>
+            </button>
+            <button
+              *ngIf="tableConfig.showRestore && item['fbaja'] !== null"
+              pButton
+              pRipple
+              type="button"
+              class="p-button-rounded p-button-text p-0 ml-2"
+              (click)="onRestore(item)"
+            >
+              <span class="material-icons iconStyle"
+                >settings_backup_restore</span
+              >
             </button>
           </div>
-          <span *ngIf="column.field !== 'action'">{{
-            item[column.field]
-          }}</span>
+          <span *ngIf="column.field !== 'action'">
+            <span
+              *ngIf="column.pipe && column.pipe === 'date'; else other_content"
+              >{{ item[column.field] | date : column.pipeFormat }}</span
+            >
+            <ng-template #other_content
+              ><span else>{{ item[column.field] }}</span></ng-template
+            >
+          </span>
         </td>
       </tr>
     </ng-template>
