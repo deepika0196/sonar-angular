@@ -67,7 +67,7 @@
                   type="text"
                   [maxLength]="9"
                   class="p-inputtext inputStyle w-full"
-                  (blur)="fetchDeatails($event)"
+                  (blur)="fetchDetails($event)"
                   formControlName="nifcif"
                 />
               </div>
@@ -149,7 +149,12 @@
                       [dropdown]="true"
                       [suggestions]="filteredMunicipio"
                       (completeMethod)="filterMunicipio($event)"
-                      (onSelect)="loadCP()"
+                      (onSelect)="
+                        loadCP(
+                          selectedMunicipio.id.muniCodProvincia,
+                          selectedMunicipio.id.muniCodMunicipio
+                        )
+                      "
                       field="muniDenominacion"
                     >
                     </p-autoComplete>
@@ -408,7 +413,7 @@
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
                   (onSelect)="
-                    loadMunicipio(selecteddDirProvincia.provCodProvincia)
+                    onProvinciaSelected(selectedProvincia.provCodProvincia)
                   "
                 >
                 </p-autoComplete>
@@ -430,7 +435,12 @@
                   [dropdown]="true"
                   [suggestions]="filteredMunicipio"
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
-                  (onSelect)="loadCP()"
+                  (onSelect)="
+                    loadCP(
+                      this.selecteddDirMunicipio.id.muniCodProvincia,
+                      selecteddDirMunicipio.id.muniCodMunicipio
+                    )
+                  "
                   field="muniDenominacion"
                   [ngClass]="{ 'disabled-inputs': true }"
                   [readonly]="copyAdress"
@@ -698,7 +708,7 @@
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab formGroupName="representanteLegal">
+      <p-accordionTab>
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p>{{ t('solicitud_de_inscripcion.title_tab_4') }}</p>
@@ -708,6 +718,49 @@
           pTemplate="content"
           contentStyle="accordion-content"
         >
+          <app-oficinas></app-oficinas>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.acreditaciones_title') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <app-acreditaciones></app-acreditaciones>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.actualizaciones_title') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <app-actualizaciones></app-actualizaciones>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.documentos_title') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <app-documentos></app-documentos>
         </ng-template>
       </p-accordionTab>
     </form>
