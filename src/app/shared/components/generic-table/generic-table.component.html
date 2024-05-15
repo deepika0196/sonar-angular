@@ -52,7 +52,10 @@
     >
       <tr>
         <td *ngFor="let column of columns; let ind = index">
-          <div *ngIf="column.field === 'action'">
+          <div
+            *ngIf="column.field === 'action'"
+            class="buttons-right"
+          >
             <button
               *ngIf="tableConfig.showEdit"
               pButton
