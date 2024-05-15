@@ -687,16 +687,45 @@
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab formGroupName="entidad">
+      <p-accordionTab>
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
-            <p>{{ t('solicitud_de_inscripcion.title_tab_4') }}</p>
+            <p>{{ t('solicitud_de_inscripcion.acreditaciones_title') }}</p>
           </div>
         </ng-template>
         <ng-template
           pTemplate="content"
           contentStyle="accordion-content"
         >
+          <app-acreditaciones></app-acreditaciones>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.actualizaciones_title') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <app-actualizaciones></app-actualizaciones>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.documentos_title') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <app-documentos></app-documentos>
         </ng-template>
       </p-accordionTab>
     </form>
