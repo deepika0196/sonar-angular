@@ -404,9 +404,12 @@
                   [suggestions]="filteredProvincia"
                   (completeMethod)="!copyAdress && filterProvincia($event)"
                   field="provDenominacion"
-                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [ngClass]="{ 'disabled-inputs': true }"
                   [readonly]="copyAdress"
-                  [disabled]="true"
+                  [disabled]="copyAdress"
+                  (onSelect)="
+                    loadMunicipio(selecteddDirProvincia.provCodProvincia)
+                  "
                 >
                 </p-autoComplete>
               </div>

@@ -44,11 +44,15 @@
   }
   .p-button.p-button-icon-only {
     height: 2.125rem;
-    background-color: white;
+    background-color: var(--white);
     color: var(--light-blue);
     border: 0%;
     border: 0.125rem solid var(--light-grey);
     border-left: none;
+  }
+
+  .p-disabled {
+    background-color: var(--light-grey);
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -35,7 +35,10 @@ import { CIFValidator } from '@app/core/utils/cif-validator';
   styleUrls: ['./solicitud-de-inscripcion.component.css'],
   providers: [MessageService, DialogService, DynamicDialogRef],
 })
-export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
+export class SolicitudDeInscripcionComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
+  registroDeEntidades: string = GlobalConstant.RegistroDeEntidades;
   isValidForm = false;
   isFechaBajaNull = true;
   alertmsg = '';
@@ -74,6 +77,13 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
     private solicituddeCodigoPostalService: SolicituddeCodigoPostalService
   ) {
     this.initializeForm();
+  }
+
+  ngAfterViewInit(): void {
+    this.datosPrincipalesForm.get('notificaciones.addressCopy')?.setValue(true);
+    this.datosPrincipalesForm.get('notificaciones.dirPro')?.disable();
+    this.datosPrincipalesForm.get('notificaciones.dirMun')?.disable();
+    this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
   }
 
   ngOnInit(): void {
@@ -240,7 +250,6 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.provinciaList = data.response;
-          console.log(data.response);
         },
         error: (err: Error) => console.error(err),
       });
@@ -253,7 +262,6 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.municipioList = data.response;
-          console.log('municipioList=', this.municipioList);
         },
         error: (err: Error) => console.error(err),
       });
@@ -269,7 +277,6 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.postalList = data.response;
-          console.log('cp = ', data.response);
         },
         error: (err: Error) => console.error(err),
       });

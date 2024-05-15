@@ -10,6 +10,7 @@ export interface TableConfig {
   sortable: boolean;
   paginator: boolean;
   showDelete?: boolean;
+  columnFilter?: boolean;
   disableDelete?: boolean;
   showEdit?: boolean;
   disableEdit?: boolean;
