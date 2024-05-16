@@ -1,13 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GlobalConstant } from '@app/core/constants/globalConstants';
 import {
   Entidad,
+  EntidadFilter,
   Municipio,
   Provincia,
 } from '@app/files/interfaces/solicitud-de-inscripcion';
@@ -18,7 +16,6 @@ import { AlertDialogComponent } from '@app/shared/components/alert-dialog/alert-
 import {
   ActionButtons,
   GenericDialog,
-  InputField,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
 import { TableColumns } from '@app/shared/components/generic-table/generic-table.component';
 import {
@@ -34,7 +31,7 @@ import { Subject, takeUntil } from 'rxjs';
   selector: 'app-solicitud-de-inscripcion-search',
   templateUrl: './solicitud-de-inscripcion-search.component.html',
   styleUrls: ['./solicitud-de-inscripcion-search.component.scss'],
-  providers: [MessageService, DialogService, DynamicDialogRef],
+  providers: [MessageService, DialogService, DynamicDialogRef, DatePipe],
 })
 export class SolicitudDeInscripcionSearchComponent
   implements OnInit, OnDestroy
@@ -42,10 +39,8 @@ export class SolicitudDeInscripcionSearchComponent
   solicitudDeInscripcions: Entidad[];
   cloneSolicitudDeInscripcionRecords: Entidad[];
 
-  addDialogRef: DynamicDialogRef | undefined;
-  updateDialogRef: DynamicDialogRef | undefined;
-  deleteDialogRef: DynamicDialogRef | undefined;
-  alertDialogRef: DynamicDialogRef | undefined;
+  dialogRef: DynamicDialogRef | undefined;
+  calendarDateFormat = GlobalConstant.ddmmyy;
 
   tableConfig: TableConfig = {
     rows: 10,
@@ -104,7 +99,7 @@ export class SolicitudDeInscripcionSearchComponent
       sortable: true,
       class: 'table-col-width',
       pipe: 'date',
-      pipeFormat: 'dd/MM/yyyy',
+      pipeFormat: GlobalConstant.ddmmyyyy,
     },
     {
       field: 'fbaja',
@@ -112,11 +107,11 @@ export class SolicitudDeInscripcionSearchComponent
       sortable: true,
       class: 'table-col-width',
       pipe: 'date',
-      pipeFormat: 'dd/MM/yyyy',
+      pipeFormat: GlobalConstant.ddmmyyyy,
     },
     {
       field: 'deseccionVal',
-      header: 'solicitudDeInscripcion.NIF/CIF_legal_representative',
+      header: 'solicitudDeInscripcion.NIF_CIF_legal_representative',
       sortable: false,
       class: 'table-col-width',
     },
@@ -128,9 +123,6 @@ export class SolicitudDeInscripcionSearchComponent
     },
   ];
   private subscription = new Subject<void>();
-  date: Date;
-  checked: boolean;
-  disableFechaBaja = true;
   solicitudDeInscripcionForm;
   provinciaList: Provincia[] = [];
   municipioList: Municipio[] = [];
@@ -142,7 +134,8 @@ export class SolicitudDeInscripcionSearchComponent
     private messageService: MessageService,
     private dialogService: DialogService,
     private translocoService: TranslocoService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {
     this.solicitudDeInscripcionForm = new FormGroup({
       cif: new FormControl(null, [Validators.maxLength(9)]),
@@ -152,7 +145,7 @@ export class SolicitudDeInscripcionSearchComponent
       incluirExpedientesBaja: new FormControl(null),
       fechaBaja: new FormControl({
         value: null,
-        disabled: this.disableFechaBaja,
+        disabled: true,
       }),
       provincia: new FormControl(null),
       municipio: new FormControl(null),
@@ -191,10 +184,10 @@ export class SolicitudDeInscripcionSearchComponent
       });
   }
 
-  onProvinciaSelected(selectedProvincia: Provincia) {
+  onProvinciaSelected(selectedProvincia: string) {
     if (selectedProvincia) {
       this.solicitudeMunicipioService
-        .getMunicipio(selectedProvincia.provCodProvincia)
+        .getMunicipio(selectedProvincia)
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: (data) => {
@@ -208,13 +201,12 @@ export class SolicitudDeInscripcionSearchComponent
   }
 
   onCheckboxChange(checked: boolean) {
-    console.log('Ss', checked);
+    const fechaBajaControl = this.solicitudDeInscripcionForm.controls.fechaBaja;
     if (checked) {
-      this.solicitudDeInscripcionForm.controls.fechaBaja.enable();
-      this.disableFechaBaja = false;
+      fechaBajaControl.enable();
     } else {
-      this.solicitudDeInscripcionForm.controls.fechaBaja.disable();
-      this.disableFechaBaja = true;
+      fechaBajaControl.disable();
+      fechaBajaControl.reset();
     }
   }
   clearAll() {
@@ -222,283 +214,95 @@ export class SolicitudDeInscripcionSearchComponent
     this.solicitudDeInscripcions = [...this.cloneSolicitudDeInscripcionRecords];
   }
 
+  convertDateFormat(date: string | null | undefined): string {
+    if (date) {
+      return (
+        this.datePipe.transform(date, GlobalConstant.ddmmyyyyWithHyphen) || ''
+      );
+    }
+    return '';
+  }
+
   filterHandler() {
-    console.log(this.solicitudDeInscripcionForm.value);
-    const values = this.cloneSolicitudDeInscripcionRecords.filter(
-      (obj: Entidad) => {
-        // let result = false;
-        // if (obj.codigo) {
-        //   result = obj.codigo
-        //     .toLowerCase()
-        //     .includes(this.codigo.trim().toLowerCase());
-        // }
-        // if (obj.deseccion) {
-        //   result =
-        //     result &&
-        //     obj.deseccion
-        //       .toLowerCase()
-        //       .includes(this.deseccion.trim().toLowerCase());
-        // }
-        // if (obj.deseccionVal) {
-        //   result =
-        //     result &&
-        //     obj.deseccionVal
-        //       ?.toLowerCase()
-        //       .includes(this.deseccionVal.trim().toLowerCase());
-        // }
-        return false;
-      }
-    );
-    this.solicitudDeInscripcions = [...values];
+    const formValues = this.solicitudDeInscripcionForm.value;
+
+    const feentrada = this.convertDateFormat(formValues.fechaSolicitud);
+    const fbaja = this.convertDateFormat(formValues.fechaBaja);
+
+    const entidadFilterObj: EntidadFilter = {
+      nifcif: formValues.cif || '',
+      denomsocial: formValues.razonSocial || '',
+      codpro: formValues.provincia || '',
+      codmun: formValues.municipio || '',
+      numinscripcion: formValues.nRegistro || '',
+      feentrada,
+      fbaja,
+      representantesNifcif: formValues.representanteLegal || '',
+    };
+    this.solicitudDeInscripcionService
+      .filterSolicitudDeInscripcions(entidadFilterObj)
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {
+          if (data.success) {
+            this.solicitudDeInscripcions = [...data.response];
+          }
+        },
+        error: (err: Error) => console.error(err),
+        complete: () => {},
+      });
   }
 
-  openAddDialog() {
-    // const actionButtons: ActionButtons[] = [
-    //   {
-    //     label: this.translocoService.translate('buttons.save'),
-    //     action: (input: CampoDeActuacion) => {
-    //       this.campoDeActuacionService
-    //         .postCampoDeActuacions(input)
-    //         .pipe(takeUntil(this.subscription))
-    //         .subscribe({
-    //           next: (data) => {
-    //             if (data.success === false && data.errorCode) {
-    //               this.openAlertDialog(
-    //                 this.translocoService.translate('errors.' + data.errorCode),
-    //                 'warn'
-    //               );
-    //             } else {
-    //               this.fetchAllCamposDeActuacion();
-    //               this.addDialogRef?.close();
-    //               this.messageService.add({
-    //                 severity: 'success',
-    //                 summary: this.translocoService.translate(
-    //                   'campoDeActuacion.title'
-    //                 ),
-    //                 detail: this.translocoService.translate(
-    //                   'toast_messages.add_success'
-    //                 ),
-    //               });
-    //             }
-    //           },
-    //           error: (err: Error) => console.error(err),
-    //           complete: () => {},
-    //         });
-    //     },
-    //     validate: (input: CampoDeActuacion) => {
-    //       return Object.values(input).some((x) => x === null || x === '');
-    //     },
-    //     disabled: true,
-    //   },
-    //   {
-    //     label: this.translocoService.translate('buttons.cancel'),
-    //     action: () => {
-    //       this.addDialogRef?.close();
-    //     },
-    //     disabled: false,
-    //   },
-    // ];
-    // const inputFields: InputField[] = [
-    //   {
-    //     label: `${this.translocoService.translate(
-    //       'campoDeActuacion.field_id'
-    //     )}*`,
-    //     required_msg: this.translocoService.translate('required_text'),
-    //     name: 'codigo',
-    //     maxLength: 10,
-    //   },
-    //   {
-    //     label: `${this.translocoService.translate(
-    //       'campoDeActuacion.field_description'
-    //     )}*`,
-    //     required_msg: this.translocoService.translate('required_text'),
-    //     name: 'deseccion',
-    //   },
-    //   {
-    //     label: `${this.translocoService.translate(
-    //       'campoDeActuacion.field_descriptionVal'
-    //     )}*`,
-    //     required_msg: this.translocoService.translate('required_text'),
-    //     name: 'deseccionVal',
-    //   },
-    // ];
-    // const inputValues: CampoDeActuacion = {
-    //   codigo: '',
-    //   deseccion: '',
-    //   deseccionVal: '',
-    // };
-    // const addDialogConfig: GenericDialog = {
-    //   header: this.translocoService.translate('dialog_header.add', {
-    //     title: this.translocoService.translate('campoDeActuacion.title'),
-    //   }),
-    //   width: '50%',
-    //   contentStyle: {
-    //     overflow: 'none',
-    //   },
-    //   closable: false,
-    //   baseZIndex: 10000,
-    //   data: {
-    //     inputValues: inputValues,
-    //     actionButtons: actionButtons,
-    //     inputFields: inputFields,
-    //   },
-    //   styleClass: 'dialogStyle',
-    //   showHeader: true,
-    // };
-    // this.addDialogRef = this.dialogService.open(
-    //   AlertDialogComponent,
-    //   addDialogConfig
-    // );
-  }
-
-  openUpdateDialog(campoDetails: Entidad) {
-    // const updateHandler = (input: CampoDeActuacion) => {
-    //   this.campoDeActuacionService
-    //     .updateCampoDeActuacions(input)
-    //     .pipe(takeUntil(this.subscription))
-    //     .subscribe({
-    //       next: (data) => {
-    //         if (data.success === false && data.errorCode) {
-    //           this.openAlertDialog(
-    //             this.translocoService.translate('errors.' + data.errorCode),
-    //             'warn'
-    //           );
-    //         } else {
-    //           this.fetchAllCamposDeActuacion();
-    //           this.updateDialogRef?.close();
-    //           this.messageService.add({
-    //             severity: 'success',
-    //             summary: this.translocoService.translate(
-    //               'campoDeActuacion.title'
-    //             ),
-    //             detail: this.translocoService.translate(
-    //               'toast_messages.update_success'
-    //             ),
-    //           });
-    //         }
-    //       },
-    //       error: (err: Error) => console.error(err),
-    //       complete: () => {},
-    //     });
-    // };
-    // const actionButtons: ActionButtons[] = [
-    //   {
-    //     label: this.translocoService.translate('buttons.update'),
-    //     action: (input: CampoDeActuacion) => {
-    //       this.openAlertDialog(
-    //         this.translocoService.translate('dialog_content.modify_alert'),
-    //         'confirm',
-    //         updateHandler,
-    //         input
-    //       );
-    //     },
-    //     validate: (input: CampoDeActuacion) => {
-    //       return Object.values(input).some((x) => x === null || x === '');
-    //     },
-    //     disabled: true,
-    //   },
-    //   {
-    //     label: this.translocoService.translate('buttons.cancel'),
-    //     action: () => {
-    //       this.updateDialogRef?.close();
-    //     },
-    //     disabled: false,
-    //   },
-    // ];
-    // const inputFields: InputField[] = [
-    //   {
-    //     label: `${this.translocoService.translate(
-    //       'campoDeActuacion.field_id'
-    //     )}*`,
-    //     required_msg: this.translocoService.translate('required_text'),
-    //     name: 'codigo',
-    //     disabled: true,
-    //   },
-    //   {
-    //     label: `${this.translocoService.translate(
-    //       'campoDeActuacion.field_description'
-    //     )}*`,
-    //     required_msg: this.translocoService.translate('required_text'),
-    //     name: 'deseccion',
-    //   },
-    //   {
-    //     label: `${this.translocoService.translate(
-    //       'campoDeActuacion.field_descriptionVal'
-    //     )}*`,
-    //     required_msg: this.translocoService.translate('required_text'),
-    //     name: 'deseccionVal',
-    //   },
-    // ];
-    // const updateDialogConfig: GenericDialog = {
-    //   header: this.translocoService.translate('dialog_header.update', {
-    //     title: this.translocoService.translate('campoDeActuacion.title'),
-    //   }),
-    //   width: '50%',
-    //   contentStyle: {
-    //     overflow: 'none',
-    //   },
-    //   closable: false,
-    //   baseZIndex: 10000,
-    //   data: {
-    //     inputValues: { ...campoDetails },
-    //     actionButtons: actionButtons,
-    //     inputFields: inputFields,
-    //   },
-    //   styleClass: 'dialogStyle',
-    //   showHeader: true,
-    // };
-    // this.updateDialogRef = this.dialogService.open(
-    //   AlertDialogComponent,
-    //   updateDialogConfig
-    // );
-  }
-
-  onArchiveHandler(campoDetails: Entidad) {
+  /**
+   * Opens a dialog for either archiving or restoring an entity.
+   * @param entidadDetails The details of the entity to be archived or restored.
+   * @param action Specifies whether the action is 'archive' or 'restore'.
+   */
+  openDialog(entidadDetails: Entidad, action: 'archive' | 'restore') {
     const actionButtons: ActionButtons[] = [
       {
         label: this.translocoService.translate('buttons.yes'),
         icon: 'check',
         action: () => {
-          console.log('yes');
-          // this.campoDeActuacionService
-          //   .deleteCampoDeActuacions(campoDetails.codigo)
-          //   .pipe(takeUntil(this.subscription))
-          //   .subscribe({
-          //     next: (data) => {
-          //       if (data.success === false && data.errorCode) {
-          //         this.openAlertDialog(
-          //           this.translocoService.translate('errors.' + data.errorCode),
-          //           'warn'
-          //         );
-          //       } else {
-          //         this.fetchAllCamposDeActuacion();
-          //         this.deleteDialogRef?.close();
-          //         this.messageService.add({
-          //           severity: 'success',
-          //           summary: this.translocoService.translate(
-          //             'campoDeActuacion.title'
-          //           ),
-          //           detail: this.translocoService.translate(
-          //             'toast_messages.delete_success'
-          //           ),
-          //         });
-          //       }
-          //     },
-          //     error: (err: Error) => console.error(err),
-          //     complete: () => {},
-          //   });
+          if (entidadDetails.id)
+            this.solicitudDeInscripcionService[
+              action === 'archive'
+                ? 'archiveSolicitudDeInscripcion'
+                : 'restoreSolicitudDeInscripcion'
+            ](entidadDetails.id)
+              .pipe(takeUntil(this.subscription))
+              .subscribe({
+                next: (data) => {
+                  if (data?.success) {
+                    this.fetchAllSolicitudDeInscripcion();
+                    this.dialogRef?.close();
+                    this.messageService.add({
+                      severity: 'success',
+                      summary: this.translocoService.translate(
+                        'solicitudDeInscripcion.title'
+                      ),
+                      detail: this.translocoService.translate(
+                        `toast_messages.${action}_success`
+                      ),
+                    });
+                  }
+                },
+                error: (err: Error) => console.error(err),
+                complete: () => {},
+              });
         },
         disabled: false,
       },
       {
         label: this.translocoService.translate('buttons.no'),
         action: () => {
-          this.deleteDialogRef?.close();
+          this.dialogRef?.close();
         },
         disabled: false,
       },
     ];
-    const deleteDialogConfig: GenericDialog = {
+
+    const dialogConfig: GenericDialog = {
       width: '40%',
       contentStyle: {
         overflow: 'none',
@@ -510,7 +314,7 @@ export class SolicitudDeInscripcionSearchComponent
       data: {
         actionButtons: actionButtons,
         alertMessage: this.translocoService.translate(
-          'dialog_content.archive_alert'
+          `dialog_content.${action}_alert`
         ),
         headerStyle: {
           icon: 'info',
@@ -519,155 +323,39 @@ export class SolicitudDeInscripcionSearchComponent
         },
       },
     };
-    this.deleteDialogRef = this.dialogService.open(
+
+    this.dialogRef = this.dialogService.open(
       AlertDialogComponent,
-      deleteDialogConfig
+      dialogConfig
     );
   }
-  onRestoreHandler(campoDetails: Entidad) {
-    const actionButtons: ActionButtons[] = [
-      {
-        label: this.translocoService.translate('buttons.yes'),
-        icon: 'check',
-        action: () => {
-          console.log('yes');
-          // this.campoDeActuacionService
-          //   .deleteCampoDeActuacions(campoDetails.codigo)
-          //   .pipe(takeUntil(this.subscription))
-          //   .subscribe({
-          //     next: (data) => {
-          //       if (data.success === false && data.errorCode) {
-          //         this.openAlertDialog(
-          //           this.translocoService.translate('errors.' + data.errorCode),
-          //           'warn'
-          //         );
-          //       } else {
-          //         this.fetchAllCamposDeActuacion();
-          //         this.deleteDialogRef?.close();
-          //         this.messageService.add({
-          //           severity: 'success',
-          //           summary: this.translocoService.translate(
-          //             'campoDeActuacion.title'
-          //           ),
-          //           detail: this.translocoService.translate(
-          //             'toast_messages.delete_success'
-          //           ),
-          //         });
-          //       }
-          //     },
-          //     error: (err: Error) => console.error(err),
-          //     complete: () => {},
-          //   });
-        },
-        disabled: false,
-      },
-      {
-        label: this.translocoService.translate('buttons.no'),
-        action: () => {
-          this.deleteDialogRef?.close();
-        },
-        disabled: false,
-      },
-    ];
-    const deleteDialogConfig: GenericDialog = {
-      width: '40%',
-      contentStyle: {
-        overflow: 'none',
-      },
-      showHeader: false,
-      closable: false,
-      baseZIndex: 10000,
-      styleClass: 'dialogStyle',
-      data: {
-        actionButtons: actionButtons,
-        alertMessage: this.translocoService.translate(
-          'dialog_content.restore_alert'
-        ),
-        headerStyle: {
-          icon: 'info',
-          dialogType: 'confirm',
-          title: this.translocoService.translate('dialog_header.delete'),
-        },
-      },
-    };
-    this.deleteDialogRef = this.dialogService.open(
-      AlertDialogComponent,
-      deleteDialogConfig
-    );
+
+  navigateToSolicitudDeInscripcion(
+    action: 'view' | 'edit' | 'add',
+    entidad?: Entidad
+  ) {
+    const state = entidad ? { cif: entidad.nifcif, action } : { action };
+    this.router.navigate(['/files/solicitudDeInscripcion'], { state });
+  }
+
+  onArchiveHandler(entidadDetails: Entidad) {
+    this.openDialog(entidadDetails, 'archive');
+  }
+
+  onRestoreHandler(entidadDetails: Entidad) {
+    this.openDialog(entidadDetails, 'restore');
   }
 
   onViewHandler(entidad: Entidad) {
-    this.router.navigate(['/files/solicitudDeInscripcion'], {
-      state: { cif: entidad.nifcif, action: 'view' },
-    });
-  }
-  onEditHandler(entidad: Entidad) {
-    this.router.navigate(['/files/solicitudDeInscripcion'], {
-      state: { cif: entidad.nifcif, action: 'edit' },
-    });
+    this.navigateToSolicitudDeInscripcion('view', entidad);
   }
 
-  openAlertDialog(
-    alertMessage: string,
-    dialogType: string,
-    callback?: (input?: any) => void,
-    campoDetails?: Entidad
-  ) {
-    // const actionButtons: ActionButtons[] =
-    //   dialogType === 'confirm'
-    //     ? [
-    //         {
-    //           label: this.translocoService.translate('buttons.yes'),
-    //           icon: 'check',
-    //           action: () => {
-    //             if (callback && campoDetails) callback(campoDetails);
-    //             this.alertDialogRef?.close();
-    //           },
-    //           disabled: false,
-    //         },
-    //         {
-    //           label: this.translocoService.translate('buttons.no'),
-    //           action: () => {
-    //             this.alertDialogRef?.close();
-    //           },
-    //           disabled: false,
-    //         },
-    //       ]
-    //     : [
-    //         {
-    //           label: this.translocoService.translate('buttons.accept'),
-    //           action: () => {
-    //             this.alertDialogRef?.close();
-    //           },
-    //           disabled: false,
-    //         },
-    //       ];
-    // const alertDialogConfig: GenericDialog = {
-    //   width: '40%',
-    //   contentStyle: {
-    //     overflow: 'none',
-    //   },
-    //   showHeader: false,
-    //   baseZIndex: 20000,
-    //   closable: false,
-    //   styleClass: 'dialogStyle',
-    //   data: {
-    //     actionButtons: actionButtons,
-    //     alertMessage: alertMessage,
-    //     headerStyle: {
-    //       icon: dialogType === 'confirm' ? 'info' : 'report_problem',
-    //       dialogType: dialogType,
-    //       title:
-    //         dialogType === 'confirm'
-    //           ? this.translocoService.translate('dialog_header.delete')
-    //           : this.translocoService.translate('dialog_header.alert'),
-    //     },
-    //   },
-    // };
-    // this.alertDialogRef = this.dialogService.open(
-    //   AlertDialogComponent,
-    //   alertDialogConfig
-    // );
+  onEditHandler(entidad: Entidad) {
+    this.navigateToSolicitudDeInscripcion('edit', entidad);
+  }
+
+  onAddHandler() {
+    this.navigateToSolicitudDeInscripcion('add');
   }
 
   ngOnDestroy(): void {

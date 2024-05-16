@@ -69,7 +69,7 @@
                   type="text"
                   [maxLength]="9"
                   class="p-inputtext inputStyle w-full"
-                  (blur)="fetchDeatails($event)"
+                  (blur)="fetchDetails($event)"
                   formControlName="nifcif"
                 />
               </div>
@@ -214,9 +214,9 @@
                     <p-calendar
                       id="feentrada"
                       class="calenderStyle w-full"
-                      [dateFormat]="dateFormat"
+                      [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
-                      placeholder="dd/mm/yyyy"
+                      [placeholder]="calendarDateFormat"
                       formControlName="feentrada"
                     ></p-calendar>
                   </div>
@@ -233,8 +233,8 @@
                       id="fbaja"
                       formControlName="fbaja"
                       class="calenderStyle w-full"
-                      placeholder="dd/mm/yyyy"
-                      [dateFormat]="dateFormat"
+                      [placeholder]="calendarDateFormat"
+                      [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
                       [showOnFocus]="false"
                       readonly
@@ -406,7 +406,7 @@
                   [suggestions]="filteredProvincia"
                   (completeMethod)="!copyAdress && filterProvincia($event)"
                   field="provDenominacion"
-                  [ngClass]="{ 'disabled-inputs': true }"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
                   (onSelect)="
@@ -434,9 +434,9 @@
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
                   (onSelect)="loadCP()"
                   field="muniDenominacion"
-                  [ngClass]="{ 'disabled-inputs': true }"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress"
-                  [disabled]="true"
+                  [disabled]="copyAdress"
                 >
                 </p-autoComplete>
               </div>
@@ -706,7 +706,7 @@
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab formGroupName="representanteLegal">
+      <p-accordionTab>
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p>{{ t('solicitud_de_inscripcion.title_tab_4') }}</p>
@@ -716,6 +716,49 @@
           pTemplate="content"
           contentStyle="accordion-content"
         >
+          <app-oficinas></app-oficinas>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.acreditaciones_title') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <app-acreditaciones></app-acreditaciones>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.actualizaciones_title') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <app-actualizaciones></app-actualizaciones>
+        </ng-template>
+      </p-accordionTab>
+
+      <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex align-items-center">
+            <p>{{ t('solicitud_de_inscripcion.documentos_title') }}</p>
+          </div>
+        </ng-template>
+        <ng-template
+          pTemplate="content"
+          contentStyle="accordion-content"
+        >
+          <app-documentos></app-documentos>
         </ng-template>
       </p-accordionTab>
     </form>

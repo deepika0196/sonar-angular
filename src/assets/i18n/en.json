@@ -43,7 +43,10 @@
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded"
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded",
+    "acreditaciones_title": "Acreditaciones",
+    "actualizaciones_title": "Actualizaciones",
+    "documentos_title": "Documentos"
   },
 
   "campoDeActuacion": {
@@ -69,7 +72,7 @@
     "low_date": "Fecha Baja",
     "province": "Provincia",
     "municipality": "Municipio",
-    "NIF/CIF_legal_representative": "NIF/CIF Representante Legal"
+    "NIF_CIF_legal_representative": "NIF/CIF Representante Legal"
   },
 
   "errors": {
@@ -94,11 +97,22 @@
     "archivar": "File",
     "restaurar": "Restore"
   },
+
+  "tooltip": {
+    "edit": "Edit",
+    "view": "View",
+    "delete": "Delete",
+    "archive": "Archive",
+    "restore": "Restore"
+  },
+
   "toast_messages": {
     "add_success": "Record added",
     "update_success": "Record edited",
     "delete_success": "Record deleted",
-    "invalid_cif": "The NIF/NIE entered is not valid"
+    "invalid_cif": "The NIF/NIE entered is not valid",
+    "archive_success": "Archive",
+    "restore_success": "Restore"
   },
   "dialog_header": {
     "add": "Add {{title}}",

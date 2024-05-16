@@ -1,7 +1,7 @@
 {
   "header": {
-    "signout": "errar sesión",
-    "cambiar_idioma": "Cambiar Idioma"
+    "signout": "Cerrar sesión",
+    "cambiar_idioma": "Canviar idioma"
   },
 
   "menu_items": {
@@ -41,7 +41,7 @@
     "low_date": "Data Baixa",
     "province": "Província",
     "municipality": "Municipi",
-    "NIF/CIF_legal_representative": "NIF/CIF Representant Legal"
+    "NIF_CIF_legal_representative": "NIF/CIF Representant Legal"
   },
   "errors": {
     "REGISTRATION_DUPLICATE_ERROR": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
@@ -65,11 +65,22 @@
     "archivar": "Archivar",
     "restaurar": "Restaurar"
   },
+
+  "tooltip": {
+    "edit": "Editar",
+    "view": "Veure detalls",
+    "delete": "Esborrar",
+    "archive": "Arxivar/Baixa",
+    "restore": "Restaurar"
+  },
+
   "toast_messages": {
     "add_success": "Registre afegit",
     "update_success": "Registre editat",
     "delete_success": "Registre esborrat",
-    "invalid_cif": "El NIF/NIE introduït no és valid."
+    "invalid_cif": "El NIF/NIE introduït no és valid.",
+    "archive_success": "Archivar",
+    "restore_success": "Restaurar"
   },
   "dialog_header": {
     "add": "Afegir {{title}}",
@@ -86,17 +97,17 @@
   },
 
   "solicitud_de_inscripcion": {
-    "title": "Solicitud de Inscripción en el registro",
-    "title_tab_1": "Entidad",
+    "title": "Sollicitud d'Inscripció en el registre",
+    "title_tab_1": "Dades principals de l'empresa",
     "cif": "CIF",
-    "razon_social": "Razón Social",
+    "razon_social": "Raó Social",
     "domicilio_social": "Domicilio Social",
     "provincia": "Provincia ",
     "municipio": "Municipio",
     "c_postal": "C. Postal",
-    "n_registro": "Nº Registro",
-    "feentrada": "Fecha Solicitud de Inscripción ",
-    "fecha_baja": "Fecha Baja",
+    "n_registro": "Núm. Registre",
+    "feentrada": "Data Sol·licitud d'Inscripció",
+    "fecha_baja": "Data Baixa",
     "e-mail": "E-mail",
     "telefono": "Teléfono ",
     "fax": "Fax",
@@ -105,13 +116,16 @@
     "title_tab_2": "Dirección Notificaciones",
     "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
     "domicilio": "Domicilio",
-    "archivar_message": "¿Desea archivar este expediente?",
-    "restaurar_message": "¿Desea restaurar este expediente?",
+    "archivar_message": "Desitja arxivar este expedient",
+    "restaurar_message": "Desitja restaurar este expedient?",
     "title_tab_3": "Representante legal",
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded"
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana expanded",
+    "acreditaciones_title": "Acreditaciones",
+    "actualizaciones_title": "Actualizaciones",
+    "documentos_title": "Documentos"
   },
 
   "dropdown": {

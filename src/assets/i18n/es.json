@@ -1,6 +1,6 @@
 {
   "header": {
-    "signout": "Cerrar sesión",
+    "signout": "errar sesión",
     "cambiar_idioma": "Cambiar Idioma"
   },
 
@@ -41,21 +41,21 @@
     "low_date": "Fecha Baja",
     "province": "Provincia",
     "municipality": "Municipio",
-    "NIF/CIF_legal_representative": "NIF/CIF Representante Legal"
+    "NIF_CIF_legal_representative": "NIF/CIF Representante Legal"
   },
 
   "solicitud_de_inscripcion": {
-    "title": "Sol·licitud d'Inscripció en el registre",
-    "title_tab_1": "es_Dades principals de l'empresa",
+    "title": "Solicitud de Inscripción en el registro",
+    "title_tab_1": "Entidad",
     "cif": "CIF",
-    "razon_social": "Raó Social",
+    "razon_social": "Razón Social",
     "domicilio_social": "Domicilio Social",
     "provincia": "Provincia ",
     "municipio": "Municipio",
     "c_postal": "C. Postal",
-    "n_registro": "Núm. Registre",
-    "feentrada": "Data Sol·licitud d'Inscripció",
-    "fecha_baja": "Data Baixa",
+    "n_registro": "Nº Registro",
+    "feentrada": "Fecha Solicitud de Inscripción ",
+    "fecha_baja": "Fecha Baja",
     "e-mail": "E-mail",
     "telefono": "Teléfono ",
     "fax": "Fax",
@@ -64,13 +64,16 @@
     "title_tab_2": "Dirección Notificaciones",
     "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
     "domicilio": "Domicilio",
-    "archivar_message": "Desitja arxivar este expedient",
-    "restaurar_message": "Desitja restaurar este expedient?",
+    "archivar_message": "¿Desea archivar este expediente?",
+    "restaurar_message": "¿Desea restaurar este expediente?",
     "title_tab_3": "Representante legal",
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana expanded"
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded",
+    "acreditaciones_title": "Acreditaciones",
+    "actualizaciones_title": "Actualizaciones",
+    "documentos_title": "Documentos"
   },
 
   "errors": {
@@ -97,11 +100,21 @@
     "restaurar": "Restaurar"
   },
 
+  "tooltip": {
+    "edit": "Editar",
+    "view": "Ver detalles",
+    "delete": "Borrar",
+    "archive": "Archivar/Baja",
+    "restore": "Restaurar"
+  },
+
   "toast_messages": {
     "add_success": "Registro añadido",
     "update_success": "Registro editado",
     "delete_success": "Registro borrado",
-    "invalid_cif": "El NIF/NIE introducido no es válido."
+    "invalid_cif": "El NIF/NIE introducido no es válido.",
+    "archive_success": "Archivar/Baja",
+    "restore_success": "Restaurar"
   },
 
   "dialog_header": {
