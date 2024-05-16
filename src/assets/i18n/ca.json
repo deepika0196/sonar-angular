@@ -65,6 +65,15 @@
     "archivar": "Archivar",
     "restaurar": "Restaurar"
   },
+
+  "tooltip": {
+    "edit": "Editar",
+    "view": "Veure detalls",
+    "delete": "Esborrar",
+    "archive": "Arxivar/Baixa",
+    "restore": "Restaurar"
+  },
+
   "toast_messages": {
     "add_success": "Registre afegit",
     "update_success": "Registre editat",

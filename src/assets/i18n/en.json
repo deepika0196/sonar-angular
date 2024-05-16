@@ -97,6 +97,15 @@
     "archivar": "File",
     "restaurar": "Restore"
   },
+
+  "tooltip": {
+    "edit": "Edit",
+    "view": "View",
+    "delete": "Delete",
+    "archive": "Archive",
+    "restore": "Restore"
+  },
+
   "toast_messages": {
     "add_success": "Record added",
     "update_success": "Record edited",
