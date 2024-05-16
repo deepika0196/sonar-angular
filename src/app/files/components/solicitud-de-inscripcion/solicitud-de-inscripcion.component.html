@@ -406,7 +406,7 @@
                   [suggestions]="filteredProvincia"
                   (completeMethod)="!copyAdress && filterProvincia($event)"
                   field="provDenominacion"
-                  [ngClass]="{ 'disabled-inputs': true }"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
                   (onSelect)="
@@ -434,9 +434,9 @@
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
                   (onSelect)="loadCP()"
                   field="muniDenominacion"
-                  [ngClass]="{ 'disabled-inputs': true }"
+                  [ngClass]="{ 'disabled-inputs': copyAdress }"
                   [readonly]="copyAdress"
-                  [disabled]="true"
+                  [disabled]="copyAdress"
                 >
                 </p-autoComplete>
               </div>

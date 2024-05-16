@@ -48,7 +48,7 @@ export class SolicitudDeInscripcionComponent
   deleteDialogRef: DynamicDialogRef | undefined;
   alertDialogRef: DynamicDialogRef | undefined;
   numinscripcion = '/ECMCA';
-  calendarDateFormat = GlobalConstant.ddmmyyyy;
+  calendarDateFormat = GlobalConstant.ddmmyy;
 
   postalList: postalCode[] = [];
   filteredPostal: postalCode[] = [];
@@ -136,10 +136,10 @@ export class SolicitudDeInscripcionComponent
         this.datosPrincipalesForm.get('entidad.nifcif')?.value
       )
     ) {
-      this.InformationAction();
+      this.openInvalidCifDialog();
     }
 
-    if (this.datosPrincipalesForm.get('id')?.value == null) {
+    if (!this.datosPrincipalesForm.get('id')?.value) {
       this.solicitudDeInscripcionService
         .createSolicitudDeInscripcion(this.mapFormToBackendData())
         .pipe(takeUntil(this.subscription))
@@ -285,7 +285,7 @@ export class SolicitudDeInscripcionComponent
         this.datosPrincipalesForm.get('entidad.nifcif')?.value
       )
     ) {
-      this.InformationAction();
+      this.openInvalidCifDialog();
     } else {
       this.solicitudDeInscripcionService
         .getByNifCif(cif)
@@ -304,7 +304,7 @@ export class SolicitudDeInscripcionComponent
       (provincia) => provincia.provCodProvincia === response.codpro
     );
 
-    const feentradaValue = this.dateFormconvetor(response.feentrada);
+    const feentradaValue = this.dateFormatConverter(response.feentrada);
     const codmunValue =
       this.municipioList.find(
         (municipio) =>
@@ -344,7 +344,7 @@ export class SolicitudDeInscripcionComponent
     });
   }
 
-  dateFormconvetor(date: string) {
+  dateFormatConverter(date: string) {
     const formattedDate = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
@@ -358,7 +358,7 @@ export class SolicitudDeInscripcionComponent
     return formattedDate;
   }
 
-  InformationAction() {
+  openInvalidCifDialog() {
     const actionButtons: ActionButtons[] = [
       {
         label: this.translocoService.translate('buttons.accept'),
