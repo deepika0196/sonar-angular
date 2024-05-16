@@ -31,6 +31,18 @@
     "field_description": "Descripción castellano",
     "field_descriptionVal": "Descripción valenciano"
   },
+  "solicitudDeInscripcion": {
+    "title": "Búsqueda de entidades",
+    "business_name": "Razón Social",
+    "cif": "CIF",
+    "registration_no": "Nº Registro",
+    "application_date": "Fecha Solicitud",
+    "include_canceled_files": "Incluir expedientes dados de baja",
+    "low_date": "Fecha Baja",
+    "province": "Provincia",
+    "municipality": "Municipio",
+    "NIF_CIF_legal_representative": "NIF/CIF Representante Legal"
+  },
 
   "solicitud_de_inscripcion": {
     "title": "Sol·licitud d'Inscripció en el registre",
@@ -88,10 +100,20 @@
     "restaurar": "Restaurar"
   },
 
+  "tooltip": {
+    "edit": "Editar",
+    "view": "Ver detalles",
+    "delete": "Borrar",
+    "archive": "Archivar/Baja",
+    "restore": "Restaurar"
+  },
+
   "toast_messages": {
     "add_success": "Registro añadido",
     "update_success": "Registro editado",
-    "delete_success": "Registro borrado"
+    "delete_success": "Registro borrado",
+    "archive_success": "Archivar/Baja",
+    "restore_success": "Restaurar"
   },
 
   "dialog_header": {
@@ -103,7 +125,14 @@
 
   "dialog_content": {
     "delete_alert": "¿Desea borrar definitivamente este registro?",
-    "modify_alert": "¿Desea guardar los cambios realizados ?"
+    "modify_alert": "¿Desea guardar los cambios realizados ?",
+    "archive_alert": "¿Desea archivar este expediente?",
+    "restore_alert": "¿Desea restaurar este expediente?"
+  },
+
+  "dropdown": {
+    "placeholder": "Seleccionar",
+    "no_result_loaded": "No se pueden mostrar los resultados"
   },
 
   "title": "es_Exemple dús",

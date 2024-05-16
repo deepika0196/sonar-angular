@@ -55,7 +55,7 @@ export class HeaderService {
             label: this.translocoService.translate(
               'menu_items.sub_menu.solicitud_de_inscripcion'
             ),
-            routerLink: ['/files/solicitudDeInscripcion'],
+            routerLink: ['/files/solicitudDeInscripcionSearch'],
             routerLinkActiveOptions: { exact: true },
           },
         ],

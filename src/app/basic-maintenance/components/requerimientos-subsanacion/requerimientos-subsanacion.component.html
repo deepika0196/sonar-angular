@@ -52,7 +52,7 @@
   </div>
   <div class="d-flex justify-content-end my-4 mr-2">
     <gva-button
-      [btnLabel]="'buttons.search'"
+      [btnLabel]="t('buttons.search')"
       [iconPosition]="'left'"
       [btnClass]="'actionStyle mr-2'"
       (btnClick)="filterHandler()"
@@ -60,7 +60,7 @@
       <span class="material-icons iconStyle">search</span>
     </gva-button>
     <gva-button
-      [btnLabel]="'buttons.clear'"
+      [btnLabel]="t('buttons.clear')"
       [iconPosition]="'left'"
       [btnClass]="'actionStyle mr-2'"
       (btnClick)="clearAll()"
@@ -72,7 +72,7 @@
       />
     </gva-button>
     <gva-button
-      [btnLabel]="'buttons.add'"
+      [btnLabel]="t('buttons.add')"
       [iconPosition]="'left'"
       [btnClass]="'actionStyle mr-2'"
       [btnDisabled]="true"
