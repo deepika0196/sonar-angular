@@ -13,8 +13,15 @@ import {
   providedIn: 'root',
 })
 export class SolicitudDeInscripcionService extends CommonService {
-  postSolicitudDeInscripcion(entidadDetials: Entidad) {
+  createSolicitudDeInscripcion(entidadDetials: Entidad) {
     return this._arqHttpClient.post<CustomResponse<Entidad>>(
+      this.urlBuilder(UrlEndpoints.reccaEntidades),
+      entidadDetials
+    );
+  }
+
+  updateSolicitudDeInscripcion(entidadDetials: Entidad) {
+    return this._arqHttpClient.put<CustomResponse<Entidad>>(
       this.urlBuilder(UrlEndpoints.reccaEntidades),
       entidadDetials
     );

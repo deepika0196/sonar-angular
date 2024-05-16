@@ -32,7 +32,7 @@ export const environment = {
     },
     name: 'prototipo-backend',
     host: 'localhost.gva.es',
-    hostDynamic: 'http://localhost:8081/ecmca-backend',
+    hostDynamic: 'http://item-s119796:8081/ecmca-backend',
   },
   locale: {
     default: 'ca',

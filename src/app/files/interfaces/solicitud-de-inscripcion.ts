@@ -23,12 +23,12 @@ export interface postalCode {
   };
 }
 export interface Entidad {
-  id?: number;
+  id: number;
   codidfiscal?: string;
   codmun?: string;
   codpro?: string;
   cp?: string;
-  denomsocial?: string; //Razón Social
+  denomsocial?: string;
   dirCodmun?: string;
   dirCodpro?: string;
   dirCp?: string;
@@ -36,13 +36,13 @@ export interface Entidad {
   dirEmail?: string;
   dirFax?: string;
   dirTelefono?: string;
-  domsocial?: string; //Domicilio Social
+  domsocial?: string;
   email?: string;
   fax?: string;
-  fbaja?: Date;
-  feentrada?: Date;
-  nifcif?: string; //cif
-  numinscripcion?: string; // Nº Registro
+  fbaja?: string;
+  feentrada?: string;
+  nifcif?: string;
+  numinscripcion?: string;
   observaciones?: string;
   publicaWeb?: string;
   telefono?: string;

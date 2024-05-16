@@ -110,6 +110,7 @@
     "add_success": "Record added",
     "update_success": "Record edited",
     "delete_success": "Record deleted",
+    "invalid_cif": "The NIF/NIE entered is not valid",
     "archive_success": "Archive",
     "restore_success": "Restore"
   },
