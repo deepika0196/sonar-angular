@@ -48,7 +48,7 @@ export class SolicitudDeInscripcionComponent
   deleteDialogRef: DynamicDialogRef | undefined;
   alertDialogRef: DynamicDialogRef | undefined;
   numinscripcion = '/ECMCA';
-  dateFormat = GlobalConstant.ddmmyyyy;
+  calendarDateFormat = GlobalConstant.ddmmyyyy;
 
   postalList: postalCode[] = [];
   filteredPostal: postalCode[] = [];

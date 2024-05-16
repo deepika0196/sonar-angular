@@ -100,11 +100,21 @@
     "restaurar": "Restaurar"
   },
 
+  "tooltip": {
+    "edit": "Editar",
+    "view": "Ver detalles",
+    "delete": "Borrar",
+    "archive": "Archivar/Baja",
+    "restore": "Restaurar"
+  },
+
   "toast_messages": {
     "add_success": "Registro añadido",
     "update_success": "Registro editado",
     "delete_success": "Registro borrado",
-    "invalid_cif": "El NIF/NIE introducido no es válido."
+    "invalid_cif": "El NIF/NIE introducido no es válido.",
+    "archive_success": "Archivar/Baja",
+    "restore_success": "Restaurar"
   },
 
   "dialog_header": {

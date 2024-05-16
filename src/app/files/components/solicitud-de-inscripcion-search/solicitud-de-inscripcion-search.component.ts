@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -30,7 +31,7 @@ import { Subject, takeUntil } from 'rxjs';
   selector: 'app-solicitud-de-inscripcion-search',
   templateUrl: './solicitud-de-inscripcion-search.component.html',
   styleUrls: ['./solicitud-de-inscripcion-search.component.scss'],
-  providers: [MessageService, DialogService, DynamicDialogRef],
+  providers: [MessageService, DialogService, DynamicDialogRef, DatePipe],
 })
 export class SolicitudDeInscripcionSearchComponent
   implements OnInit, OnDestroy
@@ -38,9 +39,8 @@ export class SolicitudDeInscripcionSearchComponent
   solicitudDeInscripcions: Entidad[];
   cloneSolicitudDeInscripcionRecords: Entidad[];
 
-  archiveDialogRef: DynamicDialogRef | undefined;
-  restoreDialogRef: DynamicDialogRef | undefined;
-  dateFormat = GlobalConstant.ddmmyyyy;
+  dialogRef: DynamicDialogRef | undefined;
+  calendarDateFormat = GlobalConstant.ddmmyy;
 
   tableConfig: TableConfig = {
     rows: 10,
@@ -99,7 +99,7 @@ export class SolicitudDeInscripcionSearchComponent
       sortable: true,
       class: 'table-col-width',
       pipe: 'date',
-      pipeFormat: 'dd/MM/yyyy',
+      pipeFormat: GlobalConstant.ddmmyyyy,
     },
     {
       field: 'fbaja',
@@ -107,7 +107,7 @@ export class SolicitudDeInscripcionSearchComponent
       sortable: true,
       class: 'table-col-width',
       pipe: 'date',
-      pipeFormat: 'dd/MM/yyyy',
+      pipeFormat: GlobalConstant.ddmmyyyy,
     },
     {
       field: 'deseccionVal',
@@ -123,9 +123,6 @@ export class SolicitudDeInscripcionSearchComponent
     },
   ];
   private subscription = new Subject<void>();
-  date: Date;
-  checked: boolean;
-  disableFechaBaja = true;
   solicitudDeInscripcionForm;
   provinciaList: Provincia[] = [];
   municipioList: Municipio[] = [];
@@ -137,7 +134,8 @@ export class SolicitudDeInscripcionSearchComponent
     private messageService: MessageService,
     private dialogService: DialogService,
     private translocoService: TranslocoService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
   ) {
     this.solicitudDeInscripcionForm = new FormGroup({
       cif: new FormControl(null, [Validators.maxLength(9)]),
@@ -147,7 +145,7 @@ export class SolicitudDeInscripcionSearchComponent
       incluirExpedientesBaja: new FormControl(null),
       fechaBaja: new FormControl({
         value: null,
-        disabled: this.disableFechaBaja,
+        disabled: true,
       }),
       provincia: new FormControl(null),
       municipio: new FormControl(null),
@@ -203,13 +201,12 @@ export class SolicitudDeInscripcionSearchComponent
   }
 
   onCheckboxChange(checked: boolean) {
+    const fechaBajaControl = this.solicitudDeInscripcionForm.controls.fechaBaja;
     if (checked) {
-      this.solicitudDeInscripcionForm.controls.fechaBaja.enable();
-      this.disableFechaBaja = false;
+      fechaBajaControl.enable();
     } else {
-      this.solicitudDeInscripcionForm.controls.fechaBaja.disable();
-      this.solicitudDeInscripcionForm.get('fechaBaja')?.reset();
-      this.disableFechaBaja = true;
+      fechaBajaControl.disable();
+      fechaBajaControl.reset();
     }
   }
   clearAll() {
@@ -217,44 +214,37 @@ export class SolicitudDeInscripcionSearchComponent
     this.solicitudDeInscripcions = [...this.cloneSolicitudDeInscripcionRecords];
   }
 
-  convertDateFormat(date: string | null | undefined) {
+  convertDateFormat(date: string | null | undefined): string {
     if (date) {
-      const today = new Date(date);
-      const yyyy = today.getFullYear();
-      const mm = today.getMonth() + 1; // Months start at 0!
-      const dd = today.getDate();
-      let month = mm.toString();
-      let day = dd.toString();
-      if (dd < 10) day = '0' + dd.toString();
-      if (mm < 10) month = '0' + mm.toString();
-
-      return day + '-' + month + '-' + yyyy.toString();
+      return (
+        this.datePipe.transform(date, GlobalConstant.ddmmyyyyWithHyphen) || ''
+      );
     }
     return '';
   }
 
   filterHandler() {
+    const formValues = this.solicitudDeInscripcionForm.value;
+
+    const feentrada = this.convertDateFormat(formValues.fechaSolicitud);
+    const fbaja = this.convertDateFormat(formValues.fechaBaja);
+
     const entidadFilterObj: EntidadFilter = {
-      nifcif: this.solicitudDeInscripcionForm.value.cif || '',
-      denomsocial: this.solicitudDeInscripcionForm.value.razonSocial || '',
-      codpro: this.solicitudDeInscripcionForm.value.provincia || '',
-      codmun: this.solicitudDeInscripcionForm.value.municipio || '',
-      numinscripcion: this.solicitudDeInscripcionForm.value.nRegistro || '',
-      feentrada: this.convertDateFormat(
-        this.solicitudDeInscripcionForm.value.fechaSolicitud
-      ),
-      fbaja: this.convertDateFormat(
-        this.solicitudDeInscripcionForm.value.fechaBaja
-      ),
-      representantesNifcif:
-        this.solicitudDeInscripcionForm.value.representanteLegal || '',
+      nifcif: formValues.cif || '',
+      denomsocial: formValues.razonSocial || '',
+      codpro: formValues.provincia || '',
+      codmun: formValues.municipio || '',
+      numinscripcion: formValues.nRegistro || '',
+      feentrada,
+      fbaja,
+      representantesNifcif: formValues.representanteLegal || '',
     };
     this.solicitudDeInscripcionService
       .filterSolicitudDeInscripcions(entidadFilterObj)
       .pipe(takeUntil(this.subscription))
       .subscribe({
         next: (data) => {
-          if (data.success === true) {
+          if (data.success) {
             this.solicitudDeInscripcions = [...data.response];
           }
         },
@@ -263,164 +253,109 @@ export class SolicitudDeInscripcionSearchComponent
       });
   }
 
-  onAddHandler() {
-    this.router.navigate(['/files/solicitudDeInscripcion'], {
-      state: { action: 'add' },
-    });
+  /**
+   * Opens a dialog for either archiving or restoring an entity.
+   * @param entidadDetails The details of the entity to be archived or restored.
+   * @param action Specifies whether the action is 'archive' or 'restore'.
+   */
+  openDialog(entidadDetails: Entidad, action: 'archive' | 'restore') {
+    const actionButtons: ActionButtons[] = [
+      {
+        label: this.translocoService.translate('buttons.yes'),
+        icon: 'check',
+        action: () => {
+          if (entidadDetails.id)
+            this.solicitudDeInscripcionService[
+              action === 'archive'
+                ? 'archiveSolicitudDeInscripcion'
+                : 'restoreSolicitudDeInscripcion'
+            ](entidadDetails.id)
+              .pipe(takeUntil(this.subscription))
+              .subscribe({
+                next: (data) => {
+                  if (data?.success) {
+                    this.fetchAllSolicitudDeInscripcion();
+                    this.dialogRef?.close();
+                    this.messageService.add({
+                      severity: 'success',
+                      summary: this.translocoService.translate(
+                        'solicitudDeInscripcion.title'
+                      ),
+                      detail: this.translocoService.translate(
+                        `toast_messages.${action}_success`
+                      ),
+                    });
+                  }
+                },
+                error: (err: Error) => console.error(err),
+                complete: () => {},
+              });
+        },
+        disabled: false,
+      },
+      {
+        label: this.translocoService.translate('buttons.no'),
+        action: () => {
+          this.dialogRef?.close();
+        },
+        disabled: false,
+      },
+    ];
+
+    const dialogConfig: GenericDialog = {
+      width: '40%',
+      contentStyle: {
+        overflow: 'none',
+      },
+      showHeader: false,
+      closable: false,
+      baseZIndex: 10000,
+      styleClass: 'dialogStyle',
+      data: {
+        actionButtons: actionButtons,
+        alertMessage: this.translocoService.translate(
+          `dialog_content.${action}_alert`
+        ),
+        headerStyle: {
+          icon: 'info',
+          dialogType: 'confirm',
+          title: this.translocoService.translate('dialog_header.delete'),
+        },
+      },
+    };
+
+    this.dialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      dialogConfig
+    );
+  }
+
+  navigateToSolicitudDeInscripcion(
+    action: 'view' | 'edit' | 'add',
+    entidad?: Entidad
+  ) {
+    const state = entidad ? { cif: entidad.nifcif, action } : { action };
+    this.router.navigate(['/files/solicitudDeInscripcion'], { state });
   }
 
   onArchiveHandler(entidadDetails: Entidad) {
-    const actionButtons: ActionButtons[] = [
-      {
-        label: this.translocoService.translate('buttons.yes'),
-        icon: 'check',
-        action: () => {
-          if (entidadDetails.id)
-            this.solicitudDeInscripcionService
-              .archiveSolicitudDeInscripcion(entidadDetails.id)
-              .pipe(takeUntil(this.subscription))
-              .subscribe({
-                next: (data) => {
-                  if (data.success === false && data.errorCode) {
-                    // this.openAlertDialog(
-                    //   this.translocoService.translate('errors.' + data.errorCode),
-                    //   'warn'
-                    // );
-                  } else {
-                    this.fetchAllSolicitudDeInscripcion();
-                    this.archiveDialogRef?.close();
-                    this.messageService.add({
-                      severity: 'success',
-                      summary: this.translocoService.translate(
-                        'campoDeActuacion.title'
-                      ),
-                      detail: this.translocoService.translate(
-                        'toast_messages.delete_success'
-                      ),
-                    });
-                  }
-                },
-                error: (err: Error) => console.error(err),
-                complete: () => {},
-              });
-        },
-        disabled: false,
-      },
-      {
-        label: this.translocoService.translate('buttons.no'),
-        action: () => {
-          this.archiveDialogRef?.close();
-        },
-        disabled: false,
-      },
-    ];
-    const archiveDialogConfig: GenericDialog = {
-      width: '40%',
-      contentStyle: {
-        overflow: 'none',
-      },
-      showHeader: false,
-      closable: false,
-      baseZIndex: 10000,
-      styleClass: 'dialogStyle',
-      data: {
-        actionButtons: actionButtons,
-        alertMessage: this.translocoService.translate(
-          'dialog_content.archive_alert'
-        ),
-        headerStyle: {
-          icon: 'info',
-          dialogType: 'confirm',
-          title: this.translocoService.translate('dialog_header.delete'),
-        },
-      },
-    };
-    this.archiveDialogRef = this.dialogService.open(
-      AlertDialogComponent,
-      archiveDialogConfig
-    );
+    this.openDialog(entidadDetails, 'archive');
   }
+
   onRestoreHandler(entidadDetails: Entidad) {
-    const actionButtons: ActionButtons[] = [
-      {
-        label: this.translocoService.translate('buttons.yes'),
-        icon: 'check',
-        action: () => {
-          if (entidadDetails.id)
-            this.solicitudDeInscripcionService
-              .restoreSolicitudDeInscripcion(entidadDetails.id)
-              .pipe(takeUntil(this.subscription))
-              .subscribe({
-                next: (data) => {
-                  if (data.success === false && data.errorCode) {
-                    // this.openAlertDialog(
-                    //   this.translocoService.translate('errors.' + data.errorCode),
-                    //   'warn'
-                    // );
-                  } else {
-                    this.fetchAllSolicitudDeInscripcion();
-                    this.restoreDialogRef?.close();
-                    this.messageService.add({
-                      severity: 'success',
-                      summary: this.translocoService.translate(
-                        'campoDeActuacion.title'
-                      ),
-                      detail: this.translocoService.translate(
-                        'toast_messages.delete_success'
-                      ),
-                    });
-                  }
-                },
-                error: (err: Error) => console.error(err),
-                complete: () => {},
-              });
-        },
-        disabled: false,
-      },
-      {
-        label: this.translocoService.translate('buttons.no'),
-        action: () => {
-          this.restoreDialogRef?.close();
-        },
-        disabled: false,
-      },
-    ];
-    const restoreDialogConfig: GenericDialog = {
-      width: '40%',
-      contentStyle: {
-        overflow: 'none',
-      },
-      showHeader: false,
-      closable: false,
-      baseZIndex: 10000,
-      styleClass: 'dialogStyle',
-      data: {
-        actionButtons: actionButtons,
-        alertMessage: this.translocoService.translate(
-          'dialog_content.restore_alert'
-        ),
-        headerStyle: {
-          icon: 'info',
-          dialogType: 'confirm',
-          title: this.translocoService.translate('dialog_header.delete'),
-        },
-      },
-    };
-    this.restoreDialogRef = this.dialogService.open(
-      AlertDialogComponent,
-      restoreDialogConfig
-    );
+    this.openDialog(entidadDetails, 'restore');
   }
 
   onViewHandler(entidad: Entidad) {
-    this.router.navigate(['/files/solicitudDeInscripcion'], {
-      state: { cif: entidad.nifcif, action: 'view' },
-    });
+    this.navigateToSolicitudDeInscripcion('view', entidad);
   }
+
   onEditHandler(entidad: Entidad) {
-    this.router.navigate(['/files/solicitudDeInscripcion'], {
-      state: { cif: entidad.nifcif, action: 'edit' },
-    });
+    this.navigateToSolicitudDeInscripcion('edit', entidad);
+  }
+
+  onAddHandler() {
+    this.navigateToSolicitudDeInscripcion('add');
   }
 
   ngOnDestroy(): void {

@@ -214,9 +214,9 @@
                     <p-calendar
                       id="feentrada"
                       class="calenderStyle w-full"
-                      [dateFormat]="dateFormat"
+                      [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
-                      [placeholder]="dateFormat"
+                      [placeholder]="calendarDateFormat"
                       formControlName="feentrada"
                     ></p-calendar>
                   </div>
@@ -233,8 +233,8 @@
                       id="fbaja"
                       formControlName="fbaja"
                       class="calenderStyle w-full"
-                      [placeholder]="dateFormat"
-                      [dateFormat]="dateFormat"
+                      [placeholder]="calendarDateFormat"
+                      [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
                       [showOnFocus]="false"
                       readonly
