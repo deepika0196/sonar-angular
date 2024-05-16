@@ -43,7 +43,10 @@
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded"
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded",
+    "acreditaciones_title": "Acreditaciones",
+    "actualizaciones_title": "Actualizaciones",
+    "documentos_title": "Documentos"
   },
 
   "campoDeActuacion": {
@@ -94,6 +97,15 @@
     "archivar": "File",
     "restaurar": "Restore"
   },
+
+  "tooltip": {
+    "edit": "Edit",
+    "view": "View",
+    "delete": "Delete",
+    "archive": "Archive",
+    "restore": "Restore"
+  },
+
   "toast_messages": {
     "add_success": "Record added",
     "update_success": "Record edited",
