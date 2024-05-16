@@ -7,7 +7,7 @@
     </div>
     <div class="col-6 justify-content-end d-flex">
       <gva-button
-        [btnLabel]="'buttons.back'"
+        [btnLabel]="t('buttons.back')"
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
       >
@@ -15,7 +15,7 @@
       </gva-button>
 
       <gva-button
-        [btnLabel]="'buttons.save'"
+        [btnLabel]="t('buttons.save')"
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
         [btnDisabled]="!isValidForm"
@@ -25,7 +25,9 @@
       </gva-button>
 
       <gva-button
-        [btnLabel]="isFechaBajaNull ? 'buttons.archivar' : 'buttons.restaurar'"
+        [btnLabel]="
+          isFechaBajaNull ? t('buttons.archivar') : t('buttons.restaurar')
+        "
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
         (btnClick)="updateFechaBaja()"
@@ -149,12 +151,7 @@
                       [dropdown]="true"
                       [suggestions]="filteredMunicipio"
                       (completeMethod)="filterMunicipio($event)"
-                      (onSelect)="
-                        loadCP(
-                          selectedMunicipio.id.muniCodProvincia,
-                          selectedMunicipio.id.muniCodMunicipio
-                        )
-                      "
+                      (onSelect)="loadCP()"
                       field="muniDenominacion"
                     >
                     </p-autoComplete>
@@ -219,7 +216,7 @@
                       class="calenderStyle w-full"
                       [dateFormat]="dateFormat"
                       [showIcon]="true"
-                      placeholder="dd/mm/yyyy"
+                      [placeholder]="dateFormat"
                       formControlName="feentrada"
                     ></p-calendar>
                   </div>
@@ -236,7 +233,7 @@
                       id="fbaja"
                       formControlName="fbaja"
                       class="calenderStyle w-full"
-                      placeholder="dd/mm/yyyy"
+                      [placeholder]="dateFormat"
                       [dateFormat]="dateFormat"
                       [showIcon]="true"
                       [showOnFocus]="false"
@@ -413,7 +410,7 @@
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
                   (onSelect)="
-                    onProvinciaSelected(selectedProvincia.provCodProvincia)
+                    loadMunicipio(selecteddDirProvincia.provCodProvincia)
                   "
                 >
                 </p-autoComplete>
@@ -435,12 +432,7 @@
                   [dropdown]="true"
                   [suggestions]="filteredMunicipio"
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
-                  (onSelect)="
-                    loadCP(
-                      this.selecteddDirMunicipio.id.muniCodProvincia,
-                      selecteddDirMunicipio.id.muniCodMunicipio
-                    )
-                  "
+                  (onSelect)="loadCP()"
                   field="muniDenominacion"
                   [ngClass]="{ 'disabled-inputs': true }"
                   [readonly]="copyAdress"

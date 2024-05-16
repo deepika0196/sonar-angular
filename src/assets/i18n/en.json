@@ -72,7 +72,7 @@
     "low_date": "Fecha Baja",
     "province": "Provincia",
     "municipality": "Municipio",
-    "NIF/CIF_legal_representative": "NIF/CIF Representante Legal"
+    "NIF_CIF_legal_representative": "NIF/CIF Representante Legal"
   },
 
   "errors": {
@@ -112,7 +112,9 @@
 
   "dialog_content": {
     "delete_alert": "Do you want to permanently delete this record?",
-    "modify_alert": "Do you want to save the changes you made?"
+    "modify_alert": "Do you want to save the changes you made?",
+    "archive_alert": "Do you want to archive this file?",
+    "restore_alert": "Do you want to restore this file?"
   },
 
   "dropdown": {

@@ -41,7 +41,7 @@
     "low_date": "Data Baixa",
     "province": "Província",
     "municipality": "Municipi",
-    "NIF/CIF_legal_representative": "NIF/CIF Representant Legal"
+    "NIF_CIF_legal_representative": "NIF/CIF Representant Legal"
   },
   "errors": {
     "REGISTRATION_DUPLICATE_ERROR": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
@@ -80,7 +80,9 @@
 
   "dialog_content": {
     "delete_alert": "Desitja esborrar definitivament este registre?",
-    "modify_alert": "Desitja guardar els canvis realitzats ?"
+    "modify_alert": "Desitja guardar els canvis realitzats ?",
+    "archive_alert": "Desitja arxivar este expedient?",
+    "restore_alert": "Desitja restaurar este expedient?"
   },
 
   "solicitud_de_inscripcion": {

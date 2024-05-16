@@ -5,8 +5,8 @@
 >
   <span class="headerStyle">{{ t('solicitudDeInscripcion.title') }}</span>
   <form [formGroup]="solicitudDeInscripcionForm">
-    <div class="d-flex flex-row justify-content-between mt-2">
-      <div class="d-flex flex-column gap-1 col-2">
+    <div class="flex flex-row justify-content-between mt-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
         <label
           htmlFor="cif"
           class="labelStyle"
@@ -21,7 +21,7 @@
           maxlength="9"
         />
       </div>
-      <div class="d-flex flex-column gap-1 col-4">
+      <div class="flex flex-column gap-1 col-4 md:col-2">
         <label
           htmlFor="razonSocial"
           class="labelStyle"
@@ -35,7 +35,7 @@
           formControlName="razonSocial"
         />
       </div>
-      <div class="d-flex flex-column gap-1 col-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
         <label
           htmlFor="provincia"
           class="labelStyle"
@@ -45,6 +45,9 @@
           [options]="provinciaList"
           formControlName="provincia"
           optionLabel="provDenominacion"
+          optionValue="provCodProvincia"
+          [emptyMessage]="t('dropdown.no_result_loaded')"
+          [emptyFilterMessage]="t('dropdown.no_result_loaded')"
           [filter]="true"
           filterBy="provDenominacion"
           [showClear]="true"
@@ -70,7 +73,7 @@
           </ng-template>
         </p-dropdown>
       </div>
-      <div class="d-flex flex-column gap-1 col-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
         <label
           htmlFor="municipio"
           class="labelStyle"
@@ -80,6 +83,9 @@
           [options]="municipioList"
           formControlName="municipio"
           optionLabel="muniDenominacion"
+          optionValue="id.muniCodMunicipio"
+          [emptyMessage]="t('dropdown.no_result_loaded')"
+          [emptyFilterMessage]="t('dropdown.no_result_loaded')"
           [filter]="true"
           filterBy="name"
           [showClear]="true"
@@ -104,7 +110,7 @@
           </ng-template>
         </p-dropdown>
       </div>
-      <div class="d-flex flex-column gap-1 col-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
         <label
           htmlFor="nRegistro"
           class="labelStyle"
@@ -120,8 +126,8 @@
         />
       </div>
     </div>
-    <div class="d-flex flex-row justify-content-between mt-2">
-      <div class="d-flex flex-column gap-1 col-2">
+    <div class="flex flex-row justify-content-between mt-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
         <label
           htmlFor="fechaSolicitud"
           class="labelStyle"
@@ -131,9 +137,10 @@
           formControlName="fechaSolicitud"
           [showIcon]="true"
           class="calenderStyle"
+          [dateFormat]="dateFormat"
         ></p-calendar>
       </div>
-      <div class="d-flex flex-column gap-1 col-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
         <span class="pt-3"></span>
         <span>
           <label
@@ -141,14 +148,21 @@
             class="labelStyle"
             >{{ t('solicitudDeInscripcion.include_canceled_files') }}</label
           >
+        </span>
+      </div>
+      <div class="flex flex-column justify-content-center gap-1 col-1 md:col-1">
+        <span class="pt-3"></span>
+        <span>
           <p-checkbox
             incluirExpedientesBaja="incluirExpedientesBaja"
             [binary]="true"
             inputId="binary"
+            class="checkboxStyle"
+            (onChange)="onCheckboxChange($event.checked)"
           ></p-checkbox>
         </span>
       </div>
-      <div class="d-flex flex-column gap-1 col-2">
+      <div class="flex flex-column gap-1 col-2 md:col-1">
         <label
           htmlFor="fechaBaja"
           class="labelStyle"
@@ -158,13 +172,14 @@
           formControlName="fechaBaja"
           [showIcon]="true"
           class="calenderStyle"
+          [dateFormat]="dateFormat"
         ></p-calendar>
       </div>
-      <div class="d-flex flex-column gap-1 col-2">
+      <div class="flex flex-column gap-1 col-3 md:col-1">
         <label
           htmlFor="representanteLegal"
           class="labelStyle"
-          >{{ t('solicitudDeInscripcion.NIF/CIF_legal_representative') }}</label
+          >{{ t('solicitudDeInscripcion.NIF_CIF_legal_representative') }}</label
         >
         <input
           pInputText
@@ -175,12 +190,12 @@
           maxlength="9"
         />
       </div>
-      <div class="d-flex flex-column gap-1 col-4"></div>
+      <div class="flex flex-column gap-1 col-2 md:col-2"></div>
     </div>
   </form>
-  <div class="d-flex justify-content-end my-4 mr-2">
+  <div class="flex justify-content-end my-4 mr-2">
     <gva-button
-      [btnLabel]="'buttons.search'"
+      [btnLabel]="t('buttons.search')"
       [iconPosition]="'left'"
       [btnClass]="'actionStyle mr-2'"
       (btnClick)="filterHandler()"
@@ -188,7 +203,7 @@
       <i class="material-icons iconStyle">search</i>
     </gva-button>
     <gva-button
-      [btnLabel]="'buttons.clear'"
+      [btnLabel]="t('buttons.clear')"
       [iconPosition]="'left'"
       [btnClass]="'actionStyle mr-2'"
       (btnClick)="clearAll()"
@@ -200,10 +215,10 @@
       />
     </gva-button>
     <gva-button
-      [btnLabel]="'buttons.add'"
+      [btnLabel]="t('buttons.add')"
       [iconPosition]="'left'"
       [btnClass]="'actionStyle mr-2'"
-      (btnClick)="openAddDialog()"
+      (btnClick)="onAddHandler()"
     >
       <i class="material-icons iconStyle">add</i>
     </gva-button>
@@ -217,8 +232,8 @@
       [tableConfig]="tableConfig"
       (openView)="onViewHandler($event)"
       (openEdit)="onEditHandler($event)"
-      (openArchive)="onDeleteHandler($event)"
-      (openRestore)="onDeleteHandler($event)"
+      (openArchive)="onArchiveHandler($event)"
+      (openRestore)="onRestoreHandler($event)"
     ></generic-table>
   </div>
 </div>

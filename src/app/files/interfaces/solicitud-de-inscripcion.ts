@@ -23,7 +23,7 @@ export interface postalCode {
   };
 }
 export interface Entidad {
-  id?: number;
+  id: number;
   codidfiscal?: string;
   codmun?: string;
   codpro?: string;
@@ -47,4 +47,16 @@ export interface Entidad {
   publicaWeb?: string;
   telefono?: string;
   web?: string;
+}
+
+export interface EntidadFilter {
+  codmun?: string;
+  codpro?: string;
+  cp?: string;
+  denomsocial?: string;
+  fbaja?: string;
+  feentrada?: string;
+  nifcif?: string;
+  numinscripcion?: string;
+  representantesNifcif?: string;
 }

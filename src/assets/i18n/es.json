@@ -41,7 +41,7 @@
     "low_date": "Fecha Baja",
     "province": "Provincia",
     "municipality": "Municipio",
-    "NIF/CIF_legal_representative": "NIF/CIF Representante Legal"
+    "NIF_CIF_legal_representative": "NIF/CIF Representante Legal"
   },
 
   "solicitud_de_inscripcion": {
@@ -116,7 +116,9 @@
 
   "dialog_content": {
     "delete_alert": "¿Desea borrar definitivamente este registro?",
-    "modify_alert": "¿Desea guardar los cambios realizados ?"
+    "modify_alert": "¿Desea guardar los cambios realizados ?",
+    "archive_alert": "¿Desea archivar este expediente?",
+    "restore_alert": "¿Desea restaurar este expediente?"
   },
 
   "dropdown": {

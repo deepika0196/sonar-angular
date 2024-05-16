@@ -63,20 +63,71 @@
   }
 }
 
+.dropdownStyle .p-dropdown:not([disabled]):hover,
+.dropdownStyle .p-dropdown:not([disabled]):focus {
+  border: 0.125rem solid var(--dark-blue) !important;
+}
+
 .calenderStyle {
   .p-calendar {
     height: 2.125rem;
     border: 0.125rem solid var(--light-grey);
+
     .p-inputtext,
     .p-datepicker-trigger {
       border-radius: 0%;
       border-color: var(--light-grey);
       border-left: 0rem;
     }
+
     .p-datepicker-trigger.p-button {
       background-color: var(--blue);
     }
+
+    .p-datepicker table td {
+      padding: 0.2rem !important;
+    }
+
+    .p-datepicker table td > span {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+
+    .p-datepicker table {
+      font-size: 10pt;
+      margin: -0.143rem 0;
+    }
+
+    .p-datepicker .p-datepicker-header {
+      padding: 0.2rem;
+    }
   }
+}
+
+.calenderStyle:not([disabled]):hover,
+.calenderStyle:not([disabled]):focus {
+  .p-calendar:not(.p-calendar-disabled) {
+    border: 0.125rem solid var(--dark-blue) !important;
+  }
+  .p-calendar:not(.p-calendar-disabled) .p-inputtext,
+  .p-calendar:not(.p-calendar-disabled) .p-datepicker-trigger {
+    border: none;
+  }
+}
+
+.checkboxStyle .p-checkbox .p-checkbox-box {
+  border-color: var(--light-grey);
+}
+
+.checkboxStyle .p-checkbox .p-checkbox-box.p-highlight,
+.checkboxStyle .p-checkbox .p-checkbox-box.p-highlight:not([disabled]):hover {
+  background: var(--blue) !important;
+}
+.checkboxStyle .p-checkbox .p-checkbox-box:not([disabled]):hover,
+.checkboxStyle .p-checkbox .p-checkbox-box:not([disabled]):focus,
+.checkboxStyle .p-checkbox.p-checkbox-focused .p-checkbox-box.p-focus,
+.checkboxStyle .p-checkbox .p-checkbox-box.p-highlight {
+  border-color: var(--dark-blue) !important;
 }
 
 .table-col-width {

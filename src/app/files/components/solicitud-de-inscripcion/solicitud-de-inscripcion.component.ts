@@ -28,6 +28,7 @@ import {
   GenericDialog,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
 import { CIFValidator } from '@app/core/utils/cif-validator';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-solicitud-de-inscripcion',
@@ -43,7 +44,6 @@ export class SolicitudDeInscripcionComponent
   isFechaBajaNull = true;
   alertmsg = '';
   copyAdress: boolean;
-  entidadData: Entidad = {};
   datosPrincipalesForm: FormGroup;
   deleteDialogRef: DynamicDialogRef | undefined;
   alertDialogRef: DynamicDialogRef | undefined;
@@ -74,7 +74,8 @@ export class SolicitudDeInscripcionComponent
     private solicitudProvinciaService: SolicitudeProvinciaService,
     private solicitudeMunicipioService: SolicitudeMunicipioService,
     private solicitudDeInscripcionService: SolicitudDeInscripcionService,
-    private solicituddeCodigoPostalService: SolicituddeCodigoPostalService
+    private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
+    private location: Location
   ) {
     this.initializeForm();
   }
@@ -88,7 +89,6 @@ export class SolicitudDeInscripcionComponent
 
   ngOnInit(): void {
     this.copyAdress = true;
-
     this.datosPrincipalesForm
       .get('notificaciones.addressCopy')
       ?.valueChanges.pipe(takeUntil(this.subscription))
@@ -138,15 +138,13 @@ export class SolicitudDeInscripcionComponent
     ) {
       this.InformationAction();
     }
-    console.log(this.mapFormToBackendData());
+
     if (this.datosPrincipalesForm.get('id')?.value == null) {
       this.solicitudDeInscripcionService
         .createSolicitudDeInscripcion(this.mapFormToBackendData())
         .pipe(takeUntil(this.subscription))
         .subscribe({
-          next: (data) => {
-            console.log(data);
-          },
+          next: (data) => {},
           error: (err: Error) => console.error(err),
         });
     } else {
@@ -154,9 +152,7 @@ export class SolicitudDeInscripcionComponent
         .updateSolicitudDeInscripcion(this.mapFormToBackendData())
         .pipe(takeUntil(this.subscription))
         .subscribe({
-          next: (data) => {
-            console.log(data);
-          },
+          next: (data) => {},
           error: (err: Error) => console.error(err),
         });
     }
@@ -210,7 +206,6 @@ export class SolicitudDeInscripcionComponent
     const formValue = this.datosPrincipalesForm.value;
     const entidad = formValue.entidad;
     const notificaciones = formValue.notificaciones;
-    console.log('fbag]ja ', entidad.fbaja);
     const publicaWeValue = entidad.publicaWeb ? 'Y' : 'N';
 
     const mappedData = {
@@ -231,7 +226,7 @@ export class SolicitudDeInscripcionComponent
       email: entidad.email,
       fax: entidad.fax,
       fbaja: entidad.fbaja,
-      feentrada: entidad.feentrada.toISOString().split('T')[0],
+      feentrada: entidad.feentrada.toISOString().split('T')[0] || '',
       nifcif: entidad.nifcif,
       numinscripcion: entidad.numinscripcion,
       observaciones: entidad.observaciones,
@@ -282,9 +277,9 @@ export class SolicitudDeInscripcionComponent
       });
   }
 
-  fetchDeatails(event: Event) {
+  fetchDetails(event: Event) {
     const cif = (event.target as HTMLInputElement).value;
-    console.log('cif = ', cif);
+
     if (
       !CIFValidator.esNifNieCifValido(
         this.datosPrincipalesForm.get('entidad.nifcif')?.value
@@ -297,7 +292,6 @@ export class SolicitudDeInscripcionComponent
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: (data) => {
-            console.log(data);
             this.patchValue(data.response);
           },
           error: (err: Error) => console.error(err),
@@ -309,15 +303,14 @@ export class SolicitudDeInscripcionComponent
     const codproValue = this.provinciaList.find(
       (provincia) => provincia.provCodProvincia === response.codpro
     );
-    this.loadMunicipio(response.codpro);
+
+    const feentradaValue = this.dateFormconvetor(response.feentrada);
     const codmunValue =
       this.municipioList.find(
         (municipio) =>
           municipio.id.muniCodMunicipio === response.codmun &&
           municipio.id.muniCodProvincia === response.codpro
       ) || null;
-
-    console.log(response.codmun, '===', response.codpro);
 
     const publicaWebValue = response.publicaWeb === 'Y' ? true : false;
     this.datosPrincipalesForm.patchValue({
@@ -330,7 +323,7 @@ export class SolicitudDeInscripcionComponent
         codmun: codmunValue || '',
         cp: response.cp,
         numinscripcion: response.numinscripcion,
-        feentrada: response.feentrada,
+        feentrada: feentradaValue,
         fbaja: response.fbaja,
         email: response.email,
         telefono: response.telefono,
@@ -349,6 +342,20 @@ export class SolicitudDeInscripcionComponent
         dirTelefono: response.dirTelefono,
       },
     });
+  }
+
+  dateFormconvetor(date: string) {
+    const formattedDate = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    };
+    const formattedDateString = formattedDate.toLocaleDateString(
+      'en-US',
+      options
+    );
+    return formattedDate;
   }
 
   InformationAction() {
