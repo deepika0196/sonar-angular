@@ -77,7 +77,9 @@
   "toast_messages": {
     "add_success": "Registre afegit",
     "update_success": "Registre editat",
-    "delete_success": "Registre esborrat"
+    "delete_success": "Registre esborrat",
+    "archive_success": "Archivar",
+    "restore_success": "Restaurar"
   },
   "dialog_header": {
     "add": "Afegir {{title}}",
