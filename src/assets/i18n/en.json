@@ -109,7 +109,9 @@
   "toast_messages": {
     "add_success": "Record added",
     "update_success": "Record edited",
-    "delete_success": "Record deleted"
+    "delete_success": "Record deleted",
+    "archive_success": "Archive",
+    "restore_success": "Restore"
   },
   "dialog_header": {
     "add": "Add {{title}}",

@@ -111,7 +111,9 @@
   "toast_messages": {
     "add_success": "Registro añadido",
     "update_success": "Registro editado",
-    "delete_success": "Registro borrado"
+    "delete_success": "Registro borrado",
+    "archive_success": "Archivar/Baja",
+    "restore_success": "Restaurar"
   },
 
   "dialog_header": {
