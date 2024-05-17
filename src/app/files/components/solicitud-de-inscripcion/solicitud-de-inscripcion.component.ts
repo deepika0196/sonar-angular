@@ -89,9 +89,7 @@ export class SolicitudDeInscripcionComponent
     this.datosPrincipalesForm.get('notificaciones.dirPro')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirMun')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
-    if (this.readOnlyMode) {
-      console.log(' Make commplete form read only .....');
-    }
+    this.setFormReadOnly(this.readOnlyMode);
   }
   ngOnInit(): void {
     this.copyAdress = true;
@@ -138,6 +136,13 @@ export class SolicitudDeInscripcionComponent
       });
   }
 
+  setFormReadOnly(isReadOnly: boolean) {
+    if (isReadOnly) {
+      this.datosPrincipalesForm.disable();
+    } else {
+      this.datosPrincipalesForm.enable();
+    }
+  }
   checkMode(mode: string) {
     if (mode == 'view') {
       this.readOnlyMode = true;
