@@ -10,6 +10,7 @@
         [btnLabel]="t('buttons.back')"
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
+        (btnClick)="perviousScreen()"
       >
         <span class="material-icons iconStyle"> arrow_back </span>
       </gva-button>
@@ -20,6 +21,7 @@
         [btnClass]="'actionStyle mr-2'"
         [btnDisabled]="!isValidForm"
         (btnClick)="onSubmit()"
+        [hidden]="readOnlyMode"
       >
         <span class="material-icons iconStyle"> save </span>
       </gva-button>
@@ -31,6 +33,7 @@
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
         (btnClick)="updateFechaBaja()"
+        [hidden]="readOnlyMode"
       >
         <span class="material-icons iconStyle"> save </span>
       </gva-button>
@@ -67,9 +70,9 @@
                 <input
                   id="nifcif"
                   type="text"
-                  [maxLength]="9"
                   class="p-inputtext inputStyle w-full"
-                  (blur)="fetchDetails($event)"
+                  [maxLength]="9"
+                  (blur)="fetchDetails(cifNif)"
                   formControlName="nifcif"
                 />
               </div>

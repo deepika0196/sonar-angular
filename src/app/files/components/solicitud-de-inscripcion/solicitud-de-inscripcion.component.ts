@@ -15,6 +15,7 @@ import {
   Entidad,
   Municipio,
   Provincia,
+  State,
   postalCode,
 } from '@app/files/interfaces/solicitud-de-inscripcion';
 import { SolicitudDeInscripcionService } from '@app/files/services/solicitud-de-inscripcion.service';
@@ -29,6 +30,7 @@ import {
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
 import { CIFValidator } from '@app/core/utils/cif-validator';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-solicitud-de-inscripcion',
@@ -39,7 +41,8 @@ import { Location } from '@angular/common';
 export class SolicitudDeInscripcionComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  registroDeEntidades: string = GlobalConstant.RegistroDeEntidades;
+  initialFormValue = {};
+
   isValidForm = false;
   isFechaBajaNull = true;
   alertmsg = '';
@@ -64,9 +67,9 @@ export class SolicitudDeInscripcionComponent
   selectedProvincia: Provincia;
   selecteddDirProvincia: Provincia;
   filteredProvincia: Provincia[] = [];
-
+  cifNif = '';
+  readOnlyMode: boolean;
   private subscription = new Subject<void>();
-
   constructor(
     private fb: FormBuilder,
     private translocoService: TranslocoService,
@@ -75,7 +78,8 @@ export class SolicitudDeInscripcionComponent
     private solicitudeMunicipioService: SolicitudeMunicipioService,
     private solicitudDeInscripcionService: SolicitudDeInscripcionService,
     private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {
     this.initializeForm();
   }
@@ -85,49 +89,62 @@ export class SolicitudDeInscripcionComponent
     this.datosPrincipalesForm.get('notificaciones.dirPro')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirMun')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
+    if (this.readOnlyMode) {
+      console.log(' Make commplete form read only .....');
+    }
   }
-
   ngOnInit(): void {
     this.copyAdress = true;
-    this.datosPrincipalesForm
-      .get('notificaciones.addressCopy')
-      ?.valueChanges.pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (value) => {
+    this.setupFormChangeSubscriptions();
+    this.loadProvincia();
+    const state: State = this.location.getState() as State;
+    this.checkMode(state.action);
+    if (state.cif) {
+      this.fetchDetails(state.cif);
+    }
+  }
+
+  private setupFormChangeSubscriptions(): void {
+    const addressCopyControl = this.datosPrincipalesForm.get(
+      'notificaciones.addressCopy'
+    );
+    if (addressCopyControl) {
+      addressCopyControl.valueChanges
+        .pipe(takeUntil(this.subscription))
+        .subscribe((value) => {
+          this.copyAdress = value;
           if (value) {
-            this.copyAdress = value;
             this.copyAddressFieldsOfEntidadData();
           } else {
-            this.copyAdress = false;
             this.clearNotificacioneFields();
           }
-        },
-        error: (err: Error) => console.error(err),
-      });
+        });
+    }
 
     this.datosPrincipalesForm
       .get('entidad')
       ?.valueChanges.pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          this.isValidForm =
-            this.datosPrincipalesForm.get('entidad')?.valid ?? false;
-          this.copyAddressFieldsOfEntidadData();
-        },
-        error: (err: Error) => console.error(err),
+      .subscribe(() => {
+        this.isValidForm =
+          this.datosPrincipalesForm.get('entidad')?.valid ?? false;
+        this.copyAddressFieldsOfEntidadData();
       });
 
     this.datosPrincipalesForm
       .get('entidad.fbaja')
       ?.valueChanges.pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (value) => {
-          this.isValidForm = this.isFechaBajaNull = value === null;
-        },
-        error: (err: Error) => console.error(err),
+      .subscribe((value) => {
+        this.isValidForm = this.isFechaBajaNull = value === null;
       });
+  }
 
-    this.loadProvincia();
+  checkMode(mode: string) {
+    if (mode == 'view') {
+      this.readOnlyMode = true;
+    } else {
+      this.readOnlyMode = false;
+    }
+    return mode;
   }
 
   onSubmit() {
@@ -137,24 +154,13 @@ export class SolicitudDeInscripcionComponent
       )
     ) {
       this.openInvalidCifDialog();
+      return;
     }
 
     if (!this.datosPrincipalesForm.get('id')?.value) {
-      this.solicitudDeInscripcionService
-        .createSolicitudDeInscripcion(this.mapFormToBackendData())
-        .pipe(takeUntil(this.subscription))
-        .subscribe({
-          next: (data) => {},
-          error: (err: Error) => console.error(err),
-        });
+      this.createSolicitud();
     } else {
-      this.solicitudDeInscripcionService
-        .updateSolicitudDeInscripcion(this.mapFormToBackendData())
-        .pipe(takeUntil(this.subscription))
-        .subscribe({
-          next: (data) => {},
-          error: (err: Error) => console.error(err),
-        });
+      this.updateSolicitud();
     }
   }
 
@@ -206,36 +212,69 @@ export class SolicitudDeInscripcionComponent
     const formValue = this.datosPrincipalesForm.value;
     const entidad = formValue.entidad;
     const notificaciones = formValue.notificaciones;
-    const publicaWeValue = entidad.publicaWeb ? 'Y' : 'N';
 
-    const mappedData = {
-      id: formValue.id,
+    const publicaWeValue = entidad && entidad.publicaWeb ? 'Y' : 'N';
+    const mappedData: Entidad = {
+      id: formValue.id || null,
       codidfiscal: '',
-      codmun: this.selectedMunicipio.id.muniCodMunicipio || '',
-      cp: this.selectedPostal.id.cpostCodPostal || '',
-      codpro: this.selectedProvincia.provCodProvincia || '',
-      denomsocial: entidad.denomsocial,
-      dirCodmun: this.selecteddDirMunicipio.id.muniCodMunicipio || '',
-      dirCp: this.selectdircp.id.cpostCodPostal || '',
-      dirCodpro: this.selecteddDirProvincia.provCodProvincia || '',
-      dirDomicilio: notificaciones.dirDomicilio,
-      dirEmail: notificaciones.dirEmail,
-      dirFax: notificaciones.dirFax,
-      dirTelefono: notificaciones.dirTelefono,
-      domsocial: entidad.domsocial,
-      email: entidad.email,
-      fax: entidad.fax,
-      fbaja: entidad.fbaja,
-      feentrada: entidad.feentrada.toISOString().split('T')[0] || '',
-      nifcif: entidad.nifcif,
-      numinscripcion: entidad.numinscripcion,
-      observaciones: entidad.observaciones,
+      codmun: entidad?.codmun ? entidad?.codmun.id.muniCodMunicipio : '',
+      cp: entidad?.cp ? entidad?.cp.id.cpostCodPostal : '',
+      codpro: entidad?.codpro ? entidad?.codpro.provCodProvincia : '',
+      denomsocial: entidad?.denomsocial || '',
+      dirCodmun: notificaciones?.dirCodmun
+        ? notificaciones.dirCodmun.id.muniCodMunicipio
+        : '',
+      dirCp: notificaciones?.dirCp
+        ? notificaciones.dirCp.id.cpostCodPostal
+        : '',
+      dirCodpro: notificaciones?.dirCodpro
+        ? notificaciones.dirCodpro.provCodProvincia
+        : '',
+      dirDomicilio: notificaciones.dirDomicilio || '',
+      dirEmail: notificaciones.dirEmail || '',
+      dirFax: notificaciones.dirFax || '',
+      dirTelefono: notificaciones.dirTelefono || '',
+      domsocial: entidad?.domsocial || '',
+      email: entidad?.email || '',
+      fax: entidad?.fax || '',
+      fbaja: entidad?.fbaja || '',
+      feentrada: entidad?.feentrada
+        ? entidad.feentrada.toISOString().split('T')[0]
+        : '',
+      nifcif: entidad?.nifcif || '',
+      numinscripcion: entidad?.numinscripcion || '',
+      observaciones: entidad?.observaciones || '',
       publicaWeb: publicaWeValue,
-      telefono: entidad.telefono,
+      telefono: entidad?.telefono || '',
       web: '',
     };
 
     return mappedData;
+  }
+
+  updateSolicitud() {
+    this.solicitudDeInscripcionService
+      .updateSolicitudDeInscripcion(this.mapFormToBackendData())
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {},
+        error: (err: Error) => console.error(err),
+        complete: () => {
+          this.router.navigate(['/files/solicitudDeInscripcionSearch']);
+        },
+      });
+  }
+  createSolicitud() {
+    this.solicitudDeInscripcionService
+      .createSolicitudDeInscripcion(this.mapFormToBackendData())
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {},
+        error: (err: Error) => console.error(err),
+        complete: () => {
+          this.router.navigate(['/files/solicitudDeInscripcionSearch']);
+        },
+      });
   }
 
   loadProvincia() {
@@ -277,18 +316,12 @@ export class SolicitudDeInscripcionComponent
       });
   }
 
-  fetchDetails(event: Event) {
-    const cif = (event.target as HTMLInputElement).value;
-
-    if (
-      !CIFValidator.esNifNieCifValido(
-        this.datosPrincipalesForm.get('entidad.nifcif')?.value
-      )
-    ) {
+  fetchDetails(cifNif: string) {
+    if (!CIFValidator.esNifNieCifValido(cifNif)) {
       this.openInvalidCifDialog();
     } else {
       this.solicitudDeInscripcionService
-        .getByNifCif(cif)
+        .getByNifCif(cifNif)
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: (data) => {
@@ -303,9 +336,6 @@ export class SolicitudDeInscripcionComponent
     const codproValue = this.provinciaList.find(
       (provincia) => provincia.provCodProvincia === response.codpro
     );
-    this.datosPrincipalesForm.get('')?.setValue(codproValue);
-
-    this.loadMunicipio(response.codpro);
 
     const feentradaValue = this.dateFormatConverter(response.feentrada);
     const codmunValue =
@@ -315,16 +345,15 @@ export class SolicitudDeInscripcionComponent
           municipio.id.muniCodProvincia === response.codpro
       ) || null;
 
-    console.log(response.codmun, '===', response.codpro);
     this.datosPrincipalesForm.get('entidad.codpro')?.setValue(codproValue);
     const publicaWebValue = response.publicaWeb === 'Y' ? true : false;
     this.datosPrincipalesForm.patchValue({
-      id: response.id,
+      id: response.id || null,
       entidad: {
         nifcif: response.nifcif,
         denomsocial: response.denomsocial,
         domsocial: response.domsocial,
-        codpro: codproValue,
+        codpro: codproValue || '',
         codmun: codmunValue || '',
         cp: response.cp,
         numinscripcion: response.numinscripcion,
@@ -489,6 +518,10 @@ export class SolicitudDeInscripcionComponent
       dirEmail: '',
       dirTelefono: '',
     });
+  }
+
+  perviousScreen() {
+    this.router.navigate(['/files/solicitudDeInscripcionSearch']);
   }
 
   filterProvincia(event: any) {

@@ -60,3 +60,9 @@ export interface EntidadFilter {
   numinscripcion?: string;
   representantesNifcif?: string;
 }
+
+export interface State {
+  cif: string;
+  action: string;
+  navigationId: number;
+}

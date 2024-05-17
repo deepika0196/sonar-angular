@@ -38,8 +38,6 @@
     height: 2.125rem;
     font-size: 1rem;
     border-radius: 0%;
-    align-items: center;
-    width: 100%;
     border-right: none;
   }
   .p-button.p-button-icon-only {
@@ -53,6 +51,9 @@
 
   .p-disabled {
     background-color: var(--light-grey);
+  }
+  .p-inputtext:enabled:hover {
+    border-color: var(--black);
   }
 }
 
