@@ -10,6 +10,7 @@
         [btnLabel]="t('buttons.back')"
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
+        (btnClick)="perviousScreen()"
       >
         <span class="material-icons iconStyle"> arrow_back </span>
       </gva-button>
@@ -20,6 +21,7 @@
         [btnClass]="'actionStyle mr-2'"
         [btnDisabled]="!isValidForm"
         (btnClick)="onSubmit()"
+        [hidden]="readOnlyMode"
       >
         <span class="material-icons iconStyle"> save </span>
       </gva-button>
@@ -31,6 +33,7 @@
         [iconPosition]="'left'"
         [btnClass]="'actionStyle mr-2'"
         (btnClick)="updateFechaBaja()"
+        [hidden]="readOnlyMode"
       >
         <span class="material-icons iconStyle"> save </span>
       </gva-button>
@@ -40,7 +43,15 @@
   <p-accordion
     class="accordion"
     [activeIndex]="0"
-    ><form [formGroup]="datosPrincipalesForm">
+    ><form
+      [formGroup]="datosPrincipalesForm"
+      [ngClass]="{ 'disabled-form': true }"
+    >
+      <input
+        id="id"
+        type="hidden"
+        formControlName="id"
+      />
       <p-accordionTab formGroupName="entidad">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
@@ -62,10 +73,11 @@
                 <input
                   id="nifcif"
                   type="text"
+                  class="p-inputtext inputStyle w-full"
                   [maxLength]="9"
-                  class="p-inputtext"
-                  (blur)="fetchDeatails($event)"
+                  (blur)="fetchDetails(cifNif)"
                   formControlName="nifcif"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -80,8 +92,9 @@
                   id="denomsocial"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="denomsocial"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -96,8 +109,9 @@
                   id="domsocial"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="domsocial"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -117,13 +131,16 @@
                     <p-autoComplete
                       id="codpro"
                       formControlName="codpro"
-                      styleClass="dropdown"
+                      class="autoCompleteStyle"
                       [(ngModel)]="selectedProvincia"
                       [dropdown]="true"
                       [suggestions]="filteredProvincia"
                       (completeMethod)="filterProvincia($event)"
+                      (onSelect)="
+                        loadMunicipio(selectedProvincia.provCodProvincia)
+                      "
                       field="provDenominacion"
-                      (onSelect)="loadMunicipio()"
+                      [ngClass]="readOnlyMode ? 'disabled' : ''"
                     >
                     </p-autoComplete>
                   </div>
@@ -139,13 +156,14 @@
                     <p-autoComplete
                       id="codmun"
                       formControlName="codmun"
-                      styleClass="dropdown"
+                      class="autoCompleteStyle"
                       [(ngModel)]="selectedMunicipio"
                       [dropdown]="true"
                       [suggestions]="filteredMunicipio"
                       (completeMethod)="filterMunicipio($event)"
                       (onSelect)="loadCP()"
                       field="muniDenominacion"
+                      [ngClass]="readOnlyMode ? 'disabled' : ''"
                     >
                     </p-autoComplete>
                   </div>
@@ -161,13 +179,16 @@
                     <p-autoComplete
                       id="cp"
                       formControlName="cp"
-                      styleClass="dropdown"
+                      class="autoCompleteStyle"
                       [(ngModel)]="selectedPostal"
                       [dropdown]="true"
                       [suggestions]="filteredPostal"
                       (completeMethod)="filterPostal($event)"
                       field="cpostMunicipio"
-                      (onSelect)="loadMunicipio()"
+                      (change)="
+                        loadMunicipio(selectedProvincia.provCodProvincia)
+                      "
+                      [ngClass]="readOnlyMode ? 'disabled' : ''"
                     >
                     </p-autoComplete>
                   </div>
@@ -188,9 +209,10 @@
                     <input
                       id="numinscripcion"
                       type="text"
-                      [maxLength]="9"
-                      class="p-inputtext"
+                      [maxLength]="10"
+                      class="p-inputtext inputStyle w-full"
                       formControlName="numinscripcion"
+                      [ngClass]="readOnlyMode ? 'disabled' : ''"
                     />
                   </div>
                 </div>
@@ -204,11 +226,12 @@
                   <div class="w-full">
                     <p-calendar
                       id="feentrada"
-                      styleClass="calender"
-                      [dateFormat]="dateFormat"
+                      class="calenderStyle w-full"
+                      [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
-                      placeholder="dd/mm/yyyy"
+                      [placeholder]="calendarDateFormat"
                       formControlName="feentrada"
+                      [ngClass]="readOnlyMode ? 'disabled' : ''"
                     ></p-calendar>
                   </div>
                 </div>
@@ -219,16 +242,17 @@
                   >
                     {{ t('solicitud_de_inscripcion.fecha_baja') }}
                   </label>
-                  <div class="w-full calender-container">
+                  <div class="w-full">
                     <p-calendar
                       id="fbaja"
                       formControlName="fbaja"
-                      styleClass="calender"
-                      placeholder="dd/mm/yyyy"
-                      [dateFormat]="dateFormat"
+                      class="calenderStyle w-full"
+                      [placeholder]="calendarDateFormat"
+                      [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
                       [showOnFocus]="false"
                       readonly
+                      [ngClass]="readOnlyMode ? 'disabled' : ''"
                     >
                     </p-calendar>
                   </div>
@@ -250,8 +274,9 @@
                   id="email"
                   type="text"
                   [maxLength]="50"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="email"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -267,8 +292,9 @@
                   id="telefono"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="telefono"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -284,8 +310,9 @@
                   id="fax"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="fax"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -319,8 +346,9 @@
                   id="observaciones"
                   type="text"
                   [maxLength]="80"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="observaciones"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -373,8 +401,8 @@
                   formControlName="dirDomicilio"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
-                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  class="p-inputtext inputStyle w-full"
+                  [ngClass]="{ disabled: copyAdress }"
                   [readonly]="copyAdress ? 'readonly' : ''"
                 />
               </div>
@@ -391,16 +419,18 @@
                 <p-autoComplete
                   id="dirPro"
                   formControlName="dirPro"
-                  styleClass="dropdown"
+                  class="autoCompleteStyle w-full"
                   [(ngModel)]="selecteddDirProvincia"
                   [dropdown]="true"
                   [suggestions]="filteredProvincia"
                   (completeMethod)="!copyAdress && filterProvincia($event)"
                   field="provDenominacion"
-                  [ngClass]="{ 'disabled-inputs': true }"
+                  [ngClass]="{ disabled: copyAdress || readOnlyMode }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
-                  (onSelect)="loadMunicipio()"
+                  (onSelect)="
+                    loadMunicipio(selecteddDirProvincia.provCodProvincia)
+                  "
                 >
                 </p-autoComplete>
               </div>
@@ -416,14 +446,14 @@
                 <p-autoComplete
                   id="dirMun"
                   formControlName="dirMun"
-                  styleClass="dropdown"
+                  class="autoCompleteStyle w-full"
                   [(ngModel)]="selecteddDirMunicipio"
                   [dropdown]="true"
                   [suggestions]="filteredMunicipio"
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
                   (onSelect)="loadCP()"
                   field="muniDenominacion"
-                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [ngClass]="{ disabled: copyAdress || readOnlyMode }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
                 >
@@ -441,16 +471,16 @@
                 <p-autoComplete
                   id="dirCp"
                   formControlName="dirCp"
-                  styleClass="dropdown"
+                  class="autoCompleteStyle w-full"
                   field="cpostMunicipio"
                   [(ngModel)]="selectdircp"
                   [dropdown]="true"
                   [suggestions]="filteredPostal"
                   (completeMethod)="!copyAdress && filterPostal($event)"
-                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [ngClass]="{ disabled: copyAdress || readOnlyMode }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
-                  (onSelect)="loadMunicipio()"
+                  (onSelect)="loadMunicipio(selectedProvincia.provCodProvincia)"
                 >
                 </p-autoComplete>
               </div>
@@ -469,9 +499,9 @@
                   id="dirEmail"
                   type="text"
                   [maxLength]="50"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="dirEmail"
-                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [ngClass]="{ disabled: copyAdress || readOnlyMode }"
                   [readonly]="copyAdress ? 'readonly' : ''"
                 />
               </div>
@@ -488,9 +518,9 @@
                   id="dirTelefono"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="dirTelefono"
-                  [ngClass]="{ 'disabled-inputs': copyAdress }"
+                  [ngClass]="{ disabled: copyAdress || readOnlyMode }"
                   [readonly]="copyAdress ? 'readonly' : ''"
                 />
               </div>
@@ -521,8 +551,9 @@
                   id="sNifCif"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sNifCif"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -537,8 +568,9 @@
                   id="sNombre"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sNombre"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -553,8 +585,9 @@
                   id="sApellidos"
                   type="text"
                   [maxLength]="250"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sApellidos"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -572,8 +605,9 @@
                   id="sDomicilio"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sDomicilio"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -586,14 +620,20 @@
                 {{ t('solicitud_de_inscripcion.provincia') }}</label
               >
               <div class="w-full">
-                <p-dropdown
+                <p-autoComplete
                   id="sCodePro"
-                  styleClass="dropdown"
-                  [editable]="true"
-                  optionLabel="name"
-                  placeholder=" "
                   formControlName="sCodePro"
-                ></p-dropdown>
+                  class="autoCompleteStyle w-full"
+                  [(ngModel)]="selecteddDirProvincia"
+                  [dropdown]="true"
+                  [suggestions]="filteredProvincia"
+                  (completeMethod)="!copyAdress && filterProvincia($event)"
+                  field="provDenominacion"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
+                  [readonly]="copyAdress"
+                  [disabled]="copyAdress"
+                >
+                </p-autoComplete>
               </div>
             </div>
             <div class="col-3">
@@ -604,14 +644,20 @@
                 {{ t('solicitud_de_inscripcion.municipio') }}
               </label>
               <div class="w-full">
-                <p-dropdown
+                <p-autoComplete
                   id="sCodMun"
-                  styleClass="dropdown"
-                  [editable]="true"
-                  optionLabel="name"
-                  placeholder=" "
                   formControlName="sCodMun"
-                ></p-dropdown>
+                  class="autoCompleteStyle w-full"
+                  [(ngModel)]="selecteddDirProvincia"
+                  [dropdown]="true"
+                  [suggestions]="filteredProvincia"
+                  (completeMethod)="!copyAdress && filterProvincia($event)"
+                  field="provDenominacion"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
+                  [readonly]="copyAdress"
+                  [disabled]="copyAdress"
+                >
+                </p-autoComplete>
               </div>
             </div>
             <div class="col-3">
@@ -621,15 +667,22 @@
               >
                 {{ t('solicitud_de_inscripcion.c_postal') }}</label
               >
+
               <div class="w-full">
-                <p-dropdown
+                <p-autoComplete
                   id="sCP"
-                  styleClass="dropdown"
-                  [editable]="true"
-                  optionLabel="name"
-                  placeholder=" "
                   formControlName="sCP"
-                ></p-dropdown>
+                  class="autoCompleteStyle w-full"
+                  [(ngModel)]="selecteddDirProvincia"
+                  [dropdown]="true"
+                  [suggestions]="filteredProvincia"
+                  (completeMethod)="!copyAdress && filterProvincia($event)"
+                  field="provDenominacion"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
+                  [readonly]="copyAdress"
+                  [disabled]="copyAdress"
+                >
+                </p-autoComplete>
               </div>
             </div>
           </div>
@@ -646,8 +699,9 @@
                   id="sEmail"
                   type="text"
                   [maxLength]="50"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sEmail"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -663,8 +717,9 @@
                   id="sTelefono"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sTelefono"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>
@@ -680,8 +735,9 @@
                   id="sFax"
                   type="text"
                   [maxLength]="9"
-                  class="p-inputtext"
+                  class="p-inputtext inputStyle w-full"
                   formControlName="sFax"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />
               </div>
             </div>

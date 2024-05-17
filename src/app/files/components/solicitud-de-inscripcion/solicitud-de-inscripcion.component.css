@@ -7,11 +7,12 @@
   margin: 0%;
 }
 
-.disabled-inputs {
-  background-color: var(--grey);
-  color: white;
+.disabled {
+  background-color: var(--light-grey);
+  .p-autocomplete-dd {
+    background-color: var(--light-grey); /*  // rgb(145, 144, 144); */
+  }
 }
-
 ::ng-deep .accordion {
   height: auto;
   .p-accordion-toggle-icon {
@@ -29,42 +30,29 @@
   }
 }
 
-input {
-  height: 0.8rem;
-  width: 100%;
-  border-radius: 0.2rem;
-  border-color: var(--black);
-}
-
 .labelStyle {
   font-size: 0.9rem;
 }
-::ng-deep .dropdown {
-  height: 1.6rem;
-  border-radius: 0.2rem;
 
-  .p-icon {
-    color: var(--light-blue);
-    background-color: none;
-  }
-
-  .p-inputtext {
-    margin: 0;
-    border-radius: 3px;
-    border-color: var(--black);
+::ng-deep .autoCompleteStyle {
+  .p-autocomplete-input {
+    border: 0.125rem solid var(--light-grey);
+    height: 2.125rem;
+    font-size: 1rem;
+    border-radius: 0%;
     border-right: none;
   }
   .p-button.p-button-icon-only {
-    width: 3rem;
-    padding: 0.75rem 0;
-    background-color: white;
+    height: 2.125rem;
+    background-color: var(--white);
+    color: var(--light-blue);
+    border: 0%;
+    border: 0.125rem solid var(--light-grey);
     border-left: none;
-    border-color: var(--black);
   }
 
-  .p-disabled {
-    background-color: var(--grey);
-    color: white;
+  .p-inputtext:enabled:hover {
+    border-color: var(--black);
   }
 }
 
@@ -74,51 +62,5 @@ input {
 
   .iconStyle {
     color: var(--light-blue);
-  }
-}
-
-::ng-deep .calender {
-  height: 1.4rem;
-  .p-button-icon-only {
-    width: 3.5rem;
-    padding: 0.75rem 0;
-    border-left: none;
-    border-color: var(--black);
-  }
-
-  .p-button:hover:not(:disabled) {
-    background-color: white !important;
-    color: var(--black);
-    border-left: none;
-    border-color: var(--black);
-  }
-
-  .p-button {
-    background-color: white !important;
-    color: var(--black);
-    border-left: none;
-    border-radius: 0.2rem;
-    border-color: var(--black);
-  }
-
-  .p-inputtext {
-    border-right: none;
-    border-radius: 0.2rem;
-    border-color: var(--black);
-  }
-
-  .p-inputtext:hover:not(:disabled) {
-    border-right: none;
-    border-radius: 0.2rem;
-    border-color: var(--black);
-  }
-  .p-datepicker .p-datepicker-header {
-    padding: 0rem;
-    height: 1.8rem;
-  }
-  .p-datepicker table th,
-  .p-datepicker table td {
-    padding: 0px;
-    max-width: 0px;
   }
 }
