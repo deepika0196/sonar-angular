@@ -7,10 +7,12 @@
   margin: 0%;
 }
 
-.disabled-inputs {
+.disabled {
   background-color: var(--light-grey);
+  .p-autocomplete-dd {
+    background-color: var(--light-grey); /*  // rgb(145, 144, 144); */
+  }
 }
-
 ::ng-deep .accordion {
   height: auto;
   .p-accordion-toggle-icon {
@@ -49,9 +51,6 @@
     border-left: none;
   }
 
-  .p-disabled {
-    background-color: var(--light-grey);
-  }
   .p-inputtext:enabled:hover {
     border-color: var(--black);
   }

@@ -85,20 +85,23 @@ export class SolicitudDeInscripcionComponent
   }
 
   ngAfterViewInit(): void {
+    this.setFormReadOnly(this.readOnlyMode);
     this.datosPrincipalesForm.get('notificaciones.addressCopy')?.setValue(true);
     this.datosPrincipalesForm.get('notificaciones.dirPro')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirMun')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
-    this.setFormReadOnly(this.readOnlyMode);
   }
   ngOnInit(): void {
     this.copyAdress = true;
     this.setupFormChangeSubscriptions();
     this.loadProvincia();
-    const state: State = this.location.getState() as State;
-    this.checkMode(state.action);
-    if (state.cif) {
-      this.fetchDetails(state.cif);
+
+    const state: State | null = this.location.getState() as State | null;
+    if (state !== null) {
+      this.checkMode(state.action);
+      if (state.cif) {
+        this.fetchDetails(state.cif);
+      }
     }
   }
 
@@ -262,7 +265,6 @@ export class SolicitudDeInscripcionComponent
       .updateSolicitudDeInscripcion(this.mapFormToBackendData())
       .pipe(takeUntil(this.subscription))
       .subscribe({
-        next: (data) => {},
         error: (err: Error) => console.error(err),
         complete: () => {
           this.router.navigate(['/files/solicitudDeInscripcionSearch']);
@@ -274,7 +276,6 @@ export class SolicitudDeInscripcionComponent
       .createSolicitudDeInscripcion(this.mapFormToBackendData())
       .pipe(takeUntil(this.subscription))
       .subscribe({
-        next: (data) => {},
         error: (err: Error) => console.error(err),
         complete: () => {
           this.router.navigate(['/files/solicitudDeInscripcionSearch']);
@@ -390,10 +391,7 @@ export class SolicitudDeInscripcionComponent
       month: 'short',
       day: 'numeric',
     };
-    const formattedDateString = formattedDate.toLocaleDateString(
-      'en-US',
-      options
-    );
+    formattedDate.toLocaleDateString('en-US', options);
     return formattedDate;
   }
 
