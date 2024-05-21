@@ -110,7 +110,7 @@ export class SolicitudDeInscripcionSearchComponent
       pipeFormat: GlobalConstant.ddmmyyyy,
     },
     {
-      field: 'deseccionVal',
+      field: 'representantesNifcif',
       header: 'solicitudDeInscripcion.NIF_CIF_legal_representative',
       sortable: false,
       class: 'table-col-width',

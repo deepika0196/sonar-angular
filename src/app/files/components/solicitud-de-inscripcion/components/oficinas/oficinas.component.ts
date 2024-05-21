@@ -1,14 +1,6 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  Injector,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { GlobalConstant } from '@app/core/constants/globalConstants';
-import { OficinasDialogComponent } from '@app/files/components/solicitud-de-inscripcion/components/oficinas-dialog/oficinas-dialog.component';
 import { Oficinas } from '@app/files/interfaces/oficinas';
 import {
   Municipio,
@@ -16,7 +8,6 @@ import {
   PostalCode,
 } from '@app/files/interfaces/solicitud-de-inscripcion';
 import { OficinasService } from '@app/files/services/oficinas.service';
-import { SolicitudDeInscripcionService } from '@app/files/services/solicitud-de-inscripcion.service';
 import { SolicituddeCodigoPostalService } from '@app/files/services/solicitudde-codigo-postal.service';
 import { SolicitudeMunicipioService } from '@app/files/services/solicitude-municipio.service';
 import { SolicitudeProvinciaService } from '@app/files/services/solicitude-provincia.service';
@@ -24,7 +15,6 @@ import { AlertDialogComponent } from '@app/shared/components/alert-dialog/alert-
 import {
   ActionButtons,
   GenericDialog,
-  InputField,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
 import { TableColumns } from '@app/shared/components/generic-table/generic-table.component';
 import {
@@ -126,6 +116,8 @@ export class OficinasComponent implements OnInit {
   oficinas: Oficinas[] = [];
   private subscription = new Subject<void>();
   addDialogRef: DynamicDialogRef | undefined;
+  deleteDialogRef: DynamicDialogRef | undefined;
+  alertDialogRef: DynamicDialogRef | undefined;
   provinciaList: Provincia[] = [];
   municipioList: Municipio[] = [];
   postalList: PostalCode[] = [];
@@ -139,8 +131,7 @@ export class OficinasComponent implements OnInit {
     private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
     private translocoService: TranslocoService,
     private dialogService: DialogService,
-    private messageService: MessageService,
-    private injector: Injector
+    private messageService: MessageService
   ) {
     this.oficinasForm = new FormGroup({
       office_name: new FormControl(''),
@@ -156,7 +147,6 @@ export class OficinasComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.fetchAllSolicitudDeInscripcion();
     this.fetchAllOficinas();
     this.fetchAllProvincia();
   }
@@ -233,7 +223,6 @@ export class OficinasComponent implements OnInit {
           //   .pipe(takeUntil(this.subscription))
           //   .subscribe({
           //     next: (data) => {
-          //       // this.municipioList = data.response;
           //       this.fetchAllOficinas();
           //     },
           //     error: (err: Error) => console.error(err),
@@ -270,11 +259,6 @@ export class OficinasComponent implements OnInit {
       data: {
         actionButtons: actionButtons,
         template: this.template,
-        // component: OficinasDialogComponent,
-        // injector: Injector.create({
-        //   providers: [{ provide: 'data', useValue: { name: 'John' } }],
-        // }),
-        // context: { name: 'John' },
       },
       styleClass: 'dialogStyle',
       showHeader: true,
@@ -283,5 +267,174 @@ export class OficinasComponent implements OnInit {
       AlertDialogComponent,
       addDialogConfig
     );
+  }
+
+  deleteOficina(campoDetails: any) {
+    this.oficinasService
+      .deleteOficinas(campoDetails.codigo)
+      .pipe(takeUntil(this.subscription))
+      .subscribe({
+        next: (data) => {
+          if (data?.success === false && data?.errorCode) {
+            this.openAlertDialog(
+              this.translocoService.translate(
+                'errors.' + data.errorCode.toString()
+              ),
+              'warn'
+            );
+          } else {
+            this.fetchAllOficinas();
+            this.deleteDialogRef?.close();
+            this.messageService.add({
+              severity: 'success',
+              summary: this.translocoService.translate(
+                'campoDeActuacion.title'
+              ),
+              detail: this.translocoService.translate(
+                'toast_messages.delete_success'
+              ),
+            });
+          }
+        },
+        error: (err: Error) => console.error(err),
+        complete: () => {},
+      });
+  }
+
+  onDeleteHandler(campoDetails: any) {
+    const actionButtons: ActionButtons[] = [
+      {
+        label: this.translocoService.translate('buttons.yes'),
+        icon: 'check',
+        action: () => {
+          if (this.oficinas.length === 1) {
+            if (this.checkDefaultOffice()) {
+              this.openAlertDialog(
+                this.translocoService.translate('errors'),
+                'warn'
+              );
+            } else {
+              this.openAlertDialog(
+                this.translocoService.translate('errors'),
+                'confirm',
+                this.deleteOficina,
+                campoDetails
+              );
+            }
+          } else {
+            this.deleteOficina(campoDetails);
+          }
+        },
+        disabled: false,
+      },
+      {
+        label: this.translocoService.translate('buttons.no'),
+        action: () => {
+          this.deleteDialogRef?.close();
+        },
+        disabled: false,
+      },
+    ];
+
+    const deleteDialogConfig: GenericDialog = {
+      width: '40%',
+      contentStyle: {
+        overflow: 'none',
+      },
+      showHeader: false,
+      closable: false,
+      baseZIndex: 10000,
+      styleClass: 'dialogStyle',
+      data: {
+        actionButtons: actionButtons,
+        alertMessage: this.translocoService.translate(
+          'dialog_content.delete_alert'
+        ),
+        headerStyle: {
+          icon: 'info',
+          dialogType: 'confirm',
+          title: this.translocoService.translate('dialog_header.delete'),
+        },
+      },
+    };
+    this.deleteDialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      deleteDialogConfig
+    );
+  }
+
+  openAlertDialog(
+    alertMessage: string,
+    dialogType: string,
+    callback?: (input?: any) => void,
+    campoDetails?: any
+  ) {
+    const actionButtons: ActionButtons[] =
+      dialogType === 'confirm'
+        ? [
+            {
+              label: this.translocoService.translate('buttons.yes'),
+              icon: 'check',
+              action: () => {
+                if (callback && campoDetails) callback(campoDetails);
+                this.alertDialogRef?.close();
+              },
+              disabled: false,
+            },
+            {
+              label: this.translocoService.translate('buttons.no'),
+              action: () => {
+                this.alertDialogRef?.close();
+              },
+              disabled: false,
+            },
+          ]
+        : [
+            {
+              label: this.translocoService.translate('buttons.accept'),
+              action: () => {
+                this.alertDialogRef?.close();
+              },
+              disabled: false,
+            },
+          ];
+
+    const alertDialogConfig: GenericDialog = {
+      width: '40%',
+      contentStyle: {
+        overflow: 'none',
+      },
+      showHeader: false,
+      baseZIndex: 20000,
+      closable: false,
+      styleClass: 'dialogStyle',
+      data: {
+        actionButtons: actionButtons,
+        alertMessage: alertMessage,
+        headerStyle: {
+          icon: dialogType === 'confirm' ? 'info' : 'report_problem',
+          dialogType: dialogType,
+          title:
+            dialogType === 'confirm'
+              ? this.translocoService.translate('dialog_header.delete')
+              : this.translocoService.translate('dialog_header.alert'),
+        },
+      },
+    };
+    this.alertDialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      alertDialogConfig
+    );
+  }
+  checkDefaultOffice() {
+    let officeDetails = null;
+    if (this.oficinas.length === 1) {
+      officeDetails = this.oficinas[0];
+      return (
+        officeDetails.office_name === 'social' && officeDetails.id === null
+      );
+    }
+
+    return false;
   }
 }

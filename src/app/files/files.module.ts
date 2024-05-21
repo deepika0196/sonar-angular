@@ -11,7 +11,6 @@ import { AcreditacionesComponent } from '@app/files/components/solicitud-de-insc
 import { DocumentosComponent } from '@app/files/components/solicitud-de-inscripcion/components/documentos/documentos.component';
 import { ActualizacionesComponent } from '@app/files/components/solicitud-de-inscripcion/components/actualizaciones/actualizaciones.component';
 import { OficinasComponent } from '@app/files/components/solicitud-de-inscripcion/components/oficinas/oficinas.component';
-import { OficinasDialogComponent } from '@app/files/components/solicitud-de-inscripcion/components/oficinas-dialog/oficinas-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { OficinasDialogComponent } from '@app/files/components/solicitud-de-insc
     DocumentosComponent,
     ActualizacionesComponent,
     OficinasComponent,
-    OficinasDialogComponent,
   ],
   imports: [CommonModule, FilesRoutingModule, SharedModule],
   providers: [CIFValidator],
