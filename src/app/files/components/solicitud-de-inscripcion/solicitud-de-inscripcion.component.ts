@@ -15,6 +15,7 @@ import {
   Entidad,
   Municipio,
   Provincia,
+  RepresentantesLegal,
   State,
   postalCode,
 } from '@app/files/interfaces/solicitud-de-inscripcion';
@@ -31,6 +32,7 @@ import {
 import { CIFValidator } from '@app/core/utils/cif-validator';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { SolicitudDeInscripcionRepresentantesService } from '@app/files/services/solicitud-de-inscripcion-representantes.service';
 
 @Component({
   selector: 'app-solicitud-de-inscripcion',
@@ -73,6 +75,7 @@ export class SolicitudDeInscripcionComponent
     private solicitudeMunicipioService: SolicitudeMunicipioService,
     private solicitudDeInscripcionService: SolicitudDeInscripcionService,
     private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
+    private representantesService: SolicitudDeInscripcionRepresentantesService,
     private location: Location,
     private router: Router
   ) {
@@ -82,8 +85,8 @@ export class SolicitudDeInscripcionComponent
   ngAfterViewInit(): void {
     this.setFormReadOnly(this.readOnlyMode);
     this.datosPrincipalesForm.get('notificaciones.addressCopy')?.setValue(true);
-    this.datosPrincipalesForm.get('notificaciones.dirPro')?.disable();
-    this.datosPrincipalesForm.get('notificaciones.dirMun')?.disable();
+    this.datosPrincipalesForm.get('notificaciones.dirCodpro')?.disable();
+    this.datosPrincipalesForm.get('notificaciones.dirCodmun')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
     if (!this.isLegalCifNif) {
       this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
@@ -168,6 +171,66 @@ export class SolicitudDeInscripcionComponent
     });
   }
 
+  checkRepresentanteLegalCifNif(cifNif: string): Promise<void | boolean> {
+    return new Promise<void | boolean>((resolve, reject) => {
+      if (!CIFValidator.esNifNieCifValido(cifNif)) {
+        this.openInvalidCifDialog();
+        resolve(false);
+        return;
+      } else {
+        this.representantesService
+          .getByRepresentantesNifCif(cifNif)
+          .pipe(takeUntil(this.subscription))
+          .subscribe({
+            next: (data) => {
+              this.patchValueOfRepresentantes(data.response);
+              resolve(true);
+            },
+            error: (err) => reject(err),
+          });
+      }
+    });
+  }
+
+  async patchValueOfRepresentantes(response: any) {
+    const codproValue = this.provinciaList.find(
+      (provincia) => provincia.provCodProvincia === response.codpro
+    );
+
+    let codmunValue;
+    if (response.codpro) {
+      await this.loadMunicipio(response.codpro);
+      codmunValue = this.municipioList.find(
+        (municipio) =>
+          municipio.muniCodMunicipio === response.codmun &&
+          municipio.muniCodProvincia === response.codpro
+      );
+    }
+    let codCPValue;
+    if (response.codpro) {
+      await this.loadCP(response.codpro, response.codmun);
+
+      codCPValue = this.postalList.find(
+        (cp) =>
+          cp.cpostCodMuni === response.codmun &&
+          cp.cpostCodPostal === response.cp
+      );
+    }
+
+    this.datosPrincipalesForm.get('representantesDTO')?.patchValue({
+      apellidos: response.apellidos,
+      codmun: codmunValue,
+      cp: codCPValue,
+      codpro: codproValue,
+      domicilio: response.domicilio,
+      email: response.email,
+      fax: response.fax,
+      id: response.id,
+      nifcif: response.nifcif,
+      nombre: response.nombre,
+      telefono: response.telefono,
+    });
+  }
   fillDefaultNotification() {
     if (this.copyAdress) {
       this.copyAddressFieldsOfEntidadData();
@@ -227,10 +290,10 @@ export class SolicitudDeInscripcionComponent
         observaciones: [null],
       }),
       notificaciones: this.fb.group({
-        addressCopy: [true],
+        addressCopy: [null],
         dirDomicilio: [null],
-        dirPro: [null],
-        dirMun: [null],
+        dirCodpro: [null],
+        dirCodmun: [null],
         dirCp: [null],
         dirEmail: [null, Validators.email],
         dirFax: [null],
@@ -265,6 +328,13 @@ export class SolicitudDeInscripcionComponent
     const representantesPostal =
       this.datosPrincipalesForm.get('representantesDTO.cp')?.value || '';
 
+    const dirPro =
+      this.datosPrincipalesForm.get('notificaciones.dirCodpro')?.value || '';
+    const dirMun =
+      this.datosPrincipalesForm.get('notificaciones.dirCodmun')?.value || '';
+    const dirCP =
+      this.datosPrincipalesForm.get('notificaciones.dirCp')?.value || '';
+
     const publicaWeValue = entidad.publicaWeb ? 'Y' : 'N';
 
     const mappedData: Entidad = {
@@ -274,9 +344,9 @@ export class SolicitudDeInscripcionComponent
       cp: entidad.cp?.cpostCodPostal || '',
       codpro: entidad?.codpro?.provCodProvincia || '',
       denomsocial: entidad?.denomsocial || '',
-      dirCodmun: notificaciones?.dirCodmun?.muniCodMunicipio || '',
-      dirCp: notificaciones.dirCp?.cpostCodPostal || '',
-      dirCodpro: notificaciones.dirCodpro?.provCodProvincia || '',
+      dirCodmun: dirMun?.muniCodMunicipio || '',
+      dirCp: dirCP?.cpostCodPostal || '',
+      dirCodpro: dirPro?.provCodProvincia || '',
       dirDomicilio: notificaciones.dirDomicilio || '',
       dirEmail: notificaciones.dirEmail || '',
       dirFax: notificaciones.dirFax || '',
@@ -395,7 +465,7 @@ export class SolicitudDeInscripcionComponent
     const codproValue = this.provinciaList.find(
       (provincia) => provincia.provCodProvincia === response.codpro
     );
-
+    let codCPValue;
     let codmunValue;
     if (response.codpro) {
       await this.loadMunicipio(response.codpro);
@@ -404,9 +474,6 @@ export class SolicitudDeInscripcionComponent
           municipio.muniCodMunicipio === response.codmun &&
           municipio.muniCodProvincia === response.codpro
       );
-    }
-    let codCPValue;
-    if (response.codpro) {
       await this.loadCP(response.codpro, response.codmun);
 
       codCPValue = this.postalList.find(
@@ -437,17 +504,18 @@ export class SolicitudDeInscripcionComponent
         observaciones: response.observaciones,
       },
       notificaciones: {
-        addressCopy: true,
         dirDomicilio: response.dirDomicilio,
-        dirPro: response.dirCodpro,
-        dirMun: response.dirCodmun,
-        dirCp: response.dirCp,
+        dirPro: response.dirCodpro || '',
+        dirMun: response.dirCodmun || '',
+        dirCp: response.dirCp || '',
         dirEmail: response.dirEmail,
         dirFax: response.dirFax,
         dirTelefono: response.dirTelefono,
       },
-      representantesDTO: response.representantesDTO,
     });
+    if (response.representantesDTO) {
+      await this.patchValueOfRepresentantes(response.representantesDTO);
+    }
   }
 
   dateFormatConverter(date: string) {
@@ -568,8 +636,8 @@ export class SolicitudDeInscripcionComponent
     return new Promise<void | boolean>((resolve, reject) => {
       this.datosPrincipalesForm.get('notificaciones')?.patchValue({
         dirDomicilio: this.datosPrincipalesForm.get('entidad.domsocial')?.value,
-        dirPro: this.datosPrincipalesForm.get('entidad.codpro')?.value,
-        dirMun: this.datosPrincipalesForm.get('entidad.codmun')?.value,
+        dirCodpro: this.datosPrincipalesForm.get('entidad.codpro')?.value,
+        dirCodmun: this.datosPrincipalesForm.get('entidad.codmun')?.value,
         dirCp: this.datosPrincipalesForm.get('entidad.cp')?.value,
         dirEmail: this.datosPrincipalesForm.get('entidad.email')?.value,
         dirTelefono: this.datosPrincipalesForm.get('entidad.telefono')?.value,
@@ -581,8 +649,8 @@ export class SolicitudDeInscripcionComponent
   clearNotificacioneFields() {
     this.datosPrincipalesForm.get('notificaciones')?.patchValue({
       dirDomicilio: '',
-      dirPro: '',
-      dirMun: '',
+      dirCodpro: '',
+      dirCodmun: '',
       dirCp: '',
       dirEmail: '',
       dirTelefono: '',

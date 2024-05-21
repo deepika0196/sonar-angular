@@ -76,3 +76,16 @@ export interface State {
   action: string;
   navigationId: number;
 }
+export interface RepresentantesLegal {
+  apellidos: string;
+  codmun: string;
+  codpro: string;
+  cp: string;
+  domicilio: string;
+  email: string;
+  fax: string;
+  id: number;
+  nifcif: string;
+  nombre: string;
+  telefono: string;
+}

@@ -348,6 +348,7 @@
                 <p-checkbox
                   [binary]="true"
                   id="publicaWeb"
+                  class="checkboxStyle"
                   formControlName="publicaWeb"
                 ></p-checkbox>
               </div>
@@ -398,6 +399,7 @@
                   [binary]="true"
                   id="addressCopy"
                   formControlName="addressCopy"
+                  class="checkboxStyle"
                 ></p-checkbox>
                 <label
                   class="labelStyle"
@@ -436,14 +438,14 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="dirPro"
+                for="dirCodpro"
               >
                 {{ t('solicitud_de_inscripcion.provincia') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
-                  id="dirPro"
-                  formControlName="dirPro"
+                  id="dirCodpro"
+                  formControlName="dirCodpro"
                   class="autoCompleteStyle w-full"
                   [dropdown]="true"
                   [suggestions]="filteredProvincia"
@@ -454,7 +456,7 @@
                   [disabled]="copyAdress || readOnlyMode"
                   (onSelect)="
                     loadMunicipio(
-                      this.datosPrincipalesForm.get('notificaciones.codPro')
+                      this.datosPrincipalesForm.get('notificaciones.dirCodpro')
                         ?.value.provCodProvincia
                     )
                   "
@@ -465,23 +467,23 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="dirMun"
+                for="dirCodmun"
               >
                 {{ t('solicitud_de_inscripcion.municipio') }}
               </label>
               <div class="w-full">
                 <p-autoComplete
-                  id="dirMun"
-                  formControlName="dirMun"
+                  id="dirCodmun"
+                  formControlName="dirCodmun"
                   class="autoCompleteStyle w-full"
                   [dropdown]="true"
                   [suggestions]="filteredMunicipio"
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
                   (onSelect)="
                     loadCP(
-                      this.datosPrincipalesForm.get('notificaciones.dirMun')
+                      this.datosPrincipalesForm.get('notificaciones.dirCodmun')
                         ?.value.muniCodProvincia,
-                      this.datosPrincipalesForm.get('notificaciones.dirMun')
+                      this.datosPrincipalesForm.get('notificaciones.dirCodmun')
                         ?.value.muniCodMunicipio
                     )
                   "
@@ -584,6 +586,14 @@
                   [maxLength]="9"
                   class="p-inputtext inputStyle w-full"
                   formControlName="nifcif"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
+                  [disabled]="readOnlyMode"
+                  (blur)="
+                    checkRepresentanteLegalCifNif(
+                      datosPrincipalesForm.get('representantesDTO.nifcif')
+                        ?.value
+                    )
+                  "
                 />
               </div>
             </div>
@@ -636,7 +646,7 @@
                 <input
                   id="sdomicilio"
                   type="text"
-                  formControlName
+                  formControlName="domicilio"
                   [maxLength]="250"
                   class="p-inputtext inputStyle w-full"
                   [ngClass]="readOnlyMode || !isLegalCifNif ? 'disabled' : ''"
