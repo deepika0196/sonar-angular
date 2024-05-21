@@ -9,9 +9,13 @@
 
 .disabled {
   background-color: var(--light-grey);
-  .p-autocomplete-dd {
-    background-color: var(--light-grey); /*  // rgb(145, 144, 144); */
+  .p-autocomplete-dd,
+  .p-calendar-disabled {
+    background-color: var(--lighter-grey);
   }
+}
+.ng-invalid .ng-touched {
+  border-color: rgb(198, 27, 27) !important;
 }
 ::ng-deep .accordion {
   height: auto;
