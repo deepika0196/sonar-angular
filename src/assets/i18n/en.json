@@ -43,7 +43,7 @@
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana",
     "acreditaciones_title": "Acreditaciones",
     "actualizaciones_title": "Actualizaciones",
     "documentos_title": "Documentos"
@@ -73,6 +73,19 @@
     "province": "Provincia",
     "municipality": "Municipio",
     "NIF_CIF_legal_representative": "NIF/CIF Representante Legal"
+  },
+
+  "oficinas": {
+    "office_name": "Office Name",
+    "residency": "Residency",
+    "province": "Província",
+    "municipality": "Municipality",
+    "phone": "Phone",
+    "fax": "Fax",
+    "postal": "C. Postal",
+    "contact_person": "Main Contact Person",
+    "contact_email": "Main contact email",
+    "office_dialog_header": "Oficina comercial"
   },
 
   "errors": {
@@ -162,5 +175,6 @@
   "snackbar_txt_validate": "Fill in the required information",
   "pagination_text": "Records from {{first}} to {{last}} (Total {{totalRecords}})",
   "empty_message": "No Record found",
-  "required_text": "You must fill out the field."
+  "required_text": "You must fill out the field.",
+  "action_column": "Actions"
 }

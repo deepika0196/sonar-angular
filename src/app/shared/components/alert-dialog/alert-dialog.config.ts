@@ -34,6 +34,10 @@ export interface GenericDialog {
       dialogType: string;
       title: string;
     };
+    template?: any;
+    context?: any;
+    injector?: any;
+    component?: any;
   };
   styleClass: string;
   showHeader: boolean;

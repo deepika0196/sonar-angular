@@ -70,10 +70,23 @@
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana expanded",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana",
     "acreditaciones_title": "Acreditaciones",
     "actualizaciones_title": "Actualizaciones",
     "documentos_title": "Documentos"
+  },
+
+  "oficinas": {
+    "office_name": "Nombre Oficina",
+    "residency": "Domicilio",
+    "province": "Provincia",
+    "municipality": "Municipio",
+    "phone": "Teléfono",
+    "fax": "Fax",
+    "postal": "C. Postal",
+    "contact_person": "Persona contacto principal",
+    "contact_email": "Correu contacte principal",
+    "office_dialog_header": "Oficina comercial"
   },
 
   "errors": {
@@ -165,5 +178,6 @@
   "snackbar_txt_validate": "es_Completeu les dades obligatòries",
   "pagination_text": "Registros del {{first}} al {{last}} (Total {{totalRecords}})",
   "empty_message": "No se encontró ninguna coincidencia",
-  "required_text": "Debe rellenar el campo."
+  "required_text": "Debe rellenar el campo.",
+  "action_column": "Acciones"
 }

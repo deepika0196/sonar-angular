@@ -16,7 +16,7 @@ import {
   Entidad,
   Municipio,
   Provincia,
-  postalCode,
+  PostalCode,
 } from '@app/files/interfaces/solicitud-de-inscripcion';
 import { SolicitudDeInscripcionService } from '@app/files/services/solicitud-de-inscripcion.service';
 import { SolicituddeCodigoPostalService } from '@app/files/services/solicitudde-codigo-postal.service';
@@ -52,10 +52,10 @@ export class SolicitudDeInscripcionComponent
   numinscripcion = '/ECMCA';
   dateFormat = GlobalConstant.ddmmyyyy;
 
-  postalList: postalCode[] = [];
-  filteredPostal: postalCode[] = [];
-  selectedPostal: postalCode;
-  selectdircp: postalCode;
+  postalList: PostalCode[] = [];
+  filteredPostal: PostalCode[] = [];
+  selectedPostal: PostalCode;
+  selectdircp: PostalCode;
 
   municipioList: Municipio[] = [];
   selectedMunicipio!: Municipio;

@@ -14,7 +14,7 @@ export interface Municipio {
   muniDenominacion: string;
 }
 
-export interface postalCode {
+export interface PostalCode {
   cpostMunicipio: string;
   id: {
     cpostCodMuni: string;

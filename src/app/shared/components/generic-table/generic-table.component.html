@@ -36,12 +36,25 @@
       </tr>
       <tr *ngIf="tableConfig.columnFilter">
         <th *ngFor="let column of columns; let ind = index">
-          <div *ngIf="column.filter">
-            <p-columnFilter
-              type="text"
-              field="{{ column.field }}"
-            ></p-columnFilter>
-          </div>
+          <p-columnFilter
+            *ngIf="column.filter"
+            type="text"
+            field="{{ column.field }}"
+            [showClearButton]="true"
+          >
+            <!-- <ng-template pTemplate="filtericon">
+              <div>
+                <span class="material-icons iconStyle">search</span>
+              </div>
+            </ng-template> -->
+            <!-- <ng-template pTemplate="removeruleicon">
+              <div>
+                <span class="material-icons iconStyle">search</span>
+              </div>
+            </ng-template> -->
+          </p-columnFilter>
+          <!-- <div >
+          </div> -->
         </th>
       </tr>
     </ng-template>

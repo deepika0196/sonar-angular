@@ -7,4 +7,5 @@ export class UrlEndpoints {
   public static vmcrcMunicipio = 'vmcrcMunicipio/findMunicipioByProvincia';
   public static vmcrcCodigoPostal =
     'vmcrcCodigoPostal/findCodigoPostalByProvinciaAndMunicipio';
+  public static oficinas = 'oficinas';
 }

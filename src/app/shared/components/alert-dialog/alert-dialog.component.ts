@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import {
   ActionButtons,
@@ -17,10 +17,15 @@ export class AlertDialogComponent implements OnInit {
   headerStyle: any;
   headerExist = false;
   inputValues: any;
+  data: any;
 
-  constructor(private dialogConfig: DynamicDialogConfig) {}
+  constructor(
+    private dialogConfig: DynamicDialogConfig // @Inject('data') public data: any // @Inject(DynamicDialogConfig) public data: any
+  ) {}
 
   ngOnInit() {
+    this.data = this.dialogConfig.data;
+    console.log(this.data);
     this.actionButtons = this.dialogConfig.data?.actionButtons;
     this.inputFields = this.dialogConfig.data.inputFields;
     this.alertMessage = this.dialogConfig.data.alertMessage;

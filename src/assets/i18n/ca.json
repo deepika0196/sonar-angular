@@ -43,6 +43,20 @@
     "municipality": "Municipi",
     "NIF_CIF_legal_representative": "NIF/CIF Representant Legal"
   },
+
+  "oficinas": {
+    "office_name": "Nom Oficina",
+    "residency": "Domicili",
+    "province": "Província",
+    "municipality": "Municipi",
+    "phone": "Telèfon",
+    "fax": "Fax",
+    "postal": "C. Postal",
+    "contact_person": "Persona contacte principal",
+    "contact_email": "Correu contacte principal",
+    "office_dialog_header": "Oficina comercial"
+  },
+
   "errors": {
     "REGISTRATION_DUPLICATE_ERROR": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
     "UPDATE_REFERENCE_ERROR": "No s'ha pogut editar el registre perquè existix informació associada.",
@@ -121,7 +135,7 @@
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana",
     "acreditaciones_title": "Acreditaciones",
     "actualizaciones_title": "Actualizaciones",
     "documentos_title": "Documentos"
@@ -162,5 +176,6 @@
   "snackbar_txt_validate": "ca_Completeu les dades obligatòries",
   "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})",
   "empty_message": "No es va trobar cap coincidència",
-  "required_text": "Cal emplenar el camp."
+  "required_text": "Cal emplenar el camp.",
+  "action_column": "Accions"
 }

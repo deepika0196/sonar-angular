@@ -23,3 +23,13 @@
 .iconStyle {
   color: var(--black);
 }
+
+/* ::ng-deep .p-column-filter-clear-button {
+  font-family: 'material-icons';
+
+  filterslashicon {
+    &:before {
+      content: '\eb32';
+    }
+  }
+} */
