@@ -42,7 +42,6 @@ export class SolicitudDeInscripcionComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   initialFormValue = {};
-
   isValidForm = false;
   isFechaBajaNull = true;
   alertmsg = '';
@@ -55,20 +54,16 @@ export class SolicitudDeInscripcionComponent
 
   postalList: postalCode[] = [];
   filteredPostal: postalCode[] = [];
-  selectedPostal: postalCode;
-  selectdircp: postalCode;
 
   municipioList: Municipio[] = [];
-  selectedMunicipio: Municipio;
-  selecteddDirMunicipio: Municipio;
   filteredMunicipio: Municipio[] = [];
 
   provinciaList: Provincia[] = [];
-  selectedProvincia: Provincia;
-  selecteddDirProvincia: Provincia;
   filteredProvincia: Provincia[] = [];
   cifNif = '';
   readOnlyMode: boolean;
+  isLegalCifNif: boolean;
+
   private subscription = new Subject<void>();
   constructor(
     private fb: FormBuilder,
@@ -90,53 +85,93 @@ export class SolicitudDeInscripcionComponent
     this.datosPrincipalesForm.get('notificaciones.dirPro')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirMun')?.disable();
     this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
+    if (!this.isLegalCifNif) {
+      this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
+      this.datosPrincipalesForm.get('representantesDTO.codmun')?.disable();
+      this.datosPrincipalesForm.get('representantesDTO.cp')?.disable();
+    }
   }
   ngOnInit(): void {
     this.copyAdress = true;
-    this.setupFormChangeSubscriptions();
-    this.loadProvincia();
-
-    const state: State | null = this.location.getState() as State | null;
-    if (state !== null) {
-      this.checkMode(state.action);
-      if (state.cif) {
-        this.fetchDetails(state.cif);
-      }
-    }
+    this.initializePage();
   }
 
-  private setupFormChangeSubscriptions(): void {
-    const addressCopyControl = this.datosPrincipalesForm.get(
-      'notificaciones.addressCopy'
-    );
-    if (addressCopyControl) {
-      addressCopyControl.valueChanges
+  async initializePage() {
+    await this.loadProvincia();
+    await this.setupFormChangeSubscriptions();
+    const state: State = this.location.getState() as State;
+    this.checkMode(state.action);
+    if (state.cif) {
+      this.cifNif = state.cif;
+      await this.fetchDetails(state.cif);
+    }
+  }
+  loadProvincia() {
+    return new Promise<void | boolean>((resolve, reject) => {
+      this.solicitudProvinciaService
+        .getProvincia()
         .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: (data) => {
+            this.provinciaList = data.response;
+            resolve(true);
+          },
+          error: (err) => reject(err),
+          complete: () => {},
+        });
+    });
+  }
+  private setupFormChangeSubscriptions() {
+    return new Promise<void | boolean>((resolve, reject) => {
+      const addressCopyControl = this.datosPrincipalesForm.get(
+        'notificaciones.addressCopy'
+      );
+      if (addressCopyControl != null) {
+        addressCopyControl.valueChanges
+          .pipe(takeUntil(this.subscription))
+          .subscribe((value) => {
+            this.copyAdress = value;
+            if (value) {
+              this.copyAddressFieldsOfEntidadData();
+            } else {
+              this.clearNotificacioneFields();
+            }
+          });
+      }
+
+      this.datosPrincipalesForm
+        .get('entidad')
+        ?.valueChanges.pipe(takeUntil(this.subscription))
+        .subscribe(() => {
+          this.isValidForm = this.datosPrincipalesForm.valid ?? false;
+          this.copyAddressFieldsOfEntidadData();
+        });
+
+      this.datosPrincipalesForm
+        .get('entidad.fbaja')
+        ?.valueChanges.pipe(takeUntil(this.subscription))
         .subscribe((value) => {
-          this.copyAdress = value;
-          if (value) {
-            this.copyAddressFieldsOfEntidadData();
+          this.isFechaBajaNull = value === null;
+        });
+
+      this.datosPrincipalesForm
+        .get('representantesDTO.nifcif')
+        ?.valueChanges.subscribe((value) => {
+          if (value && CIFValidator.esNifNieCifValido(value)) {
+            this.isLegalCifNif = true;
           } else {
-            this.clearNotificacioneFields();
+            this.isLegalCifNif = false;
           }
         });
+
+      resolve(true);
+    });
+  }
+
+  fillDefaultNotification() {
+    if (this.copyAdress) {
+      this.copyAddressFieldsOfEntidadData();
     }
-
-    this.datosPrincipalesForm
-      .get('entidad')
-      ?.valueChanges.pipe(takeUntil(this.subscription))
-      .subscribe(() => {
-        this.isValidForm =
-          this.datosPrincipalesForm.get('entidad')?.valid ?? false;
-        this.copyAddressFieldsOfEntidadData();
-      });
-
-    this.datosPrincipalesForm
-      .get('entidad.fbaja')
-      ?.valueChanges.pipe(takeUntil(this.subscription))
-      .subscribe((value) => {
-        this.isValidForm = this.isFechaBajaNull = value === null;
-      });
   }
 
   setFormReadOnly(isReadOnly: boolean) {
@@ -184,7 +219,7 @@ export class SolicitudDeInscripcionComponent
         cp: [null],
         numinscripcion: [this.numinscripcion],
         feentrada: [null],
-        fbaja: [{ value: '', disabled: true }],
+        fbaja: [{ value: null, disabled: true }],
         email: [null, Validators.email],
         telefono: [null],
         fax: [null],
@@ -201,59 +236,77 @@ export class SolicitudDeInscripcionComponent
         dirFax: [null],
         dirTelefono: [null],
       }),
-      representanteLegal: this.fb.group({
-        sNifCif: [null],
-        sNombre: [null],
-        sApellidos: [null],
-        sDomicilio: [null],
-        sCodePro: [null],
-        sCodMun: [null],
-        sCP: [null],
-        sEmail: [null, Validators.email],
-        sTelefono: [null],
-        sFax: [null],
+      representantesDTO: this.fb.group({
+        apellidos: [null],
+        codmun: [null],
+        cp: [null],
+        codpro: [null],
+        domicilio: [null],
+        email: [null, Validators.email],
+        entidadId: [null],
+        fax: [null],
+        id: [null],
+        nifcif: [null],
+        nombre: [null],
+        telefono: [null],
       }),
     });
   }
 
   mapFormToBackendData(): Entidad {
     const formValue = this.datosPrincipalesForm.value;
-    const entidad = formValue.entidad;
-    const notificaciones = formValue.notificaciones;
+    const entidad = formValue.entidad || {};
+    const notificaciones = formValue.notificaciones || {};
+    const representantesDTO = formValue.representantesDTO || {};
+    const representantesPrev =
+      this.datosPrincipalesForm.get('representantesDTO.codpro')?.value || '';
+    const representantesMunsi =
+      this.datosPrincipalesForm.get('representantesDTO.codmun')?.value || '';
+    const representantesPostal =
+      this.datosPrincipalesForm.get('representantesDTO.cp')?.value || '';
 
-    const publicaWeValue = entidad && entidad.publicaWeb ? 'Y' : 'N';
+    const publicaWeValue = entidad.publicaWeb ? 'Y' : 'N';
+
     const mappedData: Entidad = {
       id: formValue.id || null,
       codidfiscal: '',
-      codmun: entidad?.codmun ? entidad?.codmun.id.muniCodMunicipio : '',
-      cp: entidad?.cp ? entidad?.cp.id.cpostCodPostal : '',
-      codpro: entidad?.codpro ? entidad?.codpro.provCodProvincia : '',
+      codmun: entidad.codmun?.muniCodMunicipio || '',
+      cp: entidad.cp?.cpostCodPostal || '',
+      codpro: entidad?.codpro?.provCodProvincia || '',
       denomsocial: entidad?.denomsocial || '',
-      dirCodmun: notificaciones?.dirCodmun
-        ? notificaciones.dirCodmun.id.muniCodMunicipio
-        : '',
-      dirCp: notificaciones?.dirCp
-        ? notificaciones.dirCp.id.cpostCodPostal
-        : '',
-      dirCodpro: notificaciones?.dirCodpro
-        ? notificaciones.dirCodpro.provCodProvincia
-        : '',
+      dirCodmun: notificaciones?.dirCodmun?.muniCodMunicipio || '',
+      dirCp: notificaciones.dirCp?.cpostCodPostal || '',
+      dirCodpro: notificaciones.dirCodpro?.provCodProvincia || '',
       dirDomicilio: notificaciones.dirDomicilio || '',
       dirEmail: notificaciones.dirEmail || '',
       dirFax: notificaciones.dirFax || '',
       dirTelefono: notificaciones.dirTelefono || '',
-      domsocial: entidad?.domsocial || '',
-      email: entidad?.email || '',
-      fax: entidad?.fax || '',
-      fbaja: entidad?.fbaja || '',
-      feentrada: entidad?.feentrada
+      domsocial: entidad.domsocial || '',
+      email: entidad.email || '',
+      fax: entidad.fax || '',
+      fbaja: entidad.fbaja || '',
+      feentrada: entidad.feentrada
         ? entidad.feentrada.toISOString().split('T')[0]
         : '',
-      nifcif: entidad?.nifcif || '',
-      numinscripcion: entidad?.numinscripcion || '',
-      observaciones: entidad?.observaciones || '',
+      nifcif: entidad.nifcif || '',
+      numinscripcion: entidad.numinscripcion || '',
+      observaciones: entidad.observaciones || '',
       publicaWeb: publicaWeValue,
-      telefono: entidad?.telefono || '',
+      representantesDTO: {
+        apellidos: representantesDTO.apellidos || '',
+        codmun: representantesMunsi?.muniCodMunicipio || '',
+        cp: representantesPostal?.cpostCodPostal || '',
+        codpro: representantesPrev?.provCodProvincia || '',
+        domicilio: representantesDTO.domicilio || '',
+        email: representantesDTO.email || '',
+        entidadId: formValue.id || null,
+        fax: representantesDTO.fax || '',
+        id: representantesDTO.id || null,
+        nifcif: representantesDTO.nifcif || '',
+        nombre: representantesDTO.nombre || '',
+        telefono: representantesDTO.telefono || '',
+      },
+      telefono: entidad.telefono || '',
       web: '',
     };
 
@@ -283,75 +336,87 @@ export class SolicitudDeInscripcionComponent
       });
   }
 
-  loadProvincia() {
-    this.solicitudProvinciaService
-      .getProvincia()
-      .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          this.provinciaList = data.response;
-        },
-        error: (err: Error) => console.error(err),
-      });
-  }
-
-  loadMunicipio(code: string) {
-    return this.solicitudeMunicipioService
-      .getMunicipio(code)
-      .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          this.municipioList = data.response;
-        },
-        error: (err: Error) => console.error(err),
-      });
-  }
-
-  loadCP() {
-    this.solicituddeCodigoPostalService
-      .getMunicipio(
-        this.selectedMunicipio.id.muniCodProvincia,
-        this.selectedMunicipio.id.muniCodMunicipio
-      )
-      .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          this.postalList = data.response;
-        },
-        error: (err: Error) => console.error(err),
-      });
-  }
-
-  fetchDetails(cifNif: string) {
-    if (!CIFValidator.esNifNieCifValido(cifNif)) {
-      this.openInvalidCifDialog();
-    } else {
-      this.solicitudDeInscripcionService
-        .getByNifCif(cifNif)
+  loadMunicipio(provCodProvincia: string) {
+    return new Promise<void | boolean>((resolve, reject) => {
+      this.solicitudeMunicipioService
+        .getMunicipio(provCodProvincia)
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: (data) => {
-            this.patchValue(data.response);
+            this.municipioList = data.response;
+            resolve(true);
           },
-          error: (err: Error) => console.error(err),
+          error: (err: Error) => {
+            reject(err);
+          },
         });
-    }
+    });
   }
 
-  patchValue(response: any) {
+  loadCP(muniCodProvincia: string, muniCodMunicipio: string) {
+    return new Promise<void | boolean>((resolve, reject) => {
+      this.solicituddeCodigoPostalService
+        .getMunicipio(muniCodProvincia, muniCodMunicipio)
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: (data) => {
+            this.postalList = data.response;
+            resolve(true);
+          },
+          error: (err: Error) => reject(err),
+        });
+    });
+  }
+
+  fetchDetails(cifNif: string): Promise<void | boolean> {
+    return new Promise<void | boolean>((resolve, reject) => {
+      if (!CIFValidator.esNifNieCifValido(cifNif)) {
+        this.openInvalidCifDialog();
+        resolve(false);
+      } else {
+        this.solicitudDeInscripcionService
+          .getByNifCif(cifNif)
+          .pipe(takeUntil(this.subscription))
+          .subscribe({
+            next: (data) => {
+              this.patchValue(data.response);
+              resolve(true);
+            },
+            error: (err: Error) => {
+              console.error(err);
+              reject(err);
+            },
+          });
+      }
+    });
+  }
+
+  async patchValue(response: any) {
     const codproValue = this.provinciaList.find(
       (provincia) => provincia.provCodProvincia === response.codpro
     );
 
-    const feentradaValue = this.dateFormatConverter(response.feentrada);
-    const codmunValue =
-      this.municipioList.find(
+    let codmunValue;
+    if (response.codpro) {
+      await this.loadMunicipio(response.codpro);
+      codmunValue = this.municipioList.find(
         (municipio) =>
-          municipio.id.muniCodMunicipio === response.codmun &&
-          municipio.id.muniCodProvincia === response.codpro
-      ) || null;
+          municipio.muniCodMunicipio === response.codmun &&
+          municipio.muniCodProvincia === response.codpro
+      );
+    }
+    let codCPValue;
+    if (response.codpro) {
+      await this.loadCP(response.codpro, response.codmun);
 
-    this.datosPrincipalesForm.get('entidad.codpro')?.setValue(codproValue);
+      codCPValue = this.postalList.find(
+        (cp) =>
+          cp.cpostCodMuni === response.codmun &&
+          cp.cpostCodPostal === response.cp
+      );
+    }
+
+    const feentradaValue = this.dateFormatConverter(response.feentrada);
     const publicaWebValue = response.publicaWeb === 'Y' ? true : false;
     this.datosPrincipalesForm.patchValue({
       id: response.id || null,
@@ -361,7 +426,7 @@ export class SolicitudDeInscripcionComponent
         domsocial: response.domsocial,
         codpro: codproValue || '',
         codmun: codmunValue || '',
-        cp: response.cp,
+        cp: codCPValue,
         numinscripcion: response.numinscripcion,
         feentrada: feentradaValue,
         fbaja: response.fbaja,
@@ -381,6 +446,7 @@ export class SolicitudDeInscripcionComponent
         dirFax: response.dirFax,
         dirTelefono: response.dirTelefono,
       },
+      representantesDTO: response.representantesDTO,
     });
   }
 
@@ -420,8 +486,8 @@ export class SolicitudDeInscripcionComponent
           `toast_messages.invalid_cif`
         ),
         headerStyle: {
-          icon: 'warning',
-          dialogType: 'alert',
+          icon: 'report_problem',
+          dialogType: 'warn',
           title: this.translocoService.translate('dialog_header.alert'),
         },
       },
@@ -499,25 +565,25 @@ export class SolicitudDeInscripcionComponent
   }
 
   copyAddressFieldsOfEntidadData() {
-    this.selecteddDirProvincia = this.selectedProvincia;
-    this.selecteddDirMunicipio = this.selectedMunicipio;
-    this.selectdircp = this.selectedPostal;
-    this.datosPrincipalesForm.get('notificaciones')?.patchValue({
-      dirDomicilio: this.datosPrincipalesForm.get('entidad.domsocial')?.value,
-      dirProvincia: this.datosPrincipalesForm.get('entidad.codpro')?.value,
-      dirMunicipio: this.datosPrincipalesForm.get('entidad.codmun')?.value,
-      dirCPostal: this.datosPrincipalesForm.get('entidad.cp')?.value,
-      dirEmail: this.datosPrincipalesForm.get('entidad.email')?.value,
-      dirTelefono: this.datosPrincipalesForm.get('entidad.telefono')?.value,
+    return new Promise<void | boolean>((resolve, reject) => {
+      this.datosPrincipalesForm.get('notificaciones')?.patchValue({
+        dirDomicilio: this.datosPrincipalesForm.get('entidad.domsocial')?.value,
+        dirPro: this.datosPrincipalesForm.get('entidad.codpro')?.value,
+        dirMun: this.datosPrincipalesForm.get('entidad.codmun')?.value,
+        dirCp: this.datosPrincipalesForm.get('entidad.cp')?.value,
+        dirEmail: this.datosPrincipalesForm.get('entidad.email')?.value,
+        dirTelefono: this.datosPrincipalesForm.get('entidad.telefono')?.value,
+      });
+      resolve(true);
     });
   }
 
   clearNotificacioneFields() {
     this.datosPrincipalesForm.get('notificaciones')?.patchValue({
       dirDomicilio: '',
-      dirProvincia: '',
-      dirMunicipio: '',
-      dirCPostal: '',
+      dirPro: '',
+      dirMun: '',
+      dirCp: '',
       dirEmail: '',
       dirTelefono: '',
     });
