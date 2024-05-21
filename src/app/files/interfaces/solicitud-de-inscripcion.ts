@@ -7,20 +7,16 @@ export interface Provincia {
   provCodLetra: string;
 }
 export interface Municipio {
-  id: {
-    muniCodMunicipio: string;
-    muniCodProvincia: string;
-  };
+  muniCodMunicipio: string;
+  muniCodProvincia: string;
   muniDenominacion: string;
 }
 
 export interface postalCode {
   cpostMunicipio: string;
-  id: {
-    cpostCodMuni: string;
-    cpostCodPostal: string;
-    cpostCodProv: string;
-  };
+  cpostCodMuni: string;
+  cpostCodPostal: string;
+  cpostCodProv: string;
 }
 export interface Entidad {
   id: number;
@@ -45,6 +41,20 @@ export interface Entidad {
   numinscripcion?: string;
   observaciones?: string;
   publicaWeb?: string;
+  representantesDTO: {
+    apellidos: string;
+    codmun: string;
+    codpro: string;
+    cp: string;
+    domicilio: string;
+    email: string;
+    entidadId: number;
+    fax: string;
+    id: number;
+    nifcif: string;
+    nombre: string;
+    telefono: string;
+  };
   telefono?: string;
   web?: string;
 }
