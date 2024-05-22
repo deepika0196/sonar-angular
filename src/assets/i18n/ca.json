@@ -54,7 +54,9 @@
     "postal": "C. Postal",
     "contact_person": "Persona contacte principal",
     "contact_email": "Correu contacte principal",
-    "office_dialog_header": "Oficina commercial"
+    "office_dialog_header": "Oficina commercial",
+    "default_delete": "No és possible eliminar l'oficina per defecte si és l'únic registre associat a l'entitat.",
+    "last_delete": "Si l'empresa no té oficines a la Comunitat Valenciana, s'afegirà una per defecte amb la Raó social de l'entitat."
   },
 
   "errors": {
@@ -106,7 +108,9 @@
     "delete_alert": "Desitja esborrar definitivament este registre?",
     "modify_alert": "Desitja guardar els canvis realitzats ?",
     "archive_alert": "Desitja arxivar este expedient?",
-    "restore_alert": "Desitja restaurar este expedient?"
+    "restore_alert": "Desitja restaurar este expedient?",
+    "delete_oficinas_alert": "Desitja eliminar esta oficina?",
+    "update_officinas_alert": "Desitja guardar els canvis?"
   },
 
   "solicitud_de_inscripcion": {
