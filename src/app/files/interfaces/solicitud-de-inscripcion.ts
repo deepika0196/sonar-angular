@@ -7,28 +7,24 @@ export interface Provincia {
   provCodLetra: string;
 }
 export interface Municipio {
-  id: {
-    muniCodMunicipio: string;
-    muniCodProvincia: string;
-  };
+  muniCodMunicipio: string;
+  muniCodProvincia: string;
   muniDenominacion: string;
 }
 
 export interface PostalCode {
   cpostMunicipio: string;
-  id: {
-    cpostCodMuni: string;
-    cpostCodPostal: string;
-    cpostCodProv: string;
-  };
+  cpostCodMuni: string;
+  cpostCodPostal: string;
+  cpostCodProv: string;
 }
 export interface Entidad {
-  id?: number;
+  id: number;
   codidfiscal?: string;
   codmun?: string;
   codpro?: string;
   cp?: string;
-  denomsocial?: string; //Razón Social
+  denomsocial?: string;
   dirCodmun?: string;
   dirCodpro?: string;
   dirCp?: string;
@@ -36,15 +32,29 @@ export interface Entidad {
   dirEmail?: string;
   dirFax?: string;
   dirTelefono?: string;
-  domsocial?: string; //Domicilio Social
+  domsocial?: string;
   email?: string;
   fax?: string;
-  fbaja?: Date;
-  feentrada?: Date;
-  nifcif?: string; //cif
-  numinscripcion?: string; // Nº Registro
+  fbaja?: string;
+  feentrada?: string;
+  nifcif?: string;
+  numinscripcion?: string;
   observaciones?: string;
   publicaWeb?: string;
+  representantesDTO: {
+    apellidos: string;
+    codmun: string;
+    codpro: string;
+    cp: string;
+    domicilio: string;
+    email: string;
+    entidadId: number;
+    fax: string;
+    id: number;
+    nifcif: string;
+    nombre: string;
+    telefono: string;
+  };
   telefono?: string;
   web?: string;
 }
@@ -59,4 +69,10 @@ export interface EntidadFilter {
   nifcif?: string;
   numinscripcion?: string;
   representantesNifcif?: string;
+}
+
+export interface State {
+  cif: string;
+  action: string;
+  navigationId: number;
 }
