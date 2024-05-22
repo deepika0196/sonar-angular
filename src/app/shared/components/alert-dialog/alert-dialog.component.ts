@@ -19,13 +19,10 @@ export class AlertDialogComponent implements OnInit {
   inputValues: any;
   data: any;
 
-  constructor(
-    private dialogConfig: DynamicDialogConfig // @Inject('data') public data: any // @Inject(DynamicDialogConfig) public data: any
-  ) {}
+  constructor(private dialogConfig: DynamicDialogConfig) {}
 
   ngOnInit() {
     this.data = this.dialogConfig.data;
-    console.log(this.data);
     this.actionButtons = this.dialogConfig.data?.actionButtons;
     this.inputFields = this.dialogConfig.data.inputFields;
     this.alertMessage = this.dialogConfig.data.alertMessage;
