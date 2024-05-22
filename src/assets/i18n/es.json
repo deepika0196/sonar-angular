@@ -112,7 +112,8 @@
     "accept": "Aceptar",
     "back": "Volver",
     "archivar": "Archivar",
-    "restaurar": "Restaurar"
+    "restaurar": "Restaurar",
+    "close": "Cerrar"
   },
 
   "tooltip": {

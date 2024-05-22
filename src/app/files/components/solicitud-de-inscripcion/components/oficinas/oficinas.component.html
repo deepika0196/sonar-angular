@@ -142,7 +142,7 @@
           <p-dropdown
             [options]="postalList"
             formControlName="postal"
-            optionLabel="cpostMunicipio"
+            optionLabel="cpostCodPostal"
             optionValue="cpostCodPostal"
             [emptyMessage]="t('dropdown.no_result_loaded')"
             [emptyFilterMessage]="t('dropdown.no_result_loaded')"
@@ -157,7 +157,7 @@
               pTemplate="selectedItem"
             >
               <div class="flex align-items-center gap-2">
-                <div>{{ item.cpostMunicipio }}</div>
+                <div>{{ item.cpostCodPostal }}</div>
               </div>
             </ng-template>
             <ng-template
@@ -165,7 +165,7 @@
               pTemplate="item"
             >
               <div class="flex align-items-center gap-2">
-                <div>{{ item.cpostMunicipio }}</div>
+                <div>{{ item.cpostCodPostal }}</div>
               </div>
             </ng-template>
           </p-dropdown>

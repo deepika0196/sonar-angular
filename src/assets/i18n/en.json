@@ -110,7 +110,8 @@
     "accept": "Accept",
     "back": "Back",
     "archivar": "File",
-    "restaurar": "Restore"
+    "restaurar": "Restore",
+    "close": "Close"
   },
 
   "tooltip": {

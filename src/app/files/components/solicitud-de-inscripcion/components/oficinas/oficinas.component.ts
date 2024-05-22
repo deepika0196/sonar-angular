@@ -215,31 +215,188 @@ export class OficinasComponent implements OnInit {
     }
   }
 
-  deleteOficina(campoDetails: any) {
+  checkDefaultOffice() {
+    const [officeDetails] = this.oficinas;
+    return (
+      this.oficinas.length === 1 &&
+      officeDetails.office_name === 'test1' &&
+      !officeDetails.id
+    );
+  }
+
+  getCommonDialogConfig = (
+    buttons: ActionButtons[],
+    template: any
+  ): GenericDialog => {
+    return {
+      header: this.translocoService.translate('oficinas.office_dialog_header'),
+      width: '50%',
+      contentStyle: { overflow: 'none' },
+      closable: false,
+      baseZIndex: 10000,
+      data: { actionButtons: buttons, template: template },
+      styleClass: 'dialogStyle',
+      showHeader: true,
+    };
+  };
+
+  createActionButton = (
+    labelKey: string,
+    icon: string,
+    action: () => void,
+    validate?: () => boolean,
+    disabled = false
+  ): ActionButtons => {
+    return {
+      label: this.translocoService.translate(labelKey),
+      icon: icon,
+      action: action,
+      validate: validate,
+      disabled: disabled,
+    };
+  };
+
+  isOfficeNameInvalid = (): boolean => {
+    const officeName = this.oficinasForm.value.office_name;
+    return !officeName || officeName.trim() === '';
+  };
+
+  openAddDialog() {
+    const saveAction = () => {
+      console.log(this.oficinasForm.value, 'zhns');
+      this.oficinasService
+        .postOficinas({ office_name: 'dd' })
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: () => {
+            this.addDialogRef?.close();
+            this.fetchAllOficinas();
+          },
+          error: (err: Error) => console.error(err),
+        });
+    };
+
+    const actionButtons: ActionButtons[] = [
+      this.createActionButton(
+        'buttons.save',
+        'save',
+        saveAction,
+        this.isOfficeNameInvalid,
+        true
+      ),
+      this.createActionButton(
+        'buttons.cancel',
+        '',
+        () => this.addDialogRef?.close(),
+        undefined,
+        false
+      ),
+    ];
+
+    const addDialogConfig = this.getCommonDialogConfig(
+      actionButtons,
+      this.template
+    );
+    this.addDialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      addDialogConfig
+    );
+  }
+
+  openUpdateDialog() {
+    const updateService = () => {
+      this.oficinasService
+        .postOficinas({ id: 1, office_name: 'ss' })
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: () => {
+            this.updateDialogRef?.close();
+            this.fetchAllOficinas();
+          },
+          error: (err: Error) => console.error(err),
+        });
+    };
+
+    const updateAction = () => {
+      console.log(this.oficinasForm.value, 'zhns');
+      this.openAlertDialog(
+        this.translocoService.translate(
+          'dialog_content.update_officinas_alert'
+        ),
+        'confirm',
+        updateService,
+        this.oficinasForm.value
+      );
+    };
+
+    const actionButtons: ActionButtons[] = [
+      this.createActionButton(
+        'buttons.update',
+        'save',
+        updateAction,
+        this.isOfficeNameInvalid,
+        true
+      ),
+      this.createActionButton(
+        'buttons.cancel',
+        '',
+        () => this.updateDialogRef?.close(),
+        undefined,
+        false
+      ),
+    ];
+
+    const updateDialogConfig = this.getCommonDialogConfig(
+      actionButtons,
+      this.template
+    );
+    this.updateDialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      updateDialogConfig
+    );
+  }
+
+  openViewDialog() {
+    const actionButtons: ActionButtons[] = [
+      this.createActionButton(
+        'buttons.close',
+        '',
+        () => this.viewDialogRef?.close(),
+        undefined,
+        false
+      ),
+    ];
+
+    const viewDialogConfig = this.getCommonDialogConfig(
+      actionButtons,
+      this.template
+    );
+    this.viewDialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      viewDialogConfig
+    );
+  }
+
+  deleteOficina(officeDetails: any) {
     this.oficinasService
-      .deleteOficinas(campoDetails.codigo)
+      .deleteOficinas(officeDetails.codigo)
       .pipe(takeUntil(this.subscription))
       .subscribe({
         next: (data) => {
           if (data?.success === false && data?.errorCode) {
-            // this.openAlertDialog(
-            //   this.translocoService.translate(
-            //     'errors.' + data.errorCode.toString()
-            //   ),
-            //   'warn'
-            // );
-            // this.alertDialogRef = this.openDialog(
-            //   'alert',
-            //   undefined,
-            //   this.translocoService.translate('errors')
-            // );
+            this.openAlertDialog(
+              this.translocoService.translate(
+                'errors.' + data.errorCode.toString()
+              ),
+              'warn'
+            );
           } else {
             this.fetchAllOficinas();
             this.deleteDialogRef?.close();
             this.messageService.add({
               severity: 'success',
               summary: this.translocoService.translate(
-                'campoDeActuacion.title'
+                'oficinas.office_dialog_header'
               ),
               detail: this.translocoService.translate(
                 'toast_messages.delete_success'
@@ -251,241 +408,130 @@ export class OficinasComponent implements OnInit {
       });
   }
 
-  checkDefaultOffice() {
-    const [officeDetails] = this.oficinas;
-    return (
-      this.oficinas.length === 1 &&
-      officeDetails.office_name === 'test' &&
-      !officeDetails.id
-    );
-  }
-
-  openAddDialog() {
-    this.addDialogRef = this.openDialog('add');
-  }
-  openUpdateDialog() {
-    this.updateDialogRef = this.openDialog('update');
-  }
-  openViewDialog() {
-    this.viewDialogRef = this.openDialog('view');
-  }
-
   onDeleteHandler() {
-    this.deleteDialogRef = this.openDialog(
-      'delete',
-      undefined,
-      this.translocoService.translate('dialog_content.delete_oficinas_alert')
-    );
-  }
-
-  openDialog(
-    dialogType: 'add' | 'update' | 'view' | 'delete' | 'alert' | 'confirm',
-    campoDetails?: any,
-    alertMessage?: string,
-    callback?: (input?: any) => void
-  ) {
-    const serviceActions = {
-      add: () => {
-        console.log(this.oficinasForm.value, 'zhns');
-        this.oficinasService
-          .postOficinas({ office_name: 'dd' })
-          .pipe(takeUntil(this.subscription))
-          .subscribe({
-            next: () => {
-              this.addDialogRef?.close();
-              this.fetchAllOficinas();
-            },
-            error: (err: Error) => console.error(err),
-          });
-      },
-      update: () => {
-        const updateService = () => {
-          this.oficinasService
-            .updateOficinas({ id: 1, office_name: 'ss' })
-            .pipe(takeUntil(this.subscription))
-            .subscribe({
-              next: () => {
-                this.updateDialogRef?.close();
-                this.alertDialogRef?.close();
-                this.fetchAllOficinas();
-              },
-              error: (err: Error) => console.error(err),
-            });
-        };
-
-        this.alertDialogRef = this.openDialog(
-          'confirm',
-          this.oficinasForm.value,
-          this.translocoService.translate(
-            'dialog_content.update_officinas_alert'
-          ),
-          updateService
-        );
-      },
-      delete: () => {
-        if (this.oficinas.length === 1 && this.checkDefaultOffice()) {
-          this.alertDialogRef = this.openDialog(
-            'alert',
-            undefined,
-            this.translocoService.translate('oficinas.default_delete')
-          );
-        } else if (this.oficinas.length === 1) {
-          this.alertDialogRef = this.openDialog(
-            'confirm',
-            campoDetails,
-            this.translocoService.translate('oficinas.last_delete'),
-            this.deleteOficina
+    const officeDetails: any = null;
+    const yesAction = () => {
+      if (this.oficinas.length === 1) {
+        if (this.checkDefaultOffice()) {
+          this.openAlertDialog(
+            this.translocoService.translate('oficinas.default_delete'),
+            'warn'
           );
         } else {
-          this.deleteOficina(campoDetails);
+          this.openAlertDialog(
+            this.translocoService.translate('oficinas.last_delete'),
+            'confirm',
+            this.deleteOficina,
+            officeDetails
+          );
         }
+      } else {
+        this.deleteOficina(officeDetails);
+      }
+    };
+
+    const actionButtons: ActionButtons[] = [
+      this.createActionButton(
+        'buttons.yes',
+        'check',
+        yesAction,
+        undefined,
+        false
+      ),
+      this.createActionButton(
+        'buttons.no',
+        '',
+        () => this.deleteDialogRef?.close(),
+        undefined,
+        false
+      ),
+    ];
+
+    const deleteDialogConfig: GenericDialog = {
+      width: '40%',
+      contentStyle: { overflow: 'none' },
+      showHeader: false,
+      closable: false,
+      baseZIndex: 10000,
+      styleClass: 'dialogStyle',
+      data: {
+        actionButtons: actionButtons,
+        alertMessage: this.translocoService.translate(
+          'dialog_content.delete_oficinas_alert'
+        ),
+        headerStyle: {
+          icon: 'info',
+          dialogType: 'confirm',
+          title: this.translocoService.translate('dialog_header.delete'),
+        },
       },
-      view: () => {},
-      alert: () => {},
-      confirm: () => {},
     };
-
-    const validate = () => {
-      const officeName = this.oficinasForm.value.office_name;
-      return !officeName || officeName.trim() === '';
-    };
-
-    const actionButtons = this.getActionButtons(
-      dialogType,
-      serviceActions[dialogType],
-      validate,
-      callback,
-      campoDetails
+    this.deleteDialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      deleteDialogConfig
     );
-    const dialogConfig = this.getDialogConfig(
-      dialogType,
-      actionButtons,
-      alertMessage
-    );
-
-    return this.dialogService.open(AlertDialogComponent, dialogConfig);
   }
 
-  getActionButtons(
+  openAlertDialog(
+    alertMessage: string,
     dialogType: string,
-    serviceAction: () => void,
-    validate: () => boolean,
     callback?: (input?: any) => void,
     campoDetails?: any
-  ): ActionButtons[] {
-    const buttons: { [key: string]: ActionButtons[] } = {
-      add: [
-        {
-          label: this.translocoService.translate('buttons.save'),
-          icon: 'save',
-          action: serviceAction,
-          validate: validate,
-          disabled: true,
-        },
-        {
-          label: this.translocoService.translate('buttons.cancel'),
-          action: () => this.addDialogRef?.close(),
-          disabled: false,
-        },
-      ],
-      update: [
-        {
-          label: this.translocoService.translate('buttons.update'),
-          icon: 'save',
-          action: serviceAction,
-          validate: validate,
-          disabled: true,
-        },
-        {
-          label: this.translocoService.translate('buttons.cancel'),
-          action: () => this.updateDialogRef?.close(),
-          disabled: false,
-        },
-      ],
-      view: [
-        {
-          label: this.translocoService.translate('buttons.cancel'),
-          action: () => this.viewDialogRef?.close(),
-          disabled: false,
-        },
-      ],
-      delete: [
-        {
-          label: this.translocoService.translate('buttons.yes'),
-          icon: 'check',
-          action: serviceAction,
-          disabled: false,
-        },
-        {
-          label: this.translocoService.translate('buttons.no'),
-          action: () => this.deleteDialogRef?.close(),
-          disabled: false,
-        },
-      ],
-      alert: [
-        {
-          label: this.translocoService.translate('buttons.accept'),
-          action: () => this.alertDialogRef?.close(),
-          disabled: false,
-        },
-      ],
-      confirm: [
-        {
-          label: this.translocoService.translate('buttons.yes'),
-          icon: 'check',
-          action: () => {
-            if (callback && campoDetails) callback(campoDetails);
-            this.alertDialogRef?.close();
-          },
-          disabled: false,
-        },
-        {
-          label: this.translocoService.translate('buttons.no'),
-          action: () => this.alertDialogRef?.close(),
-          disabled: false,
-        },
-      ],
-    };
+  ) {
+    const actionButtons: ActionButtons[] =
+      dialogType === 'confirm'
+        ? [
+            this.createActionButton(
+              'buttons.yes',
+              'check',
+              () => {
+                if (callback && campoDetails) callback(campoDetails);
+                this.alertDialogRef?.close();
+              },
+              undefined,
+              false
+            ),
+            this.createActionButton(
+              'buttons.no',
+              '',
+              () => this.alertDialogRef?.close(),
+              undefined,
+              false
+            ),
+          ]
+        : [
+            this.createActionButton(
+              'buttons.accept',
+              '',
+              () => this.alertDialogRef?.close(),
+              undefined,
+              false
+            ),
+          ];
 
-    return buttons[dialogType];
-  }
-
-  getDialogConfig(
-    dialogType: string,
-    actionButtons: ActionButtons[],
-    alertMessage?: string
-  ): GenericDialog {
-    const isAlertDialog =
-      dialogType === 'alert' ||
-      dialogType === 'confirm' ||
-      dialogType === 'delete';
-
-    const dialogConfig: GenericDialog = {
-      header: this.translocoService.translate('oficinas.office_dialog_header'),
-      width: isAlertDialog ? '40%' : '50%',
+    const alertDialogConfig: GenericDialog = {
+      width: '40%',
       contentStyle: { overflow: 'none' },
+      showHeader: false,
+      baseZIndex: 20000,
       closable: false,
-      baseZIndex: isAlertDialog ? 20000 : 10000,
-      data: {
-        actionButtons,
-        template: isAlertDialog ? undefined : this.template,
-        alertMessage: isAlertDialog ? alertMessage : undefined,
-      },
       styleClass: 'dialogStyle',
-      showHeader: !isAlertDialog,
+      data: {
+        actionButtons: actionButtons,
+        alertMessage: alertMessage,
+        headerStyle: {
+          icon: dialogType === 'confirm' ? 'info' : 'report_problem',
+          dialogType: dialogType,
+          title:
+            dialogType === 'confirm'
+              ? this.translocoService.translate('dialog_header.delete')
+              : this.translocoService.translate('dialog_header.alert'),
+        },
+      },
     };
-
-    if (isAlertDialog) {
-      dialogConfig.data.headerStyle = {
-        icon: dialogType === 'alert' ? 'report_problem' : 'info',
-        dialogType: dialogType === 'alert' ? 'warn' : 'confirm',
-        title:
-          dialogType === 'alert'
-            ? this.translocoService.translate('dialog_header.alert')
-            : this.translocoService.translate('dialog_header.delete'),
-      };
-    }
-
-    return dialogConfig;
+    this.alertDialogRef = this.dialogService.open(
+      AlertDialogComponent,
+      alertDialogConfig
+    );
   }
 }
