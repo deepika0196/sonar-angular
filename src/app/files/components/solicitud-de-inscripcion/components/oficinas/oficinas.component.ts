@@ -326,14 +326,15 @@ export class OficinasComponent implements OnInit {
         if (this.oficinas.length === 1 && this.checkDefaultOffice()) {
           this.alertDialogRef = this.openDialog(
             'alert',
-            this.alertDialogRef,
+            undefined,
             this.translocoService.translate('oficinas.default_delete')
           );
         } else if (this.oficinas.length === 1) {
           this.alertDialogRef = this.openDialog(
-            'alert',
-            this.alertDialogRef,
-            this.translocoService.translate('oficinas.last_delete')
+            'confirm',
+            campoDetails,
+            this.translocoService.translate('oficinas.last_delete'),
+            this.deleteOficina
           );
         } else {
           this.deleteOficina(campoDetails);
@@ -460,9 +461,7 @@ export class OficinasComponent implements OnInit {
       dialogType === 'delete';
 
     const dialogConfig: GenericDialog = {
-      header: this.translocoService.translate(
-        this.translocoService.translate('oficinas.office_dialog_header')
-      ),
+      header: this.translocoService.translate('oficinas.office_dialog_header'),
       width: isAlertDialog ? '40%' : '50%',
       contentStyle: { overflow: 'none' },
       closable: false,
