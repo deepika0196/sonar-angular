@@ -46,7 +46,7 @@ module.exports = function (config) {
         emitWarning: true,
       },
     },
-    
+
     sonarqubeReporter: {
       basePath: 'src/app', // test files folder
       filePattern: '**/*spec.ts', // test files glob pattern

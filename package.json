@@ -21,7 +21,7 @@
     "build:tar_pre": "npm install && ng build --base-href /expropia-frontend/ --configuration=pre",
     "build:tar_prod": "npm install && ng build --base-href /expropia-frontend/ --configuration=prod ",
     "build:tar": "npm install && ng build --base-href /expropia-frontend/ --configuration=prod ",
-    "coverage": "ng test --codeCoverage=true --browsers=Chrome --watch=false && node sonar-project.js"
+    "coverage": "ng test --code-coverage=true --browsers=Chrome --watch=false && node sonar-project.js"
   },
   "private": true,
   "dependencies": {
