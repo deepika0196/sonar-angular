@@ -19,7 +19,7 @@ export interface postalCode {
   cpostCodProv: string;
 }
 export interface Entidad {
-  id: number;
+  id?: number;
   codidfiscal?: string;
   codmun?: string;
   codpro?: string;

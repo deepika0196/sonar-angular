@@ -9,13 +9,13 @@
 
 .disabled {
   background-color: var(--light-grey);
-  .p-autocomplete-dd,
+
   .p-calendar-disabled {
     background-color: var(--lighter-grey);
   }
 }
 .ng-invalid.ng-touched {
-  border-color: rgb(198, 27, 27) !important;
+  border-color: var(--red) !important;
 }
 ::ng-deep .accordion {
   height: auto;
@@ -28,9 +28,22 @@
   }
   .p-accordion .p-accordion-header .p-accordion-header-link {
     padding: 0;
+    color: var(--light-blue);
     background-color: var(-- --accordion);
     text-decoration: none;
     width: 100%;
+  }
+
+  .p-accordion
+    .p-accordion-header:not(.p-disabled).p-highlight
+    .p-accordion-header-link {
+    color: var(--light-blue);
+    font-weight: 800;
+  }
+  .p-accordion
+    .p-accordion-header:not(.p-highlight):not(.p-disabled):hover
+    .p-accordion-header-link {
+    color: var(--light-blue);
   }
 }
 
@@ -55,6 +68,9 @@
     border-left: none;
   }
 
+  .p-disabled {
+    background-color: var(--lighter-grey);
+  }
   .p-inputtext:enabled:hover {
     border-color: var(--black);
   }
