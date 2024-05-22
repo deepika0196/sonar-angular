@@ -30,7 +30,7 @@ import { Subject, takeUntil } from 'rxjs';
   selector: 'app-oficinas',
   templateUrl: './oficinas.component.html',
   styleUrls: ['./oficinas.component.scss'],
-  providers: [DialogService],
+  providers: [DialogService, MessageService],
 })
 export class OficinasComponent implements OnInit {
   @ViewChild('template') template: TemplateRef<any>;
