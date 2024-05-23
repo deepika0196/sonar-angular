@@ -154,8 +154,8 @@ export class SolicitudDeInscripcionSearchComponent
   }
 
   ngOnInit() {
-    this.fetchAllSolicitudDeInscripcion();
-    this.fetchAllProvincia();
+    // this.fetchAllSolicitudDeInscripcion();
+    // this.fetchAllProvincia();
   }
 
   fetchAllSolicitudDeInscripcion() {
@@ -334,7 +334,9 @@ export class SolicitudDeInscripcionSearchComponent
     action: 'view' | 'edit' | 'add',
     entidad?: Entidad
   ) {
-    const state = entidad ? { cif: entidad.nifcif, action } : { action };
+    const state = entidad
+      ? { cif: entidad.nifcif, id: entidad.id, action }
+      : { action };
     this.router.navigate(['/files/solicitudDeInscripcion'], { state });
   }
 

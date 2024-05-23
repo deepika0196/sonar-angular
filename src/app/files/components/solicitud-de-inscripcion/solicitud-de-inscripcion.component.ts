@@ -31,6 +31,8 @@ import {
 import { CIFValidator } from '@app/core/utils/cif-validator';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { OficinasService } from '@app/files/services/oficinas.service';
+import { Oficinas } from '@app/files/interfaces/oficinas';
 
 @Component({
   selector: 'app-solicitud-de-inscripcion',
@@ -63,6 +65,8 @@ export class SolicitudDeInscripcionComponent
   cifNif = '';
   readOnlyMode: boolean;
   isLegalCifNif: boolean;
+  disableTabs: boolean;
+  oficinasList: Oficinas[] = [];
 
   private subscription = new Subject<void>();
   constructor(
@@ -72,6 +76,7 @@ export class SolicitudDeInscripcionComponent
     private solicitudProvinciaService: SolicitudeProvinciaService,
     private solicitudeMunicipioService: SolicitudeMunicipioService,
     private solicitudDeInscripcionService: SolicitudDeInscripcionService,
+    private oficinasService: OficinasService,
     private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
     private location: Location,
     private router: Router
@@ -93,19 +98,41 @@ export class SolicitudDeInscripcionComponent
   }
   ngOnInit(): void {
     this.copyAdress = true;
-    this.initializePage();
+    // this.initializePage();
   }
 
   async initializePage() {
     await this.loadProvincia();
     await this.setupFormChangeSubscriptions();
     const state: State = this.location.getState() as State;
-    this.checkMode(state.action);
+    console.log(state);
+    const mode = this.checkMode(state.action);
+    this.disableTabs = mode === 'add' ? false : false;
     if (state.cif) {
       this.cifNif = state.cif;
       await this.fetchDetails(state.cif);
+      await this.fetchAllOficinasById(state.id);
     }
   }
+
+  fetchAllOficinasById(id: number): Promise<void | boolean> {
+    return new Promise<void | boolean>((resolve, reject) => {
+      this.oficinasService
+        .getOficinas(id)
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: (data) => {
+            this.oficinasList = data.response;
+            resolve(true);
+          },
+          error: (err: Error) => {
+            console.error(err);
+            reject(err);
+          },
+        });
+    });
+  }
+
   loadProvincia() {
     return new Promise<void | boolean>((resolve, reject) => {
       this.solicitudProvinciaService

@@ -1,4 +1,12 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { GlobalConstant } from '@app/core/constants/globalConstants';
 import { Oficinas } from '@app/files/interfaces/oficinas';
@@ -113,17 +121,21 @@ export class OficinasComponent implements OnInit {
     },
   ];
 
-  oficinas: Oficinas[] = [];
+  @Input() oficinas: Oficinas[] = [];
+  @Input() social = '';
+  @Input() entidadId: number;
+  @Input() provinceList: Provincia[] = [];
+  @Output() fetchAllOficinasById: EventEmitter<number> = new EventEmitter();
   private subscription = new Subject<void>();
   addDialogRef: DynamicDialogRef | undefined = new DynamicDialogRef();
   updateDialogRef: DynamicDialogRef | undefined = new DynamicDialogRef();
   viewDialogRef: DynamicDialogRef | undefined = new DynamicDialogRef();
   deleteDialogRef: DynamicDialogRef | undefined = new DynamicDialogRef();
   alertDialogRef: DynamicDialogRef | undefined = new DynamicDialogRef();
-  provinciaList: Provincia[] = [];
   municipioList: Municipio[] = [];
   postalList: PostalCode[] = [];
   calendarDateFormat = GlobalConstant.ddmmyy;
+  globalConst = GlobalConstant;
   oficinasForm;
 
   constructor(
@@ -139,7 +151,7 @@ export class OficinasComponent implements OnInit {
       office_name: new FormControl(''),
       residency: new FormControl(null),
       phone: new FormControl(null),
-      fax: new FormControl(null),
+      phone_2: new FormControl(null),
       province: new FormControl(null),
       municipality: new FormControl(null),
       postal: new FormControl(null),
@@ -149,34 +161,39 @@ export class OficinasComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchAllOficinas();
-    this.fetchAllProvincia();
-  }
-
-  fetchAllOficinas() {
-    this.oficinasService
-      .getOficinas()
-      .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          this.oficinas = data.response;
-        },
-        error: (err: Error) => console.error(err),
-        complete: () => {},
-      });
     this.oficinas.push({ office_name: 'test' });
+    // this.fetchAllOficinas();
+    // this.fetchAllProvincia();
   }
 
-  fetchAllProvincia() {
-    this.solicitudProvinciaService
-      .getProvincia()
-      .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          this.provinciaList = data.response;
-        },
-        error: (err: Error) => console.error(err),
-      });
+  // fetchAllOficinas() {
+  //   this.oficinasService
+  //     .getOficinas(1)
+  //     .pipe(takeUntil(this.subscription))
+  //     .subscribe({
+  //       next: (data) => {
+  //         this.oficinas = data.response;
+  //       },
+  //       error: (err: Error) => console.error(err),
+  //       complete: () => {},
+  //     });
+  //   this.oficinas.push({ office_name: 'test' });
+  // }
+
+  // fetchAllProvincia() {
+  //   this.solicitudProvinciaService
+  //     .getProvincia()
+  //     .pipe(takeUntil(this.subscription))
+  //     .subscribe({
+  //       next: (data) => {
+  //         this.provinciaList = data.response;
+  //       },
+  //       error: (err: Error) => console.error(err),
+  //     });
+  // }
+
+  fetchAllOficinas(item: number) {
+    this.fetchAllOficinasById.emit(item);
   }
 
   onProvinciaSelected(selectedProvincia: string) {
@@ -194,8 +211,7 @@ export class OficinasComponent implements OnInit {
       this.municipioList = [];
     }
   }
-  onMunicipalitySelected(selectedMunicipality: any) {
-    console.log(selectedMunicipality, 'Sj');
+  onMunicipalitySelected(selectedMunicipality: Municipio) {
     if (selectedMunicipality) {
       this.solicituddeCodigoPostalService
         .getMunicipio(
@@ -206,7 +222,6 @@ export class OficinasComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.postalList = data.response;
-            console.log('cp = ', data.response);
           },
           error: (err: Error) => console.error(err),
         });
@@ -219,24 +234,34 @@ export class OficinasComponent implements OnInit {
     const [officeDetails] = this.oficinas;
     return (
       this.oficinas.length === 1 &&
-      officeDetails.office_name === 'test1' &&
+      officeDetails.office_name === this.social &&
       !officeDetails.id
     );
   }
 
   getCommonDialogConfig = (
     buttons: ActionButtons[],
-    template: any
+    template: any,
+    width: string,
+    showHeader: boolean,
+    headerStyle?: any,
+    alertMessage?: string,
+    baseZIndex = 1000
   ): GenericDialog => {
     return {
       header: this.translocoService.translate('oficinas.office_dialog_header'),
-      width: '50%',
+      width: width,
       contentStyle: { overflow: 'none' },
       closable: false,
-      baseZIndex: 10000,
-      data: { actionButtons: buttons, template: template },
+      baseZIndex: baseZIndex,
+      data: {
+        actionButtons: buttons,
+        template,
+        headerStyle,
+        alertMessage,
+      },
       styleClass: 'dialogStyle',
-      showHeader: true,
+      showHeader: showHeader,
     };
   };
 
@@ -263,14 +288,13 @@ export class OficinasComponent implements OnInit {
 
   openAddDialog() {
     const saveAction = () => {
-      console.log(this.oficinasForm.value, 'zhns');
       this.oficinasService
         .postOficinas({ office_name: 'dd' })
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: () => {
             this.addDialogRef?.close();
-            this.fetchAllOficinas();
+            this.fetchAllOficinas(this.entidadId);
           },
           error: (err: Error) => console.error(err),
         });
@@ -295,7 +319,9 @@ export class OficinasComponent implements OnInit {
 
     const addDialogConfig = this.getCommonDialogConfig(
       actionButtons,
-      this.template
+      this.template,
+      '50%',
+      true
     );
     this.addDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -311,14 +337,13 @@ export class OficinasComponent implements OnInit {
         .subscribe({
           next: () => {
             this.updateDialogRef?.close();
-            this.fetchAllOficinas();
+            this.fetchAllOficinas(this.entidadId);
           },
           error: (err: Error) => console.error(err),
         });
     };
 
     const updateAction = () => {
-      console.log(this.oficinasForm.value, 'zhns');
       this.openAlertDialog(
         this.translocoService.translate(
           'dialog_content.update_officinas_alert'
@@ -348,7 +373,9 @@ export class OficinasComponent implements OnInit {
 
     const updateDialogConfig = this.getCommonDialogConfig(
       actionButtons,
-      this.template
+      this.template,
+      '50%',
+      true
     );
     this.updateDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -369,7 +396,9 @@ export class OficinasComponent implements OnInit {
 
     const viewDialogConfig = this.getCommonDialogConfig(
       actionButtons,
-      this.template
+      this.template,
+      '50%',
+      true
     );
     this.viewDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -391,7 +420,7 @@ export class OficinasComponent implements OnInit {
               'warn'
             );
           } else {
-            this.fetchAllOficinas();
+            this.fetchAllOficinas(this.entidadId);
             this.deleteDialogRef?.close();
             this.messageService.add({
               severity: 'success',
@@ -411,20 +440,20 @@ export class OficinasComponent implements OnInit {
   onDeleteHandler() {
     const officeDetails: any = null;
     const yesAction = () => {
-      if (this.oficinas.length === 1) {
-        if (this.checkDefaultOffice()) {
-          this.openAlertDialog(
-            this.translocoService.translate('oficinas.default_delete'),
-            'warn'
-          );
-        } else {
-          this.openAlertDialog(
-            this.translocoService.translate('oficinas.last_delete'),
-            'confirm',
-            this.deleteOficina,
-            officeDetails
-          );
-        }
+      const oficinasLength = this.oficinas.length;
+      const isDefaultOffice = this.checkDefaultOffice();
+      const alertType = isDefaultOffice ? 'warn' : 'confirm';
+      const alertMessage = isDefaultOffice
+        ? 'oficinas.default_delete'
+        : 'oficinas.last_delete';
+
+      if (oficinasLength === 1) {
+        this.openAlertDialog(
+          this.translocoService.translate(alertMessage),
+          alertType,
+          isDefaultOffice ? undefined : this.deleteOficina,
+          officeDetails
+        );
       } else {
         this.deleteOficina(officeDetails);
       }
@@ -447,25 +476,21 @@ export class OficinasComponent implements OnInit {
       ),
     ];
 
-    const deleteDialogConfig: GenericDialog = {
-      width: '40%',
-      contentStyle: { overflow: 'none' },
-      showHeader: false,
-      closable: false,
-      baseZIndex: 10000,
-      styleClass: 'dialogStyle',
-      data: {
-        actionButtons: actionButtons,
-        alertMessage: this.translocoService.translate(
-          'dialog_content.delete_oficinas_alert'
-        ),
-        headerStyle: {
-          icon: 'info',
-          dialogType: 'confirm',
-          title: this.translocoService.translate('dialog_header.delete'),
-        },
-      },
+    const headerStyle = {
+      icon: 'info',
+      dialogType: 'confirm',
+      title: this.translocoService.translate('dialog_header.delete'),
     };
+
+    const deleteDialogConfig = this.getCommonDialogConfig(
+      actionButtons,
+      undefined,
+      '40%',
+      false,
+      headerStyle,
+      this.translocoService.translate('dialog_content.delete_oficinas_alert')
+    );
+
     this.deleteDialogRef = this.dialogService.open(
       AlertDialogComponent,
       deleteDialogConfig
@@ -508,27 +533,25 @@ export class OficinasComponent implements OnInit {
               false
             ),
           ];
-
-    const alertDialogConfig: GenericDialog = {
-      width: '40%',
-      contentStyle: { overflow: 'none' },
-      showHeader: false,
-      baseZIndex: 20000,
-      closable: false,
-      styleClass: 'dialogStyle',
-      data: {
-        actionButtons: actionButtons,
-        alertMessage: alertMessage,
-        headerStyle: {
-          icon: dialogType === 'confirm' ? 'info' : 'report_problem',
-          dialogType: dialogType,
-          title:
-            dialogType === 'confirm'
-              ? this.translocoService.translate('dialog_header.delete')
-              : this.translocoService.translate('dialog_header.alert'),
-        },
-      },
+    const headerStyle = {
+      icon: dialogType === 'confirm' ? 'info' : 'report_problem',
+      dialogType: dialogType,
+      title:
+        dialogType === 'confirm'
+          ? this.translocoService.translate('dialog_header.delete')
+          : this.translocoService.translate('dialog_header.alert'),
     };
+
+    const alertDialogConfig = this.getCommonDialogConfig(
+      actionButtons,
+      undefined,
+      '40%',
+      false,
+      headerStyle,
+      alertMessage,
+      20000
+    );
+
     this.alertDialogRef = this.dialogService.open(
       AlertDialogComponent,
       alertDialogConfig

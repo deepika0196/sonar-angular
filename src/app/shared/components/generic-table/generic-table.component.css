@@ -24,12 +24,13 @@
   color: var(--black);
 }
 
-/* ::ng-deep .p-column-filter-clear-button {
-  font-family: 'material-icons';
+::ng-deep .p-column-filter-clear-button {
+  font-family: 'Material Icons Outlined';
 
   filterslashicon {
     &:before {
       content: '\eb32';
+      font-size: 1.5rem;
     }
   }
-} */
+}

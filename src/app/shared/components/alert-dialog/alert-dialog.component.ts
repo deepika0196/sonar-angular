@@ -23,7 +23,6 @@ export class AlertDialogComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.dialogConfig.data;
-    console.log(this.data);
     this.actionButtons = this.dialogConfig.data?.actionButtons;
     this.inputFields = this.dialogConfig.data.inputFields;
     this.alertMessage = this.dialogConfig.data.alertMessage;

@@ -10,9 +10,9 @@ import {
   providedIn: 'root',
 })
 export class OficinasService extends CommonService {
-  getOficinas() {
+  getOficinas(id: number) {
     return this._arqHttpClient.get<CustomResponse<Oficinas>>(
-      this.urlBuilder(UrlEndpoints.reccaSecciones)
+      this.urlBuilder(UrlEndpoints.reccaSecciones) + `/${id}`
     );
   }
 

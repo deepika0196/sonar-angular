@@ -73,6 +73,7 @@ export interface EntidadFilter {
 
 export interface State {
   cif: string;
+  id: number;
   action: string;
   navigationId: number;
 }
