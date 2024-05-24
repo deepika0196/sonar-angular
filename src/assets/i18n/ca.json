@@ -11,7 +11,7 @@
     "sub_menu": {
       "entidades_solicitantes": "Entidades Solicitantes",
       "campos_de_actuacion": "Campos de Actuación",
-      "requerimientos_subsanacion": "Requerimientos Subsanación",
+      "requerimientos_subsanacion": "Requerimientos de Subsanación",
       "representantes_de_entidad": "Representantes de Entidad",
       "solicitud_de_inscripcion": "Solicitud de Inscripción",
       "generacion_de_informes": "Generación de Informes"
@@ -25,6 +25,10 @@
     "field_description": "Descripció castellà",
     "field_descriptionVal": "Descripció valencià"
   },
+  "actions": {
+    "acciones": "Accions"
+  },
+
   "requerimientosSubsanacion": {
     "title": "Requeriments d'esmena",
     "field_id": "Codi",
@@ -110,13 +114,13 @@
     "fecha_baja": "Data Baixa",
     "e-mail": "E-mail",
     "telefono": "Telèfon",
-    "telefono2": "Teléfono 2",
+    "telefono2": "Teléfon 2",
     "publicar_en_web": "Publicar en web",
     "observaciones": "Observacions",
     "title_tab_2": "Dirección Notificaciones",
-    "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
+    "copiar_notificaciones": "Copiar la dirección principal para notificaciones",
     "domicilio": "Domicilio",
-    "archivar_message": "Desitja arxivar este expedient",
+    "archivar_message": "Desitja arxivar este expedient?",
     "restaurar_message": "Desitja restaurar este expedient?",
     "title_tab_3": "Representante legal",
     "nif_cif": "NIF/CIF",
@@ -131,6 +135,10 @@
   "dropdown": {
     "placeholder": "Seleccionar",
     "no_result_loaded": "No es poden mostrar els resultats"
+  },
+
+  "date": {
+    "dd/mm/yyyy": "dd/mm/aaaa"
   },
 
   "title": "ca_Exemple dús",

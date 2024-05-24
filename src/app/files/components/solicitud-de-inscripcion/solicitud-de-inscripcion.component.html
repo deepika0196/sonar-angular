@@ -233,7 +233,7 @@
                       class="calenderStyle w-full"
                       [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
-                      [placeholder]="calendarDateFormat"
+                      placeholder="{{ t('date.dd/mm/yyyy') }}"
                       formControlName="feentrada"
                       [ngClass]="readOnlyMode ? 'disabled' : ''"
                     ></p-calendar>
@@ -251,7 +251,7 @@
                       id="fbaja"
                       formControlName="fbaja"
                       class="calenderStyle disabled w-full"
-                      [placeholder]="calendarDateFormat"
+                      placeholder="{{ t('date.dd/mm/yyyy') }}"
                       [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
                       [showOnFocus]="false"

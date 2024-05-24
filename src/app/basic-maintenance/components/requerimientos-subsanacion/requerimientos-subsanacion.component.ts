@@ -57,7 +57,7 @@ export class RequerimientosSubsanacionComponent implements OnInit, OnDestroy {
     },
     {
       field: 'action',
-      header: '',
+      header: 'actions.acciones',
       sortable: false,
       class: 'table-col-width-fix',
     },
