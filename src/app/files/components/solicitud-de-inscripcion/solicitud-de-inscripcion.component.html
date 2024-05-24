@@ -73,10 +73,9 @@
                   [(ngModel)]="cifNif"
                   class="p-inputtext inputStyle w-full"
                   [maxLength]="9"
-                  (blur)="fetchDetails(cifNif)"
+                  (blur)="!readOnlyMode && fetchDetails(cifNif)"
                   formControlName="nifcif"
                   [ngClass]="readOnlyMode ? 'disabled' : ''"
-                  [disabled]="readOnlyMode"
                 />
               </div>
             </div>
@@ -94,7 +93,6 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="denomsocial"
                   [ngClass]="readOnlyMode ? 'disabled' : ''"
-                  [disabled]="readOnlyMode"
                 />
               </div>
             </div>
@@ -112,7 +110,6 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="domsocial"
                   [ngClass]="readOnlyMode ? 'disabled' : ''"
-                  [disabled]="readOnlyMode"
                 />
               </div>
             </div>
@@ -138,16 +135,14 @@
                       (completeMethod)="
                         !readOnlyMode && filterProvincia($event)
                       "
-                      field="provDenominacion"
-                      [ngClass]="readOnlyMode ? 'disabled' : ''"
-                      [readonly]="readOnlyMode"
-                      [disabled]="readOnlyMode"
                       (onSelect)="
                         loadMunicipio(
                           this.datosPrincipalesForm.get('entidad.codpro')?.value
                             .provCodProvincia
                         )
                       "
+                      field="provDenominacion"
+                      [readonly]="readOnlyMode"
                     >
                     </p-autoComplete>
                   </div>
@@ -169,10 +164,6 @@
                       (completeMethod)="
                         !readOnlyMode && filterMunicipio($event)
                       "
-                      field="muniDenominacion"
-                      [ngClass]="{ disabled: readOnlyMode }"
-                      [readonly]="readOnlyMode"
-                      [disabled]="readOnlyMode"
                       (onSelect)="
                         loadCP(
                           this.datosPrincipalesForm.get('entidad.codmun')?.value
@@ -181,6 +172,7 @@
                             .muniCodMunicipio
                         )
                       "
+                      field="muniDenominacion"
                     >
                     </p-autoComplete>
                   </div>
@@ -200,10 +192,7 @@
                       [dropdown]="true"
                       [suggestions]="filteredPostal"
                       (completeMethod)="!readOnlyMode && filterPostal($event)"
-                      field="cpostMunicipio"
-                      [ngClass]="{ disabled: readOnlyMode }"
-                      [readonly]="readOnlyMode"
-                      [disabled]="readOnlyMode"
+                      field="cpostCodPostal"
                     >
                     </p-autoComplete>
                   </div>
@@ -228,7 +217,6 @@
                       class="p-inputtext inputStyle w-full"
                       formControlName="numinscripcion"
                       [ngClass]="readOnlyMode ? 'disabled' : ''"
-                      [disabled]="readOnlyMode"
                     />
                   </div>
                 </div>
@@ -248,7 +236,6 @@
                       [placeholder]="calendarDateFormat"
                       formControlName="feentrada"
                       [ngClass]="readOnlyMode ? 'disabled' : ''"
-                      [disabled]="readOnlyMode"
                     ></p-calendar>
                   </div>
                 </div>
@@ -268,7 +255,6 @@
                       [dateFormat]="calendarDateFormat"
                       [showIcon]="true"
                       [showOnFocus]="false"
-                      [ngClass]="'disabled'"
                       readonly="true"
                       [disabled]="true"
                     >
@@ -295,7 +281,6 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="email"
                   [ngClass]="readOnlyMode ? 'disabled' : ''"
-                  [disabled]="readOnlyMode"
                 />
               </div>
             </div>
@@ -314,7 +299,6 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="telefono"
                   [ngClass]="readOnlyMode ? 'disabled' : ''"
-                  [disabled]="readOnlyMode"
                 />
               </div>
             </div>
@@ -323,7 +307,7 @@
                 class="labelStyle"
                 for="fax"
               >
-                {{ t('solicitud_de_inscripcion.fax') }}</label
+                {{ t('solicitud_de_inscripcion.telefono2') }}</label
               >
               <div class="w-100">
                 <input
@@ -333,7 +317,6 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="fax"
                   [ngClass]="readOnlyMode ? 'disabled' : ''"
-                  [disabled]="readOnlyMode"
                 />
               </div>
             </div>
@@ -348,6 +331,7 @@
                 <p-checkbox
                   [binary]="true"
                   id="publicaWeb"
+                  class="checkboxStyle"
                   formControlName="publicaWeb"
                 ></p-checkbox>
               </div>
@@ -370,7 +354,6 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="observaciones"
                   [ngClass]="readOnlyMode ? 'disabled' : ''"
-                  [disabled]="readOnlyMode"
                 />
               </div>
             </div>
@@ -398,15 +381,14 @@
                   [binary]="true"
                   id="addressCopy"
                   formControlName="addressCopy"
+                  class="checkboxStyle"
                 ></p-checkbox>
                 <label
                   class="labelStyle"
                   for="addressCopy"
                 >
                   {{
-                    t(
-                      'solicitud_de_inscripcion.copiar_la_direccion_principal_para_notificaciones'
-                    )
+                    t('solicitud_de_inscripcion.copiar_notificaciones')
                   }}</label
                 >
               </div>
@@ -436,25 +418,24 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="dirPro"
+                for="dirCodpro"
               >
                 {{ t('solicitud_de_inscripcion.provincia') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
-                  id="dirPro"
-                  formControlName="dirPro"
+                  id="dirCodpro"
+                  formControlName="dirCodpro"
                   class="autoCompleteStyle w-full"
                   [dropdown]="true"
                   [suggestions]="filteredProvincia"
                   (completeMethod)="!copyAdress && filterProvincia($event)"
                   field="provDenominacion"
-                  [ngClass]="{ disabled: copyAdress || readOnlyMode }"
                   [readonly]="copyAdress || readOnlyMode"
                   [disabled]="copyAdress || readOnlyMode"
                   (onSelect)="
                     loadMunicipio(
-                      this.datosPrincipalesForm.get('notificaciones.codPro')
+                      this.datosPrincipalesForm.get('notificaciones.dirCodpro')
                         ?.value.provCodProvincia
                     )
                   "
@@ -465,28 +446,27 @@
             <div class="col-3">
               <label
                 class="labelStyle"
-                for="dirMun"
+                for="dirCodmun"
               >
                 {{ t('solicitud_de_inscripcion.municipio') }}
               </label>
               <div class="w-full">
                 <p-autoComplete
-                  id="dirMun"
-                  formControlName="dirMun"
+                  id="dirCodmun"
+                  formControlName="dirCodmun"
                   class="autoCompleteStyle w-full"
                   [dropdown]="true"
                   [suggestions]="filteredMunicipio"
                   (completeMethod)="!copyAdress && filterMunicipio($event)"
                   (onSelect)="
                     loadCP(
-                      this.datosPrincipalesForm.get('notificaciones.dirMun')
+                      this.datosPrincipalesForm.get('notificaciones.dirCodmun')
                         ?.value.muniCodProvincia,
-                      this.datosPrincipalesForm.get('notificaciones.dirMun')
+                      this.datosPrincipalesForm.get('notificaciones.dirCodmun')
                         ?.value.muniCodMunicipio
                     )
                   "
                   field="muniDenominacion"
-                  [ngClass]="{ disabled: copyAdress || readOnlyMode }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
                 >
@@ -505,11 +485,10 @@
                   id="dirCp"
                   formControlName="dirCp"
                   class="autoCompleteStyle w-full"
-                  field="cpostMunicipio"
+                  field="cpostCodPostal"
                   [dropdown]="true"
                   [suggestions]="filteredPostal"
                   (completeMethod)="!copyAdress && filterPostal($event)"
-                  [ngClass]="{ disabled: copyAdress || readOnlyMode }"
                   [readonly]="copyAdress"
                   [disabled]="copyAdress"
                 >
@@ -584,6 +563,14 @@
                   [maxLength]="9"
                   class="p-inputtext inputStyle w-full"
                   formControlName="nifcif"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
+                  [disabled]="readOnlyMode"
+                  (blur)="
+                    checkRepresentanteLegalCifNif(
+                      datosPrincipalesForm.get('representantesDTO.nifcif')
+                        ?.value
+                    )
+                  "
                 />
               </div>
             </div>
@@ -636,7 +623,7 @@
                 <input
                   id="sdomicilio"
                   type="text"
-                  formControlName
+                  formControlName="domicilio"
                   [maxLength]="250"
                   class="p-inputtext inputStyle w-full"
                   [ngClass]="readOnlyMode || !isLegalCifNif ? 'disabled' : ''"
@@ -667,8 +654,7 @@
                     )
                   "
                   field="provDenominacion"
-                  [ngClass]="readOnlyMode || !isLegalCifNif ? 'disabled' : ''"
-                  [readonly]="readOnlyMode || !isLegalCifNif"
+                  [readonly]="!isLegalCifNif || readOnlyMode"
                   [disabled]="readOnlyMode || !isLegalCifNif"
                 >
                 </p-autoComplete>
@@ -698,7 +684,6 @@
                     )
                   "
                   field="muniDenominacion"
-                  [ngClass]="{ disabled: readOnlyMode || !isLegalCifNif }"
                   [readonly]="readOnlyMode || !isLegalCifNif"
                   [disabled]="readOnlyMode || !isLegalCifNif"
                 >
@@ -718,11 +703,10 @@
                   id="scp"
                   formControlName="cp"
                   class="autoCompleteStyle w-full"
-                  field="cpostMunicipio"
+                  field="cpostCodPostal"
                   [dropdown]="true"
                   [suggestions]="filteredPostal"
                   (completeMethod)="filterPostal($event)"
-                  [ngClass]="{ disabled: readOnlyMode || !isLegalCifNif }"
                   [readonly]="readOnlyMode || !isLegalCifNif"
                   [disabled]="readOnlyMode || !isLegalCifNif"
                 >
@@ -774,7 +758,7 @@
                 class="labelStyle"
                 for="fax"
               >
-                {{ t('solicitud_de_inscripcion.fax') }}</label
+                {{ t('solicitud_de_inscripcion.telefono2') }}</label
               >
               <div class="w-full">
                 <input
