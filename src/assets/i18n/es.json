@@ -11,7 +11,7 @@
     "sub_menu": {
       "entidades_solicitantes": "Entidades Solicitantes",
       "campos_de_actuacion": "Campos de Actuación",
-      "requerimientos_subsanacion": "Requerimientos Subsanación",
+      "requerimientos_subsanacion": "Requerimientos de Subsanación",
       "representantes_de_entidad": "Representantes de Entidad",
       "solicitud_de_inscripcion": "Solicitud de Inscripción",
       "generacion_de_informes": "Generación de Informes"
@@ -25,6 +25,10 @@
     "field_description": "Descripción castellano",
     "field_descriptionVal": "Descripción valenciano"
   },
+  "actions": {
+    "acciones": "Acciones"
+  },
+
   "requerimientosSubsanacion": {
     "title": "Requerimientos de subsanación",
     "field_id": "Código",
@@ -62,7 +66,7 @@
     "publicar_en_web": "Publicar en web",
     "observaciones": "Observaciones",
     "title_tab_2": "Dirección Notificaciones",
-    "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
+    "copiar_notificaciones": "Copiar la dirección principal para notificaciones",
     "domicilio": "Domicilio",
     "archivar_message": "¿Desea archivar este expediente?",
     "restaurar_message": "¿Desea restaurar este expediente?",
@@ -134,6 +138,10 @@
   "dropdown": {
     "placeholder": "Seleccionar",
     "no_result_loaded": "No se pueden mostrar los resultados"
+  },
+
+  "date": {
+    "dd/mm/yyyy": "dd/mm/aaaa"
   },
 
   "title": "es_Exemple dús",

@@ -35,10 +35,10 @@
     "publicar_en_web": "Publicar en web",
     "observaciones": "Observaciones",
     "title_tab_2": "Dirección Notificaciones",
-    "copiar_la_direccion_principal_para_notificaciones": "Copiar la dirección principal para notificaciones",
+    "copiar_notificaciones": "Copiar la dirección principal para notificaciones",
     "domicilio": "Domicilio",
     "archivar_message": "Do you want to archive this file?",
-    "restaurar_message": "Do you want to restore this file",
+    "restaurar_message": "Do you want to restore this file?",
     "title_tab_3": "Representante legal",
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
@@ -54,7 +54,11 @@
     "dialog_title": "Field of action",
     "field_id": "Code",
     "field_description": "Spanish description",
-    "field_descriptionVal": "Valencian description"
+    "field_descriptionVal": "Valencian description",
+    "acciones": "Actions"
+  },
+  "actions": {
+    "acciones": "Actions"
   },
   "requerimientosSubsanacion": {
     "title": "Requirements Correction",
@@ -131,6 +135,9 @@
   "dropdown": {
     "placeholder": "Select",
     "no_result_loaded": "Results cannot be displayed"
+  },
+  "date": {
+    "dd/mm/yyyy": "dd/mm/yyyy"
   },
 
   "title": "Example of use",
