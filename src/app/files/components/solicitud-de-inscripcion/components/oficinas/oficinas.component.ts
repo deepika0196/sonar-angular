@@ -137,6 +137,7 @@ export class OficinasComponent implements OnInit {
   calendarDateFormat = GlobalConstant.ddmmyy;
   globalConst = GlobalConstant;
   oficinasForm;
+  selectedProCod: string;
 
   constructor(
     private oficinasService: OficinasService,
@@ -184,6 +185,7 @@ export class OficinasComponent implements OnInit {
       fax: formValues.phone_2 || '',
       codpro: formValues.province || '',
       codmun: formValues.municipality || '',
+      cp: formValues.postal || '',
       reccaResponsables: {
         nombre: formValues.contact_person || '',
         email: formValues.contact_email || '',
@@ -193,6 +195,13 @@ export class OficinasComponent implements OnInit {
   }
 
   mapOficinasToForm(office: Oficinas) {
+    this.resetForm();
+    if (office.codpro) {
+      this.onProvinciaSelected(office.codpro);
+      if (office.codmun)
+        this.onMunicipalitySelected(office.codpro, office.codmun);
+    }
+
     this.oficinasForm.patchValue({
       office_name: office.denominacion,
       residency: office.domicilio,
@@ -204,6 +213,11 @@ export class OficinasComponent implements OnInit {
       contact_person: office.reccaResponsables?.nombre,
       contact_email: office.reccaResponsables?.email,
     });
+    console.log(office, this.oficinasForm.value);
+  }
+
+  resetForm() {
+    this.oficinasForm.reset();
   }
 
   // fetchAllOficinas() {
@@ -244,6 +258,7 @@ export class OficinasComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.municipioList = data.response;
+            this.selectedProCod = selectedProvincia;
           },
           error: (err: Error) => console.error(err),
         });
@@ -251,13 +266,13 @@ export class OficinasComponent implements OnInit {
       this.municipioList = [];
     }
   }
-  onMunicipalitySelected(selectedMunicipality: Municipio) {
-    if (selectedMunicipality) {
+  onMunicipalitySelected(
+    selectedProvince: string,
+    selectedMunicipality: string
+  ) {
+    if (selectedMunicipality && selectedProvince) {
       this.solicituddeCodigoPostalService
-        .getMunicipio(
-          selectedMunicipality.muniCodProvincia,
-          selectedMunicipality.muniCodMunicipio
-        )
+        .getMunicipio(selectedProvince, selectedMunicipality)
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: (data) => {
@@ -327,9 +342,11 @@ export class OficinasComponent implements OnInit {
   };
 
   openAddDialog() {
+    this.resetForm();
     const saveAction = () => {
+      console.log(this.oficinasForm.value, this.mapFormToOficinas());
       this.oficinasService
-        .postOficinas({ denominacion: 'dd' })
+        .postOficinas(this.mapFormToOficinas())
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: () => {

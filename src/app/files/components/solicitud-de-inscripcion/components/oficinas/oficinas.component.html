@@ -107,14 +107,15 @@
             [options]="municipioList"
             formControlName="municipality"
             optionLabel="muniDenominacion"
+            optionValue="muniCodMunicipio"
             [emptyMessage]="t('dropdown.no_result_loaded')"
             [emptyFilterMessage]="t('dropdown.no_result_loaded')"
             [filter]="true"
-            filterBy="name"
+            filterBy="muniDenominacion"
             [showClear]="true"
             placeholder="--{{ t('dropdown.placeholder') }}--"
             class="dropdownStyle"
-            (onChange)="onMunicipalitySelected($event.value)"
+            (onChange)="onMunicipalitySelected(selectedProCod, $event.value)"
           >
             <ng-template
               let-item
@@ -148,7 +149,7 @@
             [emptyMessage]="t('dropdown.no_result_loaded')"
             [emptyFilterMessage]="t('dropdown.no_result_loaded')"
             [filter]="true"
-            filterBy="name"
+            filterBy="cpostCodPostal"
             [showClear]="true"
             placeholder="--{{ t('dropdown.placeholder') }}--"
             class="dropdownStyle"
