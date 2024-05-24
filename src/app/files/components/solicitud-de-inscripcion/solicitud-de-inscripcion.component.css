@@ -8,8 +8,7 @@
 }
 
 .disabled {
-  background-color: var(--light-grey);
-
+  background-color: var(--lighter-white);
   .p-calendar-disabled {
     background-color: var(--lighter-grey);
   }
@@ -36,19 +35,12 @@
 
   .p-accordion
     .p-accordion-header:not(.p-disabled).p-highlight
-    .p-accordion-header-link {
-    color: var(--light-blue);
-    font-weight: 800;
-  }
+    .p-accordion-header-link,
   .p-accordion
     .p-accordion-header:not(.p-highlight):not(.p-disabled):hover
     .p-accordion-header-link {
     color: var(--light-blue);
   }
-}
-
-.labelStyle {
-  font-size: 0.9rem;
 }
 
 ::ng-deep .autoCompleteStyle {
@@ -59,6 +51,7 @@
     border-radius: 0%;
     border-right: none;
   }
+
   .p-button.p-button-icon-only {
     height: 2.125rem;
     background-color: var(--white);
@@ -68,9 +61,13 @@
     border-left: none;
   }
 
-  .p-disabled {
+  .p-autocomplete-dropdown:disabled.p-button-icon-only {
     background-color: var(--lighter-grey);
   }
+  .p-disabled {
+    background-color: #f0f0f0;
+  }
+
   .p-inputtext:enabled:hover {
     border-color: var(--black);
   }
