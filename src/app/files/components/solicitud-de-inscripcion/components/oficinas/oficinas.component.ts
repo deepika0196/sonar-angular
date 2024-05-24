@@ -65,14 +65,14 @@ export class OficinasComponent implements OnInit {
 
   columns: TableColumns[] = [
     {
-      field: 'office_name',
+      field: 'denominacion',
       header: 'oficinas.office_name',
       sortable: false,
       class: 'table-col-width-fix',
       filter: true,
     },
     {
-      field: 'denomsocial',
+      field: 'domicilio',
       header: 'oficinas.residency',
       sortable: false,
       class: 'table-col-width',
@@ -93,21 +93,21 @@ export class OficinasComponent implements OnInit {
       filter: true,
     },
     {
-      field: 'numinscripcion',
+      field: 'telefono',
       header: 'oficinas.phone',
       sortable: true,
       class: 'table-col-width',
       filter: true,
     },
     {
-      field: 'feentrada',
+      field: 'reccaResponsables.nombre',
       header: 'oficinas.contact_person',
       sortable: true,
       class: 'table-col-width',
       filter: true,
     },
     {
-      field: 'fbaja',
+      field: 'reccaResponsables.email',
       header: 'oficinas.contact_email',
       sortable: true,
       class: 'table-col-width',
@@ -149,21 +149,61 @@ export class OficinasComponent implements OnInit {
   ) {
     this.oficinasForm = new FormGroup({
       office_name: new FormControl(''),
-      residency: new FormControl(null),
-      phone: new FormControl(null),
-      phone_2: new FormControl(null),
-      province: new FormControl(null),
-      municipality: new FormControl(null),
-      postal: new FormControl(null),
-      contact_email: new FormControl(null),
-      contact_person: new FormControl(null),
+      residency: new FormControl(''),
+      phone: new FormControl(''),
+      phone_2: new FormControl(''),
+      province: new FormControl(''),
+      municipality: new FormControl(''),
+      postal: new FormControl(''),
+      contact_email: new FormControl(''),
+      contact_person: new FormControl(''),
     });
   }
 
   ngOnInit() {
-    this.oficinas.push({ office_name: 'test' });
+    console.log(this.oficinas, this.provinceList);
+    // this.oficinas.push({ office_name: 'test' });
+    // this.provinceList.push({
+    //   muniDenominacion: 'ss',
+    //   provCapital: 'SS',
+    //   provCodCcaa: 'SS',
+    //   provCodLetra: 'SS',
+    //   provCodProvincia: 'SS',
+    //   provDenominacion: 'Ss',
+    // });
     // this.fetchAllOficinas();
     // this.fetchAllProvincia();
+  }
+
+  mapFormToOficinas() {
+    const formValues = this.oficinasForm.value;
+    const office: Oficinas = {
+      denominacion: formValues.office_name || '',
+      domicilio: formValues.residency || '',
+      telefono: formValues.phone || '',
+      fax: formValues.phone_2 || '',
+      codpro: formValues.province || '',
+      codmun: formValues.municipality || '',
+      reccaResponsables: {
+        nombre: formValues.contact_person || '',
+        email: formValues.contact_email || '',
+      },
+    };
+    return office;
+  }
+
+  mapOficinasToForm(office: Oficinas) {
+    this.oficinasForm.patchValue({
+      office_name: office.denominacion,
+      residency: office.domicilio,
+      phone: office.telefono,
+      province: office.codpro,
+      municipality: office.codmun,
+      postal: office.cp,
+      phone_2: office.fax,
+      contact_person: office.reccaResponsables?.nombre,
+      contact_email: office.reccaResponsables?.email,
+    });
   }
 
   // fetchAllOficinas() {
@@ -234,8 +274,8 @@ export class OficinasComponent implements OnInit {
     const [officeDetails] = this.oficinas;
     return (
       this.oficinas.length === 1 &&
-      officeDetails.office_name === this.social &&
-      !officeDetails.id
+      officeDetails.denominacion === this.social &&
+      !officeDetails.codmun
     );
   }
 
@@ -289,7 +329,7 @@ export class OficinasComponent implements OnInit {
   openAddDialog() {
     const saveAction = () => {
       this.oficinasService
-        .postOficinas({ office_name: 'dd' })
+        .postOficinas({ denominacion: 'dd' })
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: () => {
@@ -329,18 +369,20 @@ export class OficinasComponent implements OnInit {
     );
   }
 
-  openUpdateDialog() {
+  openUpdateDialog(office: Oficinas) {
+    this.mapOficinasToForm(office);
     const updateService = () => {
-      this.oficinasService
-        .postOficinas({ id: 1, office_name: 'ss' })
-        .pipe(takeUntil(this.subscription))
-        .subscribe({
-          next: () => {
-            this.updateDialogRef?.close();
-            this.fetchAllOficinas(this.entidadId);
-          },
-          error: (err: Error) => console.error(err),
-        });
+      console.log(this.oficinasForm.value, this.mapFormToOficinas());
+      // this.oficinasService
+      //   .postOficinas({ entidadId: 1, denominacion: 'ss' })
+      //   .pipe(takeUntil(this.subscription))
+      //   .subscribe({
+      //     next: () => {
+      //       this.updateDialogRef?.close();
+      //       this.fetchAllOficinas(this.entidadId);
+      //     },
+      //     error: (err: Error) => console.error(err),
+      //   });
     };
 
     const updateAction = () => {
@@ -383,7 +425,8 @@ export class OficinasComponent implements OnInit {
     );
   }
 
-  openViewDialog() {
+  openViewDialog(office: Oficinas) {
+    this.mapOficinasToForm(office);
     const actionButtons: ActionButtons[] = [
       this.createActionButton(
         'buttons.close',
@@ -437,7 +480,7 @@ export class OficinasComponent implements OnInit {
       });
   }
 
-  onDeleteHandler() {
+  onDeleteHandler(office: Oficinas) {
     const officeDetails: any = null;
     const yesAction = () => {
       const oficinasLength = this.oficinas.length;
@@ -510,7 +553,8 @@ export class OficinasComponent implements OnInit {
               'buttons.yes',
               'check',
               () => {
-                if (callback && campoDetails) callback(campoDetails);
+                if (callback)
+                  campoDetails ? callback(campoDetails) : callback();
                 this.alertDialogRef?.close();
               },
               undefined,

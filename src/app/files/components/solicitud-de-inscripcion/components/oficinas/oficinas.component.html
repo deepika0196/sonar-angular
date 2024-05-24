@@ -14,9 +14,9 @@
     [columns]="columns"
     [paginatorConfig]="paginatorConfig"
     [tableConfig]="tableConfig"
-    (openView)="openViewDialog()"
-    (openEdit)="openUpdateDialog()"
-    (openDelete)="onDeleteHandler()"
+    (openView)="openViewDialog($event)"
+    (openEdit)="openUpdateDialog($event)"
+    (openDelete)="onDeleteHandler($event)"
   ></generic-table>
   <ng-template
     #template

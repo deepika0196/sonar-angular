@@ -98,14 +98,13 @@ export class SolicitudDeInscripcionComponent
   }
   ngOnInit(): void {
     this.copyAdress = true;
-    // this.initializePage();
+    this.initializePage();
   }
 
   async initializePage() {
     await this.loadProvincia();
     await this.setupFormChangeSubscriptions();
     const state: State = this.location.getState() as State;
-    console.log(state);
     const mode = this.checkMode(state.action);
     this.disableTabs = mode === 'add' ? false : false;
     if (state.cif) {
@@ -118,7 +117,7 @@ export class SolicitudDeInscripcionComponent
   fetchAllOficinasById(id: number): Promise<void | boolean> {
     return new Promise<void | boolean>((resolve, reject) => {
       this.oficinasService
-        .getOficinas(id)
+        .getOficinasByEntidadId(id)
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: (data) => {

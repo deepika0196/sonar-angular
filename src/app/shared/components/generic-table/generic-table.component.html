@@ -135,7 +135,9 @@
               >{{ item[column.field] | date : column.pipeFormat }}</span
             >
             <ng-template #other_content
-              ><span else>{{ item[column.field] }}</span></ng-template
+              ><span else>{{
+                fetchByDotOperator(item, column.field)
+              }}</span></ng-template
             >
           </span>
         </td>

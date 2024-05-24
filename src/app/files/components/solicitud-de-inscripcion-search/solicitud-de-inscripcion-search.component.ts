@@ -154,8 +154,8 @@ export class SolicitudDeInscripcionSearchComponent
   }
 
   ngOnInit() {
-    // this.fetchAllSolicitudDeInscripcion();
-    // this.fetchAllProvincia();
+    this.fetchAllSolicitudDeInscripcion();
+    this.fetchAllProvincia();
   }
 
   fetchAllSolicitudDeInscripcion() {

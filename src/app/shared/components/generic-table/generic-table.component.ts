@@ -102,6 +102,10 @@ export class GenericTableComponent<T> implements OnInit, OnChanges, OnDestroy {
     this.openArchive.emit(item);
   }
 
+  fetchByDotOperator(object: any, value: string) {
+    return value.split('.').reduce((acc, curr) => acc[curr], object);
+  }
+
   ngOnDestroy(): void {
     this.subscription.next();
     this.subscription.complete();
