@@ -83,10 +83,6 @@ export class SolicitudDeInscripcionComponent
   }
 
   ngAfterViewInit(): void {
-    this.datosPrincipalesForm.get('notificaciones.addressCopy')?.setValue(true);
-    this.datosPrincipalesForm.get('notificaciones.dirCodpro')?.disable();
-    this.datosPrincipalesForm.get('notificaciones.dirCodmun')?.disable();
-    this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
     if (!this.isLegalCifNif) {
       this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
       this.datosPrincipalesForm.get('representantesDTO.codmun')?.disable();
@@ -94,6 +90,16 @@ export class SolicitudDeInscripcionComponent
     }
   }
 
+  disableNotificationFileds() {
+    return new Promise<void | boolean>((resolve, reject) => {
+      this.datosPrincipalesForm
+        .get('notificaciones.addressCopy')
+        ?.setValue(true);
+      this.datosPrincipalesForm.get('notificaciones.dirCodpro')?.disable();
+      this.datosPrincipalesForm.get('notificaciones.dirCodmun')?.disable();
+      this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
+    });
+  }
   ngOnInit(): void {
     this.copyAdress = true;
     this.initializePage();
@@ -104,11 +110,13 @@ export class SolicitudDeInscripcionComponent
     const state: State = this.location.getState() as State;
     this.checkMode(state.action);
     await this.setupFormChangeSubscriptions();
+
     await this.setFormReadOnly(this.readOnlyMode);
     if (state.cif) {
       this.cifNif = state.cif;
       await this.fetchDetails(state.cif);
     }
+    await this.disableNotificationFileds();
   }
   loadProvincia() {
     return new Promise<void | boolean>((resolve, reject) => {
