@@ -8,4 +8,5 @@ export class GlobalConstant {
   public static maxLengthString = 250;
   public static maxLengthNine = 9;
   public static maxLengthTen = 10;
+  public static CalendarPlaceholder = 'dd/mm/aaaa';
 }
