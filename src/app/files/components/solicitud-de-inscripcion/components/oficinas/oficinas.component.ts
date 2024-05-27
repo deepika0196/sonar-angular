@@ -176,9 +176,10 @@ export class OficinasComponent implements OnInit {
     // this.fetchAllProvincia();
   }
 
-  mapFormToOficinas() {
+  mapFormToOficinas(selectedOffice?: Oficinas) {
     const formValues = this.oficinasForm.value;
     const office: Oficinas = {
+      ...selectedOffice,
       denominacion: formValues.office_name || '',
       domicilio: formValues.residency || '',
       telefono: formValues.phone || '',
@@ -186,9 +187,12 @@ export class OficinasComponent implements OnInit {
       codpro: formValues.province || '',
       codmun: formValues.municipality || '',
       cp: formValues.postal || '',
+      entidadId: this.entidadId,
       reccaResponsables: {
+        ...selectedOffice?.reccaResponsables,
         nombre: formValues.contact_person || '',
         email: formValues.contact_email || '',
+        oficinaEntidadId: this.entidadId,
       },
     };
     return office;
@@ -219,32 +223,6 @@ export class OficinasComponent implements OnInit {
   resetForm() {
     this.oficinasForm.reset();
   }
-
-  // fetchAllOficinas() {
-  //   this.oficinasService
-  //     .getOficinas(1)
-  //     .pipe(takeUntil(this.subscription))
-  //     .subscribe({
-  //       next: (data) => {
-  //         this.oficinas = data.response;
-  //       },
-  //       error: (err: Error) => console.error(err),
-  //       complete: () => {},
-  //     });
-  //   this.oficinas.push({ office_name: 'test' });
-  // }
-
-  // fetchAllProvincia() {
-  //   this.solicitudProvinciaService
-  //     .getProvincia()
-  //     .pipe(takeUntil(this.subscription))
-  //     .subscribe({
-  //       next: (data) => {
-  //         this.provinciaList = data.response;
-  //       },
-  //       error: (err: Error) => console.error(err),
-  //     });
-  // }
 
   fetchAllOficinas(item: number) {
     this.fetchAllOficinasById.emit(item);
@@ -344,7 +322,6 @@ export class OficinasComponent implements OnInit {
   openAddDialog() {
     this.resetForm();
     const saveAction = () => {
-      console.log(this.oficinasForm.value, this.mapFormToOficinas());
       this.oficinasService
         .postOficinas(this.mapFormToOficinas())
         .pipe(takeUntil(this.subscription))
@@ -389,17 +366,17 @@ export class OficinasComponent implements OnInit {
   openUpdateDialog(office: Oficinas) {
     this.mapOficinasToForm(office);
     const updateService = () => {
-      console.log(this.oficinasForm.value, this.mapFormToOficinas());
-      // this.oficinasService
-      //   .postOficinas({ entidadId: 1, denominacion: 'ss' })
-      //   .pipe(takeUntil(this.subscription))
-      //   .subscribe({
-      //     next: () => {
-      //       this.updateDialogRef?.close();
-      //       this.fetchAllOficinas(this.entidadId);
-      //     },
-      //     error: (err: Error) => console.error(err),
-      //   });
+      console.log(this.oficinasForm.value, this.mapFormToOficinas(office));
+      this.oficinasService
+        .updateOficinas(this.mapFormToOficinas(office))
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: () => {
+            this.updateDialogRef?.close();
+            this.fetchAllOficinas(this.entidadId);
+          },
+          error: (err: Error) => console.error(err),
+        });
     };
 
     const updateAction = () => {
@@ -466,39 +443,40 @@ export class OficinasComponent implements OnInit {
     );
   }
 
-  deleteOficina(officeDetails: any) {
-    this.oficinasService
-      .deleteOficinas(officeDetails.codigo)
-      .pipe(takeUntil(this.subscription))
-      .subscribe({
-        next: (data) => {
-          if (data?.success === false && data?.errorCode) {
-            this.openAlertDialog(
-              this.translocoService.translate(
-                'errors.' + data.errorCode.toString()
-              ),
-              'warn'
-            );
-          } else {
-            this.fetchAllOficinas(this.entidadId);
-            this.deleteDialogRef?.close();
-            this.messageService.add({
-              severity: 'success',
-              summary: this.translocoService.translate(
-                'oficinas.office_dialog_header'
-              ),
-              detail: this.translocoService.translate(
-                'toast_messages.delete_success'
-              ),
-            });
-          }
-        },
-        error: (err: Error) => console.error(err),
-      });
+  deleteOficina(officeDetails: Oficinas) {
+    if (officeDetails.oficinaId && officeDetails.entidadId)
+      this.oficinasService
+        .deleteOficinas(officeDetails.oficinaId, officeDetails.entidadId)
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: (data) => {
+            console.log(data);
+            if (data?.success === false && data?.errorCode) {
+              this.openAlertDialog(
+                this.translocoService.translate(
+                  'errors.' + data.errorCode.toString()
+                ),
+                'warn'
+              );
+            } else {
+              this.fetchAllOficinas(this.entidadId);
+              this.deleteDialogRef?.close();
+              this.messageService.add({
+                severity: 'success',
+                summary: this.translocoService.translate(
+                  'oficinas.office_dialog_header'
+                ),
+                detail: this.translocoService.translate(
+                  'toast_messages.delete_success'
+                ),
+              });
+            }
+          },
+          error: (err: Error) => console.error(err),
+        });
   }
 
   onDeleteHandler(office: Oficinas) {
-    const officeDetails: any = null;
     const yesAction = () => {
       const oficinasLength = this.oficinas.length;
       const isDefaultOffice = this.checkDefaultOffice();
@@ -512,10 +490,10 @@ export class OficinasComponent implements OnInit {
           this.translocoService.translate(alertMessage),
           alertType,
           isDefaultOffice ? undefined : this.deleteOficina,
-          officeDetails
+          office
         );
       } else {
-        this.deleteOficina(officeDetails);
+        this.deleteOficina(office);
       }
     };
 

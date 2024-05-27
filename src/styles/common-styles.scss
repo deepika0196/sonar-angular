@@ -66,8 +66,28 @@
 }
 .dropdownStyle .p-dropdown.p-dropdown-clearable {
   .p-dropdown-label {
-    padding-right: 0.5rem;
+    padding-right: 1.75rem;
   }
+}
+
+/* Style for the custom dropdown */
+.dropdownStyle-label {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Ensure the dropdown itself has a fixed width */
+.dropdownStyle .p-dropdown {
+  width: 100%;
+}
+
+/* Ensure the panel items are also styled correctly */
+.dropdownStyle .p-dropdown-item {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .dropdownStyle .p-dropdown:not([disabled]):hover,

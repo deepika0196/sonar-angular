@@ -31,9 +31,10 @@ export class OficinasService extends CommonService {
     );
   }
 
-  deleteOficinas(codigo: string) {
+  deleteOficinas(oficinaId: number, entidadId: number) {
     return this._arqHttpClient.delete<CustomResponse<Oficinas>>(
-      this.urlBuilder(UrlEndpoints.reccaOficinas) + `/${codigo}`
+      this.urlBuilder(UrlEndpoints.reccaOficinas) +
+        `/delete/${oficinaId}/${entidadId}`
     );
   }
 

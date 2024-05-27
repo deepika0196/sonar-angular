@@ -102,8 +102,13 @@ export class GenericTableComponent<T> implements OnInit, OnChanges, OnDestroy {
     this.openArchive.emit(item);
   }
 
-  fetchByDotOperator(object: any, value: string) {
-    return value.split('.').reduce((acc, curr) => acc[curr], object);
+  fetchByDotOperator(object: any, path: string) {
+    return path.split('.').reduce((acc, part) => {
+      if (acc && acc[part] !== undefined && acc[part] !== null) {
+        return acc[part];
+      }
+      return null;
+    }, object);
   }
 
   ngOnDestroy(): void {
