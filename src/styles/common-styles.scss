@@ -73,6 +73,9 @@ hr {
 }
 
 .calenderStyle {
+  .p-calendar-disabled {
+    background-color: var(--dark-grey);
+  }
   .p-calendar {
     height: 2.125rem;
     border: 0.125rem solid var(--light-grey);

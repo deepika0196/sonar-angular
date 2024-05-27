@@ -41,6 +41,8 @@ export class SolicitudDeInscripcionSearchComponent
 
   dialogRef: DynamicDialogRef | undefined;
   calendarDateFormat = GlobalConstant.ddmmyy;
+  calendarPlaceholder = GlobalConstant.CalendarPlaceholder;
+  ecmca = GlobalConstant.ecmca;
 
   tableConfig: TableConfig = {
     rows: 10,
@@ -140,7 +142,7 @@ export class SolicitudDeInscripcionSearchComponent
     this.solicitudDeInscripcionForm = new FormGroup({
       cif: new FormControl(null, [Validators.maxLength(9)]),
       razonSocial: new FormControl(null),
-      nRegistro: new FormControl(null),
+      nRegistro: new FormControl(`/${this.ecmca}`),
       fechaSolicitud: new FormControl(null),
       incluirExpedientesBaja: new FormControl(null),
       fechaBaja: new FormControl({
