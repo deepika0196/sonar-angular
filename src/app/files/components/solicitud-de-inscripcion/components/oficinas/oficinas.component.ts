@@ -161,20 +161,7 @@ export class OficinasComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log(this.oficinas, this.provinceList);
-    // this.oficinas.push({ office_name: 'test' });
-    // this.provinceList.push({
-    //   muniDenominacion: 'ss',
-    //   provCapital: 'SS',
-    //   provCodCcaa: 'SS',
-    //   provCodLetra: 'SS',
-    //   provCodProvincia: 'SS',
-    //   provDenominacion: 'Ss',
-    // });
-    // this.fetchAllOficinas();
-    // this.fetchAllProvincia();
-  }
+  ngOnInit() {}
 
   mapFormToOficinas(selectedOffice?: Oficinas) {
     const formValues = this.oficinasForm.value;
@@ -217,7 +204,6 @@ export class OficinasComponent implements OnInit {
       contact_person: office.reccaResponsables?.nombre,
       contact_email: office.reccaResponsables?.email,
     });
-    console.log(office, this.oficinasForm.value);
   }
 
   resetForm() {
@@ -366,7 +352,6 @@ export class OficinasComponent implements OnInit {
   openUpdateDialog(office: Oficinas) {
     this.mapOficinasToForm(office);
     const updateService = () => {
-      console.log(this.oficinasForm.value, this.mapFormToOficinas(office));
       this.oficinasService
         .updateOficinas(this.mapFormToOficinas(office))
         .pipe(takeUntil(this.subscription))
@@ -450,7 +435,6 @@ export class OficinasComponent implements OnInit {
         .pipe(takeUntil(this.subscription))
         .subscribe({
           next: (data) => {
-            console.log(data);
             if (data?.success === false && data?.errorCode) {
               this.openAlertDialog(
                 this.translocoService.translate(
