@@ -5,4 +5,5 @@ export class GlobalConstant {
   public static ddmmyy = 'dd/mm/yy';
   public static ddmmyyyy = 'dd/MM/yyyy';
   public static ddmmyyyyWithHyphen = 'dd-MM-yyyy';
+  public static CalendarPlaceholder = 'dd/mm/aaaa';
 }
