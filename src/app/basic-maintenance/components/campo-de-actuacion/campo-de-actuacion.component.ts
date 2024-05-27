@@ -68,7 +68,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
     },
     {
       field: 'action',
-      header: '',
+      header: 'actions.acciones',
       sortable: false,
       class: 'table-col-width-fix',
     },
@@ -97,7 +97,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
       .getCampoDeActuacions()
       .pipe(takeUntil(this.subscription))
       .subscribe({
-        next: (data) => {
+        next: (data: { response: CampoDeActuacion[] }) => {
           this.campoDeActuacions = data.response;
           this.cloneCampoDeActuacionRecords = data.response;
         },
@@ -276,6 +276,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
           complete: () => {},
         });
     };
+
     const actionButtons: ActionButtons[] = [
       {
         label: this.translocoService.translate('buttons.update'),
@@ -325,6 +326,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
         name: 'deseccionVal',
       },
     ];
+
     const updateDialogConfig: GenericDialog = {
       header: this.translocoService.translate('dialog_header.update', {
         title: this.translocoService.translate('campoDeActuacion.title'),

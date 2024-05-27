@@ -19,7 +19,7 @@ export interface PostalCode {
   cpostCodProv: string;
 }
 export interface Entidad {
-  id: number;
+  id?: number;
   codidfiscal?: string;
   codmun?: string;
   codpro?: string;
@@ -76,4 +76,17 @@ export interface State {
   id: number;
   action: string;
   navigationId: number;
+}
+export interface RepresentantesLegal {
+  apellidos: string;
+  codmun: string;
+  codpro: string;
+  cp: string;
+  domicilio: string;
+  email: string;
+  fax: string;
+  id: number;
+  nifcif: string;
+  nombre: string;
+  telefono: string;
 }

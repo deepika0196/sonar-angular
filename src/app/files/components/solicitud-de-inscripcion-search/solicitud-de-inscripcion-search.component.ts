@@ -117,7 +117,7 @@ export class SolicitudDeInscripcionSearchComponent
     },
     {
       field: 'action',
-      header: '',
+      header: 'actions.acciones',
       sortable: false,
       class: 'table-col-width-fix',
     },

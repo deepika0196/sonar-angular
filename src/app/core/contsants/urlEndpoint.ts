@@ -8,4 +8,5 @@ export class UrlEndpoints {
   public static vmcrcCodigoPostal =
     'vmcrcCodigoPostal/findCodigoPostalByProvinciaAndMunicipio';
   public static reccaOficinas = 'reccaOficinas';
+  public static reccaRepresentantes = 'reccaRepresentantes';
 }
