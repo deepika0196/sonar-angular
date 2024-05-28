@@ -5,10 +5,12 @@
       [iconPosition]="'left'"
       [btnClass]="'actionStyle p-2'"
       (btnClick)="openAddDialog()"
+      [btnDisabled]="readOnlyMode"
     >
       <i class="material-icons iconStyle p-0">add</i>
     </gva-button>
   </div>
+  <p-toast></p-toast>
   <generic-table
     [data]="oficinas"
     [columns]="columns"
@@ -19,7 +21,7 @@
     (openDelete)="onDeleteHandler($event)"
   ></generic-table>
   <ng-template
-    #template
+    #oficinasTemplate
     let-data
   >
     <form
@@ -186,8 +188,10 @@
             class="inputStyle"
             aria-describedby="codigo-help"
             formControlName="phone"
-            type="tel"
-            [maxlength]="globalConst.maxLengthNine"
+            type="number"
+            (keypress)="
+              checkMaxLength($event.target, globalConst.maxLengthNine)
+            "
           />
         </div>
         <div class="flex flex-column gap-1 col-4 md:col-2">
@@ -202,8 +206,10 @@
             class="inputStyle"
             aria-describedby="deseccion-help"
             formControlName="phone_2"
-            type="tel"
-            [maxlength]="globalConst.maxLengthNine"
+            type="number"
+            (keypress)="
+              checkMaxLength($event.target, globalConst.maxLengthNine)
+            "
           />
         </div>
         <div class="flex flex-column gap-1 col-4 md:col-2"></div>
@@ -233,7 +239,7 @@
           <input
             pInputText
             id="contact_email"
-            class="inputStyle"
+            class="inputStyle invalid"
             aria-describedby="deseccion-help"
             formControlName="contact_email"
             type="email"
@@ -242,6 +248,5 @@
         </div>
       </div>
     </form>
-    <!-- <app-oficinas-dialog [data]="data"></app-oficinas-dialog> -->
   </ng-template>
 </div>

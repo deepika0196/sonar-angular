@@ -789,8 +789,9 @@
           <app-oficinas
             [provinceList]="provinciaList"
             [oficinas]="oficinasList"
-            [social]="datosPrincipalesForm.value.denomsocial"
+            [social]="datosPrincipalesForm.value.entidad.denomsocial"
             [entidadId]="datosPrincipalesForm.value.id"
+            [readOnlyMode]="readOnlyMode"
             (fetchAllOficinasById)="
               fetchAllOficinasById(datosPrincipalesForm.value.id)
             "

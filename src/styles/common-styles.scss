@@ -56,6 +56,9 @@ hr {
 .inputStyle.p-inputtext {
   color: var(--dark-grey) !important;
 }
+.inputStyle.p-inputtext:disabled {
+  background-color: var(--lighter-grey);
+}
 
 .dropdownStyle .p-dropdown {
   border: 0.125rem solid var(--light-grey);
@@ -67,6 +70,10 @@ hr {
   .p-dropdown-trigger {
     color: var(--light-blue);
   }
+}
+
+.dropdownStyle .p-dropdown.p-disabled {
+  background-color: var(--lighter-grey);
 }
 .dropdownStyle .p-dropdown.p-dropdown-clearable {
   .p-dropdown-label {

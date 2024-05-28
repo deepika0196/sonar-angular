@@ -102,14 +102,6 @@ export class CommonDialogService {
               false
             ),
           ];
-    // const headerStyle = {
-    //   icon: dialogType === 'confirm' ? 'info' : 'report_problem',
-    //   dialogType: dialogType,
-    //   title:
-    //     dialogType === 'confirm'
-    //       ? this.translocoService.translate('dialog_header.delete')
-    //       : this.translocoService.translate('dialog_header.alert'),
-    // };
 
     const alertDialogConfig = this.getDialogConfig(
       '40%',
@@ -121,16 +113,6 @@ export class CommonDialogService {
       alertMessage,
       dialogType
     );
-
-    // const alertDialogConfig = this.getCommonDialogConfig(
-    //   actionButtons,
-    //   undefined,
-    //   '40%',
-    //   false,
-    //   headerStyle,
-    //   alertMessage,
-    //   20000
-    // );
 
     this.alertDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -146,10 +128,10 @@ export class CommonDialogService {
           dialogType: 'confirm',
           title: this.translocoService.translate('dialog_header.delete'),
         };
-      case 'alert':
+      case 'warn':
         return {
           icon: 'report_problem',
-          dialogType: 'alert',
+          dialogType: 'warn',
           title: this.translocoService.translate('dialog_header.alert'),
         };
       default:
