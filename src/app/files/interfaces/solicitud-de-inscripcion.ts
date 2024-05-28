@@ -16,7 +16,7 @@ export interface PostalCode {
   cpostMunicipio: string;
   cpostCodMuni: string;
   cpostCodPostal: string;
-  cpostCodProv: string;
+  cpostCodProv?: string;
 }
 export interface Entidad {
   id?: number;
