@@ -35,7 +35,7 @@
         (btnClick)="updateFechaBaja()"
         [hidden]="readOnlyMode"
       >
-        <span class="material-icons iconStyle"> save </span>
+        <span class="material-icons iconStyle"> inventory_2 </span>
       </gva-button>
     </div>
   </div>
@@ -64,7 +64,7 @@
               <label
                 class="labelStyle"
                 for="nifcif"
-                >{{ t('solicitud_de_inscripcion.cif') }}*</label
+                >{{ t('lable.cif') }}*</label
               >
               <div class="w-full">
                 <input
@@ -83,7 +83,7 @@
               <label
                 class="labelStyle"
                 for="denomsocial"
-                >{{ t('solicitud_de_inscripcion.razon_social') }}*</label
+                >{{ t('lable.razon_social') }}*</label
               >
               <div class="w-full">
                 <input
@@ -100,7 +100,7 @@
               <label
                 class="labelStyle"
                 for="domsocial"
-                >{{ t('solicitud_de_inscripcion.domicilio_social') }}*</label
+                >{{ t('lable.domicilio_social') }}*</label
               >
               <div class="w-full">
                 <input
@@ -123,7 +123,7 @@
                     class="labelStyle"
                     for="codpro"
                   >
-                    {{ t('solicitud_de_inscripcion.provincia') }}</label
+                    {{ t('lable.provincia') }}</label
                   >
                   <div class="w-full">
                     <p-autoComplete
@@ -137,7 +137,7 @@
                       "
                       (onSelect)="
                         loadMunicipio(
-                          this.datosPrincipalesForm.get('entidad.codpro')?.value
+                          this.datosPrincipalesForm.get('entidad.codpro').value
                             .provCodProvincia
                         )
                       "
@@ -152,7 +152,7 @@
                     class="labelStyle"
                     for="codmun"
                   >
-                    {{ t('solicitud_de_inscripcion.municipio') }}
+                    {{ t('lable.municipio') }}
                   </label>
                   <div class="w-full">
                     <p-autoComplete
@@ -166,9 +166,9 @@
                       "
                       (onSelect)="
                         loadCP(
-                          this.datosPrincipalesForm.get('entidad.codmun')?.value
+                          this.datosPrincipalesForm.get('entidad.codmun').value
                             .muniCodProvincia,
-                          this.datosPrincipalesForm.get('entidad.codmun')?.value
+                          this.datosPrincipalesForm.get('entidad.codmun').value
                             .muniCodMunicipio
                         )
                       "
@@ -182,7 +182,7 @@
                     class="labelStyle"
                     for="cp"
                   >
-                    {{ t('solicitud_de_inscripcion.c_postal') }}</label
+                    {{ t('lable.c_postal') }}</label
                   >
                   <div class="w-full">
                     <p-autoComplete
@@ -207,7 +207,7 @@
                     class="labelStyle"
                     for="numinscripcion"
                   >
-                    {{ t('solicitud_de_inscripcion.n_registro') }}</label
+                    {{ t('lable.n_registro') }}</label
                   >
                   <div class="w-full">
                     <input
@@ -225,7 +225,7 @@
                     class="labelStyle"
                     for="feentrada"
                   >
-                    {{ t('solicitud_de_inscripcion.feentrada') }}
+                    {{ t('lable.feentrada') }}
                   </label>
                   <div class="w-full">
                     <p-calendar
@@ -244,7 +244,7 @@
                     class="labelStyle"
                     for="fbaja"
                   >
-                    {{ t('solicitud_de_inscripcion.fecha_baja') }}
+                    {{ t('lable.fecha_baja') }}
                   </label>
                   <div class="w-full">
                     <p-calendar
@@ -271,7 +271,7 @@
                 class="labelStyle"
                 for="email"
               >
-                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+                {{ t('lable.e-mail') }}</label
               >
               <div class="w-100">
                 <input
@@ -289,12 +289,12 @@
                 class="labelStyle"
                 for="telefono"
               >
-                {{ t('solicitud_de_inscripcion.telefono') }}</label
+                {{ t('lable.telefono') }}</label
               >
               <div class="w-full">
                 <input
                   id="telefono"
-                  type="text"
+                  type="number"
                   [maxLength]="9"
                   class="p-inputtext inputStyle w-full"
                   formControlName="telefono"
@@ -302,17 +302,17 @@
                 />
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
               <label
                 class="labelStyle"
                 for="fax"
               >
-                {{ t('solicitud_de_inscripcion.telefono2') }}</label
+                {{ t('lable.telefono2') }}</label
               >
               <div class="w-100">
                 <input
                   id="fax"
-                  type="text"
+                  type="number"
                   [maxLength]="9"
                   class="p-inputtext inputStyle w-full"
                   formControlName="fax"
@@ -325,7 +325,7 @@
                 class="labelStyle"
                 for="publicaWeb"
               >
-                {{ t('solicitud_de_inscripcion.publicar_en_web') }}</label
+                {{ t('lable.publicar_en_web') }}</label
               >
               <div class="w-full">
                 <p-checkbox
@@ -344,7 +344,7 @@
                 class="labelStyle"
                 for="observaciones"
               >
-                {{ t('solicitud_de_inscripcion.observaciones') }}</label
+                {{ t('lable.observaciones') }}</label
               >
               <div class="w-100">
                 <input
@@ -387,9 +387,7 @@
                   class="labelStyle"
                   for="addressCopy"
                 >
-                  {{
-                    t('solicitud_de_inscripcion.copiar_notificaciones')
-                  }}</label
+                  {{ t('lable.copiar_notificaciones') }}</label
                 >
               </div>
             </div>
@@ -400,7 +398,7 @@
                 class="labelStyle"
                 for="dirDomicilio"
               >
-                {{ t('solicitud_de_inscripcion.domicilio') }}</label
+                {{ t('lable.domicilio') }}</label
               >
               <div class="w-full">
                 <input
@@ -420,7 +418,7 @@
                 class="labelStyle"
                 for="dirCodpro"
               >
-                {{ t('solicitud_de_inscripcion.provincia') }}</label
+                {{ t('lable.provincia') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
@@ -436,7 +434,7 @@
                   (onSelect)="
                     loadMunicipio(
                       this.datosPrincipalesForm.get('notificaciones.dirCodpro')
-                        ?.value.provCodProvincia
+                        .value.provCodProvincia
                     )
                   "
                 >
@@ -448,7 +446,7 @@
                 class="labelStyle"
                 for="dirCodmun"
               >
-                {{ t('solicitud_de_inscripcion.municipio') }}
+                {{ t('lable.municipio') }}
               </label>
               <div class="w-full">
                 <p-autoComplete
@@ -461,9 +459,9 @@
                   (onSelect)="
                     loadCP(
                       this.datosPrincipalesForm.get('notificaciones.dirCodmun')
-                        ?.value.muniCodProvincia,
+                        .value.muniCodProvincia,
                       this.datosPrincipalesForm.get('notificaciones.dirCodmun')
-                        ?.value.muniCodMunicipio
+                        .value.muniCodMunicipio
                     )
                   "
                   field="muniDenominacion"
@@ -478,7 +476,7 @@
                 class="labelStyle"
                 for="dirCp"
               >
-                {{ t('solicitud_de_inscripcion.c_postal') }}</label
+                {{ t('lable.c_postal') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
@@ -502,7 +500,7 @@
                 class="labelStyle"
                 for="dirEmail"
               >
-                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+                {{ t('lable.e-mail') }}</label
               >
               <div class="w-full">
                 <input
@@ -521,7 +519,7 @@
                 class="labelStyle"
                 for="dirTelefono"
               >
-                {{ t('solicitud_de_inscripcion.telefono') }}</label
+                {{ t('lable.telefono') }}</label
               >
               <div class="w-full">
                 <input
@@ -554,7 +552,7 @@
               <label
                 class="labelStyle"
                 for="nifcif"
-                >{{ t('solicitud_de_inscripcion.nif_cif') }}*</label
+                >{{ t('lable.nif_cif') }}*</label
               >
               <div class="w-full">
                 <input
@@ -567,8 +565,7 @@
                   [disabled]="readOnlyMode"
                   (blur)="
                     checkRepresentanteLegalCifNif(
-                      datosPrincipalesForm.get('representantesDTO.nifcif')
-                        ?.value
+                      datosPrincipalesForm.get('representantesDTO.nifcif').value
                     )
                   "
                 />
@@ -578,7 +575,7 @@
               <label
                 class="labelStyle"
                 for="nombre"
-                >{{ t('solicitud_de_inscripcion.nombre') }}</label
+                >{{ t('lable.nombre') }}</label
               >
               <div class="w-full">
                 <input
@@ -596,7 +593,7 @@
               <label
                 class="labelStyle"
                 for="apellidos"
-                >{{ t('solicitud_de_inscripcion.apellidos') }}</label
+                >{{ t('lable.apellidos') }}</label
               >
               <div class="w-full">
                 <input
@@ -617,7 +614,7 @@
                 class="labelStyle"
                 for="domicilio"
               >
-                {{ t('solicitud_de_inscripcion.domicilio') }}</label
+                {{ t('lable.domicilio') }}</label
               >
               <div class="w-full">
                 <input
@@ -637,7 +634,7 @@
                 class="labelStyle"
                 for="codpro"
               >
-                {{ t('solicitud_de_inscripcion.provincia') }}</label
+                {{ t('lable.provincia') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
@@ -650,7 +647,7 @@
                   (onSelect)="
                     loadMunicipio(
                       this.datosPrincipalesForm.get('representantesDTO.codpro')
-                        ?.value.provCodProvincia
+                        .value.provCodProvincia
                     )
                   "
                   field="provDenominacion"
@@ -665,7 +662,7 @@
                 class="labelStyle"
                 for="codmun"
               >
-                {{ t('solicitud_de_inscripcion.municipio') }}
+                {{ t('lable.municipio') }}
               </label>
               <div class="w-full">
                 <p-autoComplete
@@ -678,9 +675,9 @@
                   (onSelect)="
                     loadCP(
                       this.datosPrincipalesForm.get('representantesDTO.codmun')
-                        ?.value.muniCodProvincia,
+                        .value.muniCodProvincia,
                       this.datosPrincipalesForm.get('representantesDTO.codmun')
-                        ?.value.muniCodMunicipio
+                        .value.muniCodMunicipio
                     )
                   "
                   field="muniDenominacion"
@@ -695,7 +692,7 @@
                 class="labelStyle"
                 for="cp"
               >
-                {{ t('solicitud_de_inscripcion.c_postal') }}</label
+                {{ t('lable.c_postal') }}</label
               >
 
               <div class="w-full">
@@ -720,7 +717,7 @@
                 class="labelStyle"
                 for="email"
               >
-                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+                {{ t('lable.e-mail') }}</label
               >
               <div class="w-full">
                 <input
@@ -739,7 +736,7 @@
                 class="labelStyle"
                 for="telefono"
               >
-                {{ t('solicitud_de_inscripcion.telefono') }}</label
+                {{ t('lable.telefono') }}</label
               >
               <div class="w-full">
                 <input
@@ -758,7 +755,7 @@
                 class="labelStyle"
                 for="fax"
               >
-                {{ t('solicitud_de_inscripcion.telefono2') }}</label
+                {{ t('lable.telefono2') }}</label
               >
               <div class="w-full">
                 <input

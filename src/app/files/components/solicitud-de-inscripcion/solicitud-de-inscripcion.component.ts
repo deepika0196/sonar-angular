@@ -92,12 +92,14 @@ export class SolicitudDeInscripcionComponent
 
   disableNotificationFileds() {
     return new Promise<void | boolean>((resolve, reject) => {
+      this.datosPrincipalesForm.get('entidad.fbaja')?.disable();
       this.datosPrincipalesForm
         .get('notificaciones.addressCopy')
         ?.setValue(true);
       this.datosPrincipalesForm.get('notificaciones.dirCodpro')?.disable();
       this.datosPrincipalesForm.get('notificaciones.dirCodmun')?.disable();
       this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
+      resolve(true);
     });
   }
   ngOnInit(): void {
@@ -228,17 +230,17 @@ export class SolicitudDeInscripcionComponent
     }
 
     this.datosPrincipalesForm.get('representantesDTO')?.patchValue({
-      apellidos: response.apellidos,
-      codmun: codmunValue,
+      apellidos: response.apellidos || '',
+      codmun: codmunValue || '',
       cp: codCPValue,
       codpro: codproValue,
-      domicilio: response.domicilio,
-      email: response.email,
-      fax: response.fax,
+      domicilio: response.domicilio || '',
+      email: response.email || '',
+      fax: response.fax || '',
       id: response.id,
-      nifcif: response.nifcif,
-      nombre: response.nombre,
-      telefono: response.telefono,
+      nifcif: response.nifcif || '',
+      nombre: response.nombre || '',
+      telefono: response.telefono || '',
     });
   }
   fillDefaultNotification() {
@@ -385,14 +387,14 @@ export class SolicitudDeInscripcionComponent
         codmun: representantesMunsi?.muniCodMunicipio || '',
         cp: representantesPostal?.cpostCodPostal || '',
         codpro: representantesPrev?.provCodProvincia || '',
-        domicilio: representantesDTO.domicilio || '',
-        email: representantesDTO.email || '',
-        entidadId: formValue.id || null,
-        fax: representantesDTO.fax || '',
-        id: representantesDTO.id || null,
-        nifcif: representantesDTO.nifcif || '',
-        nombre: representantesDTO.nombre || '',
-        telefono: representantesDTO.telefono || '',
+        domicilio: representantesDTO?.domicilio || '',
+        email: representantesDTO?.email || '',
+        entidadId: formValue?.id || null,
+        fax: representantesDTO?.fax || '',
+        id: representantesDTO?.id || null,
+        nifcif: representantesDTO?.nifcif || '',
+        nombre: representantesDTO?.nombre || '',
+        telefono: representantesDTO?.telefono || '',
       },
       telefono: entidad.telefono || '',
       web: '',

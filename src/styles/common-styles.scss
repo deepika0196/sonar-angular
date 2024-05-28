@@ -31,10 +31,11 @@ hr {
 }
 
 .actionStyle.p-button:disabled {
-  background-color: var(--disable-items);
+  background-color: var(--lighter-grey) !important;
+  color: var(--grey);
 
   .iconStyle {
-    color: var(--white);
+    color: var(--dark-grey) !important;
     padding-left: 0.4rem;
   }
 }
