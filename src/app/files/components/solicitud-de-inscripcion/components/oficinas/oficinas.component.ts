@@ -29,6 +29,7 @@ import {
   PaginatorConfig,
   TableConfig,
 } from '@app/shared/components/generic-table/generic-table.config';
+import { CommonDialogService } from '@app/shared/services/common-dialog.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -38,7 +39,7 @@ import { Subject, takeUntil } from 'rxjs';
   selector: 'app-oficinas',
   templateUrl: './oficinas.component.html',
   styleUrls: ['./oficinas.component.scss'],
-  providers: [DialogService, MessageService],
+  providers: [DialogService, MessageService, CommonDialogService],
 })
 export class OficinasComponent implements OnInit {
   @ViewChild('template') template: TemplateRef<any>;
@@ -144,6 +145,7 @@ export class OficinasComponent implements OnInit {
     private solicitudeMunicipioService: SolicitudeMunicipioService,
     private solicitudProvinciaService: SolicitudeProvinciaService,
     private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
+    private commonDialogService: CommonDialogService,
     private translocoService: TranslocoService,
     private dialogService: DialogService,
     private messageService: MessageService
@@ -251,10 +253,12 @@ export class OficinasComponent implements OnInit {
 
   checkDefaultOffice() {
     const [officeDetails] = this.oficinas;
+    console.log(
+      this.social,
+      this.oficinas.length === 1 && officeDetails.denominacion === this.social
+    );
     return (
-      this.oficinas.length === 1 &&
-      officeDetails.denominacion === this.social &&
-      !officeDetails.codmun
+      this.oficinas.length === 1 && officeDetails.denominacion === this.social
     );
   }
 
@@ -337,11 +341,17 @@ export class OficinasComponent implements OnInit {
       ),
     ];
 
-    const addDialogConfig = this.getCommonDialogConfig(
-      actionButtons,
-      this.template,
+    const addDialogConfig = this.commonDialogService.getDialogConfig(
       '50%',
-      true
+      true,
+      10000,
+      false,
+      'dialogStyle',
+      actionButtons,
+      undefined,
+      undefined,
+      'oficinas.office_dialog_header',
+      this.template
     );
     this.addDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -365,7 +375,7 @@ export class OficinasComponent implements OnInit {
     };
 
     const updateAction = () => {
-      this.openAlertDialog(
+      this.commonDialogService.openSecondDialog(
         this.translocoService.translate(
           'dialog_content.update_officinas_alert'
         ),
@@ -392,11 +402,17 @@ export class OficinasComponent implements OnInit {
       ),
     ];
 
-    const updateDialogConfig = this.getCommonDialogConfig(
-      actionButtons,
-      this.template,
+    const updateDialogConfig = this.commonDialogService.getDialogConfig(
       '50%',
-      true
+      true,
+      10000,
+      false,
+      'dialogStyle',
+      actionButtons,
+      undefined,
+      undefined,
+      'oficinas.office_dialog_header',
+      this.template
     );
     this.updateDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -416,11 +432,17 @@ export class OficinasComponent implements OnInit {
       ),
     ];
 
-    const viewDialogConfig = this.getCommonDialogConfig(
-      actionButtons,
-      this.template,
+    const viewDialogConfig = this.commonDialogService.getDialogConfig(
       '50%',
-      true
+      true,
+      10000,
+      false,
+      'dialogStyle',
+      actionButtons,
+      undefined,
+      undefined,
+      'oficinas.office_dialog_header',
+      this.template
     );
     this.viewDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -428,7 +450,8 @@ export class OficinasComponent implements OnInit {
     );
   }
 
-  deleteOficina(officeDetails: Oficinas) {
+  deleteOficina = (officeDetails: Oficinas) => {
+    console.log(officeDetails, 'Ss');
     if (officeDetails.oficinaId && officeDetails.entidadId)
       this.oficinasService
         .deleteOficinas(officeDetails.oficinaId, officeDetails.entidadId)
@@ -436,7 +459,7 @@ export class OficinasComponent implements OnInit {
         .subscribe({
           next: (data) => {
             if (data?.success === false && data?.errorCode) {
-              this.openAlertDialog(
+              this.commonDialogService.openSecondDialog(
                 this.translocoService.translate(
                   'errors.' + data.errorCode.toString()
                 ),
@@ -458,7 +481,7 @@ export class OficinasComponent implements OnInit {
           },
           error: (err: Error) => console.error(err),
         });
-  }
+  };
 
   onDeleteHandler(office: Oficinas) {
     const yesAction = () => {
@@ -470,7 +493,7 @@ export class OficinasComponent implements OnInit {
         : 'oficinas.last_delete';
 
       if (oficinasLength === 1) {
-        this.openAlertDialog(
+        this.commonDialogService.openSecondDialog(
           this.translocoService.translate(alertMessage),
           alertType,
           isDefaultOffice ? undefined : this.deleteOficina,
@@ -498,20 +521,31 @@ export class OficinasComponent implements OnInit {
       ),
     ];
 
-    const headerStyle = {
-      icon: 'info',
-      dialogType: 'confirm',
-      title: this.translocoService.translate('dialog_header.delete'),
-    };
+    // const headerStyle = {
+    //   icon: 'info',
+    //   dialogType: 'confirm',
+    //   title: this.translocoService.translate('dialog_header.delete'),
+    // };
 
-    const deleteDialogConfig = this.getCommonDialogConfig(
-      actionButtons,
-      undefined,
+    const deleteDialogConfig = this.commonDialogService.getDialogConfig(
       '40%',
       false,
-      headerStyle,
-      this.translocoService.translate('dialog_content.delete_oficinas_alert')
+      10000,
+      false,
+      'dialogStyle',
+      actionButtons,
+      this.translocoService.translate('dialog_content.delete_oficinas_alert'),
+      'confirm'
     );
+
+    // const deleteDialogConfig = this.getCommonDialogConfig(
+    //   actionButtons,
+    //   undefined,
+    //   '40%',
+    //   false,
+    //   headerStyle,
+    //   this.translocoService.translate('dialog_content.delete_oficinas_alert')
+    // );
 
     this.deleteDialogRef = this.dialogService.open(
       AlertDialogComponent,
@@ -519,65 +553,76 @@ export class OficinasComponent implements OnInit {
     );
   }
 
-  openAlertDialog(
-    alertMessage: string,
-    dialogType: string,
-    callback?: (input?: any) => void,
-    campoDetails?: any
-  ) {
-    const actionButtons: ActionButtons[] =
-      dialogType === 'confirm'
-        ? [
-            this.createActionButton(
-              'buttons.yes',
-              'check',
-              () => {
-                if (callback)
-                  campoDetails ? callback(campoDetails) : callback();
-                this.alertDialogRef?.close();
-              },
-              undefined,
-              false
-            ),
-            this.createActionButton(
-              'buttons.no',
-              '',
-              () => this.alertDialogRef?.close(),
-              undefined,
-              false
-            ),
-          ]
-        : [
-            this.createActionButton(
-              'buttons.accept',
-              '',
-              () => this.alertDialogRef?.close(),
-              undefined,
-              false
-            ),
-          ];
-    const headerStyle = {
-      icon: dialogType === 'confirm' ? 'info' : 'report_problem',
-      dialogType: dialogType,
-      title:
-        dialogType === 'confirm'
-          ? this.translocoService.translate('dialog_header.delete')
-          : this.translocoService.translate('dialog_header.alert'),
-    };
+  // openAlertDialog(
+  //   alertMessage: string,
+  //   dialogType: string,
+  //   callback?: (input?: any) => void,
+  //   campoDetails?: any
+  // ) {
+  //   const actionButtons: ActionButtons[] =
+  //     dialogType === 'confirm'
+  //       ? [
+  //           this.createActionButton(
+  //             'buttons.yes',
+  //             'check',
+  //             () => {
+  //               if (callback)
+  //                 campoDetails ? callback(campoDetails) : callback();
+  //               this.alertDialogRef?.close();
+  //             },
+  //             undefined,
+  //             false
+  //           ),
+  //           this.createActionButton(
+  //             'buttons.no',
+  //             '',
+  //             () => this.alertDialogRef?.close(),
+  //             undefined,
+  //             false
+  //           ),
+  //         ]
+  //       : [
+  //           this.createActionButton(
+  //             'buttons.accept',
+  //             '',
+  //             () => this.alertDialogRef?.close(),
+  //             undefined,
+  //             false
+  //           ),
+  //         ];
+  //   // const headerStyle = {
+  //   //   icon: dialogType === 'confirm' ? 'info' : 'report_problem',
+  //   //   dialogType: dialogType,
+  //   //   title:
+  //   //     dialogType === 'confirm'
+  //   //       ? this.translocoService.translate('dialog_header.delete')
+  //   //       : this.translocoService.translate('dialog_header.alert'),
+  //   // };
 
-    const alertDialogConfig = this.getCommonDialogConfig(
-      actionButtons,
-      undefined,
-      '40%',
-      false,
-      headerStyle,
-      alertMessage,
-      20000
-    );
+  //   const alertDialogConfig = this.commonDialogService.getDialogConfig(
+  //     '40%',
+  //     false,
+  //     20000,
+  //     false,
+  //     'dialogStyle',
+  //     actionButtons,
+  //     alertMessage,
+  //     dialogType
+  //   );
 
-    this.alertDialogRef = this.dialogService.open(
-      AlertDialogComponent,
-      alertDialogConfig
-    );
-  }
+  //   // const alertDialogConfig = this.getCommonDialogConfig(
+  //   //   actionButtons,
+  //   //   undefined,
+  //   //   '40%',
+  //   //   false,
+  //   //   headerStyle,
+  //   //   alertMessage,
+  //   //   20000
+  //   // );
+
+  //   this.alertDialogRef = this.dialogService.open(
+  //     AlertDialogComponent,
+  //     alertDialogConfig
+  //   );
+  // }
 }
