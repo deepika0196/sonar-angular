@@ -65,7 +65,7 @@ export class CommonDialogService {
     };
   }
 
-  openSecondDialog(
+  openNestedConfirmOrAlertDialog(
     alertMessage: string,
     dialogType: string,
     callback?: (input?: any) => void,

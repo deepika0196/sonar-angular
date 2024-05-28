@@ -349,7 +349,7 @@ export class OficinasComponent implements OnInit {
     };
 
     const updateAction = () => {
-      this.commonDialogService.openSecondDialog(
+      this.commonDialogService.openNestedConfirmOrAlertDialog(
         this.translocoService.translate(
           'dialog_content.update_officinas_alert'
         ),
@@ -450,7 +450,7 @@ export class OficinasComponent implements OnInit {
         : 'oficinas.last_delete';
 
       if (oficinasLength === 1) {
-        this.commonDialogService.openSecondDialog(
+        this.commonDialogService.openNestedConfirmOrAlertDialog(
           this.translocoService.translate(alertMessage),
           alertType,
           isDefaultOffice ? undefined : this.deleteOficina,
