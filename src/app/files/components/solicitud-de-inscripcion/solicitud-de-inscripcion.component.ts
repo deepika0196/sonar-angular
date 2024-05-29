@@ -35,6 +35,7 @@ import { Router } from '@angular/router';
 import { OficinasService } from '@app/files/services/oficinas.service';
 import { Oficinas } from '@app/files/interfaces/oficinas';
 import { SolicitudDeInscripcionRepresentantesService } from '@app/files/services/solicitud-de-inscripcion-representantes.service';
+import { CustomResponse } from '@app/shared/services/common.service';
 
 @Component({
   selector: 'app-solicitud-de-inscripcion',
@@ -132,7 +133,7 @@ export class SolicitudDeInscripcionComponent
         .getOficinasByEntidadId(id)
         .pipe(takeUntil(this.subscription))
         .subscribe({
-          next: (data) => {
+          next: (data: CustomResponse<Oficinas>) => {
             this.oficinasList = data.response;
             resolve(true);
           },
