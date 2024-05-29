@@ -1,3 +1,4 @@
+import { TemplateRef } from '@angular/core';
 import { CampoDeActuacion } from '@app/basic-maintenance/interfaces/campoDeActuacion';
 
 export interface ActionButtons {
@@ -34,10 +35,7 @@ export interface GenericDialog {
       dialogType: string;
       title: string;
     };
-    template?: any;
-    context?: any;
-    injector?: any;
-    component?: any;
+    template?: TemplateRef<any>;
   };
   styleClass: string;
   showHeader: boolean;
