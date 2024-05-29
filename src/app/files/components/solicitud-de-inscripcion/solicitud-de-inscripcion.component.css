@@ -28,7 +28,8 @@
   .p-accordion .p-accordion-header .p-accordion-header-link {
     padding: 0;
     color: var(--light-blue);
-    background-color: var(-- --accordion);
+    border-radius: 0%;
+    background-color: var(--accordion);
     text-decoration: none;
     width: 100%;
   }
@@ -40,6 +41,7 @@
     .p-accordion-header:not(.p-highlight):not(.p-disabled):hover
     .p-accordion-header-link {
     color: var(--light-blue);
+    background-color: var(--accordion);
   }
 }
 
@@ -50,6 +52,9 @@
     font-size: 1rem;
     border-radius: 0%;
     border-right: none;
+  }
+  .p-button {
+    border-radius: 0%;
   }
 
   .p-button.p-button-icon-only {

@@ -10,12 +10,12 @@ import {
   providedIn: 'root',
 })
 export class SolicitudeProvinciaService extends CommonService {
-  getProvincia() {
+  public getProvincia() {
     return this._arqHttpClient.get<CustomResponse<Provincia>>(
       this.urlBuilder(UrlEndpoints.vmcrcProvincia)
     );
   }
-  urlBuilder(type: string): string {
+  public urlBuilder(type: string): string {
     let url: string = this.apiUrl;
     switch (type) {
       case UrlEndpoints.vmcrcProvincia:
