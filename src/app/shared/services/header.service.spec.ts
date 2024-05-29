@@ -58,6 +58,9 @@ describe('HeaderService', () => {
               routerLinkActiveOptions: { exact: true },
             },
             {
+              label: 'Entity Representatives',
+            },
+            {
               label: 'Fields of Action',
               routerLink: ['/basic-maintenance/campoDeActuacion'],
               routerLinkActiveOptions: { exact: true },
@@ -66,9 +69,6 @@ describe('HeaderService', () => {
               label: 'Remediation Requirements',
               routerLink: ['/basic-maintenance/requerimientosSubsanacion'],
               routerLinkActiveOptions: { exact: true },
-            },
-            {
-              label: 'Entity Representatives',
             },
           ],
         },
