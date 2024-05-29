@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
-import { postalCode } from '@app/files/interfaces/solicitud-de-inscripcion';
+import { PostalCode } from '@app/files/interfaces/solicitud-de-inscripcion';
 import {
   CommonService,
   CustomResponse,
@@ -15,7 +15,7 @@ export class SolicituddeCodigoPostalService extends CommonService {
       muniCodMunicipio: municipio,
       provCodProvincia: provincia,
     };
-    return this._arqHttpClient.get<CustomResponse<postalCode>>(
+    return this._arqHttpClient.get<CustomResponse<PostalCode>>(
       this.urlBuilder(UrlEndpoints.vmcrcCodigoPostal),
       { params }
     );

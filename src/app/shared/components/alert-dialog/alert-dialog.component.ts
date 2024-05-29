@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import {
   ActionButtons,
   InputField,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
+import { CampoDeActuacion } from '@app/basic-maintenance/interfaces/campoDeActuacion';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -14,13 +15,19 @@ export class AlertDialogComponent implements OnInit {
   actionButtons: ActionButtons[] = [];
   inputFields: InputField[] = [];
   alertMessage = '';
-  headerStyle: any;
+  headerStyle: {
+    icon: string;
+    dialogType: string;
+    title: string;
+  };
   headerExist = false;
-  inputValues: any;
+  inputValues: CampoDeActuacion | undefined;
+  template: TemplateRef<void>;
 
   constructor(private dialogConfig: DynamicDialogConfig) {}
 
   ngOnInit() {
+    this.template = this.dialogConfig.data.template;
     this.actionButtons = this.dialogConfig.data?.actionButtons;
     this.inputFields = this.dialogConfig.data.inputFields;
     this.alertMessage = this.dialogConfig.data.alertMessage;

@@ -43,7 +43,7 @@
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana",
     "acreditaciones_title": "Acreditaciones",
     "actualizaciones_title": "Actualizaciones",
     "documentos_title": "Documentos"
@@ -79,6 +79,22 @@
     "NIF_CIF_legal_representative": "NIF/CIF Representante Legal"
   },
 
+  "oficinas": {
+    "office_name": "Office Name",
+    "residency": "Residency",
+    "province": "Província",
+    "municipality": "Municipality",
+    "phone": "Phone",
+    "phone_2": "Phone 2",
+    "fax": "Fax",
+    "postal": "C. Postal",
+    "contact_person": "Main Contact Person",
+    "contact_email": "Main contact email",
+    "office_dialog_header": "Commercial office",
+    "default_delete": "It is not possible to delete the default office if it is the only record associated with the entity.",
+    "last_delete": "If the company does not have offices in the Valencian Community, one will be added by default with the company name of the entity."
+  },
+
   "errors": {
     "REGISTRATION_DUPLICATE_ERROR": "The record has already been inserted or is duplicated. Review it.",
     "UPDATE_REFERENCE_ERROR": "The record could not be updated because there is associated information.",
@@ -99,7 +115,8 @@
     "accept": "Accept",
     "back": "Back",
     "archivar": "File",
-    "restaurar": "Restore"
+    "restaurar": "Restore",
+    "close": "Close"
   },
 
   "tooltip": {
@@ -129,7 +146,9 @@
     "delete_alert": "Do you want to permanently delete this record?",
     "modify_alert": "Do you want to save the changes you made?",
     "archive_alert": "Do you want to archive this file?",
-    "restore_alert": "Do you want to restore this file?"
+    "restore_alert": "Do you want to restore this file?",
+    "delete_oficinas_alert": "Do you want to delete this office?",
+    "update_officinas_alert": "Do you wish to save changes?"
   },
 
   "dropdown": {
@@ -170,5 +189,6 @@
   "snackbar_txt_validate": "Fill in the required information",
   "pagination_text": "Records from {{first}} to {{last}} (Total {{totalRecords}})",
   "empty_message": "No Record found",
-  "required_text": "You must fill out the field."
+  "required_text": "You must fill out the field.",
+  "action_column": "Actions"
 }

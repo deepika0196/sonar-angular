@@ -112,7 +112,7 @@ export class SolicitudDeInscripcionSearchComponent
       pipeFormat: GlobalConstant.ddmmyyyy,
     },
     {
-      field: 'deseccionVal',
+      field: 'representantesNifcif',
       header: 'solicitudDeInscripcion.NIF_CIF_legal_representative',
       sortable: true,
       class: 'table-col-width',
@@ -336,7 +336,9 @@ export class SolicitudDeInscripcionSearchComponent
     action: 'view' | 'edit' | 'add',
     entidad?: Entidad
   ) {
-    const state = entidad ? { cif: entidad.nifcif, action } : { action };
+    const state = entidad
+      ? { cif: entidad.nifcif, id: entidad.id, action }
+      : { action };
     this.router.navigate(['/files/solicitudDeInscripcion'], { state });
   }
 
