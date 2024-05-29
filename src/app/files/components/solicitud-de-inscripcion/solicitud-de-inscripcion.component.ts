@@ -108,7 +108,7 @@ export class SolicitudDeInscripcionComponent
   }
   ngOnInit(): void {
     this.copyAdress = true;
-    // this.initializePage();
+    this.initializePage();
   }
 
   async initializePage() {

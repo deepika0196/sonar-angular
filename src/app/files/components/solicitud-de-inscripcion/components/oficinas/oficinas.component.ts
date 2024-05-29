@@ -160,7 +160,6 @@ export class OficinasComponent implements OnInit {
       disableDelete: this.readOnlyMode,
       disableEdit: this.readOnlyMode,
     };
-    this.oficinas.push({ denominacion: 'Dd' });
   }
 
   private mapFormToOficinas(selectedOffice?: Oficinas) {
