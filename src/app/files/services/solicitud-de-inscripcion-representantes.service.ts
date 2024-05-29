@@ -4,7 +4,7 @@ import { RepresentantesLegal } from '@app/files/interfaces/solicitud-de-inscripc
 
 import {
   CommonService,
-  CustomResponse,
+  CustomResponsSinglee,
 } from '@app/shared/services/common.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ import {
 export class SolicitudDeInscripcionRepresentantesService extends CommonService {
   public getByRepresentantesNifCif(cifNif: string) {
     console.log('cifNif :  ' + cifNif);
-    return this._arqHttpClient.get<CustomResponse<RepresentantesLegal>>(
+    return this._arqHttpClient.get<CustomResponsSinglee<RepresentantesLegal>>(
       this.urlBuilder(UrlEndpoints.reccaRepresentantes) +
         `/findByNifcif/${cifNif}`
     );

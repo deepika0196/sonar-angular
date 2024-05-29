@@ -33,7 +33,10 @@ import { CIFValidator } from '@app/core/utils/cif-validator';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { SolicitudDeInscripcionRepresentantesService } from '@app/files/services/solicitud-de-inscripcion-representantes.service';
-import { CustomResponse } from '@app/shared/services/common.service';
+import {
+  CustomResponsSinglee,
+  CustomResponse,
+} from '@app/shared/services/common.service';
 
 @Component({
   selector: 'app-solicitud-de-inscripcion',
@@ -195,7 +198,7 @@ export class SolicitudDeInscripcionComponent
           .getByRepresentantesNifCif(cifNif)
           .pipe(takeUntil(this.subscription))
           .subscribe({
-            next: (data: CustomResponse<RepresentantesLegal>) => {
+            next: (data: CustomResponsSinglee<RepresentantesLegal>) => {
               this.patchValueOfRepresentantes(data.response);
               resolve(true);
             },
@@ -205,7 +208,7 @@ export class SolicitudDeInscripcionComponent
     });
   }
 
-  private async patchValueOfRepresentantes(response: any) {
+  private async patchValueOfRepresentantes(response: RepresentantesLegal) {
     const codproValue = this.provinciaList.find(
       (provincia) => provincia.provCodProvincia === response.codpro
     );
@@ -507,7 +510,7 @@ export class SolicitudDeInscripcionComponent
           .pipe(takeUntil(this.subscription))
           .subscribe({
             next: (data: CustomResponse<Entidad>) => {
-              this.patchValue(data.response[0]);
+              this.patchValue(data.response);
               resolve(true);
             },
             error: (err: Error) => {
@@ -519,7 +522,7 @@ export class SolicitudDeInscripcionComponent
     });
   }
 
-  private async patchValue(response: Entidad) {
+  private async patchValue(response: any) {
     const codproValue = this.provinciaList.find(
       (provincia) => provincia.provCodProvincia === response.codpro
     );

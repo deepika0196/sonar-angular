@@ -41,7 +41,7 @@ export interface Entidad {
   numinscripcion?: string;
   observaciones?: string;
   publicaWeb?: string;
-  representantesDTO: {
+  representantesDTO?: {
     apellidos: string;
     codmun: string;
     codpro: string;

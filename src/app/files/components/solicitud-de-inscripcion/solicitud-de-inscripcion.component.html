@@ -1,15 +1,15 @@
 <div *transloco="let t">
   <div class="grid">
-    <div class="col-6">
-      <p class="headerStyle">
+    <div class="col-4">
+      <span class="headerStyle">
         {{ t('solicitud_de_inscripcion.title') }}
-      </p>
+      </span>
     </div>
-    <div class="col-6 justify-content-end d-flex">
+    <div class="col-8 justify-content-end d-flex">
       <gva-button
         [btnLabel]="t('buttons.back')"
         [iconPosition]="'left'"
-        [btnClass]="'actionStyle mr-2'"
+        [btnClass]="'actionStyle mr-2 btn-postion'"
         (btnClick)="perviousScreen()"
       >
         <span class="material-icons iconStyle"> arrow_back </span>
@@ -18,7 +18,7 @@
       <gva-button
         [btnLabel]="t('buttons.save')"
         [iconPosition]="'left'"
-        [btnClass]="'actionStyle mr-2'"
+        [btnClass]="'actionStyle mr-2 btn-postion'"
         [btnDisabled]="!isValidForm"
         (btnClick)="onSubmit()"
         [hidden]="readOnlyMode"
@@ -31,7 +31,7 @@
           isFechaBajaNull ? t('buttons.archivar') : t('buttons.restaurar')
         "
         [iconPosition]="'left'"
-        [btnClass]="'actionStyle mr-2'"
+        [btnClass]="'actionStyle mr-2 btn-postion'"
         (btnClick)="updateFechaBaja()"
         [hidden]="readOnlyMode"
       >
@@ -364,7 +364,7 @@
         >
           <div class="grid">
             <div class="col">
-              <div class="w-full">
+              <div class="w-full mt-2">
                 <p-checkbox
                   [binary]="true"
                   id="addressCopy"

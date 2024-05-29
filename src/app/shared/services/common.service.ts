@@ -8,6 +8,11 @@ export interface CustomResponse<T> {
   response: T[];
   errorCode?: string;
 }
+export interface CustomResponsSinglee<T> {
+  success: boolean;
+  response: T;
+  errorCode?: string;
+}
 
 @Injectable({
   providedIn: 'root',
