@@ -5,16 +5,16 @@
   },
 
   "menu_items": {
-    "mantenimientos_basicos": "Mantenimientos básicos",
-    "expedientes": "Expedientes",
+    "mantenimientos_basicos": "Manteniments bàsics",
+    "expedientes": "Expedients",
     "informes": "Informes",
     "sub_menu": {
-      "entidades_solicitantes": "Entidades Solicitantes",
-      "campos_de_actuacion": "Campos de Actuación",
-      "requerimientos_subsanacion": "Requerimientos de Subsanación",
-      "representantes_de_entidad": "Representantes de Entidad",
-      "solicitud_de_inscripcion": "Solicitud de Inscripción",
-      "generacion_de_informes": "Generación de Informes"
+      "entidades_solicitantes": "Entitats sol·licitants",
+      "campos_de_actuacion": "Camps d'actuació",
+      "requerimientos_subsanacion": "Requeriments d'esmena",
+      "representantes_de_entidad": "Representants d'entitat",
+      "solicitud_de_inscripcion": "Sol·licitud d'inscripció",
+      "generacion_de_informes": "Generació d'informes"
     }
   },
 

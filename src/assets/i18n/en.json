@@ -8,12 +8,12 @@
     "expedientes": "FILES",
     "informes": "Reports",
     "sub_menu": {
-      "entidades_solicitantes": "Requesting Entities",
-      "campos_de_actuacion": "Fields of Action",
-      "requerimientos_subsanacion": "Correction Requirements (OBSOLETE)",
-      "representantes_de_entidad": "Entity Representatives",
-      "solicitud_de_inscripcion": "Registration Request",
-      "generacion_de_informes": "Report Generation"
+      "entidades_solicitantes": "Requesting entities",
+      "campos_de_actuacion": "Fields of action",
+      "requerimientos_subsanacion": "Correction requirements (OBSOLETE)",
+      "representantes_de_entidad": "Entity representatives",
+      "solicitud_de_inscripcion": "Registration request",
+      "generacion_de_informes": "Report reneration"
     }
   },
 

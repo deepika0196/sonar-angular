@@ -5,16 +5,16 @@
   },
 
   "menu_items": {
-    "mantenimientos_basicos": "Mantenimientos Básicos",
+    "mantenimientos_basicos": "Mantenimientos básicos",
     "expedientes": "Expedientes",
     "informes": "Informes",
     "sub_menu": {
-      "entidades_solicitantes": "Entidades Solicitantes",
-      "campos_de_actuacion": "Campos de Actuación",
-      "requerimientos_subsanacion": "Requerimientos de Subsanación",
-      "representantes_de_entidad": "Representantes de Entidad",
-      "solicitud_de_inscripcion": "Solicitud de Inscripción",
-      "generacion_de_informes": "Generación de Informes"
+      "entidades_solicitantes": "Entidades solicitantes",
+      "campos_de_actuacion": "Campos de actuación",
+      "requerimientos_subsanacion": "Requerimientos de subsanación",
+      "representantes_de_entidad": "Representantes de entidad",
+      "solicitud_de_inscripcion": "Solicitud de inscripción",
+      "generacion_de_informes": "Generación de informes"
     }
   },
 
