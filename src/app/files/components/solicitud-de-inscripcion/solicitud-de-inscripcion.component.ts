@@ -50,7 +50,7 @@ export class SolicitudDeInscripcionComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   protected isValidForm = false;
-  private isFechaBajaNull = true;
+  protected isFechaBajaNull = true;
 
   protected copyAdress: boolean;
   protected datosPrincipalesForm: FormGroup;
@@ -58,19 +58,18 @@ export class SolicitudDeInscripcionComponent
   private numinscripcion = '/ECMCA';
   protected calendarDateFormat = GlobalConstant.ddmmyy;
 
-  private postalList: PostalCode[] = [];
+  protected postalList: PostalCode[] = [];
   protected filteredPostal: PostalCode[] = [];
-
-  private municipioList: Municipio[] = [];
+  protected municipioList: Municipio[] = [];
   protected filteredMunicipio: Municipio[] = [];
   protected disableTabs: boolean;
   protected oficinasList: Oficinas[] = [];
 
-  private provinciaList: Provincia[] = [];
+  protected provinciaList: Provincia[] = [];
   protected filteredProvincia: Provincia[] = [];
   protected cifNif = '';
-  private readOnlyMode: boolean;
-  private isLegalCifNif: boolean;
+  protected readOnlyMode: boolean;
+  protected isLegalCifNif: boolean;
   private subscription = new Subject<void>();
 
   constructor(

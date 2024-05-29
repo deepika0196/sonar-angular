@@ -97,9 +97,9 @@ describe('HeaderService', () => {
       expect(translocoServiceSpy.translate.calls.allArgs()).toEqual([
         ['menu_items.mantenimientos_basicos'],
         ['menu_items.sub_menu.entidades_solicitantes'],
+        ['menu_items.sub_menu.representantes_de_entidad'],
         ['menu_items.sub_menu.campos_de_actuacion'],
         ['menu_items.sub_menu.requerimientos_subsanacion'],
-        ['menu_items.sub_menu.representantes_de_entidad'],
         ['menu_items.expedientes'],
         ['menu_items.sub_menu.solicitud_de_inscripcion'],
         ['menu_items.informes'],
