@@ -21,7 +21,7 @@ export class AlertDialogComponent implements OnInit {
   };
   headerExist = false;
   inputValues: any;
-  template: TemplateRef<any>;
+  template: TemplateRef<void>;
 
   constructor(private dialogConfig: DynamicDialogConfig) {}
 

@@ -43,7 +43,7 @@ export class OficinasComponent implements OnInit {
   @Input() provinceList: Provincia[] = [];
   @Input() readOnlyMode = false;
   @Output() fetchAllOficinasById: EventEmitter<number> = new EventEmitter();
-  @ViewChild('oficinasTemplate') template: TemplateRef<any>;
+  @ViewChild('oficinasTemplate') template: TemplateRef<void>;
   protected tableConfig: TableConfig = {
     rows: 10,
     styleClass: 'paginator-override',

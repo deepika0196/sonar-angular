@@ -46,7 +46,7 @@ export class CommonDialogService {
     alertMessage = '',
     dialogType = '',
     headerKey = '',
-    template: TemplateRef<any> = null
+    template: TemplateRef<void> = null
   ): GenericDialog {
     return {
       header: headerKey
@@ -169,7 +169,7 @@ export class CommonDialogService {
   public openDialog(
     type: 'add' | 'update' | 'view' | 'delete' | 'confirm' | 'alert',
     action?: (input?: CampoDeActuacion | Oficinas | undefined) => void,
-    template?: TemplateRef<any>,
+    template?: TemplateRef<void>,
     validate?: () => boolean,
     icon = '',
     headerTitle = '',

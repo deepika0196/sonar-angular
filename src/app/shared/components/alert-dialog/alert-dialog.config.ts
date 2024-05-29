@@ -35,7 +35,7 @@ export interface GenericDialog {
       dialogType: string;
       title: string;
     };
-    template?: TemplateRef<any>;
+    template?: TemplateRef<void>;
   };
   styleClass: string;
   showHeader: boolean;
