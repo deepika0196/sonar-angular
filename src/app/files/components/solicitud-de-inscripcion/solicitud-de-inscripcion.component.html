@@ -761,7 +761,7 @@
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab>
+      <p-accordionTab [disabled]="disableTabs">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p class="mt-2">{{ t('solicitud_de_inscripcion.title_tab_4') }}</p>
@@ -771,11 +771,20 @@
           pTemplate="content"
           contentStyle="accordion-content"
         >
-          <app-oficinas></app-oficinas>
+          <app-oficinas
+            [provinceList]="provinciaList"
+            [oficinas]="oficinasList"
+            [social]="datosPrincipalesForm.value.entidad.denomsocial"
+            [entidadId]="datosPrincipalesForm.value.id"
+            [readOnlyMode]="readOnlyMode"
+            (fetchAllOficinasById)="
+              fetchAllOficinasById(datosPrincipalesForm.value.id)
+            "
+          ></app-oficinas>
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab>
+      <p-accordionTab [disabled]="disableTabs">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p class="mt-2">
@@ -791,7 +800,7 @@
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab>
+      <p-accordionTab [disabled]="disableTabs">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p class="mt-2">
@@ -807,7 +816,7 @@
         </ng-template>
       </p-accordionTab>
 
-      <p-accordionTab>
+      <p-accordionTab [disabled]="disableTabs">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
             <p class="mt-2">

@@ -1,5 +1,8 @@
 <div class="contentStyle">
   <div class="">
+    <div>
+      <ng-container *ngTemplateOutlet="template"></ng-container>
+    </div>
     <div
       *ngIf="headerExist"
       class="{{
@@ -14,29 +17,32 @@
           >{{ headerStyle?.icon }}</span
         >
       </div>
+
       <div class="d-flex flex-column gap-2 col-10">
         <span class="titleStyle">{{ headerStyle?.title }}</span>
         <span class="messageStyle mt-3">{{ alertMessage }}</span>
       </div>
     </div>
-    <div
-      *ngFor="let field of inputFields; let i = index"
-      class="row align-items-center m-2"
-    >
-      <label
-        htmlFor="{{ field.name }}"
-        class="labelStyle col-4"
-        >{{ field.label }}</label
+    <div *ngIf="inputFields && inputFields.length > 0">
+      <div
+        *ngFor="let field of inputFields; let i = index"
+        class="row align-items-center m-2"
       >
-      <div class="d-flex flex-column gap-2 col-8">
-        <input
-          pInputText
-          id="{{ field.name }}"
-          class="inputStyle"
-          [maxlength]="field.maxLength ? field.maxLength : null"
-          [(ngModel)]="inputValues[field.name]"
-          [disabled]="field.disabled ? field.disabled : 'false'"
-        />
+        <label
+          htmlFor="{{ field.name }}"
+          class="labelStyle col-4"
+          >{{ field.label }}</label
+        >
+        <div class="d-flex flex-column gap-2 col-8">
+          <input
+            pInputText
+            id="{{ field.name }}"
+            class="inputStyle"
+            [maxlength]="field.maxLength ? field.maxLength : null"
+            [(ngModel)]="inputValues[field.name]"
+            [disabled]="field.disabled ? field.disabled : 'false'"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -46,13 +52,13 @@
     *ngFor="let button of actionButtons; let i = index"
     [btnLabel]="button.label"
     [iconPosition]="'left'"
-    [btnClass]="'buttonStyle'"
+    [btnClass]="'actionStyle'"
     (btnClick)="button.action(inputValues)"
     [btnDisabled]="button.validate ? button.validate(inputValues) : false"
   >
     <span
       *ngIf="button.icon"
-      class="material-icons"
+      class="material-icons iconStyle icon-size"
       >{{ button.icon }}</span
     >
   </gva-button>

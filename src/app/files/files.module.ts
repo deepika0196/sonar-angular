@@ -11,6 +11,7 @@ import { AcreditacionesComponent } from '@app/files/components/solicitud-de-insc
 import { DocumentosComponent } from '@app/files/components/solicitud-de-inscripcion/components/documentos/documentos.component';
 import { ActualizacionesComponent } from '@app/files/components/solicitud-de-inscripcion/components/actualizaciones/actualizaciones.component';
 import { OficinasComponent } from '@app/files/components/solicitud-de-inscripcion/components/oficinas/oficinas.component';
+
 @NgModule({
   declarations: [
     FilesComponent,

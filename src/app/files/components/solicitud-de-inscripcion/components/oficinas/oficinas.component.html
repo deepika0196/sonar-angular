@@ -1,1 +1,252 @@
-<p>oficinas works!</p>
+<div *transloco="let t">
+  <div class="d-flex justify-content-end">
+    <gva-button
+      [btnLabel]="''"
+      [iconPosition]="'left'"
+      [btnClass]="'actionStyle p-2'"
+      (btnClick)="openAddDialog()"
+      [btnDisabled]="readOnlyMode"
+    >
+      <i class="material-icons iconStyle p-0">add</i>
+    </gva-button>
+  </div>
+  <p-toast></p-toast>
+  <generic-table
+    [data]="oficinas"
+    [columns]="columns"
+    [paginatorConfig]="paginatorConfig"
+    [tableConfig]="tableConfig"
+    (openView)="openViewDialog($event)"
+    (openEdit)="openUpdateDialog($event)"
+    (openDelete)="onDeleteHandler($event)"
+  ></generic-table>
+  <ng-template
+    #oficinasTemplate
+    let-data
+  >
+    <form
+      [formGroup]="oficinasForm"
+      class="pb-1"
+    >
+      <div class="flex flex-row justify-content-between mt-2">
+        <div class="flex flex-column gap-1 col-6 md:col-3">
+          <label
+            htmlFor="office_name"
+            class="labelStyle"
+            >{{ t('oficinas.office_name') }}*</label
+          >
+          <input
+            pInputText
+            id="office_name"
+            class="inputStyle"
+            aria-describedby="codigo-help"
+            formControlName="office_name"
+            [maxlength]="globalConst.maxLengthString"
+          />
+        </div>
+        <div class="flex flex-column gap-1 col-6 md:col-3">
+          <label
+            htmlFor="residency"
+            class="labelStyle"
+            >{{ t('oficinas.residency') }}</label
+          >
+          <input
+            pInputText
+            id="residency"
+            class="inputStyle"
+            aria-describedby="deseccion-help"
+            formControlName="residency"
+            [maxlength]="globalConst.maxLengthString"
+          />
+        </div>
+      </div>
+      <div class="flex flex-row justify-content-between mt-2">
+        <div class="flex flex-column gap-1 col-4 md:col-2">
+          <label
+            htmlFor="province"
+            class="labelStyle"
+            >{{ t('oficinas.province') }}</label
+          >
+          <p-dropdown
+            [options]="provinceList"
+            formControlName="province"
+            optionLabel="provDenominacion"
+            optionValue="provCodProvincia"
+            [emptyMessage]="t('dropdown.no_result_loaded')"
+            [emptyFilterMessage]="t('dropdown.no_result_loaded')"
+            [filter]="true"
+            filterBy="provDenominacion"
+            [showClear]="true"
+            placeholder="--{{ t('dropdown.placeholder') }}--"
+            class="dropdownStyle"
+            (onChange)="onProvinciaSelected($event.value)"
+          >
+            <ng-template
+              let-item
+              pTemplate="selectedItem"
+            >
+              <div class="flex align-items-center gap-2 dropdownStyle-label">
+                <div>{{ item.provDenominacion }}</div>
+              </div>
+            </ng-template>
+            <ng-template
+              let-item
+              pTemplate="item"
+            >
+              <div class="flex align-items-center dropdownStyle-label">
+                <div>{{ item.provDenominacion }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="flex flex-column gap-1 col-4 md:col-2">
+          <label
+            htmlFor="municipality"
+            class="labelStyle"
+            >{{ t('oficinas.municipality') }}</label
+          >
+          <p-dropdown
+            [options]="municipioList"
+            formControlName="municipality"
+            optionLabel="muniDenominacion"
+            optionValue="muniCodMunicipio"
+            [emptyMessage]="t('dropdown.no_result_loaded')"
+            [emptyFilterMessage]="t('dropdown.no_result_loaded')"
+            [filter]="true"
+            filterBy="muniDenominacion"
+            [showClear]="true"
+            placeholder="--{{ t('dropdown.placeholder') }}--"
+            class="dropdownStyle"
+            (onChange)="onMunicipalitySelected(selectedProCod, $event.value)"
+          >
+            <ng-template
+              let-item
+              pTemplate="selectedItem"
+            >
+              <div class="flex align-items-center gap-2 dropdownStyle-label">
+                <div>{{ item.muniDenominacion }}</div>
+              </div>
+            </ng-template>
+            <ng-template
+              let-item
+              pTemplate="item"
+            >
+              <div class="flex align-items-center gap-2">
+                <div>{{ item.muniDenominacion }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+        <div class="flex flex-column gap-1 col-4 md:col-2">
+          <label
+            htmlFor="postal"
+            class="labelStyle"
+            >{{ t('oficinas.postal') }}</label
+          >
+          <p-dropdown
+            [options]="postalList"
+            formControlName="postal"
+            optionLabel="cpostCodPostal"
+            optionValue="cpostCodPostal"
+            [emptyMessage]="t('dropdown.no_result_loaded')"
+            [emptyFilterMessage]="t('dropdown.no_result_loaded')"
+            [filter]="true"
+            filterBy="cpostCodPostal"
+            [showClear]="true"
+            placeholder="--{{ t('dropdown.placeholder') }}--"
+            class="dropdownStyle"
+          >
+            <ng-template
+              let-item
+              pTemplate="selectedItem"
+            >
+              <div class="flex align-items-center gap-2 dropdownStyle-label">
+                <div>{{ item.cpostCodPostal }}</div>
+              </div>
+            </ng-template>
+            <ng-template
+              let-item
+              pTemplate="item"
+            >
+              <div class="flex align-items-center gap-2">
+                <div>{{ item.cpostCodPostal }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+      <div class="flex flex-row justify-content-between mt-2">
+        <div class="flex flex-column gap-1 col-4 md:col-2">
+          <label
+            htmlFor="phone"
+            class="labelStyle"
+            >{{ t('oficinas.phone') }}</label
+          >
+          <input
+            pInputText
+            id="phone"
+            class="inputStyle"
+            aria-describedby="codigo-help"
+            formControlName="phone"
+            type="number"
+            (keypress)="
+              checkMaxLength($event.target, globalConst.maxLengthNine)
+            "
+          />
+        </div>
+        <div class="flex flex-column gap-1 col-4 md:col-2">
+          <label
+            htmlFor="phone_2"
+            class="labelStyle"
+            >{{ t('oficinas.phone_2') }}</label
+          >
+          <input
+            pInputText
+            id="phone_2"
+            class="inputStyle"
+            aria-describedby="deseccion-help"
+            formControlName="phone_2"
+            type="number"
+            (keypress)="
+              checkMaxLength($event.target, globalConst.maxLengthNine)
+            "
+          />
+        </div>
+        <div class="flex flex-column gap-1 col-4 md:col-2"></div>
+      </div>
+      <div class="flex flex-row justify-content-between mt-2">
+        <div class="flex flex-column gap-1 col-6 md:col-3">
+          <label
+            htmlFor="contact_person"
+            class="labelStyle"
+            >{{ t('oficinas.contact_person') }}</label
+          >
+          <input
+            pInputText
+            id="contact_person"
+            class="inputStyle"
+            aria-describedby="codigo-help"
+            formControlName="contact_person"
+            [maxlength]="globalConst.maxLengthString"
+          />
+        </div>
+        <div class="flex flex-column gap-1 col-6 md:col-3">
+          <label
+            htmlFor="contact_email"
+            class="labelStyle"
+            >{{ t('oficinas.contact_email') }}</label
+          >
+          <input
+            pInputText
+            id="contact_email"
+            class="inputStyle invalid"
+            aria-describedby="deseccion-help"
+            formControlName="contact_email"
+            type="email"
+            [maxlength]="globalConst.maxLengthString"
+          />
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</div>

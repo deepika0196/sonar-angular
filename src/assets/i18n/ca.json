@@ -47,6 +47,22 @@
     "municipality": "Municipi",
     "NIF_CIF_legal_representative": "NIF/CIF Representant Legal"
   },
+
+  "oficinas": {
+    "office_name": "Nom Oficina",
+    "residency": "Domicili",
+    "province": "Província",
+    "municipality": "Municipi",
+    "phone": "Telèfon",
+    "phone_2": "Telèfon 2",
+    "postal": "C. Postal",
+    "contact_person": "Persona contacte principal",
+    "contact_email": "Correu contacte principal",
+    "office_dialog_header": "Oficina commercial",
+    "default_delete": "No és possible eliminar l'oficina per defecte si és l'únic registre associat a l'entitat.",
+    "last_delete": "Si l'empresa no té oficines a la Comunitat Valenciana, s'afegirà una per defecte amb la Raó social de l'entitat."
+  },
+
   "errors": {
     "REGISTRATION_DUPLICATE_ERROR": "El registre ja ha sigut inserit o està duplicat. Revise-ho.",
     "UPDATE_REFERENCE_ERROR": "No s'ha pogut editar el registre perquè existix informació associada.",
@@ -67,7 +83,8 @@
     "accept": "Acceptar",
     "back": "Tornar",
     "archivar": "Arxivar",
-    "restaurar": "Restaurar"
+    "restaurar": "Restaurar",
+    "close": "Tancar"
   },
 
   "tooltip": {
@@ -97,7 +114,9 @@
     "delete_alert": "Desitja esborrar definitivament este registre?",
     "modify_alert": "Desitja guardar els canvis realitzats ?",
     "archive_alert": "Desitja arxivar este expedient?",
-    "restore_alert": "Desitja restaurar este expedient?"
+    "restore_alert": "Desitja restaurar este expedient?",
+    "delete_oficinas_alert": "Desitja eliminar esta oficina?",
+    "update_officinas_alert": "Desitja guardar els canvis?"
   },
 
   "solicitud_de_inscripcion": {
@@ -173,5 +192,6 @@
   "snackbar_txt_validate": "ca_Completeu les dades obligatòries",
   "pagination_text": "Registres de l'{{first}} al {{last}} (Total {{totalRecords}})",
   "empty_message": "No es va trobar cap coincidència",
-  "required_text": "Cal emplenar el camp."
+  "required_text": "Cal emplenar el camp.",
+  "action_column": "Accions"
 }

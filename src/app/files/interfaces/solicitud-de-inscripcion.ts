@@ -12,7 +12,7 @@ export interface Municipio {
   muniDenominacion: string;
 }
 
-export interface postalCode {
+export interface PostalCode {
   cpostMunicipio: string;
   cpostCodMuni: string;
   cpostCodPostal: string;
@@ -73,6 +73,7 @@ export interface EntidadFilter {
 
 export interface State {
   cif: string;
+  id: number;
   action: string;
   navigationId: number;
 }

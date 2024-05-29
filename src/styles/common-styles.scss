@@ -19,6 +19,8 @@ hr {
   background-color: var(--blue);
   border-radius: 0rem;
   border: none;
+  font-size: 1rem;
+  color: var(--white);
 
   .iconStyle {
     color: var(--light-blue);
@@ -55,6 +57,9 @@ hr {
 .inputStyle.p-inputtext {
   color: var(--dark-grey) !important;
 }
+.inputStyle.p-inputtext:disabled {
+  background-color: var(--lighter-grey);
+}
 
 .dropdownStyle .p-dropdown {
   border: 0.125rem solid var(--light-grey);
@@ -68,6 +73,35 @@ hr {
   }
 }
 
+.dropdownStyle .p-dropdown.p-disabled {
+  background-color: var(--lighter-grey);
+}
+.dropdownStyle .p-dropdown.p-dropdown-clearable {
+  .p-dropdown-label {
+    padding-right: 1.75rem;
+  }
+}
+
+/* Style for the custom dropdown */
+.dropdownStyle-label {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Ensure the dropdown itself has a fixed width */
+.dropdownStyle .p-dropdown {
+  width: 100%;
+}
+
+/* Ensure the panel items are also styled correctly */
+.dropdownStyle .p-dropdown-item {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .dropdownStyle .p-dropdown:not([disabled]):hover,
 .dropdownStyle .p-dropdown:not([disabled]):focus {
   border: 0.125rem solid var(--dark-blue) !important;
@@ -75,7 +109,7 @@ hr {
 
 .calenderStyle {
   .p-calendar-disabled {
-    background-color: var(--dark-grey);
+    background-color: var(--lighter-grey);
   }
   .p-calendar {
     height: 2.125rem;

@@ -17,7 +17,7 @@ import {
   Provincia,
   RepresentantesLegal,
   State,
-  postalCode,
+  PostalCode,
 } from '@app/files/interfaces/solicitud-de-inscripcion';
 import { SolicitudDeInscripcionService } from '@app/files/services/solicitud-de-inscripcion.service';
 import { SolicituddeCodigoPostalService } from '@app/files/services/solicitudde-codigo-postal.service';
@@ -32,6 +32,8 @@ import {
 import { CIFValidator } from '@app/core/utils/cif-validator';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { OficinasService } from '@app/files/services/oficinas.service';
+import { Oficinas } from '@app/files/interfaces/oficinas';
 import { SolicitudDeInscripcionRepresentantesService } from '@app/files/services/solicitud-de-inscripcion-representantes.service';
 import {
   CustomResponsSinglee,
@@ -56,11 +58,13 @@ export class SolicitudDeInscripcionComponent
   private numinscripcion = '/ECMCA';
   protected calendarDateFormat = GlobalConstant.ddmmyy;
 
-  private postalList: postalCode[] = [];
-  protected filteredPostal: postalCode[] = [];
+  private postalList: PostalCode[] = [];
+  protected filteredPostal: PostalCode[] = [];
 
   private municipioList: Municipio[] = [];
   protected filteredMunicipio: Municipio[] = [];
+  protected disableTabs: boolean;
+  protected oficinasList: Oficinas[] = [];
 
   private provinciaList: Provincia[] = [];
   protected filteredProvincia: Provincia[] = [];
@@ -76,6 +80,7 @@ export class SolicitudDeInscripcionComponent
     private solicitudProvinciaService: SolicitudeProvinciaService,
     private solicitudeMunicipioService: SolicitudeMunicipioService,
     private solicitudDeInscripcionService: SolicitudDeInscripcionService,
+    private oficinasService: OficinasService,
     private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
     private representantesService: SolicitudDeInscripcionRepresentantesService,
     private location: Location,
@@ -112,6 +117,7 @@ export class SolicitudDeInscripcionComponent
   private async initializePage() {
     await this.loadProvincia();
     const state: State = this.location.getState() as State;
+    this.disableTabs = state.action === 'add' ? false : false;
     this.checkMode(state.action);
     await this.setupFormChangeSubscriptions();
 
@@ -119,9 +125,29 @@ export class SolicitudDeInscripcionComponent
     if (state.cif) {
       this.cifNif = state.cif;
       await this.fetchDetails(state.cif);
+      await this.fetchAllOficinasById(state.id);
     }
     await this.disableNotificationFileds();
   }
+
+  protected async fetchAllOficinasById(id: number): Promise<void | boolean> {
+    return new Promise<void | boolean>((resolve, reject) => {
+      this.oficinasService
+        .getOficinasByEntidadId(id)
+        .pipe(takeUntil(this.subscription))
+        .subscribe({
+          next: (data: CustomResponse<Oficinas>) => {
+            this.oficinasList = data.response;
+            resolve(true);
+          },
+          error: (err: Error) => {
+            console.error(err);
+            reject(err);
+          },
+        });
+    });
+  }
+
   protected loadProvincia() {
     return new Promise<void | boolean>((resolve, reject) => {
       this.solicitudProvinciaService
@@ -456,7 +482,7 @@ export class SolicitudDeInscripcionComponent
         .getMunicipio(muniCodProvincia, muniCodMunicipio)
         .pipe(takeUntil(this.subscription))
         .subscribe({
-          next: (data: CustomResponse<postalCode>) => {
+          next: (data: CustomResponse<PostalCode>) => {
             this.postalList = data.response;
 
             resolve(true);
