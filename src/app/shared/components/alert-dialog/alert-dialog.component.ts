@@ -4,6 +4,7 @@ import {
   ActionButtons,
   InputField,
 } from '@app/shared/components/alert-dialog/alert-dialog.config';
+import { CampoDeActuacion } from '@app/basic-maintenance/interfaces/campoDeActuacion';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -20,7 +21,7 @@ export class AlertDialogComponent implements OnInit {
     title: string;
   };
   headerExist = false;
-  inputValues: any;
+  inputValues: CampoDeActuacion | undefined;
   template: TemplateRef<void>;
 
   constructor(private dialogConfig: DynamicDialogConfig) {}
