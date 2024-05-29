@@ -387,7 +387,7 @@ export class OficinasComponent implements OnInit {
       if (oficinasLength === 1) {
         this.commonDialogService.openDialog(
           alertType,
-          isDefaultOffice ? undefined : this.deleteOficina,
+          isDefaultOffice ? undefined : () => this.deleteOficina(office),
           undefined,
           undefined,
           undefined,

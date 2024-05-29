@@ -127,7 +127,7 @@ export class SolicitudDeInscripcionComponent
     await this.disableNotificationFileds();
   }
 
-  fetchAllOficinasById(id: number): Promise<void | boolean> {
+  protected async fetchAllOficinasById(id: number): Promise<void | boolean> {
     return new Promise<void | boolean>((resolve, reject) => {
       this.oficinasService
         .getOficinasByEntidadId(id)
