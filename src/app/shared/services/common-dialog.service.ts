@@ -1,4 +1,6 @@
 import { Injectable, TemplateRef } from '@angular/core';
+import { CampoDeActuacion } from '@app/basic-maintenance/interfaces/campoDeActuacion';
+import { Oficinas } from '@app/files/interfaces/oficinas';
 import { AlertDialogComponent } from '@app/shared/components/alert-dialog/alert-dialog.component';
 import {
   ActionButtons,
@@ -11,21 +13,17 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
   providedIn: 'root',
 })
 export class CommonDialogService {
-  alertDialogRef: DynamicDialogRef | undefined;
-  addDialogRef: DynamicDialogRef;
-  updateDialogRef: DynamicDialogRef;
-  viewDialogRef: DynamicDialogRef;
-  deleteDialogRef: DynamicDialogRef;
+  private dialogRefs: { [key: string]: DynamicDialogRef } = {};
 
   constructor(
     private translocoService: TranslocoService,
     private dialogService: DialogService
   ) {}
 
-  createActionButton(
+  private createActionButton(
     labelKey: string,
     icon: string,
-    action: (input?: any) => void,
+    action: (input?: CampoDeActuacion | Oficinas | undefined) => void,
     validate?: () => boolean,
     disabled = false
   ): ActionButtons {
@@ -38,7 +36,7 @@ export class CommonDialogService {
     };
   }
 
-  getDialogConfig(
+  private getDialogConfig(
     width: string,
     showHeader: boolean,
     baseZIndex: number,
@@ -48,7 +46,7 @@ export class CommonDialogService {
     alertMessage = '',
     dialogType = '',
     headerKey = '',
-    template: any = null
+    template: TemplateRef<any> = null
   ): GenericDialog {
     return {
       header: headerKey
@@ -67,61 +65,6 @@ export class CommonDialogService {
         headerStyle: dialogType ? this.getHeaderStyle(dialogType) : undefined,
       },
     };
-  }
-
-  openNestedConfirmOrAlertDialog(
-    alertMessage: string,
-    dialogType: string,
-    callback?: (input?: any) => void,
-    campoDetails?: any
-  ) {
-    const actionButtons: ActionButtons[] =
-      dialogType === 'confirm'
-        ? [
-            this.createActionButton(
-              'buttons.yes',
-              'check',
-              () => {
-                if (callback)
-                  campoDetails ? callback(campoDetails) : callback();
-                this.alertDialogRef?.close();
-              },
-              undefined,
-              false
-            ),
-            this.createActionButton(
-              'buttons.no',
-              '',
-              () => this.alertDialogRef?.close(),
-              undefined,
-              false
-            ),
-          ]
-        : [
-            this.createActionButton(
-              'buttons.accept',
-              '',
-              () => this.alertDialogRef?.close(),
-              undefined,
-              false
-            ),
-          ];
-
-    const alertDialogConfig = this.getDialogConfig(
-      '40%',
-      false,
-      20000,
-      false,
-      'dialogStyle',
-      actionButtons,
-      alertMessage,
-      dialogType
-    );
-
-    this.alertDialogRef = this.dialogService.open(
-      AlertDialogComponent,
-      alertDialogConfig
-    );
   }
 
   private getHeaderStyle(dialogType: string) {
@@ -147,185 +90,172 @@ export class CommonDialogService {
     }
   }
 
-  protected getActionButtons(
-    dialogType: 'save' | 'update' | 'view' | 'delete' | 'confirm' | string,
+  private getActionButtons(
+    dialogType: 'save' | 'update' | 'view' | 'delete' | 'confirm' | 'alert',
     dialogRef: string,
     buttonIcon: string,
-    callback?: (input?: any) => void,
+    callback?: (input?: CampoDeActuacion | Oficinas | undefined) => void,
     validate?: () => boolean
   ): ActionButtons[] {
     const closeActionButton = this.createActionButton(
       'buttons.cancel',
       '',
-      () => this[dialogRef]?.close(),
+      () => this.closeDialog(dialogRef),
       undefined,
       false
     );
 
-    const saveActionButton = this.createActionButton(
-      `buttons.save`,
-      buttonIcon,
-      (input?: any) => callback(input),
-      validate,
-      true
-    );
-    const updateActionButton = this.createActionButton(
-      `buttons.update`,
-      buttonIcon,
-      (input?: any) => callback(input),
-      validate,
-      true
-    );
+    const actionButton =
+      dialogType === 'save' || dialogType === 'update'
+        ? this.createActionButton(
+            `buttons.${dialogType}`,
+            buttonIcon,
+            (input?: CampoDeActuacion | Oficinas | undefined) =>
+              callback?.(input),
+            validate,
+            dialogType === 'save' || dialogType === 'update'
+          )
+        : undefined;
 
-    const viewActionButton = this.createActionButton(
-      'buttons.close',
-      '',
-      () => this[dialogRef]?.close(),
-      undefined,
-      false
-    );
-
-    const yesActionButton = this.createActionButton(
-      'buttons.yes',
-      'check',
-      (input?: any) => callback(input),
-      undefined,
-      false
-    );
-
-    const noActionButton = this.createActionButton(
-      'buttons.no',
-      '',
-      () => this[dialogRef]?.close(),
-      undefined,
-      false
-    );
-
-    const acceptActionButton = this.createActionButton(
-      'buttons.accept',
-      '',
-      () => this[dialogRef]?.close(),
-      undefined,
-      false
-    );
+    const yesNoButtons = [
+      this.createActionButton(
+        'buttons.yes',
+        'check',
+        (input?: CampoDeActuacion | Oficinas | undefined) => callback?.(input),
+        undefined,
+        false
+      ),
+      this.createActionButton(
+        'buttons.no',
+        '',
+        () => this.closeDialog(dialogRef),
+        undefined,
+        false
+      ),
+    ];
 
     switch (dialogType) {
       case 'save':
-        return [saveActionButton, closeActionButton];
       case 'update':
-        return [updateActionButton, closeActionButton];
+        return [actionButton, closeActionButton];
       case 'view':
-        return [viewActionButton];
+        return [
+          this.createActionButton(
+            'buttons.close',
+            '',
+            () => this.closeDialog(dialogRef),
+            undefined,
+            false
+          ),
+        ];
       case 'delete':
       case 'confirm':
-        return [yesActionButton, noActionButton];
+        return yesNoButtons;
       case 'alert':
-        return [acceptActionButton];
+        return [
+          this.createActionButton(
+            'buttons.accept',
+            '',
+            () => this.dialogRefs[dialogRef]?.close(),
+            undefined,
+            false
+          ),
+        ];
       default:
         return [];
     }
   }
 
   public openDialog(
-    type: string,
-    action?: (input?: any) => void,
+    type: 'add' | 'update' | 'view' | 'delete' | 'confirm' | 'alert',
+    action?: (input?: CampoDeActuacion | Oficinas | undefined) => void,
     template?: TemplateRef<any>,
     validate?: () => boolean,
-    icon?: string,
-    headerTitle?: string,
-    message?: string,
-    nested?: number
+    icon = '',
+    headerTitle = '',
+    message = '',
+    nested = 0
   ) {
-    let options = {
-      action: '',
-      dialogref: '',
-      icon: icon,
+    const baseConfig = {
+      icon,
       width: '50%',
       type: '',
       showHeader: true,
       baseZIndex: 10000,
     };
-    switch (type) {
-      case 'add':
-        options = {
-          ...options,
-          action: 'save',
-          dialogref: 'addDialogRef',
-        };
-        break;
-      case 'update':
-        options = {
-          ...options,
-          action: 'update',
-          dialogref: 'updateDialogRef',
-        };
-        break;
-      case 'view':
-        options = {
-          ...options,
-          action: 'view',
-          dialogref: 'viewDialogRef',
-        };
-        break;
-      case 'delete':
-        options = {
-          ...options,
-          action: 'delete',
-          dialogref: 'deleteDialogRef',
-          width: '40%',
-          type: 'confirm',
-          showHeader: false,
-        };
-        break;
-      case 'confirm':
-        options = {
-          ...options,
-          action: 'confirm',
-          dialogref: 'alertDialogRef',
-          width: '40%',
-          type: 'confirm',
-          showHeader: false,
-          baseZIndex: nested ? nested * 10000 : 10000,
-        };
-        break;
-      case 'alert':
-        options = {
-          ...options,
-          action: 'alert',
-          dialogref: 'alertDialogRef',
-          width: '40%',
-          type: 'warn',
-          showHeader: false,
-          baseZIndex: nested ? nested * 10000 : 10000,
-        };
-        break;
 
-      default:
-        break;
-    }
+    const dialogConfig = {
+      add: { action: 'save', dialogRef: 'addDialogRef' },
+      update: { action: 'update', dialogRef: 'updateDialogRef' },
+      view: { action: 'view', dialogRef: 'viewDialogRef' },
+      delete: {
+        action: 'delete',
+        dialogRef: 'deleteDialogRef',
+        width: '40%',
+        type: 'confirm',
+        showHeader: false,
+      },
+      confirm: {
+        action: 'confirm',
+        dialogRef: 'alertDialogRef',
+        width: '40%',
+        type: 'confirm',
+        showHeader: false,
+        baseZIndex: nested ? nested * 10000 : 10000,
+      },
+      alert: {
+        action: 'alert',
+        dialogRef: 'alertDialogRef',
+        width: '40%',
+        type: 'warn',
+        showHeader: false,
+        baseZIndex: nested ? nested * 10000 : 10000,
+      },
+    }[type];
 
-    const addDialogConfig = this.getDialogConfig(
-      options.width,
-      options.showHeader,
-      options.baseZIndex,
+    const config = { ...baseConfig, ...dialogConfig };
+
+    const dialogRef = this.getDialogConfig(
+      config.width,
+      config.showHeader,
+      config.baseZIndex,
       false,
       'dialogStyle',
       this.getActionButtons(
-        options.action,
-        options.dialogref,
-        options.icon,
+        config.action as
+          | 'save'
+          | 'update'
+          | 'view'
+          | 'delete'
+          | 'confirm'
+          | 'alert',
+        config.dialogRef,
+        config.icon,
         action,
         validate
       ),
       message,
-      options.type,
+      config.type,
       headerTitle,
       template
     );
-    console.log(options, addDialogConfig);
-    this[options.dialogref] = this.dialogService.open(
+
+    this.dialogRefs[config.dialogRef] = this.dialogService.open(
       AlertDialogComponent,
-      addDialogConfig
+      dialogRef
     );
+  }
+
+  public closeDialog(dialogRefKey: string) {
+    const dialogRef = this.dialogRefs[dialogRefKey];
+    if (dialogRef) {
+      dialogRef.close();
+      delete this.dialogRefs[dialogRefKey];
+    }
+  }
+
+  public closeAllDialogs() {
+    Object.values(this.dialogRefs).forEach((dialogRef) => dialogRef.close());
+    this.dialogRefs = {};
   }
 }
