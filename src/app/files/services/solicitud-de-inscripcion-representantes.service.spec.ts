@@ -6,7 +6,10 @@ import {
 import { SolicitudDeInscripcionRepresentantesService } from './solicitud-de-inscripcion-representantes.service';
 import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 import { RepresentantesLegal } from '@app/files/interfaces/solicitud-de-inscripcion';
-import { CustomResponse } from '@app/shared/services/common.service';
+import {
+  CustomResponsSinglee,
+  CustomResponse,
+} from '@app/shared/services/common.service';
 
 describe('SolicitudDeInscripcionRepresentantesService', () => {
   let service: SolicitudDeInscripcionRepresentantesService;
@@ -29,22 +32,21 @@ describe('SolicitudDeInscripcionRepresentantesService', () => {
   describe('getByRepresentantesNifCif', () => {
     it('should call get with the correct URL and parameter', () => {
       const cifNif = '12345678A';
-      const mockResponse: CustomResponse<RepresentantesLegal> = {
-        response: [
-          {
-            apellidos: '',
-            codmun: '',
-            codpro: '',
-            cp: '',
-            domicilio: '',
-            email: '',
-            fax: '',
-            id: 0,
-            nifcif: '',
-            nombre: '',
-            telefono: '',
-          },
-        ],
+      const mockResponse: CustomResponsSinglee<RepresentantesLegal> = {
+        response: {
+          apellidos: '',
+          codmun: '',
+          codpro: '',
+          cp: '',
+          domicilio: '',
+          email: '',
+          fax: '',
+          id: 0,
+          nifcif: '',
+          nombre: '',
+          telefono: '',
+        },
+
         success: true,
       };
 

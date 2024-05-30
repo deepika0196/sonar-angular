@@ -10,7 +10,7 @@ import {
   providedIn: 'root',
 })
 export class SolicituddeCodigoPostalService extends CommonService {
-  getMunicipio(provincia: string, municipio: string) {
+  public getMunicipio(provincia: string, municipio: string) {
     const params = {
       muniCodMunicipio: municipio,
       provCodProvincia: provincia,
@@ -20,7 +20,7 @@ export class SolicituddeCodigoPostalService extends CommonService {
       { params }
     );
   }
-  urlBuilder(type: string): string {
+  public urlBuilder(type: string): string {
     let url: string = this.apiUrl;
     switch (type) {
       case UrlEndpoints.vmcrcCodigoPostal:
