@@ -1,10 +1,12 @@
+import { TemplateRef } from '@angular/core';
 import { CampoDeActuacion } from '@app/basic-maintenance/interfaces/campoDeActuacion';
+import { Oficinas } from '@app/files/interfaces/oficinas';
 
 export interface ActionButtons {
   disabled: boolean;
   label: string;
-  action(input?: any): void;
-  validate?(input?: any): boolean;
+  action(input?: CampoDeActuacion | Oficinas | undefined): void;
+  validate?(input?: CampoDeActuacion | Oficinas | undefined): boolean;
   icon?: string;
 }
 
@@ -34,6 +36,7 @@ export interface GenericDialog {
       dialogType: string;
       title: string;
     };
+    template?: TemplateRef<void>;
   };
   styleClass: string;
   showHeader: boolean;

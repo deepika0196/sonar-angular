@@ -36,12 +36,18 @@
       </tr>
       <tr *ngIf="tableConfig.columnFilter">
         <th *ngFor="let column of columns; let ind = index">
-          <div *ngIf="column.filter">
-            <p-columnFilter
-              type="text"
-              field="{{ column.field }}"
-            ></p-columnFilter>
-          </div>
+          <p-columnFilter
+            *ngIf="column.filter"
+            type="text"
+            field="{{ column.field }}"
+            [showClearButton]="true"
+          >
+            <ng-template pTemplate="filtericon">
+              <div class="flex align-items-center">
+                <span class="material-icons-outlined">filter_alt</span>
+              </div>
+            </ng-template>
+          </p-columnFilter>
         </th>
       </tr>
     </ng-template>
@@ -129,7 +135,9 @@
               >{{ item[column.field] | date : column.pipeFormat }}</span
             >
             <ng-template #other_content
-              ><span else>{{ item[column.field] }}</span></ng-template
+              ><span else>{{
+                fetchByDotOperator(item, column.field)
+              }}</span></ng-template
             >
           </span>
         </td>

@@ -74,10 +74,25 @@
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
     "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana",
     "acreditaciones_title": "Acreditaciones",
     "actualizaciones_title": "Actualizaciones",
     "documentos_title": "Documentos"
+  },
+
+  "oficinas": {
+    "office_name": "Nombre Oficina",
+    "residency": "Domicilio",
+    "province": "Provincia",
+    "municipality": "Municipio",
+    "phone": "Teléfono",
+    "phone_2": "Teléfono 2",
+    "postal": "C. Postal",
+    "contact_person": "Persona contacto principal",
+    "contact_email": "Correu contacte principal",
+    "office_dialog_header": "Oficina comercial",
+    "default_delete": "No es posible eliminar la oficina por defecto si es el único registro asociado a la entidad.",
+    "last_delete": "Si la empresa no tiene oficinas en la Comunidad Valenciana, se añadirá una por defecto con la Razón social de la entidad."
   },
 
   "errors": {
@@ -101,7 +116,8 @@
     "accept": "Aceptar",
     "back": "Volver",
     "archivar": "Archivar",
-    "restaurar": "Restaurar"
+    "restaurar": "Restaurar",
+    "close": "Cerrar"
   },
 
   "tooltip": {
@@ -132,7 +148,9 @@
     "delete_alert": "¿Desea borrar definitivamente este registro?",
     "modify_alert": "¿Desea guardar los cambios realizados ?",
     "archive_alert": "¿Desea archivar este expediente?",
-    "restore_alert": "¿Desea restaurar este expediente?"
+    "restore_alert": "¿Desea restaurar este expediente?",
+    "delete_oficinas_alert": "¿Desea eliminar esta oficina?",
+    "update_officinas_alert": "¿Desea guardar los cambios?"
   },
 
   "dropdown": {
@@ -174,5 +192,6 @@
   "snackbar_txt_validate": "es_Completeu les dades obligatòries",
   "pagination_text": "Registros del {{first}} al {{last}} (Total {{totalRecords}})",
   "empty_message": "No se encontró ninguna coincidencia",
-  "required_text": "Debe rellenar el campo."
+  "required_text": "Debe rellenar el campo.",
+  "action_column": "Acciones"
 }
