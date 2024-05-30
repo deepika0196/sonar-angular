@@ -6,10 +6,7 @@ import {
 import { SolicitudDeInscripcionRepresentantesService } from './solicitud-de-inscripcion-representantes.service';
 import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
 import { RepresentantesLegal } from '@app/files/interfaces/solicitud-de-inscripcion';
-import {
-  CustomResponsSinglee,
-  CustomResponse,
-} from '@app/shared/services/common.service';
+import { CustomResponsSinglee } from '@app/shared/services/common.service';
 
 describe('SolicitudDeInscripcionRepresentantesService', () => {
   let service: SolicitudDeInscripcionRepresentantesService;

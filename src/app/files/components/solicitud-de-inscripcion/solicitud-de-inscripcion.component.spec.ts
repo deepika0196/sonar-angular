@@ -1,19 +1,19 @@
+import { Location } from '@angular/common';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
 import { TranslocoService } from '@ngneat/transloco';
-import { Location } from '@angular/common';
+import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { of } from 'rxjs';
 
-import { SolicitudDeInscripcionComponent } from './solicitud-de-inscripcion.component';
+import { SolicitudDeInscripcionRepresentantesService } from '@app/files/services/solicitud-de-inscripcion-representantes.service';
 import { SolicitudDeInscripcionService } from '@app/files/services/solicitud-de-inscripcion.service';
 import { SolicituddeCodigoPostalService } from '@app/files/services/solicitudde-codigo-postal.service';
 import { SolicitudeMunicipioService } from '@app/files/services/solicitude-municipio.service';
 import { SolicitudeProvinciaService } from '@app/files/services/solicitude-provincia.service';
-import { SolicitudDeInscripcionRepresentantesService } from '@app/files/services/solicitud-de-inscripcion-representantes.service';
-import { AlertDialogComponent } from '@app/shared/components/alert-dialog/alert-dialog.component';
+import { SolicitudDeInscripcionComponent } from './solicitud-de-inscripcion.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 class MockSolicitudDeInscripcionService {
   getByNifCif() {
@@ -70,14 +70,11 @@ class MockTranslocoService {
 describe('SolicitudDeInscripcionComponent', () => {
   let component: SolicitudDeInscripcionComponent;
   let fixture: ComponentFixture<SolicitudDeInscripcionComponent>;
-  let solicitudDeInscripcionService: SolicitudDeInscripcionService;
-  let router: Router;
-  let cifNumber: '41231173Q';
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SolicitudDeInscripcionComponent],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, HttpClientTestingModule],
       providers: [
         FormBuilder,
         {
@@ -113,10 +110,6 @@ describe('SolicitudDeInscripcionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SolicitudDeInscripcionComponent);
     component = fixture.componentInstance;
-    solicitudDeInscripcionService = TestBed.inject(
-      SolicitudDeInscripcionService
-    );
-    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 

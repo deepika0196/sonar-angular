@@ -3,7 +3,6 @@ import { HeaderComponent } from './header.component';
 import { HeaderService } from '@shared/services/header.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { TranslocoHttpLoader } from '@app/transloco-root.module';
-import { GlobalConstant } from '@app/core/constants/globalConstants';
 import { of } from 'rxjs';
 
 describe('HeaderComponent', () => {

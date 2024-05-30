@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RequerimientosSubsanacionComponent } from './requerimientos-subsanacion.component';
 import { RequerimientosSubsanacionService } from '@app/basic-maintenance/services/requerimientos-subsanacion.service';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { RequerimientosSubsanacion } from '@app/basic-maintenance/interfaces/requerimientos-subsanacion';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -64,20 +64,6 @@ describe('RequerimientosSubsanacionComponent', () => {
     expect(component.requerimientosSubsanacions).toEqual(mockData);
     expect(component.cloneRequerimientosSubsanacionRecords).toEqual(mockData);
   });
-
-  // it('should handle error while fetching requerimientos subsanacion', () => {
-  //   requerimientosSubsanacionService.getRequerimientosSubsanacions.and.returnValue(
-  //     throwError(() => new Error('Error fetching data'))
-  //   );
-
-  //   component.ngOnInit();
-
-  //   expect(
-  //     requerimientosSubsanacionService.getRequerimientosSubsanacions
-  //   ).toHaveBeenCalled();
-  //   expect(component.requerimientosSubsanacions).toBeUndefined();
-  //   expect(component.cloneRequerimientosSubsanacionRecords).toBeUndefined();
-  // });
 
   it('should clear all filters', () => {
     component.codigo = '1';
