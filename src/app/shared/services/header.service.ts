@@ -27,6 +27,11 @@ export class HeaderService {
           },
           {
             label: this.translocoService.translate(
+              'menu_items.sub_menu.representantes_de_entidad'
+            ),
+          },
+          {
+            label: this.translocoService.translate(
               'menu_items.sub_menu.campos_de_actuacion'
             ),
             routerLink: ['/basic-maintenance/campoDeActuacion'],
@@ -39,11 +44,6 @@ export class HeaderService {
             ),
             routerLink: ['/basic-maintenance/requerimientosSubsanacion'],
             routerLinkActiveOptions: { exact: true },
-          },
-          {
-            label: this.translocoService.translate(
-              'menu_items.sub_menu.representantes_de_entidad'
-            ),
           },
         ],
       },

@@ -5,16 +5,16 @@
   },
 
   "menu_items": {
-    "mantenimientos_basicos": "Mantenimientos básicos",
-    "expedientes": "Expedientes",
+    "mantenimientos_basicos": "Manteniments bàsics",
+    "expedientes": "Expedients",
     "informes": "Informes",
     "sub_menu": {
-      "entidades_solicitantes": "Entidades Solicitantes",
-      "campos_de_actuacion": "Campos de Actuación",
-      "requerimientos_subsanacion": "Requerimientos de Subsanación",
-      "representantes_de_entidad": "Representantes de Entidad",
-      "solicitud_de_inscripcion": "Solicitud de Inscripción",
-      "generacion_de_informes": "Generación de Informes"
+      "entidades_solicitantes": "Entitats sol·licitants",
+      "campos_de_actuacion": "Camps d'actuació",
+      "requerimientos_subsanacion": "Requeriments d'esmena",
+      "representantes_de_entidad": "Representants d'entitat",
+      "solicitud_de_inscripcion": "Sol·licitud d'inscripció",
+      "generacion_de_informes": "Generació d'informes"
     }
   },
 
@@ -120,8 +120,19 @@
   },
 
   "solicitud_de_inscripcion": {
-    "title": "Sollicitud d'Inscripció en el registre",
+    "title": "Sol.licitud d'Inscripció en el registre",
     "title_tab_1": "Dades principals de l'empresa",
+    "title_tab_2": "Direcció Notificacions",
+    "title_tab_3": "Representante legal",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana expanded",
+    "acreditaciones_title": "Acreditaciones",
+    "actualizaciones_title": "Actualizaciones",
+    "documentos_title": "Documentos",
+    "archivar_message": "Desitja arxivar este expedient?",
+    "restaurar_message": "Desitja restaurar este expedient?"
+  },
+
+  "lable": {
     "cif": "CIF",
     "razon_social": "Raó Social",
     "domicilio_social": "Domicili Social",
@@ -133,24 +144,15 @@
     "fecha_baja": "Data Baixa",
     "e-mail": "E-mail",
     "telefono": "Telèfon",
-    "telefono2": "Teléfon 2",
+    "telefono2": "Telèfon 2",
     "publicar_en_web": "Publicar en web",
     "observaciones": "Observacions",
-    "title_tab_2": "Dirección Notificaciones",
-    "copiar_notificaciones": "Copiar la dirección principal para notificaciones",
-    "domicilio": "Domicilio",
-    "archivar_message": "Desitja arxivar este expedient?",
-    "restaurar_message": "Desitja restaurar este expedient?",
-    "title_tab_3": "Representante legal",
+    "copiar_notificaciones": "Copiar la direcció principal per a notificacions",
+    "domicilio": "Domicili",
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
-    "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana",
-    "acreditaciones_title": "Acreditaciones",
-    "actualizaciones_title": "Actualizaciones",
-    "documentos_title": "Documentos"
+    "apellidos": "Apellidos"
   },
-
   "dropdown": {
     "placeholder": "Seleccionar",
     "no_result_loaded": "No es poden mostrar els resultats"

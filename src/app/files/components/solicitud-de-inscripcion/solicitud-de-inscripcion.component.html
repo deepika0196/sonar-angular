@@ -1,11 +1,11 @@
 <div *transloco="let t">
   <div class="grid">
-    <div class="col-6">
-      <p class="headerStyle">
+    <div class="col-4">
+      <span class="headerStyle">
         {{ t('solicitud_de_inscripcion.title') }}
-      </p>
+      </span>
     </div>
-    <div class="col-6 justify-content-end d-flex">
+    <div class="col-8 justify-content-end d-flex btn-postion">
       <gva-button
         [btnLabel]="t('buttons.back')"
         [iconPosition]="'left'"
@@ -31,11 +31,11 @@
           isFechaBajaNull ? t('buttons.archivar') : t('buttons.restaurar')
         "
         [iconPosition]="'left'"
-        [btnClass]="'actionStyle mr-2'"
+        [btnClass]="'actionStyle mr-2 btn-postion'"
         (btnClick)="updateFechaBaja()"
         [hidden]="readOnlyMode"
       >
-        <span class="material-icons iconStyle"> save </span>
+        <span class="material-icons iconStyle"> inventory_2 </span>
       </gva-button>
     </div>
   </div>
@@ -52,7 +52,7 @@
       <p-accordionTab formGroupName="entidad">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
-            <p>{{ t('solicitud_de_inscripcion.title_tab_1') }}</p>
+            <p class="mt-2">{{ t('solicitud_de_inscripcion.title_tab_1') }}</p>
           </div>
         </ng-template>
         <ng-template
@@ -64,7 +64,7 @@
               <label
                 class="labelStyle"
                 for="nifcif"
-                >{{ t('solicitud_de_inscripcion.cif') }}*</label
+                >{{ t('lable.cif') }}*</label
               >
               <div class="w-full">
                 <input
@@ -83,7 +83,7 @@
               <label
                 class="labelStyle"
                 for="denomsocial"
-                >{{ t('solicitud_de_inscripcion.razon_social') }}*</label
+                >{{ t('lable.razon_social') }}*</label
               >
               <div class="w-full">
                 <input
@@ -100,7 +100,7 @@
               <label
                 class="labelStyle"
                 for="domsocial"
-                >{{ t('solicitud_de_inscripcion.domicilio_social') }}*</label
+                >{{ t('lable.domicilio_social') }}*</label
               >
               <div class="w-full">
                 <input
@@ -116,151 +116,139 @@
           </div>
 
           <div class="grid">
-            <div class="col col-6">
-              <div class="grid">
-                <div class="col-4">
-                  <label
-                    class="labelStyle"
-                    for="codpro"
-                  >
-                    {{ t('solicitud_de_inscripcion.provincia') }}</label
-                  >
-                  <div class="w-full">
-                    <p-autoComplete
-                      id="codpro"
-                      formControlName="codpro"
-                      class="autoCompleteStyle"
-                      [dropdown]="true"
-                      [suggestions]="filteredProvincia"
-                      (completeMethod)="
-                        !readOnlyMode && filterProvincia($event)
-                      "
-                      (onSelect)="
-                        loadMunicipio(
-                          this.datosPrincipalesForm.get('entidad.codpro')?.value
-                            .provCodProvincia
-                        )
-                      "
-                      field="provDenominacion"
-                      [readonly]="readOnlyMode"
-                    >
-                    </p-autoComplete>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <label
-                    class="labelStyle"
-                    for="codmun"
-                  >
-                    {{ t('solicitud_de_inscripcion.municipio') }}
-                  </label>
-                  <div class="w-full">
-                    <p-autoComplete
-                      id="codmun"
-                      formControlName="codmun"
-                      class="autoCompleteStyle"
-                      [dropdown]="true"
-                      [suggestions]="filteredMunicipio"
-                      (completeMethod)="
-                        !readOnlyMode && filterMunicipio($event)
-                      "
-                      (onSelect)="
-                        loadCP(
-                          this.datosPrincipalesForm.get('entidad.codmun')?.value
-                            .muniCodProvincia,
-                          this.datosPrincipalesForm.get('entidad.codmun')?.value
-                            .muniCodMunicipio
-                        )
-                      "
-                      field="muniDenominacion"
-                    >
-                    </p-autoComplete>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <label
-                    class="labelStyle"
-                    for="cp"
-                  >
-                    {{ t('solicitud_de_inscripcion.c_postal') }}</label
-                  >
-                  <div class="w-full">
-                    <p-autoComplete
-                      id="cp"
-                      formControlName="cp"
-                      class="autoCompleteStyle w-full"
-                      [dropdown]="true"
-                      [suggestions]="filteredPostal"
-                      (completeMethod)="!readOnlyMode && filterPostal($event)"
-                      field="cpostCodPostal"
-                    >
-                    </p-autoComplete>
-                  </div>
-                </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="codpro"
+              >
+                {{ t('lable.provincia') }}</label
+              >
+              <div class="w-full">
+                <p-autoComplete
+                  id="codpro"
+                  formControlName="codpro"
+                  class="autoCompleteStyle w-full"
+                  [dropdown]="true"
+                  [suggestions]="filteredProvincia"
+                  (completeMethod)="!readOnlyMode && filterProvincia($event)"
+                  (onSelect)="
+                    loadMunicipio(
+                      this.datosPrincipalesForm.get('entidad.codpro').value
+                        .provCodProvincia
+                    )
+                  "
+                  field="provDenominacion"
+                  [readonly]="readOnlyMode"
+                >
+                </p-autoComplete>
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="codmun"
+              >
+                {{ t('lable.municipio') }}
+              </label>
+              <div class="w-full">
+                <p-autoComplete
+                  id="codmun"
+                  formControlName="codmun"
+                  class="autoCompleteStyle"
+                  [dropdown]="true"
+                  [suggestions]="filteredMunicipio"
+                  (completeMethod)="!readOnlyMode && filterMunicipio($event)"
+                  (onSelect)="
+                    loadCP(
+                      this.datosPrincipalesForm.get('entidad.codmun').value
+                        .muniCodProvincia,
+                      this.datosPrincipalesForm.get('entidad.codmun').value
+                        .muniCodMunicipio
+                    )
+                  "
+                  field="muniDenominacion"
+                >
+                </p-autoComplete>
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="cp"
+              >
+                {{ t('lable.c_postal') }}</label
+              >
+              <div class="w-full">
+                <p-autoComplete
+                  id="cp"
+                  formControlName="cp"
+                  class="autoCompleteStyle w-full"
+                  [dropdown]="true"
+                  [suggestions]="filteredPostal"
+                  (completeMethod)="!readOnlyMode && filterPostal($event)"
+                  field="cpostCodPostal"
+                >
+                </p-autoComplete>
               </div>
             </div>
 
-            <div class="col col-6">
-              <div class="grid">
-                <div class="col-3">
-                  <label
-                    class="labelStyle"
-                    for="numinscripcion"
-                  >
-                    {{ t('solicitud_de_inscripcion.n_registro') }}</label
-                  >
-                  <div class="w-full">
-                    <input
-                      id="numinscripcion"
-                      type="text"
-                      [maxLength]="10"
-                      class="p-inputtext inputStyle w-full"
-                      formControlName="numinscripcion"
-                      [ngClass]="readOnlyMode ? 'disabled' : ''"
-                    />
-                  </div>
-                </div>
-                <div class="col-5">
-                  <label
-                    class="labelStyle"
-                    for="feentrada"
-                  >
-                    {{ t('solicitud_de_inscripcion.feentrada') }}
-                  </label>
-                  <div class="w-full">
-                    <p-calendar
-                      id="feentrada"
-                      class="calenderStyle w-full"
-                      [dateFormat]="calendarDateFormat"
-                      [showIcon]="true"
-                      placeholder="{{ t('date.dd/mm/yyyy') }}"
-                      formControlName="feentrada"
-                      [ngClass]="readOnlyMode ? 'disabled' : ''"
-                    ></p-calendar>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <label
-                    class="labelStyle"
-                    for="fbaja"
-                  >
-                    {{ t('solicitud_de_inscripcion.fecha_baja') }}
-                  </label>
-                  <div class="w-full">
-                    <p-calendar
-                      id="fbaja"
-                      formControlName="fbaja"
-                      class="calenderStyle disabled w-full"
-                      placeholder="{{ t('date.dd/mm/yyyy') }}"
-                      [dateFormat]="calendarDateFormat"
-                      [showIcon]="true"
-                      [showOnFocus]="false"
-                      readonly="true"
-                      [disabled]="true"
-                    >
-                    </p-calendar>
-                  </div>
-                </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="numinscripcion"
+              >
+                {{ t('lable.n_registro') }}</label
+              >
+              <div class="w-full">
+                <input
+                  id="numinscripcion"
+                  type="text"
+                  [maxLength]="10"
+                  class="p-inputtext inputStyle w-full"
+                  formControlName="numinscripcion"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="feentrada"
+              >
+                {{ t('lable.feentrada') }}
+              </label>
+              <div class="w-full">
+                <p-calendar
+                  id="feentrada"
+                  class="calenderStyle w-full"
+                  [dateFormat]="calendarDateFormat"
+                  [showIcon]="true"
+                  placeholder="{{ t('date.dd/mm/yyyy') }}"
+                  formControlName="feentrada"
+                  [ngClass]="readOnlyMode ? 'disabled' : ''"
+                ></p-calendar>
+              </div>
+            </div>
+            <div class="col-2">
+              <label
+                class="labelStyle"
+                for="fbaja"
+              >
+                {{ t('lable.fecha_baja') }}
+              </label>
+              <div class="w-full">
+                <p-calendar
+                  id="fbaja"
+                  formControlName="fbaja"
+                  class="calenderStyle disabled w-full"
+                  placeholder="{{ t('date.dd/mm/yyyy') }}"
+                  [dateFormat]="calendarDateFormat"
+                  [showIcon]="true"
+                  [showOnFocus]="false"
+                  readonly="true"
+                  [disabled]="true"
+                >
+                </p-calendar>
               </div>
             </div>
           </div>
@@ -271,7 +259,7 @@
                 class="labelStyle"
                 for="email"
               >
-                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+                {{ t('lable.e-mail') }}</label
               >
               <div class="w-100">
                 <input
@@ -289,7 +277,7 @@
                 class="labelStyle"
                 for="telefono"
               >
-                {{ t('solicitud_de_inscripcion.telefono') }}</label
+                {{ t('lable.telefono') }}</label
               >
               <div class="w-full">
                 <input
@@ -302,12 +290,12 @@
                 />
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
               <label
                 class="labelStyle"
                 for="fax"
               >
-                {{ t('solicitud_de_inscripcion.telefono2') }}</label
+                {{ t('lable.telefono2') }}</label
               >
               <div class="w-100">
                 <input
@@ -325,7 +313,7 @@
                 class="labelStyle"
                 for="publicaWeb"
               >
-                {{ t('solicitud_de_inscripcion.publicar_en_web') }}</label
+                {{ t('lable.publicar_en_web') }}</label
               >
               <div class="w-full">
                 <p-checkbox
@@ -344,7 +332,7 @@
                 class="labelStyle"
                 for="observaciones"
               >
-                {{ t('solicitud_de_inscripcion.observaciones') }}</label
+                {{ t('lable.observaciones') }}</label
               >
               <div class="w-100">
                 <input
@@ -367,7 +355,7 @@
       >
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
-            <p>{{ t('solicitud_de_inscripcion.title_tab_2') }}</p>
+            <p class="mt-2">{{ t('solicitud_de_inscripcion.title_tab_2') }}</p>
           </div>
         </ng-template>
         <ng-template
@@ -376,7 +364,7 @@
         >
           <div class="grid">
             <div class="col">
-              <div class="w-full">
+              <div class="w-full mt-2">
                 <p-checkbox
                   [binary]="true"
                   id="addressCopy"
@@ -387,20 +375,18 @@
                   class="labelStyle"
                   for="addressCopy"
                 >
-                  {{
-                    t('solicitud_de_inscripcion.copiar_notificaciones')
-                  }}</label
+                  {{ t('lable.copiar_notificaciones') }}</label
                 >
               </div>
             </div>
           </div>
           <div class="grid">
-            <div class="col-4">
+            <div class="col-6">
               <label
                 class="labelStyle"
                 for="dirDomicilio"
               >
-                {{ t('solicitud_de_inscripcion.domicilio') }}</label
+                {{ t('lable.domicilio') }}</label
               >
               <div class="w-full">
                 <input
@@ -415,12 +401,12 @@
               </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-2">
               <label
                 class="labelStyle"
                 for="dirCodpro"
               >
-                {{ t('solicitud_de_inscripcion.provincia') }}</label
+                {{ t('lable.provincia') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
@@ -436,19 +422,19 @@
                   (onSelect)="
                     loadMunicipio(
                       this.datosPrincipalesForm.get('notificaciones.dirCodpro')
-                        ?.value.provCodProvincia
+                        .value.provCodProvincia
                     )
                   "
                 >
                 </p-autoComplete>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
               <label
                 class="labelStyle"
                 for="dirCodmun"
               >
-                {{ t('solicitud_de_inscripcion.municipio') }}
+                {{ t('lable.municipio') }}
               </label>
               <div class="w-full">
                 <p-autoComplete
@@ -461,9 +447,9 @@
                   (onSelect)="
                     loadCP(
                       this.datosPrincipalesForm.get('notificaciones.dirCodmun')
-                        ?.value.muniCodProvincia,
+                        .value.muniCodProvincia,
                       this.datosPrincipalesForm.get('notificaciones.dirCodmun')
-                        ?.value.muniCodMunicipio
+                        .value.muniCodMunicipio
                     )
                   "
                   field="muniDenominacion"
@@ -478,7 +464,7 @@
                 class="labelStyle"
                 for="dirCp"
               >
-                {{ t('solicitud_de_inscripcion.c_postal') }}</label
+                {{ t('lable.c_postal') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
@@ -502,7 +488,7 @@
                 class="labelStyle"
                 for="dirEmail"
               >
-                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+                {{ t('lable.e-mail') }}</label
               >
               <div class="w-full">
                 <input
@@ -521,7 +507,7 @@
                 class="labelStyle"
                 for="dirTelefono"
               >
-                {{ t('solicitud_de_inscripcion.telefono') }}</label
+                {{ t('lable.telefono') }}</label
               >
               <div class="w-full">
                 <input
@@ -542,7 +528,7 @@
       <p-accordionTab formGroupName="representantesDTO">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
-            <p>{{ t('solicitud_de_inscripcion.title_tab_3') }}</p>
+            <p class="mt-2">{{ t('solicitud_de_inscripcion.title_tab_3') }}</p>
           </div>
         </ng-template>
         <ng-template
@@ -554,7 +540,7 @@
               <label
                 class="labelStyle"
                 for="nifcif"
-                >{{ t('solicitud_de_inscripcion.nif_cif') }}*</label
+                >{{ t('lable.nif_cif') }}*</label
               >
               <div class="w-full">
                 <input
@@ -567,8 +553,7 @@
                   [disabled]="readOnlyMode"
                   (blur)="
                     checkRepresentanteLegalCifNif(
-                      datosPrincipalesForm.get('representantesDTO.nifcif')
-                        ?.value
+                      datosPrincipalesForm.get('representantesDTO.nifcif').value
                     )
                   "
                 />
@@ -578,7 +563,7 @@
               <label
                 class="labelStyle"
                 for="nombre"
-                >{{ t('solicitud_de_inscripcion.nombre') }}</label
+                >{{ t('lable.nombre') }}</label
               >
               <div class="w-full">
                 <input
@@ -596,7 +581,7 @@
               <label
                 class="labelStyle"
                 for="apellidos"
-                >{{ t('solicitud_de_inscripcion.apellidos') }}</label
+                >{{ t('lable.apellidos') }}</label
               >
               <div class="w-full">
                 <input
@@ -612,12 +597,12 @@
             </div>
           </div>
           <div class="grid">
-            <div class="col-3">
+            <div class="col-6">
               <label
                 class="labelStyle"
                 for="domicilio"
               >
-                {{ t('solicitud_de_inscripcion.domicilio') }}</label
+                {{ t('lable.domicilio') }}</label
               >
               <div class="w-full">
                 <input
@@ -632,12 +617,12 @@
               </div>
             </div>
 
-            <div class="col-3">
+            <div class="col-2">
               <label
                 class="labelStyle"
                 for="codpro"
               >
-                {{ t('solicitud_de_inscripcion.provincia') }}</label
+                {{ t('lable.provincia') }}</label
               >
               <div class="w-full">
                 <p-autoComplete
@@ -650,7 +635,7 @@
                   (onSelect)="
                     loadMunicipio(
                       this.datosPrincipalesForm.get('representantesDTO.codpro')
-                        ?.value.provCodProvincia
+                        .value.provCodProvincia
                     )
                   "
                   field="provDenominacion"
@@ -660,12 +645,12 @@
                 </p-autoComplete>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
               <label
                 class="labelStyle"
                 for="codmun"
               >
-                {{ t('solicitud_de_inscripcion.municipio') }}
+                {{ t('lable.municipio') }}
               </label>
               <div class="w-full">
                 <p-autoComplete
@@ -678,9 +663,9 @@
                   (onSelect)="
                     loadCP(
                       this.datosPrincipalesForm.get('representantesDTO.codmun')
-                        ?.value.muniCodProvincia,
+                        .value.muniCodProvincia,
                       this.datosPrincipalesForm.get('representantesDTO.codmun')
-                        ?.value.muniCodMunicipio
+                        .value.muniCodMunicipio
                     )
                   "
                   field="muniDenominacion"
@@ -690,12 +675,12 @@
                 </p-autoComplete>
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-2">
               <label
                 class="labelStyle"
                 for="cp"
               >
-                {{ t('solicitud_de_inscripcion.c_postal') }}</label
+                {{ t('lable.c_postal') }}</label
               >
 
               <div class="w-full">
@@ -720,7 +705,7 @@
                 class="labelStyle"
                 for="email"
               >
-                {{ t('solicitud_de_inscripcion.e-mail') }}</label
+                {{ t('lable.e-mail') }}</label
               >
               <div class="w-full">
                 <input
@@ -730,7 +715,7 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="email"
                   [ngClass]="readOnlyMode || !isLegalCifNif ? 'disabled' : ''"
-                  [disabled]="!isLegalCifNif"
+                  [readonly]="!isLegalCifNif"
                 />
               </div>
             </div>
@@ -739,7 +724,7 @@
                 class="labelStyle"
                 for="telefono"
               >
-                {{ t('solicitud_de_inscripcion.telefono') }}</label
+                {{ t('lable.telefono') }}</label
               >
               <div class="w-full">
                 <input
@@ -749,7 +734,7 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="telefono"
                   [ngClass]="readOnlyMode || !isLegalCifNif ? 'disabled' : ''"
-                  [disabled]="!isLegalCifNif"
+                  [readonly]="!isLegalCifNif"
                 />
               </div>
             </div>
@@ -758,7 +743,7 @@
                 class="labelStyle"
                 for="fax"
               >
-                {{ t('solicitud_de_inscripcion.telefono2') }}</label
+                {{ t('lable.telefono2') }}</label
               >
               <div class="w-full">
                 <input
@@ -768,7 +753,7 @@
                   class="p-inputtext inputStyle w-full"
                   formControlName="fax"
                   [ngClass]="readOnlyMode || !isLegalCifNif ? 'disabled' : ''"
-                  [disabled]="!isLegalCifNif"
+                  [readonly]="!isLegalCifNif"
                 />
               </div>
             </div>
@@ -779,7 +764,7 @@
       <p-accordionTab [disabled]="disableTabs">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
-            <p>{{ t('solicitud_de_inscripcion.title_tab_4') }}</p>
+            <p class="mt-2">{{ t('solicitud_de_inscripcion.title_tab_4') }}</p>
           </div>
         </ng-template>
         <ng-template
@@ -802,7 +787,9 @@
       <p-accordionTab [disabled]="disableTabs">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
-            <p>{{ t('solicitud_de_inscripcion.acreditaciones_title') }}</p>
+            <p class="mt-2">
+              {{ t('solicitud_de_inscripcion.acreditaciones_title') }}
+            </p>
           </div>
         </ng-template>
         <ng-template
@@ -816,7 +803,9 @@
       <p-accordionTab [disabled]="disableTabs">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
-            <p>{{ t('solicitud_de_inscripcion.actualizaciones_title') }}</p>
+            <p class="mt-2">
+              {{ t('solicitud_de_inscripcion.actualizaciones_title') }}
+            </p>
           </div>
         </ng-template>
         <ng-template
@@ -830,7 +819,9 @@
       <p-accordionTab [disabled]="disableTabs">
         <ng-template pTemplate="header">
           <div class="flex align-items-center">
-            <p>{{ t('solicitud_de_inscripcion.documentos_title') }}</p>
+            <p class="mt-2">
+              {{ t('solicitud_de_inscripcion.documentos_title') }}
+            </p>
           </div>
         </ng-template>
         <ng-template
