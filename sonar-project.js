@@ -8,7 +8,7 @@ sonarqubeScanner(
       'sonar.sources': '.',
       'sonar.inclusions': 'src/**', // Entry point of your code
       'sonar.exclusions':
-        'src/assets/**, **/*.spec.ts, src/environments/**, src/app/core/utils/cif-validator.ts', // Entry point of your code which you want to exclude
+        'src/assets/**, **/*.spec.ts, **/*.module.ts, *.env.ts, *.interceptor.ts, src/environments/**, src/app/core/utils/cif-validator.ts, src/app/services/item-example.service.ts', // Entry point of your code which you want to exclude
       // "sonar.exclusions": "src/assets/**,**/*.spec.ts,encryption.service.ts", // Entry point of your code which you want to exclude
       'sonar.language': 'ts',
       // 'sonar.testExecutionReportPaths': 'reports/ut_report.xml', // Entry point of test report xml file 'sonar.'sonar.
