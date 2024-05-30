@@ -73,7 +73,7 @@ export class SolicitudDeInscripcionComponent
     private dialogService: DialogService,
     private solicitudProvinciaService: SolicitudeProvinciaService,
     private solicitudeMunicipioService: SolicitudeMunicipioService,
-    private solicitudDeInscripcionService: SolicitudDeInscripcionService,
+    public solicitudDeInscripcionService: SolicitudDeInscripcionService,
     private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
     private representantesService: SolicitudDeInscripcionRepresentantesService,
     private location: Location,
