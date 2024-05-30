@@ -15,14 +15,14 @@ import {
   providedIn: 'root',
 })
 export class SolicitudeMunicipioService extends CommonService {
-  getMunicipio(provCodProvincia: string) {
+  public getMunicipio(provCodProvincia: string) {
     const params = { provCodProvincia };
     return this._arqHttpClient.get<CustomResponse<Municipio>>(
       this.urlBuilder(UrlEndpoints.vmcrcMunicipio),
       { params }
     );
   }
-  urlBuilder(type: string): string {
+  public urlBuilder(type: string): string {
     let url: string = this.apiUrl;
     switch (type) {
       case UrlEndpoints.vmcrcMunicipio:

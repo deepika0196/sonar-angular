@@ -5,16 +5,16 @@
   },
 
   "menu_items": {
-    "mantenimientos_basicos": "Mantenimientos Básicos",
+    "mantenimientos_basicos": "Mantenimientos básicos",
     "expedientes": "Expedientes",
     "informes": "Informes",
     "sub_menu": {
-      "entidades_solicitantes": "Entidades Solicitantes",
-      "campos_de_actuacion": "Campos de Actuación",
-      "requerimientos_subsanacion": "Requerimientos de Subsanación",
-      "representantes_de_entidad": "Representantes de Entidad",
-      "solicitud_de_inscripcion": "Solicitud de Inscripción",
-      "generacion_de_informes": "Generación de Informes"
+      "entidades_solicitantes": "Entidades solicitantes",
+      "campos_de_actuacion": "Campos de actuación",
+      "requerimientos_subsanacion": "Requerimientos de subsanación",
+      "representantes_de_entidad": "Representantes de entidad",
+      "solicitud_de_inscripcion": "Solicitud de inscripción",
+      "generacion_de_informes": "Generación de informes"
     }
   },
 
@@ -51,6 +51,17 @@
   "solicitud_de_inscripcion": {
     "title": "Solicitud de Inscripción en el registro",
     "title_tab_1": "Entidad",
+    "title_tab_2": "Dirección Notificaciones",
+    "archivar_message": "¿Desea archivar este expediente?",
+    "restaurar_message": "¿Desea restaurar este expediente?",
+    "title_tab_3": "Representante legal",
+    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana” expanded",
+    "acreditaciones_title": "Acreditaciones",
+    "actualizaciones_title": "Actualizaciones",
+    "documentos_title": "Documentos"
+  },
+
+  "lable": {
     "cif": "CIF",
     "razon_social": "Razón Social",
     "domicilio_social": "Domicilio Social",
@@ -58,26 +69,18 @@
     "municipio": "Municipio",
     "c_postal": "C. Postal",
     "n_registro": "Nº Registro",
-    "feentrada": "Fecha Solicitud de Inscripción ",
+    "feentrada": "Fecha Solicitud",
     "fecha_baja": "Fecha Baja",
     "e-mail": "E-mail",
     "telefono": "Teléfono",
     "telefono2": "Teléfono 2",
     "publicar_en_web": "Publicar en web",
     "observaciones": "Observaciones",
-    "title_tab_2": "Dirección Notificaciones",
     "copiar_notificaciones": "Copiar la dirección principal para notificaciones",
     "domicilio": "Domicilio",
-    "archivar_message": "¿Desea archivar este expediente?",
-    "restaurar_message": "¿Desea restaurar este expediente?",
-    "title_tab_3": "Representante legal",
     "nif_cif": "NIF/CIF",
     "nombre": "Nombre",
-    "apellidos": "Apellidos",
-    "title_tab_4": "Oficinas comerciales en la Comunidad Valenciana",
-    "acreditaciones_title": "Acreditaciones",
-    "actualizaciones_title": "Actualizaciones",
-    "documentos_title": "Documentos"
+    "apellidos": "Apellidos"
   },
 
   "oficinas": {

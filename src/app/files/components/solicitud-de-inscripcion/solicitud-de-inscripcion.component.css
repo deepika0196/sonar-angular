@@ -4,7 +4,9 @@
   font-weight: bold;
   position: absolute;
   bottom: 0;
-  margin: 0%;
+}
+.btn-postion {
+  margin-bottom: -0.5rem;
 }
 
 .disabled {
@@ -28,7 +30,8 @@
   .p-accordion .p-accordion-header .p-accordion-header-link {
     padding: 0;
     color: var(--light-blue);
-    background-color: var(-- --accordion);
+    border-radius: 0%;
+    background-color: var(--accordion);
     text-decoration: none;
     width: 100%;
   }
@@ -40,6 +43,7 @@
     .p-accordion-header:not(.p-highlight):not(.p-disabled):hover
     .p-accordion-header-link {
     color: var(--light-blue);
+    background-color: var(--accordion);
   }
 }
 
@@ -50,6 +54,9 @@
     font-size: 1rem;
     border-radius: 0%;
     border-right: none;
+  }
+  .p-button {
+    border-radius: 0%;
   }
 
   .p-button.p-button-icon-only {
@@ -65,19 +72,14 @@
     background-color: var(--lighter-grey);
   }
   .p-disabled {
-    background-color: #f0f0f0;
-  }
-
-  .p-inputtext:enabled:hover {
-    border-color: var(--black);
+    background-color: var(--lighter-grey);
   }
 }
-
-:host ::ng-deep .p-button.actionStyle {
-  background-color: var(--blue);
-  border-radius: 0rem;
-
-  .iconStyle {
-    color: var(--light-blue);
+.autoCompleteStyle:hover {
+  .p-inputtext {
+    border-color: var(--black);
+  }
+  .p-button.p-button-icon-only {
+    border-color: var(--black);
   }
 }

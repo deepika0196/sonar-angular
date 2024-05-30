@@ -13,52 +13,52 @@ import {
   providedIn: 'root',
 })
 export class SolicitudDeInscripcionService extends CommonService {
-  createSolicitudDeInscripcion(entidadDetials: Entidad) {
+  public createSolicitudDeInscripcion(entidadDetials: Entidad) {
     return this._arqHttpClient.post<CustomResponse<Entidad>>(
       this.urlBuilder(UrlEndpoints.reccaEntidades),
       entidadDetials
     );
   }
 
-  updateSolicitudDeInscripcion(entidadDetials: Entidad) {
+  public updateSolicitudDeInscripcion(entidadDetials: Entidad) {
     return this._arqHttpClient.put<CustomResponse<Entidad>>(
       this.urlBuilder(UrlEndpoints.reccaEntidades),
       entidadDetials
     );
   }
 
-  getByNifCif(cif: string) {
+  public getByNifCif(cif: string) {
     return this._arqHttpClient.get<CustomResponse<Entidad>>(
       this.urlBuilder(UrlEndpoints.reccaEntidades) + `/findByNifcif/${cif}`
     );
   }
 
-  getSolicitudDeInscripcions() {
+  public getSolicitudDeInscripcions() {
     return this._arqHttpClient.get<CustomResponse<Entidad>>(
       this.urlBuilder(UrlEndpoints.reccaEntidades)
     );
   }
 
-  archiveSolicitudDeInscripcion(id: number) {
+  public archiveSolicitudDeInscripcion(id: number) {
     return this._arqHttpClient.delete<CustomResponse<Entidad>>(
       this.urlBuilder(UrlEndpoints.reccaEntidades) + `/archive/${id}`
     );
   }
 
-  restoreSolicitudDeInscripcion(id: number) {
+  public restoreSolicitudDeInscripcion(id: number) {
     return this._arqHttpClient.delete<CustomResponse<Entidad>>(
       this.urlBuilder(UrlEndpoints.reccaEntidades) + `/restore/${id}`
     );
   }
 
-  filterSolicitudDeInscripcions(entidadFilter: EntidadFilter) {
+  public filterSolicitudDeInscripcions(entidadFilter: EntidadFilter) {
     return this._arqHttpClient.post<CustomResponse<Entidad>>(
       this.urlBuilder(UrlEndpoints.reccaEntidades) + `/searchAdv`,
       entidadFilter
     );
   }
 
-  urlBuilder(type: string): string {
+  public urlBuilder(type: string): string {
     let url: string = this.apiUrl;
     switch (type) {
       case UrlEndpoints.reccaEntidades:
