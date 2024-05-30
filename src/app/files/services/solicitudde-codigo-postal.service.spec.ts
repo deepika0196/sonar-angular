@@ -6,7 +6,7 @@ import {
 import { SolicituddeCodigoPostalService } from './solicitudde-codigo-postal.service';
 import { CustomResponse } from '@app/shared/services/common.service';
 import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
-import { postalCode } from '@app/files/interfaces/solicitud-de-inscripcion';
+import { PostalCode } from '@app/files/interfaces/solicitud-de-inscripcion';
 
 describe('SolicituddeCodigoPostalService', () => {
   let service: SolicituddeCodigoPostalService;
@@ -30,7 +30,7 @@ describe('SolicituddeCodigoPostalService', () => {
     it('should call get with the correct URL and parameters', () => {
       const provincia = '01';
       const municipio = '001';
-      const mockResponse: CustomResponse<postalCode> = {
+      const mockResponse: CustomResponse<PostalCode> = {
         response: [
           {
             cpostMunicipio: '',

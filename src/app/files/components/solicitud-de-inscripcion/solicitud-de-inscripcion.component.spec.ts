@@ -57,7 +57,7 @@ class MockRouter {
 
 class MockLocation {
   getState() {
-    return { action: 'view', cif: '12345678Z' };
+    return { action: 'view', cif: '41231173Q' };
   }
 }
 

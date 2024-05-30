@@ -68,25 +68,25 @@ export class SolicitudDeInscripcionSearchComponent
     {
       field: 'nifcif',
       header: 'solicitudDeInscripcion.cif',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width-fix',
     },
     {
       field: 'denomsocial',
       header: 'solicitudDeInscripcion.business_name',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
     {
       field: 'provDenominacion',
       header: 'solicitudDeInscripcion.province',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
     {
       field: 'muniDenominacion',
       header: 'solicitudDeInscripcion.municipality',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
     {
@@ -112,9 +112,9 @@ export class SolicitudDeInscripcionSearchComponent
       pipeFormat: GlobalConstant.ddmmyyyy,
     },
     {
-      field: 'deseccionVal',
+      field: 'representantesNifcif',
       header: 'solicitudDeInscripcion.NIF_CIF_legal_representative',
-      sortable: false,
+      sortable: true,
       class: 'table-col-width',
     },
     {
@@ -336,7 +336,9 @@ export class SolicitudDeInscripcionSearchComponent
     action: 'view' | 'edit' | 'add',
     entidad?: Entidad
   ) {
-    const state = entidad ? { cif: entidad.nifcif, action } : { action };
+    const state = entidad
+      ? { cif: entidad.nifcif, id: entidad.id, action }
+      : { action };
     this.router.navigate(['/files/solicitudDeInscripcion'], { state });
   }
 

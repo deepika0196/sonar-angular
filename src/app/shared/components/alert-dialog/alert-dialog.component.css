@@ -62,24 +62,17 @@
   background-color: var(--white);
 }
 
-::ng-deep .buttonStyle {
-  background-color: var(--blue);
-  border-radius: 0rem;
-  border: none;
-  font-size: 1rem;
-  color: var(--white);
+::ng-deep .icon-size {
+  font-size: 1.313rem;
+}
+
+::ng-deep .extra-padding {
+  padding-bottom: 0.831rem;
+  padding-top: 0.831rem;
 }
 
 .alertStyle {
   padding: 1.2rem 1.2rem 1.2rem 0rem;
-}
-
-::ng-deep .buttonStyle:not([disabled]):hover {
-  background-color: var(--dark-blue);
-}
-
-::ng-deep .buttonStyle:disabled {
-  background-color: var(--disable-items);
 }
 
 .headerStyle-confirm {
