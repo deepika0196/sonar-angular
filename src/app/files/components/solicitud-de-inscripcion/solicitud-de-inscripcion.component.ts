@@ -53,7 +53,7 @@ export class SolicitudDeInscripcionComponent
   protected isFechaBajaNull: boolean;
 
   protected copyAdress: boolean;
-  protected datosPrincipalesForm: FormGroup;
+  public datosPrincipalesForm: FormGroup;
   private alertDialogRef: DynamicDialogRef | undefined;
   private numinscripcion = '/ECMCA';
   protected calendarDateFormat = GlobalConstant.ddmmyy;
@@ -96,7 +96,7 @@ export class SolicitudDeInscripcionComponent
     }
   }
   private disableFileds() {
-    return new Promise<void | boolean>((resolve, reject) => {
+    return new Promise<void | boolean>((resolve) => {
       this.datosPrincipalesForm.get('entidad.fbaja')?.disable();
       this.datosPrincipalesForm
         .get('notificaciones.addressCopy')
@@ -118,7 +118,7 @@ export class SolicitudDeInscripcionComponent
     this.initializePage();
   }
 
-  private async initializePage() {
+  public async initializePage() {
     await this.loadProvincia();
     const state: State = this.location.getState() as State;
     this.disableTabs = state.action === 'add' ? false : false;
@@ -171,7 +171,7 @@ export class SolicitudDeInscripcionComponent
     });
   }
   private setupFormChangeSubscriptions() {
-    return new Promise<void | boolean>((resolve, reject) => {
+    return new Promise<void | boolean>((resolve) => {
       const addressCopyControl = this.datosPrincipalesForm.get(
         'notificaciones.addressCopy'
       );
@@ -287,8 +287,8 @@ export class SolicitudDeInscripcionComponent
     }
   }
 
-  private setFormReadOnly(isReadOnly: boolean) {
-    return new Promise<void | boolean>((resolve, reject) => {
+  public setFormReadOnly(isReadOnly: boolean) {
+    return new Promise<void | boolean>((resolve) => {
       if (isReadOnly) {
         this.datosPrincipalesForm.disable();
         resolve(true);
@@ -299,7 +299,7 @@ export class SolicitudDeInscripcionComponent
     });
   }
   private checkMode(mode: string) {
-    return new Promise<void | boolean>((resolve, reject) => {
+    return new Promise<void | boolean>(() => {
       if (mode == 'view') {
         this.readOnlyMode = true;
       } else {
@@ -310,7 +310,7 @@ export class SolicitudDeInscripcionComponent
     });
   }
 
-  protected onSubmit() {
+  public onSubmit() {
     if (
       !CIFValidator.esNifNieCifValido(
         this.datosPrincipalesForm.get('entidad.nifcif')?.value
@@ -440,7 +440,7 @@ export class SolicitudDeInscripcionComponent
 
     return mappedData;
   }
-  private updateSolicitud() {
+  public updateSolicitud() {
     this.solicitudDeInscripcionService
       .updateSolicitudDeInscripcion(this.mapFormToBackendData())
       .pipe(takeUntil(this.subscription))
@@ -453,7 +453,7 @@ export class SolicitudDeInscripcionComponent
         error: (err: Error) => console.error(err),
       });
   }
-  private createSolicitud() {
+  public createSolicitud() {
     this.solicitudDeInscripcionService
       .createSolicitudDeInscripcion(this.mapFormToBackendData())
       .pipe(takeUntil(this.subscription))
@@ -532,7 +532,7 @@ export class SolicitudDeInscripcionComponent
     });
   }
 
-  protected fetchDetails(cifNif: string): Promise<void | boolean> {
+  public fetchDetails(cifNif: string): Promise<void | boolean> {
     return new Promise<void | boolean>((resolve, reject) => {
       if (!CIFValidator.esNifNieCifValido(cifNif)) {
         this.openInvalidCifDialog();
@@ -624,7 +624,7 @@ export class SolicitudDeInscripcionComponent
     return formattedDate;
   }
 
-  private openInvalidCifDialog() {
+  public openInvalidCifDialog() {
     const actionButtons: ActionButtons[] = [
       {
         label: this.translocoService.translate('buttons.accept'),
@@ -728,7 +728,7 @@ export class SolicitudDeInscripcionComponent
   }
 
   protected copyAddressFieldsOfEntidadData() {
-    return new Promise<void | boolean>((resolve, reject) => {
+    return new Promise<void | boolean>((resolve) => {
       this.datosPrincipalesForm.get('notificaciones')?.patchValue({
         dirDomicilio: this.datosPrincipalesForm.get('entidad.domsocial')?.value,
         dirCodpro: this.datosPrincipalesForm.get('entidad.codpro')?.value,

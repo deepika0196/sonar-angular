@@ -7,8 +7,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TranslocoService } from '@ngneat/transloco';
 import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-
-import { CampoDeActuacion } from '@app/basic-maintenance/interfaces/campoDeActuacion';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CampoDeActuacionComponent', () => {
   let component: CampoDeActuacionComponent;
@@ -35,6 +34,7 @@ describe('CampoDeActuacionComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [CampoDeActuacionComponent],
       providers: [
         {
