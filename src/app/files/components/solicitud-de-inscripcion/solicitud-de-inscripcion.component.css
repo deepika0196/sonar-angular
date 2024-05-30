@@ -6,9 +6,7 @@
   bottom: 0;
 }
 .btn-postion {
-  position: absolute;
-  bottom: 0;
-  margin: 0%;
+  margin-bottom: -0.5rem;
 }
 
 .disabled {
@@ -74,19 +72,14 @@
     background-color: var(--lighter-grey);
   }
   .p-disabled {
-    background-color: #f0f0f0;
-  }
-
-  .p-inputtext:enabled:hover {
-    border-color: var(--black);
+    background-color: var(--lighter-grey);
   }
 }
-
-:host ::ng-deep .p-button.actionStyle {
-  background-color: var(--blue);
-  border-radius: 0rem;
-
-  .iconStyle {
-    color: var(--light-blue);
+.autoCompleteStyle:hover {
+  .p-inputtext {
+    border-color: var(--black);
+  }
+  .p-button.p-button-icon-only {
+    border-color: var(--black);
   }
 }

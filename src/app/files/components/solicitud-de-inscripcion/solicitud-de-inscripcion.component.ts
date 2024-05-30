@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -46,9 +46,7 @@ import {
   styleUrls: ['./solicitud-de-inscripcion.component.css'],
   providers: [MessageService, DialogService, DynamicDialogRef],
 })
-export class SolicitudDeInscripcionComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
   protected isValidForm = false;
   protected isFechaBajaNull = true;
 
@@ -88,15 +86,7 @@ export class SolicitudDeInscripcionComponent
     this.initializeForm();
   }
 
-  ngAfterViewInit(): void {
-    if (!this.isLegalCifNif) {
-      this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
-      this.datosPrincipalesForm.get('representantesDTO.codmun')?.disable();
-      this.datosPrincipalesForm.get('representantesDTO.cp')?.disable();
-    }
-  }
-
-  private disableNotificationFileds() {
+  private disableFileds() {
     return new Promise<void | boolean>((resolve, reject) => {
       this.datosPrincipalesForm.get('entidad.fbaja')?.disable();
       this.datosPrincipalesForm
@@ -105,6 +95,12 @@ export class SolicitudDeInscripcionComponent
       this.datosPrincipalesForm.get('notificaciones.dirCodpro')?.disable();
       this.datosPrincipalesForm.get('notificaciones.dirCodmun')?.disable();
       this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
+      if (!this.isLegalCifNif) {
+        console.log('this is  ===', this.isLegalCifNif);
+        this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
+        this.datosPrincipalesForm.get('representantesDTO.codmun')?.disable();
+        this.datosPrincipalesForm.get('representantesDTO.cp')?.disable();
+      }
       resolve(true);
     });
   }
@@ -126,7 +122,7 @@ export class SolicitudDeInscripcionComponent
       await this.fetchDetails(state.cif);
       await this.fetchAllOficinasById(state.id);
     }
-    await this.disableNotificationFileds();
+    await this.disableFileds();
   }
 
   protected async fetchAllOficinasById(id: number): Promise<void | boolean> {

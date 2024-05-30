@@ -5,11 +5,11 @@
         {{ t('solicitud_de_inscripcion.title') }}
       </span>
     </div>
-    <div class="col-8 justify-content-end d-flex">
+    <div class="col-8 justify-content-end d-flex btn-postion">
       <gva-button
         [btnLabel]="t('buttons.back')"
         [iconPosition]="'left'"
-        [btnClass]="'actionStyle mr-2 btn-postion'"
+        [btnClass]="'actionStyle mr-2'"
         (btnClick)="perviousScreen()"
       >
         <span class="material-icons iconStyle"> arrow_back </span>
@@ -18,7 +18,7 @@
       <gva-button
         [btnLabel]="t('buttons.save')"
         [iconPosition]="'left'"
-        [btnClass]="'actionStyle mr-2 btn-postion'"
+        [btnClass]="'actionStyle mr-2'"
         [btnDisabled]="!isValidForm"
         (btnClick)="onSubmit()"
         [hidden]="readOnlyMode"
