@@ -55,7 +55,7 @@ export class SolicitudDeInscripcionComponent
   protected copyAdress: boolean;
   public datosPrincipalesForm: FormGroup;
   private alertDialogRef: DynamicDialogRef | undefined;
-  private numinscripcion = '/ECMCA';
+  private readonly numinscripcion = '/ECMCA';
   protected calendarDateFormat = GlobalConstant.ddmmyy;
 
   protected postalList: PostalCode[] = [];
@@ -70,29 +70,34 @@ export class SolicitudDeInscripcionComponent
   protected cifNif = '';
   protected readOnlyMode: boolean;
   protected isLegalCifNif: boolean;
-  private subscription = new Subject<void>();
+  private readonly subscription = new Subject<void>();
+  private readonly representantesDTOCodpro = 'representantesDTO.codpro';
+  private readonly representantesDTOCodmun = 'representantesDTO.codmun';
+  private readonly representantesDTOCp = 'representantesDTO.cp';
+  private readonly filesSolicitudDeInscripcionSearch =
+    '/files/solicitudDeInscripcionSearch';
 
   constructor(
-    private fb: FormBuilder,
-    private translocoService: TranslocoService,
-    private dialogService: DialogService,
-    private solicitudProvinciaService: SolicitudeProvinciaService,
-    private solicitudeMunicipioService: SolicitudeMunicipioService,
-    private solicitudDeInscripcionService: SolicitudDeInscripcionService,
-    private oficinasService: OficinasService,
-    private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
-    private representantesService: SolicitudDeInscripcionRepresentantesService,
-    private location: Location,
-    private router: Router
+    private readonly fb: FormBuilder,
+    private readonly translocoService: TranslocoService,
+    private readonly dialogService: DialogService,
+    private readonly solicitudProvinciaService: SolicitudeProvinciaService,
+    private readonly solicitudeMunicipioService: SolicitudeMunicipioService,
+    private readonly solicitudDeInscripcionService: SolicitudDeInscripcionService,
+    private readonly oficinasService: OficinasService,
+    private readonly solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
+    private readonly representantesService: SolicitudDeInscripcionRepresentantesService,
+    private readonly location: Location,
+    private readonly router: Router
   ) {
     this.initializeForm();
   }
 
   ngAfterViewInit(): void {
     if (!this.isLegalCifNif) {
-      this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
-      this.datosPrincipalesForm.get('representantesDTO.codmun')?.disable();
-      this.datosPrincipalesForm.get('representantesDTO.cp')?.disable();
+      this.datosPrincipalesForm.get(this.representantesDTOCodpro)?.disable();
+      this.datosPrincipalesForm.get(this.representantesDTOCodmun)?.disable();
+      this.datosPrincipalesForm.get(this.representantesDTOCp)?.disable();
     }
   }
   private disableFileds() {
@@ -106,9 +111,8 @@ export class SolicitudDeInscripcionComponent
       this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
 
       if (!this.isLegalCifNif) {
-        this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
-        this.datosPrincipalesForm.get('representantesDTO.codmun')?.disable();
-        this.datosPrincipalesForm.get('representantesDTO.cp')?.disable();
+        this.datosPrincipalesForm.get(this.representantesDTOCodmun)?.disable();
+        this.datosPrincipalesForm.get(this.representantesDTOCp)?.disable();
       }
       resolve(true);
     });
@@ -121,7 +125,7 @@ export class SolicitudDeInscripcionComponent
   public async initializePage() {
     await this.loadProvincia();
     const state: State = this.location.getState() as State;
-    this.disableTabs = state.action === 'add' ? false : false;
+    this.disableTabs = false;
     this.checkMode(state.action);
     await this.setupFormChangeSubscriptions();
     await this.setFormReadOnly(this.readOnlyMode);
@@ -376,70 +380,70 @@ export class SolicitudDeInscripcionComponent
 
   private mapFormToBackendData(): Entidad {
     const formValue = this.datosPrincipalesForm.value;
-    const entidad = formValue.entidad || {};
-    const notificaciones = formValue.notificaciones || {};
-    const representantesDTO = formValue.representantesDTO || {};
-    const representantesPrev =
-      this.datosPrincipalesForm.get('representantesDTO.codpro')?.value || '';
-    const representantesMunsi =
-      this.datosPrincipalesForm.get('representantesDTO.codmun')?.value || '';
-    const representantesPostal =
-      this.datosPrincipalesForm.get('representantesDTO.cp')?.value || '';
 
-    const dirPro =
-      this.datosPrincipalesForm.get('notificaciones.dirCodpro')?.value || '';
-    const dirMun =
-      this.datosPrincipalesForm.get('notificaciones.dirCodmun')?.value || '';
-    const dirCP =
-      this.datosPrincipalesForm.get('notificaciones.dirCp')?.value || '';
+    const getNestedValue = (obj: any, path: string, defaultValue: any = '') =>
+      path.split('.').reduce((o, p) => (o ? o[p] : defaultValue), obj);
 
-    const publicaWeValue = entidad.publicaWeb ? 'Y' : 'N';
+    const formatDate = (date: any) =>
+      date ? date.toISOString().split('T')[0] : '';
 
-    const mappedData: Entidad = {
-      id: formValue.id || null,
-      codidfiscal: '',
-      codmun: entidad.codmun?.muniCodMunicipio || '',
-      cp: entidad.cp?.cpostCodPostal || '',
-      codpro: entidad?.codpro?.provCodProvincia || '',
-      denomsocial: entidad?.denomsocial || '',
-      dirCodmun: dirMun?.muniCodMunicipio || '',
-      dirCp: dirCP?.cpostCodPostal || '',
-      dirCodpro: dirPro?.provCodProvincia || '',
-      dirDomicilio: notificaciones.dirDomicilio || '',
-      dirEmail: notificaciones.dirEmail || '',
-      dirFax: notificaciones.dirFax || '',
-      dirTelefono: notificaciones.dirTelefono || '',
+    const mapRepresentantesDTO = (representantesDTO: any, id: any): any => ({
+      apellidos: representantesDTO.apellidos || '',
+      codmun: getNestedValue(representantesDTO, 'codmun.muniCodMunicipio'),
+      cp: getNestedValue(representantesDTO, 'cp.cpostCodPostal'),
+      codpro: getNestedValue(representantesDTO, 'codpro.provCodProvincia'),
+      domicilio: representantesDTO.domicilio || '',
+      email: representantesDTO.email || '',
+      entidadId: id || null,
+      fax: representantesDTO.fax || '',
+      id: representantesDTO.id || null,
+      nifcif: representantesDTO.nifcif || '',
+      nombre: representantesDTO.nombre || '',
+      telefono: representantesDTO.telefono || '',
+    });
+
+    const mapEntidad = (entidad: any): any => ({
+      codmun: getNestedValue(entidad, 'codmun.muniCodMunicipio'),
+      cp: getNestedValue(entidad, 'cp.cpostCodPostal'),
+      codpro: getNestedValue(entidad, 'codpro.provCodProvincia'),
+      denomsocial: entidad.denomsocial || '',
       domsocial: entidad.domsocial || '',
       email: entidad.email || '',
       fax: entidad.fax || '',
       fbaja: entidad.fbaja || '',
-      feentrada: entidad.feentrada
-        ? entidad.feentrada.toISOString().split('T')[0]
-        : '',
+      feentrada: formatDate(entidad.feentrada),
       nifcif: entidad.nifcif || '',
       numinscripcion: entidad.numinscripcion || '',
       observaciones: entidad.observaciones || '',
-      publicaWeb: publicaWeValue,
-      representantesDTO: {
-        apellidos: representantesDTO.apellidos || '',
-        codmun: representantesMunsi?.muniCodMunicipio || '',
-        cp: representantesPostal?.cpostCodPostal || '',
-        codpro: representantesPrev?.provCodProvincia || '',
-        domicilio: representantesDTO?.domicilio || '',
-        email: representantesDTO?.email || '',
-        entidadId: formValue?.id || null,
-        fax: representantesDTO?.fax || '',
-        id: representantesDTO?.id || null,
-        nifcif: representantesDTO?.nifcif || '',
-        nombre: representantesDTO?.nombre || '',
-        telefono: representantesDTO?.telefono || '',
-      },
+      publicaWeb: entidad.publicaWeb ? 'Y' : 'N',
       telefono: entidad.telefono || '',
+    });
+
+    const mapNotificaciones = (notificaciones: any): any => ({
+      dirCodmun: getNestedValue(notificaciones, 'dirCodmun.muniCodMunicipio'),
+      dirCp: getNestedValue(notificaciones, 'dirCp.cpostCodPostal'),
+      dirCodpro: getNestedValue(notificaciones, 'dirCodpro.provCodProvincia'),
+      dirDomicilio: notificaciones.dirDomicilio || '',
+      dirEmail: notificaciones.dirEmail || '',
+      dirFax: notificaciones.dirFax || '',
+      dirTelefono: notificaciones.dirTelefono || '',
+    });
+
+    const mappedData: Entidad = {
+      id: formValue.id || null,
+      codidfiscal: '',
+      ...mapEntidad(formValue.entidad),
+      ...mapNotificaciones(formValue.notificaciones),
+      representantesDTO: mapRepresentantesDTO(
+        formValue.representantesDTO,
+        formValue.id
+      ),
       web: '',
     };
 
     return mappedData;
   }
+
   public updateSolicitud() {
     this.solicitudDeInscripcionService
       .updateSolicitudDeInscripcion(this.mapFormToBackendData())
@@ -447,7 +451,7 @@ export class SolicitudDeInscripcionComponent
       .subscribe({
         next: (data: CustomResponse<Entidad>) => {
           if (data.success) {
-            this.router.navigate(['/files/solicitudDeInscripcionSearch']);
+            this.router.navigate([this.filesSolicitudDeInscripcionSearch]);
           }
         },
         error: (err: Error) => console.error(err),
@@ -460,7 +464,7 @@ export class SolicitudDeInscripcionComponent
       .subscribe({
         next: (data: CustomResponse<Entidad>) => {
           if (data.success) {
-            this.router.navigate(['/files/solicitudDeInscripcionSearch']);
+            this.router.navigate([this.filesSolicitudDeInscripcionSearch]);
           }
         },
         error: (err: Error) => console.error(err),
@@ -753,7 +757,7 @@ export class SolicitudDeInscripcionComponent
   }
 
   protected perviousScreen() {
-    this.router.navigate(['/files/solicitudDeInscripcionSearch']);
+    this.router.navigate([this.filesSolicitudDeInscripcionSearch]);
   }
 
   protected filterProvincia(event: { query: string }): void {

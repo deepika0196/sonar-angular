@@ -44,6 +44,7 @@ export class OficinasComponent implements OnInit {
   @Input() readOnlyMode = false;
   @Output() fetchAllOficinasById: EventEmitter<number> = new EventEmitter();
   @ViewChild('oficinasTemplate') template: TemplateRef<void>;
+  private readonly tableWidthClass = 'table-col-width';
   protected tableConfig: TableConfig = {
     rows: 10,
     styleClass: 'paginator-override',
@@ -77,42 +78,42 @@ export class OficinasComponent implements OnInit {
       field: 'domicilio',
       header: 'oficinas.residency',
       sortable: false,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
       filter: true,
     },
     {
       field: 'provDenominacion',
       header: 'oficinas.province',
       sortable: false,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
       filter: true,
     },
     {
       field: 'muniDenominacion',
       header: 'oficinas.municipality',
       sortable: false,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
       filter: true,
     },
     {
       field: 'telefono',
       header: 'oficinas.phone',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
       filter: true,
     },
     {
       field: 'reccaResponsables.nombre',
       header: 'oficinas.contact_person',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
       filter: true,
     },
     {
       field: 'reccaResponsables.email',
       header: 'oficinas.contact_email',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
       filter: true,
     },
     {
@@ -123,7 +124,7 @@ export class OficinasComponent implements OnInit {
     },
   ];
 
-  private subscription = new Subject<void>();
+  private readonly subscription = new Subject<void>();
   protected municipioList: Municipio[] = [];
   protected postalList: PostalCode[] = [];
   globalConst = GlobalConstant;
@@ -131,13 +132,13 @@ export class OficinasComponent implements OnInit {
   protected selectedProCod: string;
 
   constructor(
-    private oficinasService: OficinasService,
-    private solicitudeMunicipioService: SolicitudeMunicipioService,
-    private solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
-    private commonDialogService: CommonDialogService,
-    private translocoService: TranslocoService,
-    private dialogService: DialogService,
-    private messageService: MessageService
+    private readonly oficinasService: OficinasService,
+    private readonly solicitudeMunicipioService: SolicitudeMunicipioService,
+    private readonly solicituddeCodigoPostalService: SolicituddeCodigoPostalService,
+    private readonly commonDialogService: CommonDialogService,
+    private readonly translocoService: TranslocoService,
+    private readonly dialogService: DialogService,
+    private readonly messageService: MessageService
   ) {
     this.oficinasForm = new FormGroup({
       office_name: new FormControl('', [Validators.required]),
@@ -271,7 +272,7 @@ export class OficinasComponent implements OnInit {
     );
   }
 
-  private isOfficeInvalid = (): boolean => {
+  private readonly isOfficeInvalid = (): boolean => {
     const officeName = this.oficinasForm.value.office_name;
     return !officeName || officeName.trim() === '' || this.oficinasForm.invalid;
   };
@@ -360,7 +361,7 @@ export class OficinasComponent implements OnInit {
     this.commonDialogService.openDialog('view', undefined, this.template);
   }
 
-  private deleteOficina = (officeDetails: Oficinas) => {
+  private readonly deleteOficina = (officeDetails: Oficinas) => {
     if (officeDetails.oficinaId && officeDetails.entidadId)
       this.oficinasService
         .deleteOficinas(officeDetails.oficinaId, officeDetails.entidadId)

@@ -43,6 +43,7 @@ export class SolicitudDeInscripcionSearchComponent
   calendarDateFormat = GlobalConstant.ddmmyy;
   calendarPlaceholder = GlobalConstant.CalendarPlaceholder;
   ecmca = GlobalConstant.ecmca;
+  private readonly tableWidthClass = 'table-col-width';
 
   tableConfig: TableConfig = {
     rows: 10,
@@ -75,31 +76,31 @@ export class SolicitudDeInscripcionSearchComponent
       field: 'denomsocial',
       header: 'solicitudDeInscripcion.business_name',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
     },
     {
       field: 'provDenominacion',
       header: 'solicitudDeInscripcion.province',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
     },
     {
       field: 'muniDenominacion',
       header: 'solicitudDeInscripcion.municipality',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
     },
     {
       field: 'numinscripcion',
       header: 'solicitudDeInscripcion.registration_no',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
     },
     {
       field: 'feentrada',
       header: 'solicitudDeInscripcion.application_date',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
       pipe: 'date',
       pipeFormat: GlobalConstant.ddmmyyyy,
     },
@@ -107,7 +108,7 @@ export class SolicitudDeInscripcionSearchComponent
       field: 'fbaja',
       header: 'solicitudDeInscripcion.low_date',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
       pipe: 'date',
       pipeFormat: GlobalConstant.ddmmyyyy,
     },
@@ -115,7 +116,7 @@ export class SolicitudDeInscripcionSearchComponent
       field: 'representantesNifcif',
       header: 'solicitudDeInscripcion.NIF_CIF_legal_representative',
       sortable: true,
-      class: 'table-col-width',
+      class: this.tableWidthClass,
     },
     {
       field: 'action',
@@ -124,20 +125,20 @@ export class SolicitudDeInscripcionSearchComponent
       class: 'table-col-width-fix',
     },
   ];
-  private subscription = new Subject<void>();
+  private readonly subscription = new Subject<void>();
   solicitudDeInscripcionForm;
   provinciaList: Provincia[] = [];
   municipioList: Municipio[] = [];
 
   constructor(
-    private solicitudDeInscripcionService: SolicitudDeInscripcionService,
-    private solicitudProvinciaService: SolicitudeProvinciaService,
-    private solicitudeMunicipioService: SolicitudeMunicipioService,
-    private messageService: MessageService,
-    private dialogService: DialogService,
-    private translocoService: TranslocoService,
-    private router: Router,
-    private datePipe: DatePipe
+    private readonly solicitudDeInscripcionService: SolicitudDeInscripcionService,
+    private readonly solicitudProvinciaService: SolicitudeProvinciaService,
+    private readonly solicitudeMunicipioService: SolicitudeMunicipioService,
+    private readonly messageService: MessageService,
+    private readonly dialogService: DialogService,
+    private readonly translocoService: TranslocoService,
+    private readonly router: Router,
+    private readonly datePipe: DatePipe
   ) {
     this.solicitudDeInscripcionForm = new FormGroup({
       cif: new FormControl(null, [Validators.maxLength(9)]),
