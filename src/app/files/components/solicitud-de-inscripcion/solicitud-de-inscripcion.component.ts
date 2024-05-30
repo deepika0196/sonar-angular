@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -46,9 +46,11 @@ import {
   styleUrls: ['./solicitud-de-inscripcion.component.css'],
   providers: [MessageService, DialogService, DynamicDialogRef],
 })
-export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
-  protected isValidForm = false;
-  protected isFechaBajaNull = true;
+export class SolicitudDeInscripcionComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
+  protected isValidForm: boolean;
+  protected isFechaBajaNull: boolean;
 
   protected copyAdress: boolean;
   protected datosPrincipalesForm: FormGroup;
@@ -86,6 +88,13 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
     this.initializeForm();
   }
 
+  ngAfterViewInit(): void {
+    if (!this.isLegalCifNif) {
+      this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
+      this.datosPrincipalesForm.get('representantesDTO.codmun')?.disable();
+      this.datosPrincipalesForm.get('representantesDTO.cp')?.disable();
+    }
+  }
   private disableFileds() {
     return new Promise<void | boolean>((resolve, reject) => {
       this.datosPrincipalesForm.get('entidad.fbaja')?.disable();
@@ -95,8 +104,8 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
       this.datosPrincipalesForm.get('notificaciones.dirCodpro')?.disable();
       this.datosPrincipalesForm.get('notificaciones.dirCodmun')?.disable();
       this.datosPrincipalesForm.get('notificaciones.dirCp')?.disable();
+
       if (!this.isLegalCifNif) {
-        console.log('this is  ===', this.isLegalCifNif);
         this.datosPrincipalesForm.get('representantesDTO.codpro')?.disable();
         this.datosPrincipalesForm.get('representantesDTO.codmun')?.disable();
         this.datosPrincipalesForm.get('representantesDTO.cp')?.disable();
@@ -115,13 +124,16 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
     this.disableTabs = state.action === 'add' ? false : false;
     this.checkMode(state.action);
     await this.setupFormChangeSubscriptions();
-
     await this.setFormReadOnly(this.readOnlyMode);
+
     if (state.cif) {
       this.cifNif = state.cif;
       await this.fetchDetails(state.cif);
       await this.fetchAllOficinasById(state.id);
     }
+    await this.checkRepresentanteLegalCifNif(
+      this.datosPrincipalesForm.get('representantesDTO.nifcif').value
+    );
     await this.disableFileds();
   }
 
@@ -206,7 +218,7 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
     });
   }
 
-  private checkRepresentanteLegalCifNif(
+  protected checkRepresentanteLegalCifNif(
     cifNif: string
   ): Promise<void | boolean> {
     return new Promise<void | boolean>((resolve, reject) => {
@@ -221,6 +233,7 @@ export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
           .subscribe({
             next: (data: CustomResponsSinglee<RepresentantesLegal>) => {
               this.patchValueOfRepresentantes(data.response);
+              this.isLegalCifNif = true;
               resolve(true);
             },
             error: (err) => reject(err),
