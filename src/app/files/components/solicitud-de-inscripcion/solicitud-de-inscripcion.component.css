@@ -49,9 +49,9 @@
 
 ::ng-deep .autoCompleteStyle {
   .p-autocomplete-input {
-    border: 0.125rem solid var(--light-grey);
     height: 2.125rem;
     font-size: 1rem;
+    border: 0.125rem solid var(--light-grey);
     border-radius: 0%;
     border-right: none;
   }
@@ -77,9 +77,9 @@
 }
 .autoCompleteStyle:hover {
   .p-inputtext {
-    border-color: var(--black);
+    border-color: var(--dark-blue);
   }
   .p-button.p-button-icon-only {
-    border-color: var(--black);
+    border-color: var(--dark-blue);
   }
 }
