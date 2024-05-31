@@ -55,12 +55,6 @@ export class RequerimientosSubsanacionComponent implements OnInit, OnDestroy {
       sortable: true,
       class: 'table-col-width',
     },
-    {
-      field: 'action',
-      header: 'actions.acciones',
-      sortable: false,
-      class: 'table-col-width-fix',
-    },
   ];
   private subscription = new Subject<void>();
 

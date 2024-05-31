@@ -125,7 +125,7 @@ export class SolicitudDeInscripcionComponent
   public async initializePage() {
     await this.loadProvincia();
     const state: State = this.location.getState() as State;
-    this.disableTabs = false;
+    this.disableTabs = state.action === 'add' ? true : false;
     this.checkMode(state.action);
     await this.setupFormChangeSubscriptions();
     await this.setFormReadOnly(this.readOnlyMode);

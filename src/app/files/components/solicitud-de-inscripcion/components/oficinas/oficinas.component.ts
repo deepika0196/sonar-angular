@@ -293,6 +293,7 @@ export class OficinasComponent implements OnInit {
 
   protected openAddDialog() {
     this.resetForm();
+    this.oficinasForm.enable();
     const saveAction = () => {
       this.oficinasService
         .postOficinas(this.mapFormToOficinas())
@@ -317,6 +318,7 @@ export class OficinasComponent implements OnInit {
 
   protected async openUpdateDialog(office: Oficinas) {
     await this.mapOficinasToForm(office);
+    this.oficinasForm.enable();
     const updateService = () => {
       this.oficinasService
         .updateOficinas(this.mapFormToOficinas(office))
