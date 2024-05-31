@@ -24,13 +24,8 @@
   color: var(--black);
 }
 
-::ng-deep .p-column-filter-clear-button {
+::ng-deep .p-column-filter-clear-button:before {
+  content: '\eb32';
+  font-size: 1.5rem;
   font-family: 'Material Icons Outlined';
-
-  filterslashicon {
-    &:before {
-      content: '\eb32';
-      font-size: 1.5rem;
-    }
-  }
 }

@@ -1,11 +1,6 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Params } from '@angular/router';
 import { UrlEndpoints } from '@app/core/contsants/urlEndpoint';
-import {
-  Municipio,
-  Provincia,
-} from '@app/files/interfaces/solicitud-de-inscripcion';
+import { Municipio } from '@app/files/interfaces/solicitud-de-inscripcion';
 import {
   CommonService,
   CustomResponse,

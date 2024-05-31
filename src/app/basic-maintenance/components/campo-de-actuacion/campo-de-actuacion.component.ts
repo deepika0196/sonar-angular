@@ -24,7 +24,10 @@ import { Subject, takeUntil } from 'rxjs';
 export class CampoDeActuacionComponent implements OnInit, OnDestroy {
   campoDeActuacions: CampoDeActuacion[];
   cloneCampoDeActuacionRecords: CampoDeActuacion[];
-
+  fieldIdLabel = 'campoDeActuacion.field_id';
+  fieldDescription = 'campoDeActuacion.field_description';
+  fieldDescriptionVal = 'campoDeActuacion.field_descriptionVal';
+  campoDeActuacionTitle = 'campoDeActuacion.title';
   addDialogRef: DynamicDialogRef | undefined;
   updateDialogRef: DynamicDialogRef | undefined;
   deleteDialogRef: DynamicDialogRef | undefined;
@@ -50,19 +53,19 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
   columns = [
     {
       field: 'codigo',
-      header: 'campoDeActuacion.field_id',
+      header: this.fieldIdLabel,
       sortable: true,
       class: 'table-col-width-fix',
     },
     {
       field: 'deseccion',
-      header: 'campoDeActuacion.field_description',
+      header: this.fieldDescription,
       sortable: true,
       class: 'table-col-width',
     },
     {
       field: 'deseccionVal',
-      header: 'campoDeActuacion.field_descriptionVal',
+      header: this.fieldDescriptionVal,
       sortable: true,
       class: 'table-col-width',
     },
@@ -73,13 +76,13 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
       class: 'table-col-width-fix',
     },
   ];
-  private subscription = new Subject<void>();
+  private readonly subscription = new Subject<void>();
 
   constructor(
-    private campoDeActuacionService: CampoDeActuacionService,
-    private messageService: MessageService,
-    private dialogService: DialogService,
-    private translocoService: TranslocoService
+    private readonly campoDeActuacionService: CampoDeActuacionService,
+    private readonly messageService: MessageService,
+    private readonly dialogService: DialogService,
+    private readonly translocoService: TranslocoService
   ) {}
 
   codigo = '';
@@ -165,7 +168,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
                   this.messageService.add({
                     severity: 'success',
                     summary: this.translocoService.translate(
-                      'campoDeActuacion.title'
+                      this.campoDeActuacionTitle
                     ),
                     detail: this.translocoService.translate(
                       'toast_messages.add_success'
@@ -193,24 +196,18 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
 
     const inputFields: InputField[] = [
       {
-        label: `${this.translocoService.translate(
-          'campoDeActuacion.field_id'
-        )}*`,
+        label: `${this.translocoService.translate(this.fieldIdLabel)}*`,
         required_msg: this.translocoService.translate('required_text'),
         name: 'codigo',
         maxLength: 10,
       },
       {
-        label: `${this.translocoService.translate(
-          'campoDeActuacion.field_description'
-        )}*`,
+        label: `${this.translocoService.translate(this.fieldDescription)}*`,
         required_msg: this.translocoService.translate('required_text'),
         name: 'deseccion',
       },
       {
-        label: `${this.translocoService.translate(
-          'campoDeActuacion.field_descriptionVal'
-        )}*`,
+        label: `${this.translocoService.translate(this.fieldDescriptionVal)}*`,
         required_msg: this.translocoService.translate('required_text'),
         name: 'deseccionVal',
       },
@@ -264,7 +261,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
               this.messageService.add({
                 severity: 'success',
                 summary: this.translocoService.translate(
-                  'campoDeActuacion.title'
+                  this.campoDeActuacionTitle
                 ),
                 detail: this.translocoService.translate(
                   'toast_messages.update_success'
@@ -304,24 +301,18 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
 
     const inputFields: InputField[] = [
       {
-        label: `${this.translocoService.translate(
-          'campoDeActuacion.field_id'
-        )}*`,
+        label: `${this.translocoService.translate(this.fieldIdLabel)}*`,
         required_msg: this.translocoService.translate('required_text'),
         name: 'codigo',
         disabled: true,
       },
       {
-        label: `${this.translocoService.translate(
-          'campoDeActuacion.field_description'
-        )}*`,
+        label: `${this.translocoService.translate(this.fieldDescription)}*`,
         required_msg: this.translocoService.translate('required_text'),
         name: 'deseccion',
       },
       {
-        label: `${this.translocoService.translate(
-          'campoDeActuacion.field_descriptionVal'
-        )}*`,
+        label: `${this.translocoService.translate(this.fieldDescriptionVal)}*`,
         required_msg: this.translocoService.translate('required_text'),
         name: 'deseccionVal',
       },
@@ -329,7 +320,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
 
     const updateDialogConfig: GenericDialog = {
       header: this.translocoService.translate('dialog_header.update', {
-        title: this.translocoService.translate('campoDeActuacion.title'),
+        title: this.translocoService.translate(this.campoDeActuacionTitle),
       }),
       width: '50%',
       contentStyle: {
@@ -375,7 +366,7 @@ export class CampoDeActuacionComponent implements OnInit, OnDestroy {
                   this.messageService.add({
                     severity: 'success',
                     summary: this.translocoService.translate(
-                      'campoDeActuacion.title'
+                      this.campoDeActuacionTitle
                     ),
                     detail: this.translocoService.translate(
                       'toast_messages.delete_success'
