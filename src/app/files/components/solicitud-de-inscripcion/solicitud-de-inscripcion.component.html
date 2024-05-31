@@ -70,10 +70,9 @@
                 <input
                   id="nifcif"
                   type="text"
-                  [(ngModel)]="cifNif"
                   class="p-inputtext inputStyle w-full"
                   [maxLength]="9"
-                  (blur)="!readOnlyMode && fetchDetails(cifNif)"
+                  (blur)="!readOnlyMode && fetchDetails($event.value)"
                   formControlName="nifcif"
                   [ngClass]="readOnlyMode ? 'disabled' : ''"
                 />

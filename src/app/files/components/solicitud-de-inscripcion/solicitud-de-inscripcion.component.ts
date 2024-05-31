@@ -46,9 +46,7 @@ import {
   styleUrls: ['./solicitud-de-inscripcion.component.css'],
   providers: [MessageService, DialogService, DynamicDialogRef],
 })
-export class SolicitudDeInscripcionComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class SolicitudDeInscripcionComponent implements OnInit, OnDestroy {
   protected isValidForm: boolean;
   protected isFechaBajaNull: boolean;
 
@@ -67,7 +65,6 @@ export class SolicitudDeInscripcionComponent
 
   protected provinciaList: Provincia[] = [];
   protected filteredProvincia: Provincia[] = [];
-  protected cifNif = '';
   protected readOnlyMode: boolean;
   protected isLegalCifNif: boolean;
   private readonly subscription = new Subject<void>();
@@ -93,13 +90,6 @@ export class SolicitudDeInscripcionComponent
     this.initializeForm();
   }
 
-  ngAfterViewInit(): void {
-    if (!this.isLegalCifNif) {
-      this.datosPrincipalesForm.get(this.representantesDTOCodpro)?.disable();
-      this.datosPrincipalesForm.get(this.representantesDTOCodmun)?.disable();
-      this.datosPrincipalesForm.get(this.representantesDTOCp)?.disable();
-    }
-  }
   private disableFileds() {
     return new Promise<void | boolean>((resolve) => {
       this.datosPrincipalesForm.get('entidad.fbaja')?.disable();
@@ -113,9 +103,15 @@ export class SolicitudDeInscripcionComponent
       if (!this.isLegalCifNif) {
         this.datosPrincipalesForm.get(this.representantesDTOCodmun)?.disable();
         this.datosPrincipalesForm.get(this.representantesDTOCp)?.disable();
+        this.datosPrincipalesForm.get(this.representantesDTOCodpro)?.disable();
       }
       resolve(true);
     });
+  }
+  private enableFileds() {
+    this.datosPrincipalesForm.get(this.representantesDTOCodmun)?.enable();
+    this.datosPrincipalesForm.get(this.representantesDTOCp)?.enable();
+    this.datosPrincipalesForm.get(this.representantesDTOCodpro)?.enable();
   }
   ngOnInit(): void {
     this.copyAdress = true;
@@ -131,13 +127,9 @@ export class SolicitudDeInscripcionComponent
     await this.setFormReadOnly(this.readOnlyMode);
 
     if (state.cif) {
-      this.cifNif = state.cif;
       await this.fetchDetails(state.cif);
       await this.fetchAllOficinasById(state.id);
     }
-    await this.checkRepresentanteLegalCifNif(
-      this.datosPrincipalesForm.get('representantesDTO.nifcif').value
-    );
     await this.disableFileds();
   }
 
@@ -269,6 +261,9 @@ export class SolicitudDeInscripcionComponent
           cp.cpostCodMuni === response.codmun &&
           cp.cpostCodPostal === response.cp
       );
+    }
+    if (response.nifcif && !this.readOnlyMode) {
+      this.enableFileds();
     }
 
     this.datosPrincipalesForm.get('representantesDTO')?.patchValue({
